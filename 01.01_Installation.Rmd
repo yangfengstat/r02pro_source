@@ -32,7 +32,7 @@ Then, you will see a window popping up like Figure \@ref(fig:size). After clicki
 
 - *Editor font size* controls the size of the font only in the code editor.
 
-Once done customizing the appearance, you need to click on *Apply* to save the adjustments.
+Once finishing customizing the appearance, you need to click on *Apply* to save the adjustments.
 
 ```{r size, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Zoom and Editor font size", out.width = '70%'}
 knitr::include_graphics("pics/1size.PNG")
