@@ -1,16 +1,50 @@
 ## Interative Plot with `plotly()` {#plotly}
 
-Until now, all the plots we created are all static. In this section, we will introduce a powerful tool named `plotly()` that can make interactive plots. 
+Until now, all the plots we created are all static. In this section, we will introduce a powerful tool named `plotly()` that can make interactive plots. If you haven't done so, you need to first install the R package **plotly**. 
 
-### Interactive scatterplots
+```{r, eval = FALSE}
+install.pacakges("plotly")
+```
 
 Let's start with a static scatterplot and make it interactive. 
 
 ```{r, warning=FALSE}
 library(r02pro)
 library(ggplot2)
-ggplot(data = gm2004) + 
-  geom_point(mapping = aes(x = sugar, 
-                           y = cholesterol))
+library(plotly)
+my_plot <- ggplot(data = gm2004) + 
+    geom_point(mapping = aes(x = sugar, 
+                             y = cholesterol))
+ggplotly(my_plot)                           
 ```
 
+Upon a first look, this may look identical to a regular scatterplot. However, you can try to move your cursor to the points which will show the corresponding coordinates. Some other features offered are available via a bar of buttons on the top right of the plot. Some useful features include 
+
+- Download plot as png. 
+- Zoom: Zoom a region of the plot.
+- Pan: Move the plot around. 
+
+
+In addition to the vanilla scatterplots, you can use plotly with more complicated plots that involves aesthetics. 
+
+```{r}
+my_plot_continent <- ggplot(data = gm2004) + 
+    geom_point(mapping = aes(x = sugar, 
+                             y = cholesterol,
+                             color = continent))
+ggplotly(my_plot_continent)   
+```
+
+Now, you can easily see the `continent` in addition to the `sugar`and `cholesterol` values for each data point. 
+
+Let's try to use plotly with some other types of plots. 
+
+```{r}
+my_box_plot <- ggplot(data = na.omit(sahp), 
+            aes(x = house_style, 
+                y = sale_price)) +
+  scale_x_discrete(limits=c("1Story", "2Story")) + geom_boxplot(mapping = aes(color = oa_qual > 5))
+ggplotly(my_box_plot) 
+```
+
+For boxplots, we can easily see the values of summary statistics. You are welcome to try out plotly on other types of plots. 
