@@ -61,7 +61,7 @@ To verify it, you can run the code with just the object name to check its value.
 x_num
 ```
 
-Great! The output is 5, indicating that you have successfully assigned the value 5 to the name x_num, and you have created a new object `x_num`. You can use `x_num` instead of `5` to do the subsequent calculations because `x_num` and `5` have the same value. 
+Great! The output is 5, indicating that you have successfully assigned the value 5 to the name x_num, and you have created a new object `x_num`. From now on, you can use `x_num` instead of `5` to do the subsequent calculations because `x_num` and `5` have the same value. 
 
 Note that R object names are **case-sensitive**. For example, you have defined `x_num`, but if you type `X_num`, the console will return an error message as follow. 
 
