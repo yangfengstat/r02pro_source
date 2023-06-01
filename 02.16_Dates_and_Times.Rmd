@@ -1,0 +1,241 @@
+## Dates and Times {#date-time}
+
+Now you have learned numeric vectors, character vectors and logical vectors which are quite intuitive. In this section, we want to introduce two special formats of vectors in R which are **dates** and **times**. Dates and times belong to vectors because they only contain values of the same type.
+
+### Dates
+
+***a. Date class***
+
+Let's first look at a vector in the date format. First, to get today's date, you can use the `Sys.Date()` function. Similarly, you can verify its class by using the `class()` function.
+
+```{r, results=TRUE}
+today <- Sys.Date()
+today
+class(today)
+```
+
+Looking at the output, we know that `today` is a vector of the **Date** class. You may be wondering how are the dates stored in R. To get this information, you can use the `typeof()` function on a date object. 
+
+```{r, results = TRUE}
+typeof(today)
+```
+
+This may look a bit surprising to you. Indeed, dates objects are stored as numeric values (in "double" to be precise), representing the (signed) number of days that has passed since Jan 1, 1970 (The reference date in R). To get this information, you can convert it to a number by `as.numeric()`.  
+```{r, results = TRUE}
+as.numeric(today)
+```
+
+Storing the dates as numbers makes it handy to perform additions and subtractions. For example, you can use `today - 1` to get the date of yesterday, and use `today + 1` to get the date of tomorrow. 
+```{r, results=TRUE}
+today - 1
+today + 1
+```
+
+The computation in R is done by adding or subtracting one to the number of days since Jan 1, 1970. 
+
+::: {.infobox .caution data-latex="{caution}"}
+Although the output of `today` looks similar to a string, you will get a character vector if you assign value(s) like `"2021-09-09"` to a name. You you can verify its class by using `class()`.
+Of course, an error will show up if you try to do addition or subtraction operations on a character vector. 
+
+```{r, error=TRUE}
+date_char <- "2021-09-09"
+class(date_char)
+date_char - 1
+```
+::: 
+
+
+You can also get the days of week, months, and quarters for a date using the functions `weekdays()`, `months()`, and `quarters()`.
+```{r, eval=FALSE}
+weekdays(today)
+months(today)
+quarters(today)
+```
+
+
+***b. Converting between dates and strings***
+
+Now, you may be wondering what information we can extract out of an object of the date class. We can use the `format()` function to convert a date class object into a string that contains various information about the date. First, let's introduce a list of commonly used elements of dates and the corresponding **conversion specification**.  A conversion specification is usually formed by `%` followed by a single letter. The following table shows a list of common conversion specifications.
+
+```{r echo = FALSE, results = TRUE}
+Code  <- c("%m", "%d", "%y","%Y", "%a", "%A", "%b", "%B")
+Name <- c("2-digit month", "2-digit day", "2-digit year", "4-digit year", "abbreviated weekday", "full weekday", "abbreviated month", "full month")
+Example <- c(format(today, Code))
+d <- data.frame(Code, Name, Example)
+knitr::kable(d)
+```
+
+Then, for a Date class object, we can create a **format string** that contains any number of the **conversion specifications** in the previous table. The working mechanism of `format()` is that, it will scan through the **format string**, look for all the conversion specifications, and convert the conversion specifications into their corresponding values for the given date. Any character in the format string that is not part of a conversion specification is interpreted literally (and `%%` gives `%`).  Let's see an example.
+```{r, results = TRUE}
+format(today, "Today is %A (%a for short), %b %d, %Y. It is also %m/%d/%Y")
+```
+
+On the other hand, we can also convert a string back into a Date class object. To do that, you can use the `as.Date()` function with the string along with the corresponding format string in the `fomat` argument.  
+
+You can also specify the `tryFormats` argument, which contains a character vector with all possible formats to try.
+```{r, results=TRUE}
+Aug <- as.Date("08-01-2021", format = "%m-%d-%Y")
+Aug
+class(Aug)
+```
+
+Here, the value of `format` corresponds to each part in string. `%m` corresponds to `08`, which is the month of the date. `%d` corresponds to `01`, which is the day of the date. `%Y` corresponds to `2021`, which is the year of the date. Now you have successfully converted the string into a vector of the Date class!
+
+The `as.Date()` function can be viewed as the inverse function of `format()` when we use the same format string.
+```{r, eval=FALSE}
+as.Date(format(today, format = "%m-%d-%Y"), format = "%m-%d-%Y")
+```
+
+
+Notice that the correspondence of the string and supplied format should follow the above table, otherwise you may get some unexpected result.
+```{r, results=TRUE}
+as.Date("08-01-2021", format = "%B-%d-%y")        #wrong
+as.Date("August-01-2021", format = "%B-%d-%y")    #correct
+```
+
+Here, you should use `August` rather than `08` in string because `%B` corresponds to full month, so you get `NA` as the result.
+
+In addition to use `-` as the separator, you can also use `/` as the separator. If the separators used in the string and the format doesn't match in `as.Date()`, you will also get `NA` as the result.
+
+```{r, results=TRUE}
+as.Date("08/01/2021", format = "%m/%d/%y")
+as.Date("08/01/2021", format = "%m-%d-%y")
+as.Date("08/01/2021", format = "%m-%d/%y")
+```
+
+You can try different combinations by yourself. Here are some examples！ 
+```{r, results=TRUE}
+as.Date("01-03-2021", format = "%m-%d-%Y")
+as.Date("01-03-2021", format = "%d-%m-%Y")
+as.Date("Apr-03-2021", format = "%b-%d-%Y")
+as.Date("09/October/97", format = "%d/%B/%y")
+as.Date("2010-02-29", format = "%Y-%m-%d")
+```
+
+It is worth noting that the last output is `NA`, indicating that Feb 29, 2010 is not a valid date. That's because only **leap years** have 29 days in February!
+
+In addition to manually specifying a single `format` for the conversion, the `as.Date()` function also has a parameter `tryFormats` which could include multiple formats, for which the functions will try sequentially until the supplied string matches with a particular format. The default value of `tryFormats` is `c("%Y-%m-%d", "%Y/%m/%d")`. Note that the first format `%Y-%m-%d` is the ISO 8601 international standard.
+
+```{r}
+as.Date("2010-02-28")
+as.Date("2010/03/28")
+```
+
+Although this may work well when you are certain the default formats match the character vector provided, all elements have to be of the same format. 
+
+```{r}
+as.Date(c("2010-02-28", "2010/03/28"))
+```
+
+As a precaution, it is recommended that you manually supply the format via the `format` argument and make sure all the elements follow the format.
+
+We can also construct date using the number of days since a reference date using the `origin` argument in the `as_date()` function.
+```{r, results=TRUE}
+as.Date(10, origin = "2021-01-01")      #10 days after 2021-01-01
+```
+
+
+
+***c. `difftime` class***
+
+Now, let's introduce a very useful class named `difftime`. From the name, you may be able to tell it is designed to represent **time differences**. Let's see an example when we subtract between two dates objects.
+
+```{r, results=TRUE}
+ref_date <- as.Date("1970/01/01", format = "%Y/%m/%d")
+days_diff <- today - ref_date           #the time difference between two dates
+days_diff
+class(days_diff)
+```
+
+To learn more about the `difftime` class, let's look at its structure.
+```{r, results=TRUE}
+str(days_diff)
+```
+
+You can see that it is stored as a number, with an attribute named `"units"` and the value `"days"`. This attribute shows the units of the difference. To create a time difference in other units, you can use the `difftime()` function and specify the `units` argument to the desired units. 
+```{r, results = TRUE}
+hours_diff <- difftime(today, ref_date, units = "hours")
+weeks_diff <- difftime(today, ref_date, units = "weeks")
+```
+
+You can also use the `as.difftime()` function to help getting date. For example, to get the date of 10 weeks and 3 days from `today`, you can use the following code.
+```{r, results=TRUE}
+ten_week <- as.difftime(10, units = "weeks")
+today + ten_week + 3
+```
+
+### Times
+
+After talking about dates, it is natural to introduce how **times** are represented in R. Just like dates, let's first get the time at the current moment using the `Sys.time()` function. You can also check its class, internal storage type, and structure by the `class()`, `typeof()`, and `str()` functions.
+```{r, results=TRUE}
+now <- Sys.time()
+now
+class(now)
+typeof(now)
+str(now)
+```
+
+
+The object `now` is of class `POSIXct`. The second element of `class(now)` is `POSIXt`, which is a parent class for class `POSIXct` and class `PISIXlt`. This parent class `POSIXt` is used to allow operations such as subtraction to mix the two classes. 
+
+From the result of `typeof(now)`, we know that similar to dates, the `POSIXct` class used to represent times is also stored as `double`. Indeed, the class `POSIXct` represents the (signed) number of seconds since the beginning of 1970 as a numeric vector.
+
+You can also get the time of an hour ago or a minute later. Now, here the difference is in the unit of seconds instead of days for the date class.
+```{r, results=TRUE}
+now - 3600
+now + 60
+```
+
+
+
+Besides all the elements for dates you can use for the time class object, a list of other commonly used elements of times and the corresponding conversion specifications is summarized in the following table. 
+
+```{r echo = FALSE, results = TRUE}
+Code  <- c("%H", "%M", "%S", "%Z")
+Name <- c("hours", "minutes", "seconds","time zone")
+Example <- c(format(now, Code))
+d <- data.frame(Code, Name, Example)
+knitr::kable(d)
+```
+
+
+Just like dates, you can format the time into characters via the `format()` function. 
+
+```{r, results=TRUE}
+format(now, "Hi! The current time in %Z (Time Zone) is %A (weekday), year %Y, month %m, day %d, hour %H, min %M, second %S. ")
+```
+
+
+You can also display the time in a different time zone by setting the `tz` argument in the `format()` function.
+```{r, results=TRUE}
+format(now, tz = "UTC")                 #Coordinated Universal Time
+format(now, tz = "America/Los_Angeles") #Pacific Standard Time
+format(now, tz = "America/New_York")    #Eastern Standard Time
+format(now, tz = "Europe/London")       #Greenwich Mean Time 
+```
+
+To create a time object from a character, you can use the `as.POSIXlt()` function with the optional `format` argument. 
+```{r, results=TRUE}
+as.POSIXct("2021-09-21 13:14:15", format = "%Y-%m-%d %H:%M:%S")
+as.POSIXct("13:14:15, Sep 21, 2021", format = "%H:%M:%S, %b %d, %Y")
+```
+
+Similar as the difference of dates, the difference of two times is also an object of class `difftime`. You can again use the `as.difftime()` function to help with getting a time difference object in the given unit. For example, to get the time 2 days 3 hours and 4 minutes later, you can use the following.
+```{r, results=TRUE}
+now + as.difftime(2, units = "days") + as.difftime(3, units = "hours") + as.difftime(4, units = "mins") 
+```
+
+### Exercises
+
+1. From year 1900 to year 2021 (inclusive), calculate the number of leap years. (Hint: for a leap year, February has 29 days instead of 28. The value of `as.Date("2010-02-29", format = "%Y-%m-%d")` is `NA`)
+
+2. If `x <- as.Date("69-01-01", format = "%y-%m-%d")` and `y <- as.Date("68-12-31", format = "%y-%m-%d")`, what is `x - y`? Please think about the answer first, then try it in R. 
+
+3. What's the date of the day that is 1000 days later than Feb 14, 2021.
+
+4. What's the time that is 1 year, 2 days, 3 hours, 4 minutes, and 5 seconds past 8:15pm on July 4, 2021. 
+
+
+
+
+

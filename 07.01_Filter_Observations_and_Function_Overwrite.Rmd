@@ -1,0 +1,104 @@
+## Filter Observations and Objects Masking {#filter-observations}
+
+Let's start with the first task outlined at the beginning of this chapter. Suppose we want to find the observations that represent countries in Europe (`continent`), years between 2006 and 2010 (`year`), and Low Human Development Index (`HDI_category`). You can use the function `filter()` in the **dplyr** package, a member of the **tidyverse** package. If you haven't installed the **tidyverse** package, you need to install it. Let's first load the **dplyr** package. 
+
+```{r, echo = TRUE, results = TRUE, message=TRUE, warning=TRUE, tidy = TRUE}
+library(dplyr)
+```
+
+### Objects Masking
+
+After loading the package **dplyr** for the first time, you can see the following message
+
+```
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+```
+
+
+The message appears because **dplyr** contains the functions `filter()` and `lag()` which are already defined and preloaded in the R package **stats**. As a result, the original functions  are masked by the new definition in **dplyr**. 
+
+In this scenario when the same function name is shared by multiple packages, we can add the package name as a prefix to the function name with *double colon* (`::`). For example, `stats::filter()` represents the `filter()` function in the **stats** package, while `dplyr::filter()` represents the `filter()` function in the **dplyr** package. You can also look at their documentations.
+
+```{r, eval=FALSE}
+?stats::filter
+?dplyr::filter
+```
+
+It is helpful to verify which version of `filter()` you are using by typing the function name `filter`. 
+```{r, eval = FALSE}
+filter
+```
+
+Usually, R will use the function in the package that is loaded at a later time. To verify the search path, you can use the `search()` function. R will show a list of attached packages and R objects. 
+
+```{r, results=TRUE}
+search()
+```
+
+### Filter Observations
+
+Now, let's introduce how to use `filter()` to get the subset of `gm` which consists of the rows that represent countries in Europe (`continent`), years between 2004 and 2006 (`year`), and very high Human Development Index (`HDI_category`). 
+
+To use the `filter()` function, you put the dataset in the first argument, and put the **logical statements** as individual arguments after that. 
+
+```{r, results=TRUE}
+library(r02pro)
+filter(gm, 
+       continent == "Europe", 
+       year >= 2004,
+       year <= 2006,
+       HDI_category == "very high") 
+```
+
+In the `filter()` function, each logical statement will be computed, which leads to a logical vector of the same length as the number of observations. Then, only the observations that have `TRUE` values in all logical vectors are kept. 
+
+It is helpful to learn the mechanism of `filter()` by reproducing the results using what we learned on data frame subsetting in Section \@ref(subset_df). 
+
+```{r, eval = FALSE}
+gm[which(gm$continent == "Europe" & 
+   gm$year >= 2004 &
+   gm$year <= 2006 &
+   gm$HDI_category == "very high"), ]
+```
+
+Although we got the same answer, we hope you agree with us that the `filter()` function provides more intuitive and simpler codes than the raw data frame subsetting. For example, the tibble name `gm` appeared five times in the data frame subsetting while it only appears once in the `filter()` function. 
+
+
+::: {.infobox .caution data-latex="{caution}"}
+This is an example of the power of creating new R functions and R packages. They usually enable us to do tasks that couldn't be done using the existing functions in base R, or making coding easier than just using the existing functions.  Recall that the same thing happened in the visualization where we compared the visualization functions in base R with the `ggplot()` function. No matter how complicated the figure we want to create is, we only need to put the data set name once in the `ggplot()` function if all the layers are using the same data set.   
+::: 
+
+
+
+
+It is worth noting that the `filter()` function only returns the observations when the conditions are all `TRUE`, excluding the observations that are missing in the variables associated with the filter conditions. 
+
+Using the `filter()` function, the original tibble is **unchanged**, which is an important feature of many functions we will learn in this Chapter. To save the filtered tibble, you can either assign the value to the original tibble name, which will overwrite it; or assign the value to a new name, which will create a new tibble with the new values. Let's save the filtering results in a new tibble.
+```{r, eval = FALSE}
+gm_europe <- filter(gm, 
+                    continent == "Europe",
+                    year >= 2004,
+                    year <= 2006,
+                    HDI_category == "very high") 
+gm_europe
+```
+
+In addition to using separate logical statements, you can also have logical operations between multiple logical vectors inside each statement. This makes the `filter()` function very flexible in expressing different kinds of filtering operation. Let's say we want to find records that are in either Europe or Asia with `HDI_category` being "high" and "very high" in year 2004. 
+```{r, eval = FALSE}
+filter(gm, 
+       continent == "Europe" | continent == "Asia" ,
+       year == 2004,
+       HDI_category == "very high" | HDI_category == "high" )
+```
+
+
+### Exercise
+
+Using `ahp` dataset,
+
+1. Create a new tibble named `some_apr` that contains all houses that are built before year 2000 (not including 2000), sold on or after year 2009, and with 2 or 3 bedrooms.
+
+
+

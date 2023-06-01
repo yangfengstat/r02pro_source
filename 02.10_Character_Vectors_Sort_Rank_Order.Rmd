@@ -1,0 +1,135 @@
+## Character Vectors: Sort, Rank, Order {#character-sort-rank-order}
+
+In Section \@ref(numeric-sort-rank-order), you learned `sort()`, `rank()``, and `order()` to sort numeric vectors and get their elements' ranks and indices. These three functions can be used in a similar manner for character vectors. Similar to numeric vectors, let's first prepare a character vector. 
+
+```{r}
+char_vec <- c("a", "A", "B", "b", "aB","ac", "1c", ".a", "1a","2a",".a","&u","3","_4")
+```
+
+
+### Ordering rules {#ordering-rules}
+
+For character vectors, R uses the **lexicographical ordering**, which is sometimes called dictionary order since it is the order used in a dictionary. Note that the strings in character vectors can contain letters, numbers, or symbols. There are a few important ordering rules as follows.
+
+- symbols < digits < letters: symbols appear first, followed by digits, and letters appear last.
+
+- symbols are ordered in a specific way as shown below.
+
+```{r, results = TRUE}
+syms <- c(" ",",",";","_","(",")","!","[","]","{","}","-","*","/","#","$","%","^","&","`","@","+","=","|","?","<",">",".")
+sort(syms)
+```
+
+- digits are ordered ascendingly: the smaller digits appear earlier than the bigger ones.
+
+```{r, results = TRUE}
+nums <- 0:9
+sort(nums)
+```
+
+- Letters have two sorting rules. In R, `letters` is a pre-created character vector with all 26 lower-cased letters in the alphabet, and `LETTERS` is another character vector with all 26 upper-cased letters in the alphabet. Case-wise, lower cases go before upper cases. Letter-wise, letters are sorted alphabetically. 
+
+
+```{r, results = TRUE}
+all_letters <- c(letters,LETTERS)
+sort(all_letters)
+```
+
+From the example below, you will find out that the letter-wise rule always overweighs the case-wise rule. #麻烦帮忙看看这里讲得清不清楚
+
+```{r}
+x <- c("d", "c")
+sort(x)
+y <- c("d", "C")
+sort(y)
+```
+
+
+### Sort vectors with `sort()`
+
+You can surely apply `sort()` on character vectors. A character vector's elements (i.e., strings) are sorted by their first character. If two elements have the same first character, they will be sorted by their second character. The rule applies until the indexed ties between two strings' characters are broken, or two strings run out of characters.
+
+Let's try to sort the character vector `char_vec`.
+
+```{r results = TRUE}
+sort(char_vec)
+```
+
+We have the following observations.
+
+- Symbols appear first, followed by digits, and letters appear last.
+- According to the ordering rule of symbols, `_4` goes first, `.a` (two of them) and `&u` follow subsequently.
+- `1a` and `1c` have the same first character. Between their second character, a goes before c, therefore `1a` goes before `1c`.
+- `aB` and `ac` have the same first character, since b goes before C (although B is an upper case while c is a lower case), `aB` goes before `ac`.
+
+Of course, we can also have the order reversed by adding the argument `decreasing = TRUE` inside `sort()`. 
+
+```{r}
+sort(char_vec, decreasing = TRUE)
+```
+
+### Get ranks in vectors with `rank()`
+
+The same ordering rules introduced in subsection \@ref(ordering-rules) do apply when R ranks a character vector's strings. Here, the element with rank 1 is `_4` and `.a` has rank 2. Just like numeric vectors, if you have strings with the same value (i.e., characters) in character vectors, these elements' ranks will be the same (the average of the corresponding ranks) by default. 
+
+```{r results = TRUE}
+rank(char_vec)
+```
+
+As expected, you can set the `ties.method` argument in `rank()` to use other methods for breaking ties. 
+
+```{r}
+rank(char_vec, ties.method = "min")
+rank(char_vec, ties.method = "first")
+```
+
+### Get the ordering permutation via `order()`
+
+Again, you can use the same `order()` function to get the corresponding indices of a character vector's strings. Also, the `order()` function breaks the ties by the appearing order by default. 
+
+```{r results = TRUE}
+order(char_vec)
+```
+
+The `decreasing` argument still works for `order()`:
+
+```{r results = TRUE}
+order(char_vec, decreasing = TRUE)
+```
+
+### Summary and comparisons
+
+Let's put all sort-related functions together to clarify their functions.
+
+```{r}
+char_vec
+```
+
+```{r}
+sort(char_vec)
+```
+
+The `sort()` function **sort** `char_vec` according to previously introduced ordering rules. `_4` goes first because its first character is a symbol (symbols < digits < letters), and `_` goes before "." and "&".
+
+```{r}
+rank(char_vec)
+```
+
+The `rank()` function gives the **ranks** of strings inside `char_vec`. The first returned rank is `9.0` because the first string in `char_vec`, namely "a", is sorted in the 9th place in `char_vec`. The second returned rank is `10.0` because the second string in `char_vec`, namely "A", is sorted in the 10th place in `char_vec`.
+
+```{r}
+order(char_vec)
+```
+
+The `order()` function gives the **ordering permutation** of `char_vec`. The first returned order is 14 because sorting `char_vec` will put this character vector's 14th string, namely "_4", in the first place. Similarly, the second returned order is 8 because sorting `char_vec` will put this character vector's 8th string, namely ".a", in the second place.
+
+### Exercises
+
+Suppose `exercise <- c("&5", "Nd", "9iC", "3df", "df", "nd", "_5", "9ic")`
+
+1. Sort `exercise` in the  ascending order. Explain why 1) `3df` goes before `9ic`; 2) `&5` goes before `3df`; 3) `9ic` goes before `9iC`.
+
+2. Apply both `rank()` and `order()` to the character vector `exercise`. Within the two returned vectors, explain how does the element `7` means differently in two vectors. 
+
+
+

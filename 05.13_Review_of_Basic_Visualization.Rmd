@@ -1,0 +1,68 @@
+## Review of Basic Visualization {#review-basic-visualization}
+
+In this chapter, we have introduced the most commonly used plots for visualization. It is helpful to review what we have learned so far. 
+
+### Summary of geoms
+
+```{r echo = FALSE, results = TRUE, warning=FALSE, message=FALSE}
+library(kableExtra)
+Names <- c("Histogram",
+           "Density Plot",
+           "Boxplot",
+           "Bar Chart",
+           "Pie Chart",
+           "Scatterplot",
+           "Line Plot",
+           "Smoothline",
+           "Bar Chart",
+           "Boxplot")
+Type  <- c("One continuous variable","(e.g. `cholesterol`)","","","","One discrete variable","(e.g. `kit_qual`)", "Two continuous variables", "(e.g. `sugar` and `cholesterol`)", "","Two discrete variables", "(e.g. `kit_qual` and `heat_qual`)", "One continous varialbe and one discrete variable")
+Funs <- c("`geom_histogram(aes(x = cholesterol))`", "`geom_density(aes(x = cholesterol))`", '`geom_boxplot(aes(x = "", y = sale_price))`',
+ "`geom_bar(mapping = aes(x = kit_qual))`",'`geom_bar(aes(x = kit_qual), stat = "identity") + coord_polar("y")` ',
+ "`geom_point(mapping = aes(x = sugar, y = cholesterol))`",
+ "`geom_line(mapping = aes(x = dt_sold, y = sale_price))`",
+ "`geom_smooth(mapping = aes(x = sugar, y = cholesterol))`",
+ "`geom_bar(mapping = aes(x = kit_qual, fill = central_air))`","`geom_boxplot(aes(x = kit_qual, y = sale_price))`")
+Section <- c("\\@ref(histogram)","\\@ref(density-plot)","\\@ref(boxplots)","\\@ref(intro-bar-chart)","\\@ref(pie-charts)","\\@ref(scatterplot)","\\@ref(line-plot)","\\@ref(smoothline)","\\@ref(bar-aes)","\\@ref(boxplot-2)")
+
+
+
+d <- data.frame(Names, Funs, Section)
+kableExtra::kable(d) %>% kableExtra::row_spec(c(3, 5,8), hline_after = T)%>%kableExtra::pack_rows("One continuous variable (e.g. `cholesterol` or `sale_price`)", 1, 3,background = "orange")%>%pack_rows("One discrete variable (e.g. `kit_qual`)", 4, 5,background = "orange")%>%pack_rows("Two continuous variables (e.g. `sugar` and `cholesterol`)", 6, 8,background = "orange")%>%pack_rows("Two discrete variables (e.g. `kit_qual` and `central_air`):", 9, 9,background = "orange")%>%pack_rows("One continuous variable and one discrete variable (e.g. `kit_qual` and `sale_price`):", 10, 10,background = "orange")
+#row_spec(4,hline_after = T)
+```
+
+
+### The grammatical structure of `ggplot()`
+
+Next, we review the grammatical structure of `ggplot()`.
+
+```{r echo = FALSE, results = TRUE}
+Code  <- c("`ggplot(data = <DATA>) +`", "`<GEOM_FUNCTION>(`", "`mapping = aes(<MAPPINGS>),`", "`stat = <STAT>, `", "`position = <POSITION>) + `", "`<COORDINATE_FUNCTION> +`", "`<FACET_FUNCTION> +`","`<SCALE_FUNCTION> +`", "`<THEME_FUNCTION>`")
+Info <- c("data to be used", "geom for generating the desirable plot", "aesthetic mappings, this may include the x and y axes and other features like `color`, `shape`, `fill`, `linetype`, `size`, etc.", "statistical transformation, for example, when we create the errorbar", "position, like `stack`, `dodge`, `fill`", "such as flipping the x and y axes", "`facet_wrap()` and `facet_grid()`, create multiple plots for different subsets of the data", "customize the x and y breaks", "customize labels, title, and fonts")
+d <- data.frame(Code, Info)
+kableExtra::kable(d, format = "pipe") 
+```
+
+### A complex `ggplot()` example
+
+To conclude this chapter, let's look at an example with all components.
+
+```{r, warning=FALSE, message=FALSE}
+library(r02pro)
+library(tidyverse)
+ggplot(data = na.omit(sahp)) +
+  geom_bar(
+    mapping = aes(x = kit_qual, fill = oa_qual > 5),
+    stat = "count", #Default stat for geom_bar, can be removed
+    position = "fill") +
+  coord_flip() +
+  facet_wrap(vars(house_style)) +
+  scale_y_continuous(breaks = seq(from = 0, to = 1, by = 0.2)) +
+  theme(plot.title = element_text(size = 24, color = "magenta")) +
+        xlab("Kitchen quality") +
+  ylab("Proportion") +
+  ggtitle('A bar chart in proportion of kitchen quality')
+```
+
+This plot shows a bar chart using the data `sahp` for the variable `kit_qual`, map the variable `oa_qual > 5` to the fill aesthetic and with `fill` position, with the x and y coordinates flipped, faceted using the variable `house_style`, and with the breaks on the y axis, the title and its font, the label on the y axis being customized. 

@@ -1,0 +1,4 @@
+# Data Import and Export {#import-export}
+
+So far in this book, you have been creating objects by yourself. When working on real projects, you often need to **import** existing data into R, or **export** the created objects or analysis results into a file on the computer. In this chapter, you will learn how to import and export data of different file types. 
+

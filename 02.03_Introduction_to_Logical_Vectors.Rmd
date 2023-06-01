@@ -1,0 +1,167 @@
+## Introduction to Logical Vectors {#intro-logi-vector} 
+
+Having learning numeric vectors (Section \@ref(intro-num-vector)) and character vectors (Section \@ref(intro-char-vector)), it is time to master **logical vectors**, which is another important type of atomic vectors, containing only logical values. 
+
+### Logical vectors: creation by comparisons, class, and storage type{#create-logical-vector} 
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
+```
+
+A **logical vector** is an atomic vector containing only **logical values**, mostly `TRUE` and `FALSE`. Logical vectors are most omnipresent when we check whether a comparison statement is true or false. Generally,  comparisons are more common between numeric vectors, since it is easy to compare numbers, so we will take the comparisons between numeric vectors as examples in this section. 
+
+For two length-1 vector, the comparison is simply done between the only element of each vector. Let's create a numeric vector `x` with value `3`, and then compare it with `2` and `1`. (Here `2` and `1` are both length-1 numeric vectors) 
+
+```{r results=TRUE}
+x <- 3
+x < 2
+x > 1
+```
+
+The value of `x < 2` is `FALSE` since 3 is not smaller than 2, and the value of `x > 1` is `TRUE` since 3 is larger than 1. So `x < 2` and `x > 1` are both vectors of length 1. Just like numeric and character vectors, you can check the class, length, and storage type of the result of this comparison. Let's take `x > 1` for example.
+
+```{r, results = TRUE}
+class(x > 1)
+length(x > 1)
+typeof(x > 1)
+```
+
+In addition, you can assign values of logical vectors to names for future use.
+
+```{r}
+big_1 <- x > 1
+big_1
+class(big_1)
+typeof(big_1)
+```
+
+Now, it is clear that `x > 1` and `big_1` are both logical vectors with length of 1.
+
+
+There are a few other commonly used operators for doing comparisons, which all result in `TRUE` when the statement is correct, and `FALSE` otherwise.
+
+```{r, results = TRUE}
+x < 2      #less than
+x <= 2     #less than or equal to
+x > 1      #bigger than
+x >= 1     #bigger than or equal to
+x == 3     #equal to
+#x = 3     #another assignment operator in addition to `<-`, NOT comparison
+x != 3     #not equal to
+```
+
+Note that if you want to check whether two vectors are equal, you have to use **two equal signs** (with no space in-between) as a single operator, which is `==`, to do comparisons. If only one equal sign is used, it would work as an assignment operator.  In addition, you can use an exclamation mark together with one equal sign, which is `!=`, to find out whether two vectors are not equal.
+ 
+
+In addition to making comparisons involving vectors of length 1, you can also do it with vectors containing more than 1 elements. When we make comparisons between two vectors that contain more than 1 elements, R will make an **element-wise** comparison just like the arithmetic operations between two numeric vectors in Section \@ref(operation-recycling).
+
+```{r, results = TRUE}
+x2 <- c(1, 2, 6)
+x3 <- c(2, 2, 4)
+logi_1 <- x2 <= x3
+logi_1 
+```
+
+As `x2` and `x3` are of the same length, **element-wise** comparison will be applied. The result of this comparison `logi_1` will be a logical vector of same length, and only contain `TRUE` and `FALSE.` You can also manually check that the values of `logi_1` agree with the comparisons `1 <= 2`, `2 <= 2`, and `6 <= 4`.
+
+Similar to the arithmetic operations on numeric vectors, the **recycling rule** (introduced in Section \@ref(operation-recycling)) also applies to the comparison when the two vectors do not have the same length.  This recycling is most often used for a comparison between a vector **with length greater than 1** and a vector **with length of 1**. Let's see an example.
+
+```{r, results = TRUE}
+x3 <- c(2, 2, 4)
+x3 != 2 
+```
+
+Here, `x3` is a numeric vector with length of 3, and `2` is a numeric vector of length 1. From the result, you can see that `2` is compared with each element in `x3`, producing a length-3 logical vector. You can simply check the values by doing the following comparisons: `2 != 2`, `2 != 2` and `4 != 2`.
+
+Now you must be familiar with logical vectors. Similar to numeric vectors and character vector, you can also use the `c()` function along with the logical values `TRUE` (or `T` for short) and `FALSE` (or `F` for short) as elements. 
+
+```{r, results = TRUE}
+logi_2 <- c(TRUE, FALSE, TRUE)
+logi_2
+class(logi_2)
+```
+
+The values of logical vectors can also be `T` or `F`. You can check the class of `logi_3` by using `class()`.
+
+```{r}
+logi_3 <- c(F, T, F, T)
+logi_3
+class(logi_3)
+typeof(logi_3)
+```
+
+
+::: {.infobox .caution data-latex="{caution}"}
+It is worth emphasizing that, in creating numeric vectors and logical vectors, quotation marks aren't necessary like they are in creating character vectors. If you put quotation marks around `TRUE` or `FALSE`, you will create a character vector instead. 
+```{r, results = TRUE}
+char_1 <- c("TRUE", "FALSE", "TRUE")
+char_1
+class(char_1)
+```
+:::
+
+
+It is worth mentioning that, R is case-sensitive in terms of the expression of `TRUE` and `FALSE`. Any expression other than `TRUE`, `FALSE`, `T`, or `F` will be recognized as character values or name of an object in R, not logical values. Please see the example below. 
+
+```{r, error = TRUE, results = TRUE}
+# Valid Expression 
+class(c(TRUE, T))
+
+# Invalid Expression
+class(true)
+class(True)
+class("true")
+```
+
+Finally, you can use the `vector(mode, length)` function to create a logical vector of certain length. 
+```{r}
+vector("logical", 2)
+```
+
+Note that the default value is `FALSE`.
+
+
+### Logical vectors: creation when testing for types
+
+In addition to comparison operations, another situation that you will encounter logical vectors is when we test whether an object belongs to certain type.
+
+First of all, you can use `is.numeric()` to check whether an object is numeric, i.e. can be interpreted as numbers. It will return  `TRUE` if the object is numeric, and will otherwise return `FALSE`. Note that both double vectors and integer vectors (Section \@ref(storage-type)) are numeric since they can both be interpreted as numbers. To further differentiate between double vectors and integer vectors, you can use `is.double()` and `is.integer()`. 
+
+```{r, results = TRUE}
+x1 <- c(1, 2)
+x2 <- c(1L, 2L)
+c(is.numeric(x1), is.double(x1), is.integer(x1))
+c(is.numeric(x2), is.double(x2), is.integer(x2))
+```
+
+From the result, you can see that both `x1` and `x2` are numeric, only `x1` is of double type, and only `x2` is of integer type.
+
+Similarly, you can use `is.character()` to check whether an object is character, and `is.logical()` to check whether an object is logical.
+
+Let's look at some examples.
+
+```{r, results = TRUE}
+x1 <- c(1, 2)
+x2 <- c("this", "is", "great")
+x3 <- c(TRUE, FALSE)
+c(is.numeric(x1), is.character(x1), is.logical(x1))
+c(is.numeric(x2), is.character(x2), is.logical(x2))
+c(is.numeric(x3), is.character(x3), is.logical(x3))
+```
+
+We can see that all results from those check functions are logical values and they agree with the corresponding object types. 
+
+
+
+
+### Exercises
+
+Write the R code to complete the following tasks.
+
+1. Suppose we have `x1 <- c(1, 2, 3)`, create a logical vector with name `logi_1` that represents whether each element of `x1` is less than or equal to its square.
+
+2. Suppose we have `logi_2 <- c(TRUE, TRUE, FALSE)`. Create a logical vector of length 4 with name `logi_3` with elements representing whether `logi_2` is of integer type, double type, character type, and logical type, respectively.
+
+

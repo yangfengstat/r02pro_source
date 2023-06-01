@@ -1,0 +1,16 @@
+## Interative Plot with `plotly()` {#plotly}
+
+Until now, all the plots we created are all static. In this section, we will introduce a powerful tool named `plotly()` that can make interactive plots. 
+
+### Interactive scatterplots
+
+Let's start with a static scatterplot and make it interactive. 
+
+```{r, warning=FALSE}
+library(r02pro)
+library(ggplot2)
+ggplot(data = gm2004) + 
+  geom_point(mapping = aes(x = sugar, 
+                           y = cholesterol))
+```
+

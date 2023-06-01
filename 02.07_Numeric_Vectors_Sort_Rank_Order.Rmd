@@ -1,0 +1,109 @@
+## Numeric Vectors: Sort, Rank, Order {#numeric-sort-rank-order}
+
+After creating a numeric vector, we usually need to arrange (sort) the elements in either ascending or descending order. In this section, we will introduce how to sort numeric vectors and two other measures related to sorting. 
+
+
+First, let's create a numeric vector to be used throughout this section.
+
+```{r}
+x <- c(2, 3, 2, 0, 4, 7) 
+x #check the value of x
+```
+
+### Sort vectors with `sort()`
+
+The first function we will introduce is `sort()`. By default, the `sort()` function **sort** elements in vector in the **ascending** order, namely from the smallest to largest.
+
+```{r, results = TRUE}
+sort(x)
+```
+
+If you want to sort the vector in the **descending** order, namely from the largest to smallest, you can add a second argument `decreasing = TRUE`.
+
+```{r}
+sort(x, decreasing = TRUE)
+```
+
+### Get ranks in vectors with `rank()`
+
+Next, let's talk about ranks in a vector. The `rank()` function gives the **ranks** for each element of the vector, namely the corresponding positions in the **ascending order**. It is worth mentioning that, in R, indexes start at 1 - the 1st element of is at index 1, and the following indexes will count as normal.
+
+```{r results = TRUE}
+rank(x)
+```
+
+If you check the values of `x`, you can see that the smallest value of `x` is 0, which corresponds to the  element at the fourth position of the original `x` vector. Thus, a rank of 1 will be assigned to the fourth position of the rank vector. 
+
+The second smallest value of `x` is 2, which appears twice at the first and the third positions, resulting a **tie** (elements with the same value will result in a tie). Normally, these two elements would have ranks 2 and 3, respectively. To break the tie, the `rank()` function assigns the **average** of the ranks for all elements within a tie situation, by default. For our example, the average of 2 and 3 is 2.5, and will be assigned to the first and the third position of the rank vector. In addition to this default behavior for handling ties, `rank()` also provides other options by setting the `ties.method` argument. 
+
+The third smallest value of `x` is 3, with a rank of 4 at the second position, thus a 4.0 will appear at the second position in the rank vector. The rest of the ranks is assigned in the same fashion. 
+
+If you set `ties.method = "min"`, all the tied elements will have the *minimum rank* instead of the average rank. In this case, the minimum rank is 2. 
+
+```{r results = TRUE}
+rank(x, ties.method = "min")
+```
+
+If you want to break the ties by the locations of the tied elements appear in the vector, you can set `ties.method = "first"`. Then, the earlier-appearing elements will have smaller ranks than the later-appearing ones. In this example, the first element will have rank 2 and the third element has rank 3, since the first element appears earlier than the third element. There are other options for handling ties, which you can look up in the documentation of `rank()` if interested. 
+
+```{r results = TRUE}
+rank(x, ties.method = "first")
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+Unlike `sort()`, you can't get positions in the descending order from the `rank()` function by adding `decreasing = TRUE` in `rank()`. However, you can achieve this goal by using `sort(-x)` if you want to get the positions in the descending order for vector `x`.
+```{r}
+sort(-x)
+```
+:::
+
+
+
+### Get the ordering permutation via `order()
+
+The next item we want to introduce is the `order()` function. Note that the function name **order** could be a bit misleading since ordering elements also has the same meaning of sorting. However, although it is related to sorting, `order()` is a very *different* function from `sort()`.  
+
+Let's recall the values of `x` and apply `order()` on `x`.
+
+```{r results = TRUE}
+x
+order(x)
+sort(x)
+```
+
+From the result, you can see that the `order()` function returns **indices** for the elements in the **ascending** order, namely from the smallest to the largest. For example, the first output is 4, since the 4th element in `x` is the smallest. The second output is 1, since the 1st element in `x` is the second smallest. In other words, `order()` returns a **permutation** which rearranges the vector `x` into ascending order, which is shown in the following example.
+
+```{r}
+x[order(x)]
+```
+
+
+::: {.infobox .caution data-latex="{caution}"}
+Unlike `rank()`, the `order()` function breaks the ties by the appearing order by default.
+:::
+
+If you want the indices corresponding to the descending order, then you can set `decreasing = TRUE` just like what we did in the `sort()` function. 
+
+```{r}
+order(x, decreasing = TRUE)  
+```
+
+In this section, we have covered `sort()`, `rank()`, and `order()` functions for numeric vectors. It is helpful to provide a brief summary. 
+
+- The `sort()` function sorts elements in vectors in ascending/descending order. 
+- The `rank()` function produces ranks for each element of the vector.
+- The `order()` function returns the corresponding indices in ascending/descending order for the elements.
+
+
+
+
+### Exercises
+
+Write R codes to solve the following problems.
+
+1. Create a numeric vector named `exe` with values `2, 0, -3, 0, 5, 6` and sort `exe` from the largest to the smallest.
+
+2. In `exe`, what's the ranks of `2` and the first `0`? 
+
+3. For `exe`, get indices for the elements in the ascending order.
+

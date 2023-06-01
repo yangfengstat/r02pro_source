@@ -1,0 +1,365 @@
+## Matrix {#matrix}
+
+Having mastered atomic vectors, which are an 1-dimensional objects containing elements of the same type, we now introduce another object type, called **matrix**, which is a rectangular array (2-dimensional) that contains elements of the **same type**, arranged in rows and columns.
+
+### Create a matrix from a vector
+
+One of most common ways to create a matrix from a vector is to use the function `matrix()`. In the `matrix()` function, the first argument is the data vector,  and the following arguments of `nrow` and `ncol` represent the desired numbers of rows and columns of the matrix.
+
+```{r, results = TRUE}
+matrix(data = 1:12, nrow = 3, ncol = 4)
+```
+
+Note that when we supply the arguments in the default order of an R function, we can omit the argument names. As a result, the following expression could be simplified and generate the same matrix.
+
+```{r, eval=FALSE}
+matrix(1:12, 3, 4)
+```
+
+Typically, the length of the supplied vector **equals** the number of rows multiplied by the number of columns. Otherwise, R will use the recycling rule we learned in Section \@ref(operation-recycling) on the vector to fill in the matrix. This recycling rule is particularly useful to create matrix consisting elements of the same value. 
+
+```{r, results = TRUE}
+matrix(6, 3, 3)
+```
+
+As mentioned before, some arguments of the function could be omitted for simpler expression and clean coding. In this case, you can just specify `nrow` or `ncol` if the value of the other one can be implied, and still get the exact same matrices as shown below. 
+
+```{r, eval=FALSE}
+matrix(1:12, nrow = 3)
+matrix(1:12, ncol = 4)
+```
+
+Looking at the resulting matrix, you may notice that the matrix is created by filling the columns sequentially with the elements from the input vector. That is, it first fills the first column, then the second column, and so on. If you want to fill rows instead, you can add the argument `byrow = TRUE`.
+
+```{r}
+matrix(1:12, nrow = 4, byrow = TRUE)
+```
+
+After defining a matrix, we can apply various functions on it.
+
+```{r, results=TRUE}
+x <- matrix(1:12, nrow = 4)
+dim(x)            #the dimension        
+nrow(x)           #the number of rows
+ncol(x)           #the number of columns
+t(x)              #the transpose
+```
+
+Now, let's check its class using `class()`, internal storage type using `typeof()`, structure using `str()`, and attributes using `attributes()`. 
+
+```{r, results = TRUE}
+class(x)
+typeof(x)
+str(x)
+attributes(x)
+```
+
+We can see that `x` is of `matrix` class, and the storage type is integer. The reason is that when creating consecutive integers using the `:` operator, R will interpret it as integers. `x` has one attribute named `dim` with value `4 3`. 
+
+
+::: {.infobox .caution data-latex="{caution}"}
+Attributes are very critical in determining the class as well as the structure of an R object. You can completely change the class and structure of an R object by specifying/changing its attributes.
+
+```{r, eval=FALSE}
+v <- rep(1:3, 2)
+class(v)
+str(v)
+attr(v, "dim") <- c(2, 3)
+v
+class(v)
+str(v)
+```
+
+In this example, you will convert a length-6 vector into a 2-by-3 matrix by setting the `"dim"` attributes. 
+:::
+
+
+To set the names of a matrix, you can use `rownames()` and `colnames()` to set the row names and column names, respectively.
+
+```{r, results = TRUE}
+rownames(x) <- c("a","b","c","d")     #row names
+colnames(x) <- c("x","y","z")         #column names
+```
+
+Interesting, you can use the same functions `rownames()` and `colnames()` to extract the row and column names. 
+
+```{r, eval=FALSE}
+rownames(x)
+colnames(x)
+```
+
+We can also convert a matrix to a vector, which will take the elements of the matrix column by column.
+
+```{r, results=TRUE}
+as.vector(x)      #convert matrix to a vector
+```
+
+In addition to numeric matrices, you can also create character matrices from a character vector.
+
+```{r, results = TRUE}
+char_mat <- matrix(letters[1:6], 2, 3)
+char_mat
+```
+
+Another way of creating matrix from a vector is to specify the desired dimensions (length-2 integer vector) to the `dim()` function. 
+
+```{r, results = TRUE}
+my_vec <- 1:6
+my_vec
+dim(my_vec) <- c(2, 3)
+my_vec
+```
+
+You can see here, `my_vec` becomes a matrix after we set its dimensions.
+
+### Combine vectors or matrices into a matrix {#combine-vectors}
+
+To combine two vectors into a matrix, you can use the `rbind()` or `cbind()` function to stack the vectors together by row or by column, respectively.
+
+```{r, results=TRUE}
+z <- 1:4
+w <- 5:8
+rbind(z,w)
+cbind(z,w)
+```
+
+In addition to combine two vectors, you can also use `rbind()` and `cbind()` to combine two matrices. 
+
+```{r, results=TRUE}
+m1 <- matrix(1:6, 2, 3)
+m2 <- matrix(5:10, 2, 3)
+rbind(m1, m2)
+cbind(m1, m2)
+```
+
+### Matrix subsetting {#matrix-subsetting}
+
+Like vector subsetting introduced in \@ref(vector-subsetting), we can do matrix subsetting as well. 
+
+***a. using indices to do matrix subsetting***
+
+The first method for matrix subsetting is to specify the desired row indices and column indices, separated by `,`. For example, we can extract the (1, 1) and (2, 3) element of `x` using the following codes. 
+
+```{r, results=TRUE}
+x[1, 1]      #the element on the first row and first column
+x[2, 3]      #the element on the second row and third column
+```
+
+To get a submatrix with multiple rows and columns, you just need to supply the row and column indices separated by `,`. 
+
+```{r}
+x[1:2, 2:3]   #the elements on the first & second row and second & third column
+```
+
+To keep all the rows or columns, you can leave the index location empty. 
+
+```{r}
+x[2, ]       #all elements on the second row
+x[, 3]       #all elements on the third column
+x[, c(2,3)]  #all elements on the second and third columns
+```
+
+As you can see from the first two results, if the result is only one-dimensional, R will drop the other index and return a vector instead of a matrix. If you need to keep the result as a matrix, you can add a `third` "dimension", `drop = FALSE` in the subsetting operation.
+
+```{r, results=TRUE}
+x[2, , drop = FALSE]
+x[, 3, drop = FALSE]
+```
+
+Similar to vectors, you can use **negative indices** to get all the rows or columns except the specified one(s). 
+
+```{r}
+x[-2, 3]       #all rows except the 2nd row, the 3rd column
+x[-1, -c(2,3)] #all rows except the 1st row, except the 2nd and the 3rd column
+```
+
+***b. using row and column names to do matrix subsetting***
+
+Just like vector subsetting for named vectors (Section \@ref(vector-subsetting)), we can extract a submatrix using the row and columns names. 
+
+```{r, eval=FALSE}
+x["a", "z"]
+x[c("a", "c"), c("x", "y")]
+x["b",]
+```
+
+***c. using logical vectors to do matrix subsetting***
+
+Similar to vector subsetting, you can also use logical vectors to do matrix subsetting. Note that different from vector subsetting, you can supply two logical vectors, one for rows and another for columns. Let's see some examples.
+
+```{r, eval=FALSE}
+x[c(T, F, T, F), c(F, T, T)]
+x[c(F, T, F, T), ]
+x[, c(T, F, F)]
+```
+
+In addition to using the logical values directly, you can also create a logical vector and use it on the fly to do matrix subsetting. Let's say we want to keep the rows with the value on the `y` column that are greater than 6. To do that, you can create a logical vector `x[, "y"] > 6`, then use it to subset the corresponding rows. 
+
+```{r, results=TRUE}
+x[, "y"] > 6       #logical vector for the rows such that the `y` column > 6
+x[x[, "y"] > 6, ]  #extract the corresponding rows
+```
+
+Similarly, if we want to keep the columns with the value on the `b` row less than 7. To do that, you can create a logical vector `x["b", ] < 7`, then use it to subset the corresponding columns. 
+```{r, results=TRUE}
+x["b", ] < 7       #logical vector for the columns such that the `b` row < 7
+x[, x["b", ] < 7]  #extract the corresponding columns
+```
+
+Of course, you can combine the two requirements, namely, keep the rows with the value on the `y` column greater than 6 and the columns with the value on the `b` row less than 7.
+```{r, eval=FALSE}
+x[x[, "y"] > 6, x["b", ] < 7] 
+```
+
+### Modify values in sub-matrices
+
+Just as modifying values on sub-vectors (Section \@ref(update-vector)), we can use the same technique for modifying values in sub-matrices. To avoid the changing the original matrix, we will modify the values on an copy of the original matrix.
+
+```{r, results=TRUE}
+x_copy <- x
+x_copy[1, 2] <- 10      #update the (1, 2) element
+x_copy
+x_copy[1:2, 3] <- c(20, 30)  #update the (1:2, 3) submatrix
+x_copy
+x_copy[, 2] <- 40     #update the 2nd column to 40
+x_copy
+x_copy[c(2, 4), c(1, 3)] <- 50
+x_copy
+```
+
+### Operators and functions on matrices
+
+Now, let's introduce some commonly used operators and functions on matrices. First of all, if you use arithmetic operators between two matrices, the specified operation will be performed elementwisely, similar to the operation between two vectors. 
+
+```{r, results=TRUE}
+m1 <- matrix(c(2, 1, 1, 2), 2, 2)
+m2 <- matrix(c(1, 2, 2, 1), 2, 2)
+m1 + m2
+m1 * m2
+m1 / m2
+```
+
+You can also apply operations between a matrix and a number (a vector of length 1), where the recycling rule introduced in Section \@ref(numeric-vector) will apply. 
+
+```{r, eval=FALSE}
+m1 * 2
+```
+
+To perform the actual matrix multiplication, you can use the operator `%*%` between two matrices. 
+
+```{r, results=TRUE}
+m1 %*% m2
+```
+
+We will next introduce some functions for creating special matrices. 
+
+To create a diagonal matrix, you can use the `diag()` function on a vector. 
+
+```{r, results=TRUE}
+diag(1:5)
+```
+
+The `diag()` function can also be used to extract the diagonal elements of a square matrix.
+
+```{r, results=TRUE}
+diag(m1)
+```
+
+For a squared matrix $A_{n\times n} = [A_{ij}]$, you can also calculate its determinant $det(A)$ using `det(A)`. If $A$ is invertible, you can compute its inverse matrix $A^{-1}$ using `solve(A)`. 
+
+```{r, results=TRUE}
+det(m1)
+solve(m1)
+m1 %*% solve(m1)   ##verify we are getting the inverse of m1
+```
+
+To apply a function on all elements of a matrix, you can directly use the function on the matrix object as if it is a vector. The result is equivalent to first convert the matrix into a vector using `as.vector()` and then apply the function on the vector. 
+
+```{r, results=TRUE}
+sum(x)
+mean(x)
+quantile(x, c(0.25, 0.5, 0.75))
+cumsum(x)
+```
+
+### Apply functions on each row or each column {#apply-matrix}
+
+In many applications, we may want to apply certain function on each row or column. To do this, you can use the `apply()` function, which takes three arguments by default. 
+- The first argument is the **matrix**.
+- The second argument is the **dimension(s)** to apply the function on.
+- The third argument is the **function** to be applied. 
+
+For example, if you want to calculate the mean and sum of each row for `x`, you can use 
+
+```{r, results=TRUE}
+apply(x, 1, mean)   #calculate the mean of each row
+rowMeans(x)         #calculate the mean of each row
+apply(x, 1, sum)    #calculate the sum of each row
+rowSums(x)          #calculate the sum of each row 
+```
+
+Here, `1` means the first dimension, i.e. the row. You can see that the mean for the row `a` is (1 + 5 + 9)/3 = 5, and the sum is 1 + 5 + 9 = 15. To get the mean and sum of each row, you can also use `rowMeans()` and `rowSums()`. To calculate the mean and sum of each column for `x`, you can use 
+
+```{r, results=TRUE}
+apply(x, 2, mean)   #calculate the mean of each column
+colMeans(x)
+apply(x, 2, sum)
+colSums(x)
+```
+
+Here, `2` means the second dimension, i.e. the column. You can see that the mean for the column `y` is (5 + 6 + 7 + 8)/4 = 6.5, and the sum is 5 + 6 + 7 + 8 = 26. 
+
+In addition to the mean and sum functions, you can use any function defined on a vector. Following are some other examples.
+
+```{r, results=TRUE}
+apply(x, 2, sd)     #calculate the standard deviation of each column
+apply(x, 1, max)    #calculate the max of each row
+```
+
+In addition to the default three arguments for the `apply()` function, you can add more arguments that will be passed when applying the specified function, i.e. the orginal third argeument. For example, to calculate the first quantile of each column, 
+
+```{r, results=TRUE}
+apply(x, 2, quantile, 0.25)
+```
+
+If the function you apply returns a vector with more than one elements, the `apply()` function will create a higher dimensional object. Let's see an example of calculate the cumulative sum of each row. 
+
+```{r, results=TRUE}
+apply(x, 1, cumsum) #calculate the cumulative sum of each row
+```
+
+The mechanism of the `cumsum()` function is applied on each row of `x` and the resulting vectors are combined into a matrix. The following reproduces the results using the `cbind()` function on the cumulative sum results. 
+
+```{r, eval=FALSE}
+cbind(cumsum(x[1,]), cumsum(x[2,]), cumsum(x[3,]), cumsum(x[4,]))
+```
+
+As another example, you can use the following code to calculate the (0.25, 0.5, 0.75) quantiles for each column of `x`.
+
+```{r, results=TRUE}
+apply(x, 2, quantile, c(0.25, 0.5, 0.75))
+```
+
+Finally, let's see an example of the `apply()` function on a character matrix. We want to combine the strings in each column of the matrix with separator `_`.
+
+```{r, results=TRUE}
+apply(char_mat, 2, paste, collapse = "_")
+```
+
+### Exercises
+
+1. Use R to create the following matrix 
+```{r, echo=FALSE, results=TRUE}
+matrix(1, 6, 6) + diag(rep(1,6))
+```
+
+For matrix `x <- matrix(1:16, 4, 4)`, compute the following questions using R.
+
+2. Compute the column means of `x`.
+
+3. Create a matrix that contains the 0.4 and 0.7 quantiles for each row of `x`.
+
+4. Compute the cumulative sum of each row of `x`. What type of object is the result? And explain the result of the first column.
+
+5. If `b <- 1:4`, solve `a` such that $Xa = b$. 
+

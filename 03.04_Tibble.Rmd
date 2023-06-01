@@ -1,0 +1,100 @@
+## Tibble {#tibble}
+
+Having learned data frames in Section \@ref(dataframe), we would like to introduce a modern version of data frame, named **tibbles**. Tibbles **are** data frames with modifications for easier coding. To use the tibble class, you need to install the **tibble** package, which is part of the **tidyverse** package. 
+
+```{r, eval=FALSE}
+install.packages("tibble")
+```
+
+
+### Introduction to tibbles
+
+After installing the **tibble** package, you can load the package and create a tibble using the `tibble()` function using all vectors as its argument, a process similar to how you create a data frame.
+```{r, results=TRUE}
+library(tibble)
+animal <- rep(c("sheep", "pig"), c(3,3))
+year <- rep(2019:2021, 2)
+healthy <- c(rep(TRUE, 5), FALSE)
+my_tibble <- tibble(animal, year, healthy)
+my_tibble
+```
+
+Another way to create a tibble is using the `as_tibble()` function on an already-created data frame.
+```{r}
+my_data_frame <- data.frame(animal, year, healthy)
+as_tibble(my_data_frame)
+```
+
+From the output, we can see that, under the columns' names, their types are also shown, which is very helpful. Another useful feature of tibble compare to data frame is that when you check its value, the output only shows at most the first 10 rows and the number of columns that can fit the output window, which avoids the console to be overcrowded. 
+```{r, results = TRUE}
+x <- 1:1e5
+tibble(id = x, value = sin(x))
+```
+
+Be prepared that your console output will be flooded with numbers before running the following code. 
+```{r, eval=FALSE}
+data.frame(id = x, value = sin(x)) 
+```
+
+Once we have a tibble, let's learn its class and structure.
+```{r, results=TRUE}
+class(my_tibble)
+str(my_tibble)
+```
+
+From the result, you can see that in addition to `"data.frame"`, the tibble also has classes of `"tbl_df"` and `"tbl"`, which contain many useful functions. We will be using tibbles extensively throughout the rest of book due to its advantages over the original data frames.
+
+For your convenience, we've summarized below the different variables types a tibble can include.
+
+```{r echo = FALSE, results = TRUE}
+Type  <- c("`<chr>`","`<int>`","`<dbl>`","`<ord>`", "`<fct>`","`<lgl>`","`<date>`","`<dttm>`")
+Section <- c("character vector","integer","double","ordered factor","unordered factor", "logical vector", "dates", "date-times")
+d <- data.frame(Type, Section)
+knitr::kable(d)
+```
+
+Since tibble belongs to data frame, all the functions we learned for data frames including adding observations or variables, and subsetting operations can be used in the exact same format. However, the `tibble` class offers additional functions which makes some tasks easier.
+
+### Adding Observations or Variables in Tibbles
+
+In a tibble, adding observations has an easier method than that in a data frame, via the `add_row()` function in the **tibble** package. 
+```{r, results = TRUE}
+add_row(my_tibble, animal = "pig", year = c(2017, 2018), healthy = TRUE)
+```
+
+From the results, we can see that multiple rows can be added at the same time by specifying the corresponding values for each variable name. Note the recycling rule applies for other variables with only one value specified. 
+
+To add an additional variable, in addition to using the `$` operator followed by a name as in data frames, you can also use the function `add_column()`. 
+
+```{r}
+add_column(my_tibble, 
+           weight = c(110, 120, 140, NA, 300, 800),
+           height = c(2.2, 2.4, 2.7, 2, 2.1, 2.3)
+           )
+```
+
+### Tibble subsetting and modifying
+
+While the tibble subsetting and modifying is very similar to those for data frame, we would like to point out a key difference. 
+
+First of all, when you use the `[` and  `]` to do tibble subsetting, it always returns a tibble by default, even if only one column is selected. This behavior is different from subsetting data frames using `[` and `]`. If you are particularly interested in selecting only one column and returning it as a vector, you need to add `drop = TRUE` in the subsetting process. You can also subset a single row and convert it into a vector by adding the same argument.
+```{r, results = TRUE}
+my_tibble[, 1]               #6*1 tibble
+my_data_frame[, 1]           #vector
+my_tibble[, 1, drop = TRUE]  #vector
+```
+
+
+### Exercises
+Consider the following tibble,
+```{r, results=TRUE}
+animal <- rep(c("sheep", "pig"), c(3,3))
+weight <- c(110, NA, 140, NA, 300, 800)
+condition <- c("excellent", "good", NA, "excellent", "good", "average")
+healthy <- c(rep(TRUE, 5), FALSE)
+my_tibble <- tibble(animal, weight, condition, healthy)
+my_data_frame <- data.frame(animal, weight, condition, healthy)
+my_tibble
+```
+1. Add the following observation to `my_tibble`: `animal = "pig"`, `weight = 900`, `condition = average`, and `healthy = FALSE`. 
+2. Without running in R, what do you think are the difference between `my_tibble[, 1]` and `my_data_frame[, 1]`? How can you reproduce ``my_data_frame[, 1]` by subsetting `my_tibble`? 

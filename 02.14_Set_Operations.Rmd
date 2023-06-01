@@ -1,0 +1,145 @@
+## Set Operations {#set-operations}
+
+### Set operations
+We've spent a couple sections introducing numeric, character, and logical vectors separately. In this section, we'll continue discussing set operations between two vectors of the **same type**. However, all set operators in this section are applicable to all three types off vectors. For later convenience, let's create some numeric, character, and logical vectors now.
+
+```{r}
+num1 <- c(1, 2, 1, 3, 1)
+num2 <- c(1, 1, 3, 4, 4, 5)
+
+char1 <- c("sheep", "monkey", "sheep", "chicken")
+char2 <- c("sheep", "pig", "pig")
+
+log1 <- c(T, F, F, T)
+log2 <- c(T, T, T)
+```
+
+
+***a. Intersection*** 
+
+When attempting to inspect values appeared in **both** vectors, you can use the `intersect()` function. Such values can be anything that can be put inside numeric vectors, character vectors, or logical vectors. 
+
+
+```{r}
+intersect(num1,num2)
+intersect(char1,char2)
+intersect(log1,log2)
+```
+
+Taking a closer look at the outputs, you will notice that the intersection procedure discards duplicate values in two vectors of the same type. In other words, only the **unique elements** are retained in the output. 
+
+
+***b. Union***           
+
+While `intersect()` gives values appeared in both vectors of interest, the `union()` function outputs all values that appear in at least one vector in the arguments.
+
+```{r, results=TRUE}
+union(num1, num2)
+union(char1,char2)
+union(log1,log2)
+```
+
+Again, only one copy of each value is retained in the output.
+
+
+***c. Set difference***               
+To get values that are only included in one of the two vectors of interest, you can use the `setdiff()` function. Now, it's important to keep in mind that, inside the function, the first argument will be the one you'd like to inspect its unique values. 
+
+Let's start with `num1` and `num2`, two numeric vectors we created at the beginning of this section. To get values that only appear in `num1` but not `num2`, `num1` will become the first argument and `num2` will be the second/last argument.
+
+```{r, results=TRUE}
+setdiff(num1, num2)
+```
+
+Then you will get the result of `2`! Reflecting on the output, you should realize that the `setdiff()` function only cares whether a value only appears, not if a value appears more or less frequently, in the specific vector of interest (in our case, `num1`). The rationale is that the `setdiff()` function will get unique elements in the arguments before setting the difference between them.
+
+Similarly, if you want to get values in `num2` but not in `num1`, `num2` should be in the first argument and `num1` is in the second. These rules also apply to character vectors and logical vectors.
+
+```{r, results=TRUE}
+setdiff(num2, num1)
+setdiff(char1, char2)
+setdiff(log2, log1)
+```
+
+***d. Set equality***                              
+To check whether two vectors are the same, you can use the `setequal()` function. Similar to the `setdiff()` function, the `setequal()` function works by looking at whether the two vectors have same set of unique values. 
+
+```{r, results=TRUE}
+setequal(num1, num2)
+setequal(char1, char2)
+setequal(log1, log2)
+```
+
+Of course you will get `FALSE` in each operation: `num1` has a unique value `2`, `char1` and `char1` each have their unique values, and `"F"` only appears in `log1`. However, you will get get `TRUE` in the following examples,
+
+```{r, results=TRUE}
+setequal(c(1, 1, 2), c(1, 2))
+setequal(c("apple", "apple", "peach"), c("apple", "peach"))
+setequal(c("T", "T", "F", "F"), c("T", "F"))
+```
+
+***e. Membership determination***
+
+Finally, to check whether each element of one vector is inside the other vector in the arguments, you can use the `is.element()` function or the `%in%` operator. They are identical to each other. The order of vectors is also important for membership determination.
+
+```{r, results=TRUE}
+is.element(num1, num2)
+char2 %in% char1
+log1 %in% log2
+```
+
+For `is.element()` and `%in%`, the output will be a logical vector and its length will be the same as the first argument. 
+
+In the first example above, the output is a logical vector of length-5, the same length as `num1`. The first element of `num1` is `1`, and `num2` also has elements with value 1, so the first element of the logical vector is `TRUE`. The second element of `num1` is `2`, but `num2` doesn't have any elements with value 2, hence the result is `FALSE`. You can verify the other elements by yourself.
+
+Even if the first value of `num2` is not `1`, as long as `1` appears somewhere in `num2`, the first element of the output would still be `TRUE`. In other words, `is.element()` and `%in%` don't take the values' indices into consideration.  
+
+### Applicance of the coercion rule
+
+At the beginning of this section, we've stressed that set operations are performed on two vectors of the **same type**. What about set operations on two vectors of different types? Are such operations achievable?
+
+The answer is Yes! Remember in Section \@ref(coercion-rule), you learned the **coercion rule**, which basically indicates that R will *unify* all elements into the **most complex type**. When you apply set operations on two vectors of different types, R will coerce the simpler vector to the more complex vector's type and subsequently perform set operations of the same type. Below is how R recognize each vector type's complexity, from the simplest to the most complex.
+$$\mbox{logical} < \mbox{numeric} < \mbox{character}$$
+Let's try some examples.
+
+```{r}
+x <- 1:6
+y <- c(T, T, F, T)
+intersect(x, y)
+union(x, y)
+setdiff(x, y)
+setequal(x, y)
+is.element(x, y)
+```
+
+In the example above, `x` and `y` are a numeric vector and a logical vector, respectively. When they become the arguments of set operations, the vector of the simpler type, `y`, is coerced to the more complex type, numeric type in this case. Specifically, `TRUE` is coerced to `1` and `FALSE` is coerced to `0`. This is why you get a value of `0` when performing `intersect()`, when `0` doesn't look like extant in either `x` or `y`. From there, set operations are basically performed on two numeric vectors.
+
+
+### Summary
+Please find a summary of the set operations between `x` and `y` in the following table. `x` and `y` are two vectors of the **same type**. If two vectors are of different vector types, the coercion rule will be applied as introduced above.
+
+```{r results = TRUE, echo=FALSE}
+Operation  <- c("Intersection", "Union", "Set Difference", "Set Equality", "Membership Determination")
+Code <- c("`intersect(x, y)`", "`union(x, y)`", "`setdiff(x, y)`", "`setequal(x, y)`", "`is.element(x, y)`")
+Argument_Order <- c("insensitive", "insensitive", "sensitive", "insensitive", "sensitive")
+d <- data.frame(Operation, Code, Argument_Order)
+knitr::kable(d)
+```
+
+
+### Exercises
+
+Consider the vector `s1 <- seq(from = 1, to = 100, length.out = 7)`.
+
+1. Compare `s1` to 50 to see whether the values of `s1` are bigger than 50, then assign the result to name s2. Compare `s1` to 80 to see whether the values of `s1` are less or equal to 80, then assign the result to name s3.
+
+2. Use two methods (logical operators and set operations) to find the subvector of `s1` with values bigger than 50 and less or equal to 80. 
+
+3. For `x <- 1:200`, use two methods (logical operators and set operations) to find the subvector of `x` that is divisible by 7, but not divisible by 2.
+
+
+
+
+
+
+

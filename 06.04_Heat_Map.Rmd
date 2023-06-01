@@ -1,0 +1,91 @@
+## Heat Map {#heat-map}
+
+A **heat map** is a data visualization technique that shows magnitude of a phenomenon in the two dimensional space. 
+
+First of all, we prepare a smaller data set from the `gm2004` data in the **r02pro** package, to better illustrate the mechanism of a heat map.
+
+```{r}
+library(r02pro)
+library(tidyverse)
+country_list <- c("Australia", 
+                  "China",
+                  "United States",
+                  "United Kingdom",
+                  "South Africa")
+sgm2004 <- gm2004 %>%
+  dplyr::filter(gender == "female", country %in% country_list) %>%
+  select(country, population, BMI, cholesterol, GDP_per_capita)
+```
+
+Note that during the data preparation process, we have used the `filter()` and `select()` functions, which filters observations and select variables from a tibble, respectively. They will be covered in detailed in the next Chapter. 
+
+
+### Using the `heatmap()` function
+
+We will first introduce the function `heatmap()`, which is available in base R. To use the function, you need to convert the object into a `matrix` using `as.matrix()` and specify the rownames of the object. 
+
+```{r}
+sgm2004_mat <- as.matrix(sgm2004[, -1])
+rownames(sgm2004_mat) <- country_list
+sgm2004_mat
+heatmap(sgm2004_mat)
+```
+
+The working of mechanism of a heatmap is that it creates a grid of colored gray-scale rectangles with colors corresponding to the values in the corresponding matrix. By default, the **rows** of the input matrix are scaled to have mean zero and standard deviation one. In our example, perhaps it is more meaningful to scale the **columns** as the represent different variables. We can achieve this by setting `scale = "column"`. 
+
+```{r}
+heatmap(sgm2004_mat, scale = "column")
+```
+
+In addition to generating the heat map, the `heatmap()` function, by default, also run a **clustering algorithm** on both the rows and columns, and visualize the results with **dendrograms**. To turn off the dendrograms, you can set arguments `Rowv = NA` and `Colv = NA` for the row and column dendrograms, respectively. 
+
+In addition, it is easy to customize the colors of the heatmap.
+
+```{r}
+rc <- rainbow(nrow(sgm2004_mat), start = 0, end = .3)
+cc <- rainbow(ncol(sgm2004_mat), start = 0, end = .3)
+heatmap(sgm2004_mat, 
+        col = cm.colors(256),
+        scale = "column",
+        RowSideColors = rc, 
+        ColSideColors = cc)
+```
+
+### Using `geom_tile()` in **ggplot2**
+
+In the **ggplot2** packages, there is no geom that directly generates a heatmap, however, we can use the `geom_tile()` on a transformed data format using `pivot_longer()`, which will be introduced in Chapter ??. 
+
+```{r}
+sgm2004_long <- sgm2004 %>%
+  pivot_longer(cols = 2:5, 
+               names_to = "Var")
+ggplot(sgm2004_long) +
+  geom_tile(mapping = aes(x = country, 
+                          y = Var,
+                          fill = value))
+```
+
+Here, since the variables are not in the same scale, the colors of the tiles are dominated by the `population` value. As before, we need to scale the variables to make them comparable. 
+```{r}
+sgm2004_long <- sgm2004_long %>% 
+  group_by(Var) %>%
+  mutate(std_value = scale(value)) %>%
+  ungroup()
+ggplot(sgm2004_long) +
+  geom_tile(mapping = aes(x = country, 
+                          y = Var,
+                          fill = std_value))
+```
+
+Now, the heatmap looks more informative that shows the relative magnitude across different countries for each variable considered. 
+
+Like in Section \@ref(aes-local-map), you can customize the range of the tile colors by specifying the `low` and `high` parameters in the `scale_fill_gradient()` function. 
+```{r}
+ggplot(sgm2004_long) +
+  geom_tile(mapping = aes(x = country, 
+                          y = Var,
+                          fill = std_value)) + 
+  scale_fill_gradient(low = "green", 
+                      high = "red")
+```
+

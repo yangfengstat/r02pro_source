@@ -1,0 +1,97 @@
+## Logical Vectors: Create with Repetitions and Summary Functions {#logical-patterns}
+
+Whenever you need to create repeated vectors that are of logical type, you can conveniently achieve such tasks through methods you learned in \@ref(patterned_numeric_vectors_creation) and \@ref(char-concatenate).
+
+### Create logical vectors with repetitions
+
+Let's start by recalling how we create numeric and character vectors with repetitions. The function we use is the `rep()` function, inside of which the first argument refers to elements to be repeated, and the second argument indicates the number of repetitions. 
+
+```{r}
+num1 <- rep(1, 3)
+cha1 <- rep("sheep", 2)
+```
+
+Remember that, the first argument can be 1) a number, 2) a character, 3) colon operator `:` (for numeric vectors), 4) a numeric vector with several values, and 5) a character vector with several values; the second argument can be 1) a number, 2) colon operator `:`, and 3) a numeric vector with several values. When only the first argument is a vector with several values, it is **repeated as a whole**, not elementwisely. When both arguments are vectors with several values, R will do an **element repeat** operation.
+
+```{r}
+num2 <- rep(c(1, 0), 3)
+num3 <- rep(1:3, 3:1)
+num4 <- rep(c(1, 0), c(2, 2))
+char2 <- rep(c("apple", "chocolate"), 2)
+char3 <- rep(c("apple", "chocolate"), 1:2)
+char4 <- rep(c("apple", "chocolate"), c(3, 3))
+```
+
+If you feel confident creating numeric and character vectors with repetitions, the ways of creating logical vectors with repetitions are basically at your fingertips:
+
+```{r eval=FALSE}
+logic <- rep(c(TRUE, FALSE, NA), c(3,2,1))
+logic
+```
+
+
+### Statistical Functions on Logical Vectors {#functions-logi}
+
+Before we end our study of logical vectors with logical operators in next section, we will take a look at how some previously introduced summary functions can be used on logical vectors.
+
+***Group A: summary statistics***
+
+What if we apply `summary()` on logical vectors?
+
+```{r}
+logic <- rep(c(T,F,T,NA), 4:1)
+summary(logic)
+```
+
+Similar to character vectors, you can get the vector type, which is `logical` here. You also get a frequency table for the times `FALSE`, `TRUE`, and missing values `NA` appear in the vector.
+
+***Group B: arithmetic operations***
+
+Different from character vectors, logical vectors can be used in ordinary arithmetic, meaning you can apply almost all the functions summarized in Table \@ref(tab:summaryFuns) to logical vectors. In such cases, the **coercion rule** introduced in Section \@ref(coercion-rule) will convert every `TRUE` to 1 and `FALSE` to 0. Let's take a look at an example,
+
+```{r}
+a <- c(TRUE, TRUE, FALSE, FALSE, TRUE)
+sum(a)
+mean(a)
+```
+
+Clearly, to proceed calculations, R considers `a` having three 1s and two 0s, given there are three `TRUE` and two `FALSE`. Therefore, sum(a)` equals 3 and `mean(a)` equals 0.6. You are welcome to try other functions on a logical vector. 
+
+However, as much as `TRUE` and `FLASE` will be coerced into specific numeric values, missing values `NA` won't be coerced to an assigned value. Therefore, ordinary arithmetic involving `NA` will return `NA` as well, meaning the result is **not available**.
+
+```{r}
+b <- c(TRUE, FALSE, TRUE, NA)
+sum(b)
+mean(b)
+```
+
+```{r}
+d <- c(1:5, NA)
+sum(d)
+e <- c(1:5, NaN)
+sum(e)
+f <- c(1:5, NA, NaN)
+is.na(d)
+is.nan(d)
+```
+
+
+
+### Exercises
+
+1. Write the R code to create logical vectors with the following results, then show the unique elements and their corresponding frequencies in each vector:
+
+a).`FALSE TRUE NA FALSE TRUE NA`
+b). `FALSE FALSE TRUE TRUE TRUE NA`
+
+
+2. Write two different R codes using `rep()` function to create a logical vector with values `TRUE FALSE TRUE FLASE`. The two codes should have at least one argument different from each other.
+
+
+
+
+
+
+
+
+

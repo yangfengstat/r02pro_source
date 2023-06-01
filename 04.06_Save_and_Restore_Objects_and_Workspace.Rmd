@@ -1,0 +1,124 @@
+## Save and Restore Objects and Workspace  {#save-object}
+
+Now, you know how to export and import data frames (or tibbles) to and from various types of files. In this section, you will learn how to save and restore one or more objects that can be **of any types**, and even the **whole workspace** that includes all the named objects. 
+
+To get started, let's first clear our workspace using `rm(list = ls())` and create a few objects with different types. 
+
+```{r, eval=TRUE, results = TRUE}
+rm(list = ls())
+dig_num <- 7:1
+ani_char <- c("sheep", "pig", "monkey", "pig", "monkey", NA, "pig")
+```
+
+Recall that we can use `ls()` to get a vector of strings giving the names of the objects in the current environment.
+```{r, results = TRUE}
+ls()
+```
+
+
+### Save and Restore Objects using .RData
+
+In R, you can use the function `save()` to save one or more objects into an .RData file. Note that you want to make sure to change the working directory as needed. Let's see the following example where we save the object `dig_num` into a file named "dig_num.RData".
+
+```{r, eval=FALSE}
+save(dig_num, file = "data/dig_num.RData")
+```
+
+Before introducing how to restore objects, let's first remove `dig_num` from our workspace using the `rm()` function and check its value.
+
+```{r, error = TRUE}
+rm(dig_num)
+dig_num
+```
+
+You can see an error since `dig_num` has been removed from the workspace. To restore it, you can use the function `load()` with the corresponding .RData file in double quotes as its argument. 
+
+```{r, results=TRUE}
+load("data/dig_num.RData")
+dig_num
+```
+
+You can verify from the value of `dig_num` that we have successfully restored the object `dig_num` from the file "dig_num.RData". 
+
+To save more than one objects into a single file, you just need to enter them as additional arguments in the `save()` function.
+
+```{r, eval=FALSE}
+save(dig_num, ani_char, file = "data/dig_num_and_ani_char.RData")
+```
+
+To save everything in the workspace, you can use the function `save.image()` with the desired file name in double quotes as the argument. 
+
+```{r, eval=FALSE}
+save.image("data/all.RData")
+```
+
+To verify that "all.RData" indeed contains all the named object, let's do the following. 
+
+```{r, results = TRUE}
+rm(list = ls())        #remove everything from the workspace.
+ls()                   #confirm the workspace is empty.
+load("data/all.RData") #restore from "all.RData".
+ls()                   #check what's in the workspace.
+```
+
+
+
+### Save and Restore a Single Object using `saveRDS()` and `loadRDS()`
+
+Before introducing the new method, there is one drawback of `load()` worth noting: if the imported .RData file contains objects with the same names as in the current workspace, **all** these objects in the current workspace will be **silently overwritten** without any warning! Let's see the following example. 
+
+```{r, results = TRUE}
+dig_num <- 3.14
+dig_num
+load("data/all.RData")
+dig_num
+```
+
+We can see that the value of  `dig_num` was indeed silently *overwritten* by the `load()` function, which could be sometimes dangerous. 
+
+To avoid this issue, another pair of functions to save and restore a single object is `saveRDS()` and `loadRDS()`. The usage of `saveRDS()` is almost identical to `save()` except we usually use a file with extension ".rds" to store the object. 
+
+```{r, eval=FALSE}
+saveRDS(dig_num, file = "data/dig_num.rds")
+```
+
+To highlight the different behaviors of `readRDS()` and `load()`, let's change the `dig_num` again. 
+
+```{r, results = TRUE}
+dig_num <- 666
+dig_num
+```
+
+To restore the object in an "rds" file, we use the `readRDS()` in the following way.
+
+```{r, results = TRUE}
+dig_num_new <- readRDS("data/dig_num.rds")
+dig_num_new
+dig_num
+```
+
+As it is clear from this example, you need to assign the output of the `readRDS()` function to a name, which helps to prevent any objects been overwritten silently. In fact, the `saveRDS()` only saves the value of the object **without the object name**. 
+
+For this reason, you are recommended to use the function pair `saveRDS()` and `readRDS()` if you want to save and load a single R object. 
+
+While `save()` and `load()` may be simpler to use when saving and loading multiple objects, you want to be extremely careful with the overwriting issues we discussed here. In fact, you can also use `saveRDS()` and `readRDS()` for multiple objects if you create a list containing all the objects. 
+
+```{r, eval = FALSE}
+saveRDS(list(dig_num = dig_num, ani_char = ani_char), file = "data/multi.rds")
+```
+
+Now, let's try to change the value of `dig_num`, and recover its original value using `readRDS()`.
+
+```{r, results=TRUE}
+dig_num <- 999
+dig_num
+my_list <- readRDS("data/multi.rds")
+my_list$dig_num
+```
+
+
+### Exercises
+
+1. Define a vector `my_vec <- 1:8` and a list `my_list <- list(my_num = 5:10, my_char = letters[1:5])`. Save `my_vec` and `my_list` to a single .RData file named "my_vec_list.RData". Then clear the workspace, restore these two objects from the .RData file, and verify their values.
+2. Save both `my_vec` and `my_list` in Q1 to a single .rds file named "my_vec_list.rds". Then clear the workspace, restore these two objects from the .rds file, and verify their values.
+

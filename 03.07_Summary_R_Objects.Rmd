@@ -1,0 +1,30 @@
+## Summary of R Objects {#summary-r-objects}
+
+Throughout last chapter and this one, we have covered all types of R objects including vectors, matrices, arrays, data frames (tibbles), and lists. In this section, we would like to summarize what we have covered and highlight the differences of the different types of objects in terms of their **dimensions** and the **data types** they can contain. 
+
+```{r echo = FALSE, results = TRUE}
+library(tibble)
+Type  <- c("Vector","Matrix","Array","Data Frame/Tibble", "List")
+Section <- c("\\@ref(r-objects)","\\@ref(matrix)","\\@ref(array)","\\@ref(dataframe) - \\@ref(tibble)","\\@ref(list)")
+Dim <- c(1, 2, ">=3", 2, 1)
+data_type <- c("Single", "Single","Single", "Multiple", "Multiple")
+d <- tibble(Type, Section, Dim, `Data Type` = data_type )
+knitr::kable(d)
+```
+
+### Exercises
+
+Suppose there are 3 lions, 5 tigers, 7 birds, and 2 monkeys in the zoo.
+
+1. Write R code to create a **named** numeric vector `zoo1` to represent this information. What's the storage type of `zoo1`?
+2. If we create a vector `zoo2 <- c(3, "lions", "5", "tigers")`,  what is its storage type? Why?
+3. Write R code to create a data frame `zoo3` where `3 5 7 2` are in one column and the corresponding animal names are in another column. Then give names to each column according to the class of the corresponding vector (if two columns are of the same type, then you can add different numbers after the variable type, e.g. numeric1, numeric2). 
+4. Write R code to get the number of birds from `zoo3`.
+5. Write R code to extract rows of `zoo3` corresponding to lions and tigers.
+6. If the zoo also has 6 pandas, write R code to add a row to `zoo3` to represent this information.
+7. By now, find out the total number of animals in total are in the zoo? (`+` is not permitted)
+8. The zoo manager wants to put some parrots to the zoo, but he doesn't yet know the exact number, how can you add a row to represent this? 
+9. The zoo manager finds that a tiger ran away, please update the data frame `zoo3`.
+10. Can you use the two columns in `zoo3` to create a matrix `zoo4`? If you can, what type of matrix it will be? How many columns and rows are there in the matrix?
+11. Please write R code to create a list `zoo5` where the first element is `3 5 7 2`, the second element contains the corresponding animal names, and the third element being `zoo3`. During the creation process, assign names to each element according to its class (choose from vector, matrix, array, data frame, list. If two elements are of the same type, then please add different numbers after the element type, e.g. array1, array2) 
+12. If the zoo manager wants to extract an element named "array" from `zoo5`, what will he get?

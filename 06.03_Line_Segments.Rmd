@@ -1,0 +1,100 @@
+## Line Segments {#add-auxiliary}
+
+It is sometimes helpful to add line segments as auxiliary lines to existing plots to provide additional information. 
+
+### Using `abline()` with `plot()`
+
+Let's first review the scatterplot between `liv_area` and `sale_price`. 
+
+```{r, warning=FALSE, fig.show='hide'}
+library(r02pro)
+plot(sahp$liv_area, sahp$sale_price)
+```
+
+In this plot, you may want to add some auxiliary lines. You can use the function `abline()` after a call of `plot()` to do this. To add a vertical line, you can set the parameter `v`; to add a horizontal line, you can set the parameter `h`.
+
+```{r}
+plot(sahp$liv_area, sahp$sale_price)
+abline(v = 2000, col = "purple")       ##Add a vertical line at liv_area = 2000
+```
+
+
+```{r}
+plot(sahp$liv_area, sahp$sale_price)
+abline(h = 300, col = "blue")         ##Add a horizontal line at sale_price = 2000
+```
+
+Note that the `v` and `h` arguments can also be vectors with more than one values, which will lead to multiple vertical or horizontal lines.  The corresponding argument `col` can also be a vector with multiple values. 
+```{r}
+plot(sahp$liv_area, sahp$sale_price)
+abline(h = c(100, 200, 300), 
+       col = c("red","blue","green"))         ##Add multiple horizontal lines
+```
+
+
+In addition to adding vertical lines and horizontal lines, you can also add any line with the `abline()` function. We know a line can be represented as a function $y = a + b\times x$, where $a$ is the intercept and $b$ is the slope. In the `abline()`, you can generate such a line by specifying the parameter `a` for the intercept and `b` for the slope. Note that you can run  `abline()` multiple times to add multiple lines.
+
+```{r}
+plot(sahp$liv_area, sahp$sale_price)
+abline(h = 300, col = "blue")   
+abline(a = 100, b = 0.1, col = "green") 
+```
+
+### Using `geom_hline()`, `geom_vline()` and `geom_abline()`
+
+Let's first review the following scatterplot between `liv_area` and `sale_price`. 
+
+```{r, warning=FALSE}
+library(r02pro)
+library(tidyverse)
+ggplot(data = sahp) + 
+  geom_point(mapping = aes(x = liv_area, y = sale_price))
+```
+
+Looking at the scatterplot, it maybe helpful to add a horizontal line. To do this, you can use the `geom_hline()` function with argument `yintercept` specifying the value on the y-axis. 
+
+```{r, warning=FALSE}
+ggplot(data = sahp) + 
+  geom_point(mapping = aes(x = liv_area, y = sale_price)) + 
+  geom_hline(yintercept = 300, color = "red")
+```
+
+Here, a horizontal line at 300 is added to the scatterplot. 
+
+You can also add both vertical lines and horizontal lines to the same plot. 
+
+```{r, warning=FALSE}
+ggplot(data = sahp) + 
+  geom_point(mapping = aes(x = liv_area, y = sale_price)) + 
+  geom_vline(xintercept = 2000, color = "green") + 
+  geom_hline(yintercept = 300, color = "red")
+```
+
+In addition to adding vertical lines and horizontal lines, you can also add any line with the `geom_abline()` function. We know a line can be represented as a function $y = a + b\times x$, where $a$ is the intercept and $b$ is the slope. In the `geom_abline()`, you can generate such a line by specifying the `slope` and `intercept` arguments. 
+
+```{r, warning=FALSE}
+ggplot(data = sahp) + 
+  geom_point(mapping = aes(x = liv_area, y = sale_price)) + 
+  geom_abline(slope = 0.1, intercept = 100, color = "blue")
+```
+
+Similar to smoothline fit and line plots, you can change line type here. Different numbers correspond to different line types.
+
+```{r}
+ggplot(data = sahp) + 
+  geom_point(mapping = aes(x = liv_area, y = sale_price)) + 
+  geom_abline(slope = 0.1, intercept = 100, linetype = 3) 
+```
+
+### Exercises
+
+
+1. Using the `sahp` data, using `plot()` to generate a scatterplot between `lot_area` (x-axis) and `sale_price` (y-axis), and add horizontal lines at 150 with color "blue" and 200 with color "red".
+2. Using the `sahp` data, using `ggplot()` to generate a scatterplot between `sale_price` (x-axis) and `liv_area` (y-axis), and add the following lines to the plot: 
+- $y = 5\times x + 1000$ (in green color, dashed line)
+- $y = 3\times x + 1500$ (in purple color, solid line)
+
+
+
+
+

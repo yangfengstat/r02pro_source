@@ -1,0 +1,225 @@
+## List {#list}
+
+In the last two sections, we have learned data frames and tibbles whose columns can contain variables of different types. However, they are still of rectangular format, where all variables have the same number of observations. Now, let's learn the most complex object type in R, namely, the **list**, which contains a sequence of variables with possibly different number of observations (elements) and even with different types.
+
+### Create a list
+
+To create a list, you can use the `list()` function with the elements separated by comma. 
+
+```{r, results=TRUE}
+dig_num <- 1:6
+ani_char <- c("sheep", "pig", "monkey", "pig", "monkey", "pig")
+x_mat <- matrix(1:12, nrow = 3, ncol = 4)
+conditions <- c("Excellent", "Good", "Average", "Fair", "Good", "Excellent")
+cond_fac <- factor(conditions, ordered = TRUE, levels = c("Fair", "Average", "Good", "Excellent"))
+my_list <- list(dig_num, ani_char, x_mat, cond_fac)
+my_list
+```
+
+Here, we created a list named `my_list`, which contains four elements of different types. From the output, at the beginning of each element, its index is represented by the surrounding `[[` and `]]`. Usually, you want to assign a name for each element and the elements can be accessed by their names later on. 
+
+```{r, results = TRUE}
+my_list <- list(number = dig_num, character = ani_char, matrix = x_mat, factor = cond_fac)
+my_list
+```
+
+After the elements are named, the output shows the `$` followed by the name before each element. Let's examine the class, structure, and internal storage type of `my_list`. 
+
+```{r, results = TRUE}
+class(my_list)
+str(my_list)
+typeof(my_list)
+```
+
+From this example, it is clear that lists are more general than all the object types we have learned. It can contain vectors, matrices, arrays, data frames/tibbles, and even lists. 
+
+
+::: {.infobox .caution data-latex="{caution}"}
+In R, data frames are actually stored as lists. Indeed, they are special lists where each element is a vector (could be of different types) and each element is of the same length. Let's create a data frame and look at its `typeof()`.
+```{r}
+df_ex <- data.frame(dig_num, ani_char)
+typeof(df_ex)
+length(df_ex)
+```
+For this reason, data frame and matrix are treated completely differently in R. Most functions on lists can be used directly on data frames. 
+::: 
+
+Sometimes, you may want to create a list skeleton and fill in the values at a later time. In this case, you can use the `vector(mode, length)` function.
+
+```{r}
+vector("list", length = 3)
+```
+
+Note that the default value is `NULL`, which will be explained in detail in the next Section.
+
+### Extract a list element and list subsetting
+
+***a. Extract a list element*** 
+
+To extract a single element from a list, you can use the `$` followed by the element name if the element is named, or use the index surrounded by `[[` and `]]`. After the elements are extracted, you can directly apply desired functions on them without the need to assign the values to another name. 
+
+```{r, results=TRUE}
+my_list$number          #a vector
+#my_list[[1]]           #the first element
+#my_list$matrix          #a matrix
+my_list[[3]]           #the third element
+mean(my_list$number)
+rowMeans(my_list$matrix)
+```
+
+If you want to do list subsetting by extracting multiple elements, you can follow similar methods as subsetting a vector introduced in Section \@ref(vector-subsetting). 
+
+***b. Use indices to do list subsetting***
+
+The first method is to use indices to do list subsetting. To get a sublist of the 3rd element of the original list `my_list`, you can use `my_list[3]` as below.
+
+```{r, results = TRUE}
+my_list[3]      #the third element of my_list
+```
+
+It is worth to do a comparison between the results of `my_list[[3]]` and `my_list[3]`. The former is the third element of `my_list` which is a matrix, while the latter is a list containing a single matrix element. Let's confirm this by looking at their structures.
+
+```{r, results = TRUE}
+str(my_list[[3]])
+str(my_list[3])
+```
+
+Of course, you can create a sublist containing multiple element, just like when creating subvectors using indices. 
+
+```{r}
+my_list[c(1,3)] #the first and third elements of my_list
+#my_list[-3]     #all elements except the third one
+```
+
+***c. Use names to do list subsetting***
+
+When the list elements are named, you can also use names around `[` and `]` to do list subsetting. You can also use a character vector containing the element names. 
+
+```{r, results = TRUE}
+my_list['number']
+my_list[c('number', 'matrix')]
+```
+
+### List inside a list
+
+One interesting aspect of the list type is that you can have lists inside a list. 
+
+```{r, results = TRUE}
+my_big_list <- list(small_list = my_list,  number = dig_num)
+my_big_list
+```
+
+If you want to extract `ani_char` from `my_list`, you need to use two layers of extraction operations. 
+
+```{r, results=TRUE}
+my_big_list$small_list$ani_char
+my_big_list[[1]][[2]]
+```
+
+You can further put the `my_big_list` in another list. 
+
+```{r}
+my_big_big_list <- list(big_list = my_big_list,  character = ani_char)
+my_big_big_list
+```
+
+To extract `dig_num` from `my_big_big_list`, you now need three layers of extraction operations.
+
+```{r, results=TRUE}
+my_big_big_list$big_list$small_list[[1]]
+my_big_big_list[[1]][[1]][[1]]
+#my_big_big_list[[1]]$small_list[[1]] #mix the two ways for value extraction
+```
+
+### Unlist a list
+
+Sometime, you may want to **unlist** a list into a vector. 
+
+```{r, results=TRUE}
+unlist(my_list)
+c(my_list[[1]], my_list[[2]], my_list[[3]], my_list[[4]]) #reproduce the result
+```
+
+As you can tell from the result, the `unlist()` function works in the following steps.
+
+1. It visits each element of the list sequentially according to the indices, one at a time. Each element will be converted into a vector using the `as.vector()` function. 
+2. Then converted vectors of each element will be combined into a longer vector using the `c()` function. During the `c()` operation, coercion rules will apply.
+3. The named of the final vector will the name of each element followed by the index of the corresponding value inside each list element. 
+
+Here, `my_list` doesn't contain an element that is also a list. When a list contains another list as one of its elements, the `unlist()` function will also apply the unlist operation on the element by default. In fact, the unlist operation will be applied recursively until none of the elements is a list. Please try to run the following example.
+
+```{r, eval=FALSE}
+unlist(my_big_big_list)
+```
+
+If you just want to unlist a list at the first level, you can add the argument `recursive = FALSE` to the `unlist()` function. Note that the result will still be a list if the original list contains a list. You can check the result of the following code.
+
+```{r, eval=FALSE}
+unlist(my_big_big_list, recursive = FALSE)
+```
+
+### Apply functions for each element of a list
+
+It is often useful to apply function on each element of a list. To do that, you can use the `lapply()` function (short for list apply). Let's look at an example where we want to get the `length` of each element of `my_list`. 
+
+```{r, results=TRUE}
+lapply(my_list, length)
+```
+
+You can see that the default output of `lapply()` is another list which is the result of the function applied on each element of the list. In this application, it might to better to use a vector to represent the result. To smplify this process, you can use the `sapply()` function, which is a user-friendly version and wrapper of `lapply()` which will return a vector or a matrix when appropriate. 
+
+```{r, results=TRUE}
+sapply(my_list, length)
+```
+
+Let's look at another example where we want to compute the quantiles of each element of a list.
+
+```{r, results = TRUE}
+my_num_list <- list(a = 1:20, b = rep(c(TRUE, FALSE), c(6,3)))
+sapply(my_num_list, quantile)
+```
+
+### List Matrix
+In Section \@ref(matrix), we know that matrices are 2-dimensional objects containing elements of the same type. A natural extension of matrix to the case where different elements can be of different types is called **list matrix**.  
+
+Let's create a list matrix from `my_list`. Since `my_list` has 4 elements, you can use the `matrix()` function to create a $2\times 2$ matrix of elements. 
+
+```{r, results = TRUE}
+my_list_mat <- matrix(my_list, 2, 2)
+my_list_mat
+```
+
+To extract the elements from a list matrix, you can use the pair of `[[` and `]]` with the indices inside. Similar to the list subsetting, using the pair of `[` and `]` will result in a list of length 1.
+
+```{r, results=TRUE}
+my_list_mat[[1, 2]]
+my_list_mat[1, 2]
+```
+
+Similar to combining vectors into matrices in Section \@ref(#combine-vectors), you can also combine lists into list matrix using the `rbind()` or `cbind()` functions.
+
+```{r, results = TRUE}
+l1 <- list(num = 1:4, mat = matrix(1:6, 2, 3))
+l2 <- list(char = letters[1:5], my_list = list(num = 9:1, char = LETTERS[1:7]))
+list_mat_r <- rbind(l1,l2)
+list_mat_c <- cbind(l1,l2)
+str(list_mat_r)
+typeof(list_mat_r)
+```
+
+You can see from the result that `list_mat_r` is still stored as a list, but with the `"dim"` attributes. This relationship is very similar to that between a vector and its converted matrix. 
+
+### Exercises
+Consider the following list,
+```{r, results=TRUE}
+dig_num <- 1:6
+ani_char <- c("sheep", "pig", "monkey", "pig", "monkey")
+x_mat <- matrix(1:12, nrow = 3, ncol = 4)
+my_list <- list(num = dig_num, char = ani_char, mat = x_mat)
+my_list
+```
+
+1. What's the difference between `my_list[2]` and `my_list[3]`? 
+2. What's the difference between `my_list[2:3]` and `my_list[[2:3]]`? 
+3. Using the `sapply` function to get the length of each element in `my_list`.
+4. Multiple the 3rd row of `mat` in `my_list` by 10. Then, check the new value of `my_list`.  

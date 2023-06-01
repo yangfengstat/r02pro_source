@@ -1,0 +1,111 @@
+## Exporting to and Importing from Excel Files  {#import-excel}
+
+Now, you know how to export to and import from *delimited* files. In this section, you will learn how to export to and import from Excel files with extensions .xls and .xlxs. 
+
+### Export data into Excel files
+
+To export data into an Excel file, you can use the **writexl** package. Let's first install the package.
+
+```{r, eval=FALSE}
+install.packages("writexl")
+```
+
+Now, we can load the **writexl** package and use the `write_xlsx()` function to write data into an Excel file with extension .xlsx. Let's first load the data from "gm_small.csv" and write it to "gm_small.xlsx". 
+
+```{r, eval = FALSE}
+library(writexl)
+library(readr)
+gm_small <- read_csv("data/gm_small.csv")
+write_xlsx(gm_small, "data/gm_small.xlsx")
+```
+
+By default, the column names of the data frame/tibble will be written to the first row of the Excel file. To skip the column names, you can set `col_names = FALSE` in the `write_xlsx()` function.
+
+In addition to writing a single data frame to an Excel file, `write_xlsx()` can also write **multiple data frames** into a single Excel file, with each Excel sheet containing one data frame. To do that, you need to supply a list of data frames as the first argument in `write_xlsx()`.  Let's take a look at the following example which write both `gm_small` and `sahp` (a tibble in the **r02pro** package introduced in Section \@ref(sahp)) into an Excel file named "two_data.xlsx".
+
+```{r, eval=FALSE}
+library(r02pro)
+two_data <- list(gapminder = gm_small, sahp = sahp)
+write_xlsx(two_data, "data/two_data.xlsx")
+```
+
+You can open this file with Excel and verify its contents.
+
+### Import Excel Files (.xls and .xlsx ) using `read_excel()`
+
+After learning how to export data into an Excel file, let's see how to read an existing Excel file into R. We can use the `read_excel()` function in the `readxl` package to import Excel files. Here, `readxl` is another subpackage in the **tidyverse** package. Thus we can directly load the package if the **tidyverse** package is already installed. 
+
+Let's import the Excel file "two_data.xlsx" we just created into R. 
+
+```{r, results=TRUE}
+library(readxl)
+my_df <- read_excel("data/two_data.xlsx")
+head(my_df)
+```
+
+We can see from the result that although the file contains two sheets, the function will import the first sheet by default. To import the second sheet, you can set the `sheet` argument to the sheet name (`sahp`) or the position of the sheet (2). 
+
+```{r, eval=TRUE, results=TRUE}
+sahp_1 <- read_excel("two_data.xlsx", sheet = "sahp")
+#sahp_1 <- read_excel("two_data.xlsx", sheet = 2)     #same result as the previous line
+head(sahp_1)
+```
+
+If we only want to import a portion of the data, say the first 5 rows and the first 4 columns, then we can set the argument `range = "A1:D5"`, just like the range in an excel file. Note that the index starts with the first row, which may correspond to the column names.
+
+```{r, eval=TRUE, results=TRUE}
+sahp_2 <- read_excel("two_data.xlsx", sheet = "sahp", range = "A1:D5")
+sahp_2
+```
+
+Note that `read_excel()` can read both .xls and xlsx file types. 
+
+### Import Excel file using the menu
+
+Besides using `read_excel()` to import Excel files, you can again use the interactive menu we introduced in Section \@ref(import-data).
+
+As introduced in Table \@ref(tab:importMenu), to import Excel files, you can select *From Excel* after choosing the **Import Dataset** option. As before, you can click **Browse...** and select the data file. Let's select the "two_data.xlsx" file we just created. 
+
+Similar to importing the delimited files, we can see the first several rows in the **Data Preview** window. The first row shows the column names and their associate types in parentheses. For each column, you can click the dropdown menu after the type to change its type. Now, let's discuss several options in the **Import Options** section and their corresponding arguments in the `read_excel()` function. 
+
+```{r importExcelOptions, echo = FALSE, results = TRUE}
+Option  <- c("Name","Sheet", "Range", "Max Rows", "Skip","NA", "First Row as Names", "Code Preview")
+Argument <- c("-", "`sheet`","`range`","`n_max`","`skip`", "`na`", "`col_names`", "-")
+Meaning <- c("The object name you would like to assign to.", "The Sheet you want to import from.", "The data range you want to import.", "The maximum number of rows to import.", "The number of rows to skip at the beginning of the file.", "The way NA is represented in the data file.", "Whether you want to use the first row as column names. `TRUE` or `FALSE`.", "The R code to be executed for importing the data")
+d <- data.frame(Option, Argument, Meaning)
+knitr::kable(d, caption = "Menu Options and its Corresponding Arguments in `read_excel()` and Meanings")
+```
+
+Note that similar as importing delimited files, when you change these options, the code in the *Code Preview* window will change accordingly, which is a great way to learn on how they work.
+
+### Exercises
+
+Use R to create the following data frame and assign it to the name `df1`.
+
+```{r, echo=FALSE, results=TRUE}
+c1 <- c("one", "two", NA)
+num1 <- c(1,NA,3)
+df1 <- data.frame(word1 = c1, number1 = num1)
+df1
+```
+
+Then, use R to create the following data frame and assign it to the name `df2`.
+
+```{r, echo=FALSE, results=TRUE}
+c2 <- c("three", NA, "five")
+num2 <- c(3,4,5)
+df2 <- data.frame(word2 = c2, number2 = num2)
+df2
+```
+
+Then create a list named `my_list` with `df1` as the first element and `df2` as the second element.
+
+1. Write R code to set working directory to the desktop, then export `my_list` into an excel file named `list.xlsx`. How many sheets are there in the excel file? What's in each sheet? 
+
+2. Write R code to import the first two rows and the first column of the second sheet from the excel file you just created. And verify the object value.
+
+
+
+
+
+

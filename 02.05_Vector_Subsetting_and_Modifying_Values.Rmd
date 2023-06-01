@@ -1,0 +1,277 @@
+## Vector Subsetting and Modifying Values {#subsetting-and-modify-values}
+
+So far, we've learned fundamental knowledge of \@ref(intro-num-vector), \@ref(intro-char-vector), and \@ref(intro-logi-vector). In this section, we'll start with how to create named vectors. Heads up, the process of creating a named vector is different from object assignment, and you'll see the difference immediately.
+
+### Named Vectors
+
+Remember in Section \@ref(Object-Assignment), we learned to give a name to an object by using the **assignment operator** `<-`. Depending on what name you assign to an object, it may provide a broad but unspecified explanation of the element(s) the object contains. When necessary, we need a way to label each element of an object to have a concrete idea on what each element refers to. To do so, We can turn an vector into an **named vector**, and there are two ways to complete this task. 
+
+***a. Using the equal sign whilst creating the vector***
+
+If you have an object with a short length, you can consider using the form `name = value` inside the `c()` to create a named vector in one step.
+
+```{r}
+x_w_name <- c(height = 165, weight = 60, BMI = 22)
+x_w_name
+```
+
+In this example, we can see that the output includes a label for every arbitrary numeric value so that we know what these numbers mean in real life. For a named vector, you can also access its elements via the names, and update the values via the assignment operator.
+
+```{r}
+x_w_name["height"]
+x_w_name["weight"] <- x_w_name["weight"] + 10
+x_w_name
+```
+
+
+***b. Using the Names Function `names()` afterwards***
+
+While the equal sign method is straightforward, it is less effective when the object contains a few elements. In such cases, we can apply the Function `names()` after the vector is created. For example, if we want to represent whether it snows on each day using a logical vector during a ten-day time period.
+
+```{r}
+y <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, TRUE)
+y
+names(y) <- c("Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5", "Jan 6", "Jan 7", "Jan 8", "Jan 9", "Jan 10")
+y
+```
+
+Again, the output after applying `names()` provides more information than before. You can also access element(s) and update their values via their names as we introduced just now. Reflectively, we can create an named vector whenever we want the vector itself to include more information, and the specific way to do that is really contingent upon our preferences and what we are given in each case. 
+
+Now, it's important to be aware that the value for an element's name need to be a character vector. Actually, an element's name is also a type of attributes of R Objects. We will introduce other types of attributes as we encounter them. The name attribute provides additional information regarding the meaning of each element, and enables us to extract values using the names.
+
+```{r}
+attributes(x_w_name)
+str(x_w_name)
+
+x_wo_name <- c(165, 60, 22)
+str(x_wo_name)
+
+```
+
+You can see that `x_w_name` is a named numeric vector, with the names attribute. In contrast, str() function tells us `x_wo_name` is a plain numeric vector with no attributes. To directly extract certain attributes of an R object, you can use the attr() function on it with the second argument being the specific attribute you wish to extract.
+
+```{r}
+attr(x_w_name, "names")
+```
+
+
+### Vector subsetting
+
+Now, let's delve into this section's main focus: vector subsetting. At some point of your analysis of a vector with more than 1 element, you may want to extract particular elements to constitute a new vector. In R, the new vector is considered as a **subvector** of the original vector. This process is called **vector subsetting**, and the subvector will be of the **same type** as the original one. 
+
+In this part, we will introduce two common ways to do vector subsetting in R. Before we get started, let's create a vector which will be used throughout this part. 
+
+```{r}
+h <- c(3,1,4,2,90)
+```
+
+
+***a. Use logical vectors to do vector subsetting***
+
+Firstly, let's see how we can apply logical vectors to do vector subsettings. Following the original vector's name, a pair of square brackets `[ ]` is used to include a logical vector of the **same length** as the original vector. Here is an example,
+
+```{r results=TRUE}
+h[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
+```
+
+From the result, you can see that the values from `h` with the same positions of `TRUE`s are extracted. Since `3`, `4` and `90` are parts of the values of `h`, the vector composed of `3 4 90` is a subvector of `h`. When assigning these three values to a name, you will get a named subvector `sub1`. While `sub1` is developed from `h`, they are now stored as two different vectors.
+
+```{r results=TRUE}
+sub1 <- h[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
+sub1
+```
+
+In addition to writing the logical vector in an explicit form, you can also use a named logical vector or an expression whose result is a logical vector. Let's say we want to find the subvector of `h` for all elements in `h` that are larger than 2.  Then, you can first compare  `h` with `2`, getting a logical vector, which is named `big3` here. 
+
+```{r results=TRUE}
+h > 2
+big3 <- h > 2
+big3
+```
+
+Then you may notice that both `big3` and `h > 2` are identical to `c(TRUE, FALSE, TRUE, FALSE, TRUE)`. So, you can clearly put either `big3` or `h > 2` into `[ ]`, which generates the same subvector with `3 4 90` as its elements. 
+
+```{r}
+h[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
+h[big3]
+h[h > 2]
+```
+
+Don't restrict yourself in thinking that only numeric vectors can be subsetted. If you create a character vector `home` and compare it to `"pig"`, you will get another logical vector `same3`. Let's try to use `same3` to do vector subsetting on `h`.
+
+```{r results=TRUE}
+home <- c("pig", "monkey", "pig", "monkey", "pig")
+same3 <- home == "pig"
+sub2 <- h[same3]
+sub2
+```
+
+Awesome! You still get the result of `3 4 90`! As a result, as long as the logical vector you apply in subsetting have the same logical values, you will get the same result after doing vector subsetting. 
+
+Of course, you can do vector subsetting on character vectors or logical vectors. Keep in mind that the result will be the same type as the original one. Try the following code by yourself.
+
+```{r}
+home[same3]
+home[big3]
+lg <- c(TRUE, FALSE, FALSE, FALSE, TRUE)
+lg[same3]
+lg[big3]
+```
+
+***b. Use indices to do vector subsetting***
+
+Next, we will introduce how to use indices to do vector subsetting. To achieve this goal, you need to put a numeric vector inside `[ ]`, for example,
+
+```{r results=TRUE}
+h #let's refresh ourself with what elements h contains
+h[c(2,4)]  #return values of the 2nd and 4th elements of h
+```
+
+As it shows, the values of the 2nd and 4th elements in `h` are returned. Notice that, in R, the first element in a vector has index 1, whereas other programming languages may have different indexing fashion. In that sense, the numeric vector inside the `[ ]` represents relative indices instead of actual numeric values. If you add a minus sign `-` before the numeric vector, you will get all elements except the 2nd and 4th ones in `h`.
+
+```{r results=TRUE}
+h[-c(2,4)]  #return values except the 2nd and 4th elements of h
+```
+
+Similar to using a named logical vectors, you can also use a named numeric vector to do vector subsetting.#comment:我get到这里说named logical vectors的意思了，但是感觉named vectors会让读者以为是2.5.1那种named vectors，所以我觉得可以改成a logical vector assigned with a name
+
+```{r, eval=TRUE}
+ind <- c(2,4)
+sub3 <- h[ind]
+sub3
+```
+
+The first line of this example looks like a new object assignment that assigns two numeric values, 2 and 4, to the name `ind`. However, what we really attempt is to restrict `ind`, a random name, to represent the 2nd and the 4th index.
+
+Also, you can get subvectors of character vectors or logical vectors via indices.
+
+```{r}
+home[ind]
+lg[ind]
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+In conclusion, there are two ways to get a subvector of `h` with values bigger than 2.
+```{r}
+h <- c(3,1,4,2,90)
+h[h > 2]      #h > 2 will return TRUE if the element in h has value bigger than 2
+h[c(1,3,5)]   #It's clear to see that the first, third and fifth elements have values bigger than 2
+```
+::: 
+
+***c. using names to do vector subsetting***
+
+For a named vector, we can also use character vectors consisting of the names as indices to do vector subsetting. The elements' names and their corresponding indices are fungible.
+```{r, results=TRUE}
+x_w_name <- c(height = 165, weight = 60, BMI = 22)
+x_w_name["height"]
+x_w_name[c("weight", "BMI")]
+x_w_name[c(1,3)] # c("weight", "BMI") and c(1, 3) refer to the same elements, so the last two lines lead to the same output
+```
+
+
+
+###Access and modify values in vectors and sub-vectors
+
+We'll end this section by learning the way to access and modify values in a vector. This is a fairly basic data manipulation, and the reason we wait until now to introduce it is because we use the same ways to access and modify values in atomic vectors that we presented in previous sections.
+
+Let's begin with extracting one element from a vector. To access a specific element, you can apply vector indexing by using the index of the element with a pair of square brackets `[ ]` surrounding it following by the vector name. After accessing an element, you can also update its value by using the assignment operator with the extraction expression on the left and the new value on the right. Let's say you want to access the third element of `y1`  and update its value to 100.
+
+```{r}
+y1 <- c(1, 3, 3, 5, 5)
+y1
+y1[3]
+y1[3] <- 100
+y1
+```
+
+
+It is as straightforward as it looks like! From the result, you can see that you've updated the third element's value is updated to 100. Now, if you did look through the first half of this section, at this point you may find that accessing a vector's element(s) is completed similarly compared to vector subsetting. It turns out we can update the values of multiple elements of a vector in a similarly way. 
+
+***a. Change all values in subsets of vectors***
+
+Firstly, let's review values of vector `h` and get a subset of it. 
+
+```{r}
+h <- c(3,1,4,2,90)
+h[c(2,4)]
+```
+
+Obviously, you will get a numeric vector with `1` and `2` as the values. Let's see how to change values for a subset of `h`. You just need to assign new values to the subset, then you can verify the values of `h`. Let's see an example,
+
+```{r results=TRUE}
+h[c(2,4)] <- c(10, 20)
+h
+h[c(2,4)] <- 10         #recycling rule applies
+h
+```
+
+In the first two lines, you can see that you have changed `1` and `2` to `10` and `20`, respectively. In the last two lines, however, since you assign multiple values to one new value, R will apply recycling rule to complete the value updating process. In both cases, you have successfully change parts of `h`!
+
+***b. Define the vector again***
+
+Another way to change values in vectors is to do object assignment again using the same name, then you can change any values of it.
+
+Let's first reset the values of `h`.
+```{r}
+h <- c(3,1,4,2,90)
+```
+
+
+From Section \@ref(Object-Assignment), you learned that you can check all objects you assigned and their values in the **environment panel**. So let's review values of vector `h` from this panel together.
+
+```{r h1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Values of h (1)", out.width = '70%'}
+knitr::include_graphics("pics/2h1.PNG")
+```
+
+We should agree that `h` is a numeric vector with 5 values Then let's try to do an object assignment again, this time you can assign different values to `h` and see what will happen to `h`.  
+
+```{r results=TRUE}
+h <- c(1,2,3,4,5)
+h
+```
+
+Then you can see that the values of `h` have been changed to the new ones! Another easier way to verify values of `h` is from the environment, so it is a good habit to monitor the environment from time to time to make sure everything looks fine.
+
+```{r h2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Values of h (2)", out.width = '70%'}
+knitr::include_graphics("pics/2h2.PNG")
+```
+
+You can assign any values to `h` as you want, then `h` may change the vector type or even the object type according to the values assigned. By running the following code, `h` will be a character vector with three strings.
+
+```{r}
+h <- c("pig", "monkey", "panda")
+```
+
+```{r h3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Values of h (3)", out.width = '70%'}
+knitr::include_graphics("pics/2h3.PNG")
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+
+If you assign values of a subvector to a name, you will create a new vector. Now `hs` is not the subset of `h`, it is a vector with the same value as the subset. If you assign different value(s) to `hs`, there will be no change on `h`.
+
+```{r, eval=FALSE }
+h <- c(3,1,4,2,90)
+hs <- h[c(2,4)]
+hs <- 10
+h
+```
+
+::: 
+
+
+
+### Exercises
+
+Consider the vector `v1 <- c(7, 2, 4, 9, 7)`, `v2 <- c(6, 2, 8, 7, 9)`, and `v3 <- 1:50`. 
+
+
+1. Find the locations in `v1` where the corresponding value is smaller than `v2`.
+
+2. Find the subvector of `v2` such that the corresponding location in `v1` is larger than 5. 
+
+3. Find the subvector of `v3` such that it is divisible by 7. (Hint: the result of `7%%7` is equal to 0 since 7 is divisible by 7)
+
+4. For all elements of `v3` that is divisible by 8, replace it by 100. 
+

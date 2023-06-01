@@ -1,0 +1,114 @@
+## Array {#array}
+
+Having learned the 1-dimensional atomic vectors in Chapter \@ref(r-objects) and 2-dimensional matrix in Section \@ref(matrix), we will now take a look in higher dimensional space, namely **array**. Array can be viewed as an generalization of vector and matrix to a higher dimensional ($>=3$) space, and still only contains elements of the same type. 
+
+### Create an array from a vector
+
+To create an array from a vector, you can use the function `array()`. Let's see an example and use `dim()` to get its dimension. 
+
+```{r, results = TRUE}
+x <- array(1:24, c(2,3,4))
+x
+dim(x)
+```
+
+You can see from the result, array has more than two dimensions. To display all elements, R will slice the array into many matrices by fixing the indices except the first two, then display one matrix at a time. 
+
+As usual, we can learn more about an array by using the `str()`, `class()`, `typeof()`, and `attributes()` functions.
+
+```{r, results=TRUE}
+str(x)
+class(x)
+typeof(x)
+attributes(x)
+```
+
+We can see that `x` is a three-dimensional array with integers as its elements. Similarly, you can create a higher-dimensional array. The following example creates a four-dimensional array with all elements equal to 6.  
+
+```{r, eval = FALSE}
+y <- array(6, 2:5)
+y
+dim(y)
+```
+
+### Array subsetting
+
+Like vector subsetting in Section \@ref(vector-subsetting) and matrix subsetting in Section \@ref(matrix-subsetting), we can do array subsetting as well. 
+
+To do array subsetting, you can specify the indices for each dimension separated by `,`. Since `x` is a three-dimensional array, you can specify at most 3 indices. If you leave the indices for certain dimensions empty, everything will be kept along the corresponding dimensions. You can also use negative index to dropping the specified elements. Let's see a few examples.
+
+```{r, results=TRUE}
+x[1, 2, 3]     #the (1, 2, 3)-th element of x
+x[, , 2]       #the matrix where the index of the 3rd dimension equals 2
+x[2, , 4]      #the vector whether the indices of the 1st and 3rd dimension equal 2 and 4.
+x[-2, 3, -3]   
+```
+
+Just like subsetting matrices, you can also use logical vectors on each dimension, as well as using names as the indices on a named array. 
+
+```{r}
+x[x[, 1, 2] == 7,,]
+```
+
+### Operators and functions on arrays
+
+Similar to vectors and matrices, arithmetic operations between arrays are performed elementwisely, with the recycling rule applying when the two arrays are of different dimensions. Let's see the following example.
+
+```{r}
+array_1 <- array(1:8, c(2, 2, 2))
+array_2 <- array(8:1, c(2, 2, 2))
+array_1 + array_2
+array_1 * array_2
+array_1 * 3
+```
+
+To apply a function on all elements of an array, you can directly use the function on the array object as if it is a vector, as we did with a matrix. The result is equivalent to first convert the array into a vector using `as.vector()` and apply the function on the vector. 
+
+```{r, results=TRUE}
+sum(array_2)
+mean(array_2)
+quantile(array_2, c(0.25, 0.5, 0.75))
+cumsum(array_2)
+```
+
+### Apply functions along certain dimension(s)
+
+Just like when we work with matrices, it is of interest to apply functions not on the whole array, but along certain dimension(s). To do this, you can use the same function `apply()` as we did in matrices. 
+
+```{r, results=TRUE}
+apply(array_1, 1, mean)      #calculate the mean along the first dim
+mean(array_1[1, , ])         #verify the first element
+mean(array_1[2, , ])         #verify the second element
+apply(array_1, 2, sum)       #calculate the sum along the second dim
+apply(array_1, 3, sd)        #calculate the sd along the third dim
+```
+
+In the second argument of `apply()`, in addition to specifying one dimension, you can also supply a vector of dimensions that the function will be applied upon. For example, the following code computes the sum along the first two dimensions. 
+
+```{r, results = TRUE}
+apply(array_1, 1:2, sum) 
+sum(array_1[1, 1, ])      #verify the [1, 1] element
+sum(array_1[1, 2, ])      #verify the [1, 2] element
+sum(array_1[2, 1, ])      #verify the [2, 1] element
+sum(array_1[2, 2, ])      #verify the [2, 2] element
+```
+
+In addition to the three arguments, you can add additional arguments that will be passed when applying the specified function as we did in Section \@ref(apply-matrix). For example, the follow code generates the third quantile along the third dimension. 
+
+```{r, results=TRUE}
+apply(array_1, 3, quantile, 0.75) 
+```
+
+### Exercises
+
+First use R to create the following array 
+
+```{r, echo=TRUE}
+a <- array(1:24, c(2, 3, 4))
+```
+
+1. Compute the mean along the second dimension of `a`. (Hint: the result will be a vector of length -3.)
+2. Compute the first quantile along the first and third dimension of `a`. (Hint: the result will be a matrix of dimension $2\times 4$)
+3. Compute the first and third quantile along the first and third dimension of `a`. (Hint: the result will be an array of dimension $(2, 2, 4)$)
+
+

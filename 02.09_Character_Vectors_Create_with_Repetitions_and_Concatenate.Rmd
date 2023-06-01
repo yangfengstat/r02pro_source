@@ -1,0 +1,139 @@
+## Character Vectors: Create with Repetition and Concatenate {#char-concatenate} 
+
+From this section, we will dive deep into **character vectors**.
+
+### Create character vectors with repetition
+
+Just like numeric vectors, you can also create character vectors with **repetition** via the `rep()` function. 
+
+```{r}
+rep("sheep", 5)
+```
+
+If the first argument is of length larger than 1, and the second argument is a single integer, the `rep()` function will **repeat** the first vector the corresponding times that is specified by the integer. 
+
+```{r}
+rep(c("sheep", "monkey"), 3)
+```
+
+Another option is to specify the second argument as a numeric vector of the same length as the vector to be repeated. In this case, each element of the character vector will be sequentially repeated the corresponding number of times. Please see the following examples. 
+
+```{r}
+rep(c("sheep", "monkey"), rep(3, 2))
+rep(c("sheep", "monkey"), c(3,4))
+```
+
+### Concatenate strings with `paste()`
+
+Next, we will introduce how to **concatenate** several strings into a single string. To do this, you can use the `paste()` function. First, let's create a character vector with four elements,       
+
+```{r}
+four_strings <- c("I", "love", "r02pro", "!")
+four_strings
+length(four_strings) #verify the number of strings
+```
+
+To concatenate the four strings in to a single string, you can use `paste()` instead of `c()`:
+
+```{r results=TRUE}
+one_long_string <- paste("I", "love", "r02pro", "!")
+one_long_string
+```
+
+You can verify the class and length of the new object. 
+
+```{r}
+class(one_long_string)
+length(one_long_string) #verify the number of strings
+```
+
+From the results, you can see that `one_long_string` is a character vector with length 1, and the value of `one_long_string` is a single string with spaces between the individual strings.
+
+In `paste()`, the default **separator** between the individual strings is space. Take a look at the documentation of the `paste()` function with any form of getting help (Section \@ref(Calculator)) that we previously introduced. What does the `sep = " "` argument mean? In fact, you can change the separator by setting the `sep` argument as a string in `paste()`. For example, you can separate the individual strings with comma or `!&!`.
+
+```{r results=TRUE}
+comma <- paste("I", "love", "r02pro", "!", sep = ",") 
+comma
+paste("I", "love", "r02pro", "!", sep = "!&!") 
+```
+
+If you don't want to use a separator, you can set `sep = ""` or use the `paste0()` function. 
+
+```{r results=TRUE}
+paste("I", "love", "r02pro", "!", sep = "")
+paste0("I", "love", "r02pro", "!") 
+```
+
+You may noticed the next argument for `paste()` is `collapse = NULL` in the documentation. If you would like to concatenate the elements of a vector into a longer string, you need to specify the `collapse` argument as the separator instead of `sep` in the `paste()` function. 
+
+```{r, results=TRUE}
+paste(four_strings, collapse = "")
+paste(four_strings, collapse = ",")
+paste(four_strings)                 ##doesn't work without the collapse argument
+```
+
+
+In addition to paste several strings into one long string, you can also use the `paste()` function to concatenate two or more character vectors, where the pair of strings will be pasted elementwisely. 
+```{r, results=TRUE}
+paste(c("July", "August"),  c("2007", "2008"))
+```
+
+Note that you can take advantage of the **recycling rule** by using single strings in the character vectors.
+```{r}
+paste("Do", c("I", "you", "they"), "love r02pro?")
+paste("Yes!", c("I", "You", "They"), "love r02pro!")
+```
+
+By default, the arguments in the `paste()` function are all character vectors. However, if you mix vectors of different types, all elements will be converted to characters based on the coercion rule (Section \@ref(coercion-rule)) before being concatenated.
+```{r}
+paste(c("Peter", "James", "Mary"), "has been learning R for", 2:4, "years.")
+paste("The statement is", c(T, F))
+```
+
+
+### Output via `cat()`
+
+Another commonly used function related to character vectors is the `cat()` function, which converts its arguments to character vectors, concatenates them to a single character vector, appends the given **separator** specified in the optional argument `sep` to each element, and then outputs them. The default separator is space. 
+
+```{r, results = TRUE}
+cat("I", "am", "a", "long", "string")
+```
+
+Let's try to specify the separator `sep = "$"`. 
+```{r, results = TRUE}
+cat("I", "am", "a", "long", "string", sep = "$")
+```
+
+The `cat()` function is super useful when one wants to print a message in user-defined functions. Some important characters are the **newline character** `\n`, and the **tab character** `\t`. Let's try it in action. Please pay special attention to the effects of `\n` and `\t` characters.
+
+```{r, results = TRUE}
+cat("I", "am", "\n", "starting \t line 2....", 
+    "a", "long", "\n", "starting line 3....", "string")
+```
+
+Similar to the `paste()` function, implicit coercion will also apply before the concatenate process.
+```{r}
+cat(c("Peter", "James", "and Mary"),"\n", 
+    "have been learning R for\n", 2:4, "years,\n",
+    "respectively.")
+```
+
+### Exercises
+1. Write R codes using the  `rep()` function to reproduce the following three vectors with alphabetic letter values. Avoid repeating the same letters in your code.
+
+- a b c d a b c d a b c d
+- a a a b b b c c c d d d 
+- a a a a b b b c c d
+
+2. Please use the `paste()` function to reproduce the following sentences. Avoid repeating the same words in your code.
+
+Alice has been playing tennis for 4 years in London.
+Bob has been playing soccer for 3 years in New York.
+Charlie has been playing baseball for 2 years in Berlin.
+
+3. Please use the `paste()` and `cat()` functions to reproduce the following message. Avoid repeating the same words in your code.
+
+```{r, echo = FALSE, results = TRUE}
+cat(paste("Starting i = ", 1:10, "\n", sep=""))
+```
+

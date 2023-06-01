@@ -1,0 +1,4 @@
+# R Objects (I): Atomic Vectors {#r-objects}
+
+In this chapter, we focus on the most fundamental R object type: **atomic vectors**. We will introduce different types of atomic vectors, creating vectors with patterns, applying different functions and operations on vectors, comparing and extracting vectors. We will also discuss data and times, factors, and how R represents unexpected results. 
+

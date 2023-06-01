@@ -1,0 +1,190 @@
+## Introduction to Data Sets {#intro-dataset}
+
+In this section, we will introduce two datasets that will be used extensively throughout the rest of the book to illustrate necessary concepts like data import and export, visualization, data manipulation, etc. This chapter will greatly enhance your ability in working independently on your own project by integrating the knowledge and skills from the previous chapters. 
+
+### Gapminder Data Set {#intro-gapminder}
+
+We will first introduce a dataset `gm2004`, located in the R package **r02pro**, the companion package of this book. The `gm2004` dataset is created from the gapminder (https://www.gapminder.org/) website from a wide range of public health related topics. In particular, `gm2004` contains 472 observations and 23 healthcare variables collected in year 2004. Each observation (row) corresponds to a specific country, with columns representing features like mortality, health spending, and other demographic information. 
+
+Let's begin by loading the **r02pro** and **tibble** packages since `gm2004` is in a tibble format. 
+
+```{r}
+library(r02pro)
+library(tibble)
+```
+
+After loading the two packages, you can type `gm2004` to have a quick look of the dataset.
+
+```{r, results = TRUE}
+gm2004
+```
+
+You can see that `gm2004` is a *tibble* with 472 observations and 23 variables. By default, the output only gives a compact view of the first 10 observations in the tibble along with the first few variables that can fit the window. To view the full dataset, you can use the `View()` function, which will open the dataset in a new window. 
+
+```{r, eval=FALSE}
+View(gm2004)
+```
+
+To view the top rows of the dataset, you can use the `head()` function, which produces the first 6 observations by default. You can also set an optional second argument to pick any given number of observations. 
+
+```{r}
+head(gm2004)
+head(gm2004, 15)
+```
+
+To get a general idea on the dataset, you can use the `summary()` function introduced in Section \@ref(vector-functions). 
+
+```{r}
+summary(gm2004)
+```
+
+In the output, we get the summary statistics for each variable. For numeric variables, we get the minimum, 1st quartile, median, mean, 3rd quartile, and the maximum. It also shows the number of `NA`'s for a particular variable. For character variables, we only get the length of the vector, the class, and the mode. 
+
+Although the types of each variable are shown in the result when typing `gm2004`, a more detailed list can be found with the function `str()`. 
+
+```{r, results=TRUE}
+str(gm2004)
+```
+
+The `str()` function lists out all variables in the dataset with their corresponding type, length, and each variable's first several values. 
+
+### Small Ames Housing Price Data Set {#sahp}
+
+Next, we will introduce the `sahp` dataset, which is part of the Ames Housing Price data. For your convience, we have also included `sahp` in the R package **r02pro**. Similarly, you can type `sahp` to have a quick look of the dataset.
+
+```{r, results = TRUE}
+sahp
+```
+
+You can see that `sahp` is a *tibble* with 165 observations and 12 housing variables, including the sale date, price, and other property quality measurements. Let's again use the `summary()` function on the dataset. 
+
+```{r}
+summary(sahp)
+```
+
+Again, we can use the `str()` function to a detailed list of each variable along with its type. 
+
+```{r, results=TRUE}
+str(sahp)
+```
+
+Now, let's try to answer a few questions using the `sahp` dataset. 
+
+####Sample Analysis: are two-story houses more expensive than one-story ones? 
+
+Let's try to answer this question by doing some analysis. First, let's create the logical vectors corresponding to two-story and one-story houses. 
+
+```{r}
+story_2 <- sahp$house_style == "2Story"
+story_1 <- sahp$house_style == "1Story"
+```
+
+Then, we create two vectors containing the prices of the two groups, respectively. 
+
+```{r}
+sale_price_2 <- sahp$sale_price[story_2]
+sale_price_1 <- sahp$sale_price[story_1]
+```
+
+Finally, we can run the `summary()` function on both vectors.
+
+```{r, results=TRUE}
+summary(sale_price_2)
+summary(sale_price_1)
+```
+
+The results from the `summary()` function clearly represent that the corresponding statistics are larger for two-story houses compared to one-story ones, for all 6 measures. As a result, we can conclude that the two-story houses indeed have higher sale prices than the one-story ones.
+
+### Converting Data Types
+
+When you import a dataset into R, some variables may not have the desired types. In this case, it would be useful to convert them into the types you want before conducting further data analyses. 
+
+***a. Converting a character vector to an unordered factor***
+
+Let's look at the variable `house_style` in `sahp`. We can see from the output of `str(sahp)` that it is of `chr` type. Let's check it and confirm the structure with `summary()`.
+
+```{r, results=TRUE}
+is.character(sahp$house_style)
+summary(sahp$house_style)
+```
+
+As briefly mentioned before, using the `summary()` function on a character vector doesn't provide us much useful information. Let's find the unique values of this vector and get the frequency table.
+
+```{r, results=TRUE}
+unique(sahp$house_style)
+table(sahp$house_style)
+```
+
+We can see that there are five house styles along with their frequencies. It turns out to be particularly useful to convert this type of variable into a *factor* type. Let's use the function `factor()` to proceed the conversion and `as.factor()` to ensure the conversion is successfully completed.
+
+```{r, results=TRUE}
+house_style_factor <- factor(sahp$house_style)
+is.factor(house_style_factor)
+summary(house_style_factor)
+```
+
+Instead of calling `table()` to see the frequencies, we can obtain them by calling just `summary()`.
+
+***b. Converting a character vector to an ordered factor***
+
+Now, let's take a look at another variable called `kit_qual`, measuring the kitchen quality. Again, let's check the unique values.
+
+```{r, results=TRUE}
+unique(sahp$kit_qual)
+```
+
+In addition to having four different quality values, they have an internal ordering among them. In particular, we know Fair < Average < Good < Excellent. To reflect this intrinsic order, you can convert this variable into an *ordered factor* using the same `factor()` function, setting `ordered = TRUE` and specifying the `levels` in the ascending order of the desired ordering.
+
+```{r, results=TRUE}
+kit_qual_ordered_factor <- factor(sahp$kit_qual, ordered = TRUE, levels = c("Fair", "Average", "Good", "Excellent")) #covert to ordered factor
+summary(kit_qual_ordered_factor)
+str(kit_qual_ordered_factor)
+```
+
+***c. Converting a character vector to a logical vector***
+
+Lastly, let's look at the variable `central_air`, representing a house's AC condition. As before, let's get the unique elements. 
+
+```{r, results=TRUE}
+unique(sahp$central_air)
+```
+
+Intuitively, you can create a logical vector representing whether the house has central AC or not. 
+
+```{r}
+central_air_logi <- sahp$central_air == "Y"
+summary(central_air_logi)
+str(central_air_logi)
+```
+
+Another scenario would be creating an additional variable from the existing ones. For example, we know the overall quality (`oa_qual`) of the house ranges from 2 to 10. 
+
+```{r}
+table(sahp$oa_qual)
+```
+
+If we want to crate a new variable representing houses of good quality with a `oa_qual` greater than 5, this can be achieved by creating a new logical variable named `good_qual` as shown below. 
+
+```{r}
+good_qual <- sahp$oa_qual > 5
+summary(good_qual)
+str(good_qual)
+```
+
+### Recover Modified Values
+
+When you are working with a dataset provided by a package, you may accidentally modify some values in the original dataset.
+
+In this situation, there's no need to panic, as this mistake can be easily recovered by setting the data into its "factory" setting (i.e. the original version inside the package). 
+
+To do this, you just need to use the `data()` function with the dataset name as its argument. Let's try to modify one value of `sahp` and recover the data set afterward.
+
+However, it is strongly recommended to develop the habit of saving an independent copy of dataset under a different object name when working, especially with those provided by a loaded package. We encourage you to label your code with necessary, clear comments along with this process. It is a good habit that can greatly enhance your efficiency of coding while avoiding unnecessary error. 
+
+```{r, results=TRUE}
+sahp[1,2]              #get the original value
+sahp[1,2] <- 5         #modify the value
+sahp[1,2]              #verify the modified value
+data(sahp)             #recover the data
+sahp[1,2]              #verify the value is recovered
+```

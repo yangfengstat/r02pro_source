@@ -1,0 +1,191 @@
+## Other Atomic Vector Types {#other-atomic-vector}
+
+So far, we have covered the most commonly used  atomic vector types, including logical, integer, numeric, and character, when we order by complexity. In this section, we will introduce two more atomic vector types: **complex** vectors and **raw** vectors.
+
+### Complex Vectors
+
+Another atomic vector type in R is **complex**, which stores complex numbers. Let's create a complex vector using the `c()` function.
+```{r, results=TRUE}
+my_complex <- c(1 + 2i, 3 + 4i, -3 - 4i)
+my_complex
+class(my_complex)
+typeof(my_complex)
+str(my_complex)
+```
+
+You can do operations on complex vectors. Like integers and doubles, the operations are performed componentwisely. Keep in mind that $i \times i = -1$.
+```{r}
+my_complex_2 <- c(2 + 1i,   2i, 2 + 3i)
+my_complex + my_complex_2
+my_complex * my_complex_2
+my_complex / my_complex_2
+```
+
+It is worth to emphasize that for complex vectors, `is.numeric()` returns `FALSE` and `is.complex()` returns `TRUE`.
+```{r, results=TRUE}
+is.numeric(my_complex)
+is.complex(my_complex)
+```
+
+For a complex vector $z = x + i y$ with real $x$ and $y$, we have the following table for variable components along with the functions in R.
+```{r summaryFunsComplex, results = TRUE, echo=FALSE}
+Operation  <- c("Re(z)", "Im(z)", "Mod(z)", 
+                "Arg(z)", "Conj(z)")
+Explanation <- c("the real part", "the imaginary part", "the modulus", "the argument", "the conjugate vector")
+Values <- c("$x$", "$y$", "$\\sqrt{x^2 + y^2}$",
+            "$arccos(\\frac{x}{\\sqrt{x^2 + y^2}})$", "$x - i y$")
+d <- data.frame(Operation, Explanation, Values)
+knitr::kable(d)
+```
+
+Here, the modulus and argument are also called the **polar coordinates**. For $r = Mod(z)$, and $\phi = Arg(z)$, we have $x = r*\cos(\phi)$ and $y = r*\sin(\phi)$. 
+
+Now, let's try these functions on our complex vector `my_complex`.
+
+```{r, results=TRUE}
+Re(my_complex)
+Im(my_complex)
+Mod(my_complex)
+Arg(my_complex)
+Conj(my_complex)
+```
+
+
+Another way to create complex vectors is to use the `complex()` function where you can specify two out of the four arguments, namely the real part, the imaginary part, the modulus, and the argument. Usually, we use a combination of `real` and `imaginary`, or `modulus` and `argument`.
+```{r}
+complex(real = 1:5, imaginary = 5:1)
+complex(modulus = 1:5, argument = 1:5)
+```
+
+Finally, you can use the `vector(mode, length)` function to create a complex vector of certain length. 
+```{r}
+vector("complex", 4)
+```
+
+Note that the default value is `0+0i`.
+
+### Raw Vectors
+
+The **raw** type of vector holds raw bytes. To create a raw vector, you can use the `raw()` function with the desired length as its argument, which will be initialized as a zero vector. You can check the class and storage type of the created object are indeed raw.
+```{r, results=TRUE}
+my_raw <- raw(2)
+my_raw
+class(my_raw)
+typeof(my_raw)
+```
+
+Working with the raw vector type is not as easy as the other types we have covered so far. In particular, the implicit coercion doesn't work here and leads to an error if you try to assign a number to a raw type vector.
+```{r, error=TRUE}
+my_raw[1] <- 20
+```
+
+You may be wondering, how do we modify the values of a raw type vector? To do that, you can use the `as.raw()` function with an integer vector as its argument. 
+```{r, results=TRUE}
+as.raw(c(0:20, 135, 255))
+```
+
+It is worth to explain the mechanism of this explicit coercion. The input integer is converted to a length-two string-like value, taking the numeric values 0-9, and the lower case letters a-f. In fact, the representation can be viewed as a **Hexadecimal System**, which is the numbering system with base 16. The numeric values 0-9 coincide with the corresponding numbers 0-9, while the lower case letters a-f correspond to numbers 10-15. Let's look at a few examples.
+\begin{align}
+0b &= 0*16 + 11 = 11\\
+87 &= 8*16 + 7 = 135\\
+ff &= 15*16 + 15 = 255
+\end{align}
+
+Note that when the input is less than 0 or larger than 255, the output will be always `00` with a warning displayed.
+```{r, results=TRUE, warning=TRUE}
+as.raw(-1)
+as.raw(256)
+```
+
+
+Once you have a raw vector, you can use `as.integer()` to coerce it to an integer vector. In addition, you can use `is.raw()` to check whether the input is a raw vector.
+```{r, results=TRUE}
+my_raw[1] <- as.raw(200)
+as.integer(my_raw)
+is.raw(my_raw)
+is.raw(200)
+```
+
+Interesting, the integer values 0-255 has a correspondence with the **ASCII characters**. However, note that the first 32 values correspond to ASCII control characters, which are not printable. Therefore, the most useful ones are values 32-255. For more details, you can find the corresponding table of the ASCII code and the characters via https://www.ascii-code.com/.
+
+You can use the function `charToRaw()` to convert a string to a raw vector. And its inverse function `rawToChar()` will decode a raw vector into the corresponding string. This pair of operations can be viewed as an interesting example of **encryption** and **decryption**. 
+```{r, results=TRUE}
+r02pro_str <- "I love r02pro!"
+r02pro_raw <- charToRaw(r02pro_str)
+r02pro_raw
+rawToChar(r02pro_raw)
+```
+
+For example, the character `I` corresponds to raw value 49, and number 111, the space corresponds to raw value 20, and number 32, and the `!` corresponds to raw value 21, and number 33. 
+
+Now, let's try something interesting.
+```{r, results=TRUE}
+rawToChar(as.raw(32:126))
+```
+
+You can see that the numbers, lower and upper case letters, and commonly used symbols correspond to values from 32 to 126.
+
+### Full Coercion Ordering
+
+In Section \@ref(coercion-rule), we learned the following coercion rule:
+$$\mbox{logical} < \mbox{integer} < \mbox{double} < \mbox{character}$$
+
+You may be wondering where do the complex and raw vectors lie in this sequence. Let's first present the rule and show some examples.
+
+$$\mbox{raw} < \mbox{logical} < \mbox{integer} < 
+\mbox{double} < \mbox{complex} < \mbox{character}$$
+
+Let's mix `my_raw` with logical, integer, and character values, respectively.
+```{r}
+c(my_raw, TRUE)
+c(my_raw, 2L)
+c(my_raw, "test")
+```
+
+Now, let's mix `my_complex` with raw, logical, integer, and character, respectively.
+```{r}
+c(my_complex, my_raw)
+c(my_complex, TRUE)
+c(my_complex, 8L)
+c(my_complex, 3.14)
+c(my_complex, "test")
+```
+
+### Exercises
+1. Use complex vectors to verify Euler's formula:
+$$e^{iy} = \cos(y) + i sin(y).$$
+Hint: for a sequence of `y` values (eg. `y_seq <- pi *seq(from = -2, to = 2, by = 0.1)`), compute the left hand side and right hand side respectively, and compare them.
+<!--
+```{r}
+y_seq <- pi *seq(from = -2, to = 2, by = 0.1)
+left_side <- exp(complex(real = 0, imaginary = y_seq))
+right_side <- complex(real = cos(y_seq), imaginary = sin(y_seq))
+left_side - right_side
+```
+-->
+
+2. Tom wants to send out a message and he want to encypt it using raw vectors. He first convert the message into raw vectors, and then convert the raw vector into an integer vector. Suppose he got the following integer vector: `r as.integer(charToRaw("Have a nice day!"))`, please write R code to recover the message. 
+
+3. Suppose we have the following vectors of different types. 
+```{r}
+my_raw <- as.raw(62)
+my_logi <- TRUE
+my_int <- 6L
+my_complex <- 3 + 14i
+my_char <- "Good luck!"
+```
+
+Guess the values of the following operations and confirm them in R.
+```{r, eval=FALSE}
+c(c(my_raw, my_logi), my_int)
+c(my_raw, c(my_logi, my_int))
+c(c(my_raw, my_logi), my_char)
+c(my_raw, c(my_logi, my_char))
+c(c(my_raw, my_complex), my_char)
+c(my_raw, my_complex, my_char)
+c(c(my_raw, my_logi), c(my_int, my_complex), my_char)
+c(c(my_raw, my_logi), my_int, my_complex, my_char)
+c(my_raw, my_logi, my_int, my_complex, my_char)
+c(my_raw, my_logi, c(my_int, my_complex), my_char)
+```
+

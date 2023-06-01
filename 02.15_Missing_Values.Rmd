@@ -1,0 +1,224 @@
+## Missing Values (`NA`) {#missing-values}
+
+So far, we have been working with the ideal case that the vector is fully observed without any missing values. However, in most applications, you may encounter the situation, where some values like `NA` or a large value `999`, which represent **missingness** in the data set for certain variables, and such values can be resulted from one of the below situations:
+
+a) the observer fails to record the data, meaning the value is not available at the given position of a vector or a data frame, or 
+b) the data is impossible or undefined, meaning the value is resulted from an error or logical contradiction, such as dividing by 0.
+
+In two scenarios, R uses a) `NA`, indicating they are **not available**, and b) `NaN`, indicating they are **not a number** to present those values, respectively. Let's see the following example. 
+
+```{r, results = TRUE}
+a <- 1:10
+a[11]
+```
+
+Here, you have defined `a` as a length-10 numeric vector with 10 values in it. If you try to access the 11-th element of `a`, it is not available, hence you will see `NA` as the result. 
+
+
+Sometimes, the values of some elements in a vector are missing, then you can use `NA` for these elements. Here is an example containing `NA`s as some values. If you want to get values of the 2nd and 4th elements in `b`, you will get `NA NA` as the result.
+
+```{r, results = TRUE}
+b <- c(1, NA, 2, NA, 3)
+b
+b[c(2,4)]
+```
+
+Let's see another example.
+
+```{r}
+b <- 0/0
+```
+
+If you look at the environment panel, you will see that `b` has a value of `NaN`, because arithmetically you cannot divide a number by 0.
+
+```{r}
+c <- c(NA, NA)
+class(b)
+typeof(b)
+class(c)
+typeof(c)
+```
+
+By running the above codes, you can notice that `NA` is stored as a logical type, whereas `NaN` is stored as a numeric type.
+
+Now you have had a basic understanding of `NA` and `NaN`. In the following parts of this section, we want to introduce several properties of them. Let's start with the fact that `NA` is **contagious**. 
+
+### `NA` and `NaN` are contagious
+
+***a. `NA` ***
+
+`NA` implies that the underlying value is not available, in other words, there is uncertainty with the value. As a result, for most operations associated with `NA`, the results will also be `NA`, showing that `NA` is **contagious**. 
+
+```{r, results=TRUE}
+y <- NA
+y + 3
+y == 3
+```
+
+As you can see here, `y` is `NA`, indicating the value of `y` is not available. When you try to do operations like `y + 3` or `y == 3`, the answers are clearly not available as well, hence both taking the value `NA`. 
+
+How about we create another `NA` object and compare it with `y`? 
+```{r, results=TRUE}
+z <- NA 
+y == z 
+NA == NA
+```
+
+It is again `NA`, which may be confusing at a first thought. However, keep in mind that since both `y` and `z` are not available, there is no way to tell whether they are the same. Hence `y == z` is also `NA`.
+
+::: {.infobox .caution data-latex="{caution}"}
+1. Think about what is the value of 1^NA^ in R. Try to run it in R. Does it agree with your thoughts? 
+
+2. Think about what is the value of 0^NA^ in R. Try to run it in R. Does it agree with your thoughts? 
+
+- Answer 1. For any $x$, we have $1^x = \exp(\log (1^x)) = \exp(x \log 1) = \exp(x \cdot 0) = 1$. Since there is no uncertainty regarding the expression, the value of 1^NA^ is 1 
+- Answer 2. We have $0^0 = \lim_{x\to 0}x^x =\exp[\lim_{x\to 0} x\log(x)]=\exp[0] = 1$, and $0^1 = 0$. Since `NA` represents uncertainty values, it can be 0 or 1 or other numbers. So 0^NA^ is not deterministic because it can take different values according to the exponent. Hence, the value of 0^NA^ is also `NA`.
+::: 
+
+
+Now, let's talk about what impact the `NA` values make when we apply statistical functions. Let's create a vector containing `NA` values, and apply some functions on it.
+```{r, results=TRUE}
+x <- c(1, NA, 3, 4, NA, 2)
+x
+sum(x) 
+mean(x)
+sd(x)
+```
+
+As you can see, for many statistical functions on vectors, as long as there exists at least one `NA` values in vectors, the results are often impossible to determine, hence resulting an `NA` value as well. 
+
+As a result, you may want to ignore the `NA` values during the function evaluation. Fortunately, most statistical functions on vectors provide an optional argument `na.rm`, which takes a logical value, indicating whether to remove `NA` before applying the functions. Let's see the following examples.
+```{r, results=TRUE}
+sum(x, na.rm = TRUE) 
+mean(x, na.rm = TRUE)
+sd(x, na.rm = TRUE)
+```
+
+It is easy to verify that the results are what we expect to get if the `NA` values are removed. Feel free to try the following codes which apply the same functions on the subvector with the non-missing values.
+```{r, eval = FALSE}
+x_no_na <- c(1, 3, 4, 2)
+sum(x_no_na) 
+mean(x_no_na)
+sd(x_no_na)
+```
+
+Interesting, the `summary()` function will deal with the `NA` values automatically by removing them before computing the five percentiles and the mean. In addition, the `summary()` function provides a column which shows the number of `NA`s in `x`.
+```{r, results=TRUE}
+summary(x) 
+```
+
+***b. `NaN` ***
+
+```{r}
+b * 3
+b + 3
+```
+
+Similar to `NA`, `NaN` is also contagious, because numeric calculations on undefined values are also undefined.
+
+```{r}
+d <- c(1, 2, 3, 0/0)
+d
+sum(d) 
+mean(d)
+sd(d)
+sum(d, na.rm = TRUE) 
+mean(d, na.rm = TRUE)
+sd(d, na.rm = TRUE)
+```
+
+Moreover, if a vector consists undefined values, applying statistical functions on it will also result in `NaN`, and you can still use `na.rm` to remove `NaN` before applying the functions.
+
+### Work with `NA` values
+
+Since `NA` is far more common in real-life applications, we'll focus this section on `NA` values. When there are `NA` values in our vector, there is nothing to be afraid of as there are many useful tools we can use. 
+
+Let's use `x <- c(1, NA, 3, 4, NA, 2)` throughout this part. 
+
+***a. Find indices with missing values***
+
+Firstly, we will introduce how to find indices with missing values. To find the indices, you may be tempted to use the comparison operator introduced in Section \@ref(create-logical-vector). Let's try to compare `x` with `NA` as the following code.
+```{r}
+x == NA
+```
+
+You get a vector of all values equaling `NA`! This is actually not surprising for the following reason. Given that the `NA` you are comparing can take any unknown value, any comparison with it will result in an `NA` value due to the lack of information.
+
+Instead of using `==` for finding missing values, the correct way is to use the `is.na()` function, which returns a logical vector representing whether the value of each element is missing or not. Then, you can use the `which()` function which can return the locations of all `TRUE` values to find the indices for the `NA` values. Here, the `sum()` function on the logical vector `x_na` returns the number of `NA` values in the vector, following the coercion rule described in Section \@ref(functions-logi). 
+```{r, results=TRUE}
+x_na <- is.na(x)        #logical vector     
+x_na
+which(x_na)             #numeric vector
+sum(x_na)               #the number of NAs in x 
+sum(!x_na)              #the number of non-NAs in x
+```
+
+If you only want to detect whether there is any `NA` values in the vector, you can use the `anyNA()` function.
+```{r, results=TRUE}
+anyNA(c(NA, 1))
+anyNA(1:3)
+```
+
+
+***b. Remove missing values***
+
+Sometimes, you may want to simply remove the missing values. To do that, you can use a logical vector to do vector subsetting as introduced in Section \@ref(vector-subsetting). The specific logical vector you want to use is the opposite (`!`) of the logical vector that represents missing values. Then you will get a subvector of `x` which keeps all values except `NA`. You can also use the `na.omit()` function to achieve the same result.
+```{r, results=TRUE}
+x2 <- x[!x_na]
+x2
+na.omit(x)
+```
+
+***c. Impute missing values***
+
+In many applications, naively removing the missing values before doing the analysis may lead to incorrect inference. Usually, it is useful to make the data complete by **imputing** the missing values. For example, you can use mean imputing or median imputing, which replaces the missing values with the mean or median of the non-missing values. 
+
+```{r, results=TRUE}
+x_impute <- x
+mean(x, na.rm = TRUE)
+x_impute[x_na] <- mean(x, na.rm = TRUE)
+x_impute
+x
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+If you want to compare the values of an object before and after some operations, you can create a new object with the same value as the original object (here, we create `x_impute` which has the same value as `x`), then make operations on `x_impute` without changing the value of `x`. 
+::: 
+In `x_impute`, values of the 2nd and 5th elements are replaced by 2.5, the average of the non-missing values of `x`. 
+
+***d. Replace non-standard missing values with `NA` in the vector***
+
+Sometimes, the data we collected may not use `NA` to indicate that a value is missing. For example, in the following vector `x3`, the value `999` represents the corresponding element that is missing.
+
+```{r}
+x3 <- c(4, 999, 1, 999, 3, 999, 999)
+```
+
+It is highly recommended to convert these values into `NA` before carrying out any analysis. 
+```{r, results=TRUE}
+x3[x3 == 999] <- NA
+x3
+```
+
+Let's see another example where both `999` and `-999` represent the value is missing. You can convert all `999` and `-999` into `NA` by using operations introduced in Section \@ref(set-operations).
+```{r, results=TRUE}
+x4 <- c(4, 999, 1, -999, 3, -999, 999)
+##999 and -999 are the values indicating missingness
+x4[x4 %in% c(999, -999)] <- NA
+x4
+```
+
+
+
+### Exercises
+1. For the vector `x <- rep(c(1, 2, NA), 3:5)`, 
+a. verify each value of `summary(x)` by using other functions.
+b. find the indices with missing values;
+c. create a vector x_no_na containing the non-missing values in `x`;
+d. replace those missing values by the median of the non-missing values in `x`.
+
+2. For the vector `y <- rep(c("N", 2, "A"), 5:3)`, the values of both `"N"` and `"A"` indicate missingness. Convert non-standard missing values to `NA`, then find the indices of `y` that correspond to missing values. 
+
+
+
+

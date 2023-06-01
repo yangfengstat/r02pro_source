@@ -1,0 +1,174 @@
+## Introduction to Character Vectors {#intro-char-vector} 
+
+After familiarizing yourself with the numeric vectors in Section \@ref(intro-num-vector), we will introduce another member of the atomic vector family: character vectors. 
+
+### Creation, class and storage type{#create-character-vector} 
+
+```{r, include = FALSE, echo=FALSE}
+rm(list=ls())
+```
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>", echo = TRUE, eval = TRUE, results = TRUE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
+```
+
+A **character vector** is another type of atomic vector (where all elements are of the same type). In a character vector, the value of each element is of character type, which means each element is a string. A string is a sequence of characters (including letters, numbers, or symbols) surrounded by the double quotes ("") or single quotes (\'\'). For consistency, we will stick with double quotes in this book.
+
+The first example: if the word book is surrounded by a pair of double quotes, then it is a string, and `"book"` is a character vector with length 1. The value of `"book"` is the string itself. Notice that here `"book"` is a vector **without** a name since we have not assigned its value to a name, which will be introduced shortly. You can then verify the number of strings in this vector by using `length()` and verify the vector type by using `class()`.
+
+```{r}
+"book" 
+length("book")
+class("book")
+```
+
+Now the `class()` function will return `character`, which shows that `"book"` is a character vector.
+
+After assigning the value to the name r02pro, you have created a new character vector `r02pro` with "book" as the value.
+
+```{r}
+r02pro <- "book" 
+r02pro
+class(r02pro)
+```
+
+
+::: {.infobox .caution data-latex="{caution}"}
+Double quotes need to be paired in strings. If you miss the right double quote, R will show a plus on the next line, waiting for you to finish the command. If this happens, you can either enter the matching double quote, or press ESC to escape this command.
+
+```{r quo, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Miss the right quotation mark", out.width = '70%'}
+knitr::include_graphics("pics/2quo.PNG")
+```
+:::
+
+Next, let's create a numeric vector `num_vec` with number 708. After adding a pair of double quotes around the number 708, "708" has converted to a string now. You can assign the value "708" to a name (say char_vec), which will create a new character vector named `char_vec`. Don't forget to check the vector type by using `class()` if you are not sure.
+
+```{r}
+num_vec <- 708
+char_vec <- "708" 
+class(num_vec)
+class(char_vec)
+```
+
+Also, strings can contain symbols. For example, you can create a character vector with "gph&708".
+
+```{r}
+char_vec2 <- "gph&708"
+class(char_vec2)
+```
+
+In conclusion, if characters (including letters, numbers, and symbols) are surrounded by double quotes, it will be interpreted as a string by the R language. 
+
+Similar to a numeric vector, you can have multiple elements in a character vector, using the `c()` function to combine several strings into a single vector. You can verify the number of elements in a vector by using the  `length()` function. 
+
+Now we know how to obtain the length of a vector, but what about the length of a single element within a given vector? Function `nchar()` can help us with that, as you will get the number of **characters** in a string.
+
+```{r}
+animals <- c("sheep%29", "bear$11", "monkey@66")
+animals
+length(animals)
+nchar(animals)
+```
+
+As shown in the example, we can see that there are three elements in the `animals` vector, and string "sheep%29" has a length of 8 (including 5 characters, 1 symbol, and 2 numbers). Similarly, "bear$11" and "monkey@66" have a length of 7 and 9, and you can check it by yourself with the `nchar()` function. 
+
+Same as the numeric vector, you can use the `typeof()` function to find the internal storage type of a character vector. All the character vectors will be stored as the **character** in R. You can check the storage type of some character vectors we created before.
+
+```{r}
+typeof(char_vec)
+typeof(animals)
+```
+
+Finally, you can use the `vector(mode, length)` function to create a character vector of certain length. 
+```{r}
+vector("character", 6)
+```
+
+Note that the default value is an empty string for all elements.
+
+### Change case{#case}
+
+In character vectors, each string can contain both uppercase and lowercase letters. You can unify the cases of all letters inside a vector. Let's review the character vector `four_strings` first,
+
+```{r results=TRUE}
+four_strings <- c("This", "is", "R02#", "$Pro")
+four_strings
+```
+
+As one could observe, the vector `four_strings` contains a mix of uppercase, lowercase, numbers, and symbols. In order to convert all convertible characters in each string to lowercase, you can use the `tolower()` function. 
+
+The converted result can be shown directly, or saved as a new vector with your name of preference. For example, after `four_strings` is passed to `tolower()`, the returned result was saved to `lower_strings`. 
+
+```{r results=TRUE}
+lower_strings <- tolower(four_strings)
+lower_strings
+```
+
+One should also notice that, numbers and symbols within a string will not be changed, as they are non-alphabetic characters. 
+The opposite operation of `tolower()` is `toupper()`, which converts all characters in the vector to uppercase.
+
+```{r results=TRUE}
+upper_strings <- toupper(four_strings)
+upper_strings
+```
+
+### Review of getting help in R
+
+In Section \@ref(get-help), we introduced three common ways to get help in R, which can help you know more about a particular function. In this section, we will review these methods by taking `toupper` and `tolower` as examples.
+
+- Use a question mark followed by the function name `?tolower`
+- Use help function `help(tolower)` 
+- Use the help window in RStudio 
+
+Use any of the methods listed above to get the documentation for the function `tolower()`, and let's take a detailed look at it. 
+
+Different from the documentation of the `sign()` function, you will the title is named "Character Translation and Casefolding" (Figure \@ref(fig:help1)).
+
+```{r help1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (I)", out.width = '70%'}
+knitr::include_graphics("pics/2help1.PNG")
+```
+
+- The *Description* part describes the general purpose of this function. In this example, all functions introduced in this documentation translate characters in a character vector (from upper to lower case or vice versa).
+- The *Usage* part shows the expected syntax. This section may contain multiple functions that share similar usage, but with different number and format of input. For example, `chartr` is expecting three arguments, which is `old`,`new` and `x`, respectively, but `tolower` and `toupper` functions is only taking one argument `x`. 
+- The *Arguments* part provides detailed explanation for argument. Depending on the function, argument could be different from data type to input length, and it is best to read them individually. For our example, you can focus on the explanation of `x` for `tolower` and `toupper` functions for now, as this is the only required input for both of them. 
+
+Next, let's move to the *Details* part,
+
+```{r help2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (II)", out.width = '70%'}
+knitr::include_graphics("pics/2help2.PNG")
+```
+
+- The *Details* part explains the mechanism of the functions, as well as what each of them could achieve. 
+- The *Value* part shows the result that the function would return, with specified data attributes and types. For `tolower` and `toupper`, since we only covert the cases of characters, the returned character vector will share the same `length()` as the input vector. 
+
+```{r help3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (III)", out.width = '70%'}
+knitr::include_graphics("pics/2help3.PNG")
+```
+
+In the last part of the documentation, you can see the notes in the *Note* part and some functions related to functions introduced in the *See Also* part. Remember to try some sample codes in the *Examples* part, and implement your own codes with the help of the examples.
+
+
+At the end of this section, let us review the environment panel. You can see all the character vectors **with names** in this section. Notice that now the vector type has been changed to *chr* (here *chr* is short for character). 
+
+```{r char, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Character vectors", out.width = '70%'}
+knitr::include_graphics("pics/2char.PNG")
+```
+
+You can also see the list of all the named objects by using `ls()` function.
+
+```{r, results = TRUE}
+ls()
+```
+
+### Exercises
+
+1. Write R code to create a numeric vector named `vec_1` with values `7 24 8 26`, get its length, and find out its type.
+
+2. Write R code to create a character vector named `char_1` with values `"I"`, `"am"`, `"learning"`, `"R!"`, get its length, find out its type, and concatenate the vector into a single string with space as the separator.
+
+3. For the `char_1` defined in Q2, find the number of characters in each string, and convert each string to upper case.
+
+4. Create a length-2 logical vector representing whether `vec_1` and `char_1` are of character type.
+
+

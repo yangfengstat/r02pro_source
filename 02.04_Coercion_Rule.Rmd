@@ -1,0 +1,155 @@
+## Coercion Rule {#coercion-rule}
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = TRUE, collapse = TRUE)
+```
+
+At this point, we have introduced three types of atomic vectors: numeric (Section \@ref(intro-num-vector)) (containing double and integer types), character (Section \@ref(intro-char-vector)), and logical vectors (Section \@ref(intro-logi-vector)). Recall that by definition, the **atomic vectors** always contain elements of a single type. You may wonder what will happen if we try to create a vector with values of **mixed types** and that is exactly what we are going to answer in this section. 
+
+
+
+### Coercion with `c()`
+
+When we supply arguments of different types in the `c()` function, R will *unify* all elements into the **most complex type**, which is usually called the **coercion rule**. Specifically, R uses the following order of complexity (from simple to complex). 
+$$\mbox{logical} < \mbox{numeric} < \mbox{character}$$
+
+Let's see a few examples to learn how the coercion works. The first example mixes logical values with numbers. 
+
+```{r, results = TRUE}
+mix_1 <- c(TRUE, 7, 4, FALSE)
+mix_1 
+typeof(mix_1)
+class(mix_1)
+```
+
+You can see that the logical values are converted to numbers, in particular, `TRUE` is converted to 1 and `FALSE` is converted to 0, when they mix with numbers. At the end, you can see `mix_1` is a numeric vector with four numbers. The result of coercion can be confirmed with the `typeof()` and `class()` function. 
+
+
+The second example mixes numbers with strings. 
+
+```{r, results = TRUE}
+mix_2 <- c("today", "is", "Jan", 15, "2022")
+mix_2 
+class(mix_2)
+typeof(mix_2)
+```
+
+You can see that both `15` and `2022` are converted into strings since strings are more complex than numbers. Then `mix_2` will be a character vector.
+
+
+The next example mixes  logical values, numbers and strings. 
+
+```{r, results=TRUE}
+mix_3 <- c(16, TRUE, "pig")
+mix_3
+class(mix_3)
+
+```
+
+You can see in both `mix_3` and `mix_4`, both `16` and `TRUE` are converted to strings! That's because values of character type are the most complex among all values. 
+
+
+Next, let's see an interesting example in which we have two layers of coercion. 
+
+```{r, results=TRUE}
+mix_4 <- c(c(16, TRUE), "pig")
+mix_4
+```
+
+Nested `c()` will collapse into a single vector recursively and during the process, the coercion rule will apply whenever needed. First, `c(16, TRUE)` will be converted to `c(16, 1)` since numbers are more complex than logical values. Then, the expression becomes `c(c(16, 1), "pig")`. Since character is more complex than numbers, `c(16, 1)` will be converted to `c("16", "1")` when you combine it with `"pig"`, leading to the results of `mix_5`. To help you understand the process, let's look at another example. 
+
+```{r, results=TRUE}
+mix_5 <- c(16, c(TRUE, "pig"))
+mix_5
+```
+
+Here, the first layer is `c(TRUE, "pig")` which is coerced to `c("TRUE", "pig")`. Then, 16 will be coerced to `"16"` in `c(16, c("TRUE", "pig"))`, leading to the final result. The difference between `mix_4` and `mix_5` reflects the sequential coercion process.
+
+Lastly, let's talk about the coercion within numeric values. In particular, we have learned that there are two kinds of types numeric values are stored: namely **integers** and **doubles**. In the coercion rule, we have 
+$$\mbox{integer} < \mbox{double}.$$
+
+Let's see the following examples.
+
+```{r, results=TRUE}
+typeof(c(1, 5L))
+typeof(c(TRUE, 5L))
+```
+
+Let's now summarize the coercion rule of all types we have learned.
+$$\mbox{logical} < \mbox{integer} < \mbox{double} < \mbox{character}$$
+
+
+
+### Cocercion in operators
+
+
+In addition to appearing in the vector creation using the `c()` function, the coercion rule also applies when we apply operators with different types. 
+
+```{r}
+typeof(1L + 3)
+2 + TRUE + FALSE + TRUE
+(TRUE * 30 + FALSE * 29)/2
+```
+::: {.infobox .caution data-latex="{caution}"}
+R is very smart in whether to apply the coercion. 
+```{r}
+typeof(1L + 5L)
+typeof(1L * 5L)
+typeof(1L / 5L)
+```
+::: 
+
+
+When comparing vectors of different types, the coercion rule also will apply. Take the following vectors as example:
+
+```{r}
+a <- c(-1, 0, 1)
+b <- c(TRUE, FALSE, TRUE)
+a == b
+#> [1] FALSE  TRUE  TRUE
+```
+
+When we are trying to figure out if `a` is equal to `b`, we get a length-3 logical vector. Elements in `b` is first converted into 1 and 0 based on the coercion rule we previously introduced, which is `TRUE = 1` and `FALSE = 0`, and the result will be `c(1, 0, 1)`. Thus, a comparison between a logical and a numeric vector is changed into comparing two numeric vectors. 
+
+You can make comparisons between vectors of other types, the following example shows that the classic transitive property in math ($a = b$ and $b = c$ imply $a = c$) doesn't hold in R. 
+
+```{r}
+1 == TRUE
+TRUE == "TRUE"   
+1 == "TRUE"
+```
+
+
+
+### Explicit Coercion
+
+Besides the coercion rule which automatically converts all elements into the most complex type, you can also use functions to do the conversion **manually**. In particular, 
+`as.numeric()`, `as.integer()`, `as.character()`, and `as.logical()` convert its argument into numeric, integer, character, and logical, respectively.
+```{r, results=TRUE}
+as.numeric(c(TRUE, FALSE))
+as.character(c(TRUE, FALSE))
+as.integer(c(TRUE, FALSE))
+as.logical(c(1, 0))
+as.logical(c("TRUE", "FALSE"))
+```
+
+### Exercises
+
+1. Looking at the following codes without running in R, what are the storage types of `mix_1`, `mix_2`, `mix_3`, `mix_4`, `mix_5`, and `mix_6`? Verify your answers by running the code in R and explain the reason.
+```{r, eval=FALSE}
+int_1 <- 5L
+int_2 <- 6L
+num_1 <- 2
+char_1 <- "pig"
+logi_1 <- TRUE
+mix_1 <- int_1 + int_2 
+mix_2 <- int_1 + num_1
+mix_3 <- int_1/int_2
+mix_4 <- c(num_1, char_1)
+mix_5 <- c(num_1, logi_1)
+mix_6 <- c(num_1, char_1, logi_1)
+```
+
+2. If `logi_2 <- c(TRUE, FALSE, TRUE)` and `logi_3 <- TRUE`,
+what are the values of `3 * logi_2 + logi_3` and `logi_2 - logi_3`? 

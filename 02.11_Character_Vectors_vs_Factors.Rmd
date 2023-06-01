@@ -1,0 +1,158 @@
+## Character Vectors, Factors & Ordered Factors {#factors}
+
+Having learned various aspects of character vectors, we will introduce a very important class of objects in this section, named **factors**. First, let's create a character vector to be used in this section. 
+
+```{r}
+animals <- c("sheep", "pig", "monkey", "sheep", "sheep", "pig")
+```
+
+### Create a factor from a vector
+
+So, what is exactly a **factor**? It can be viewed as a special type of vector whose elements take on a **fixed and known** set of different values. You can create a factor from a vector using the `factor()` function. To understand the output of a factor, it is helpful to compare the results with the original vector `animals`. 
+```{r, results = TRUE}
+animals_fac <- factor(animals)  
+animals_fac
+animals
+```
+
+First, note that the strings in the character vector all have quotation marks around the elements, while the corresponding factor doesn't have them. Second, we see an additional row in the factor, starting with "Levels:". This shows the unique elements of `animals` ordered alphabetically. 
+
+
+If you use the `class()` function on `animals_fac`, you will see it is indeed a factor. 
+```{r}
+class(animals_fac)
+class(animals)
+```
+
+To retrieve the levels of a factor, you can use the function `levels()` on it.
+```{r, results=TRUE}
+levels(animals_fac)
+```
+
+To have a deeper understanding on factors, it is helpful to check its internal storage type using `typeof()`. 
+
+```{r, results=TRUE}
+typeof(animals_fac)
+as.numeric(animals_fac)
+```
+
+Perhaps a bit surprisingly, a factor is stored as integers. The integers represent the corresponding locations of each element in the levels. For example, the first value of `as.numeric(animals_fac)` is 3, since the first element of `animals_fac` is `"sheep"`, which is the third element in the levels. The particular storage mechanism for factors is very appealing in the sense that storing integers takes much less space than storing all the same levels repeatedly in the original character vector. As the same time, you can easily reproduce the original character vector using the integers and the factor levels using vector subsetting via indices. 
+```{r, results=TRUE}
+levels(animals_fac)[as.numeric(animals_fac)]
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+To show that factors indeed could take less memory than the corresponding character vectors when the levels are repeated many times, let's see the following example where we use the `object.size()` function to check the estimate of memory used to store the corresponding object.
+```{r, results=TRUE}
+many_animals <- rep(c("sheep", "pig", "monkey"), c(100,200,300))
+many_animals_fac <- factor(many_animals)
+object.size(many_animals)
+object.size(many_animals_fac)
+```
+
+From this example, we can see that storing the information as a factor could offer substantial memory savings (about 40% in this example) compare to storing it as a character vector.
+::: 
+
+
+
+
+Another advantage of factors over vectors is that it will detect any input that is outside of the levels. Let's try to assign the string "Tiger" to the first element of both `animals_fac` and `animals`.
+```{r, results = TRUE}
+animals_fac_new <- animals_fac
+animals_fac_new[1] <- "Tiger"
+animals_fac_new
+animals_new <- animals
+animals_new[1] <- "Tiger"
+animals_new
+```
+
+Since `"Tiger"` is not inside the levels set, we see a warning in the assignment process and the value of the first element is modified to `<NA>`, indicating it is "Not Available". We will cover `NA` in detail in Section \@ref(na). When the same assignment is done on the vector `animals`, there is no warning and the first element of `animals` is changed to "Tigers" as instructed. This is an attractive feature of factors that can prevent input errors. 
+
+In addition to creating factors from character vectors, you can also create them from numeric vectors as well as logical vectors.
+```{r}
+x <- rep(3:1, 1:3)
+x_fac <- factor(x)
+y <- rep(c(T, F), c(5, 3))
+y_fac <- factor(y)
+```
+
+It is worth noting that after converting a numeric vector into a factor, the usual arithmetic operation can no longer be applied since the numbers become levels. 
+```{r, results=TRUE, warning=TRUE}
+x_fac[1] + 1
+```
+
+The result is `NA` with a warning message that `+` is not meaningful for factors.
+
+### Set the factor levels and labels
+
+As we have seen, the `factor()` function extracts the unique elements from a vector and sort them as its levels. To manually specify the levels and their order, you can set the `levels` argument. For example, if you only want `"sheep"` and `"pig"` in the level, you can use the following code.
+
+```{r, results=TRUE}
+factor(animals_fac, levels = c("pig", "sheep"))
+```
+
+As you can see, the third element is now `NA`, since the corresponding value `"monkey"` is not in the set of levels. 
+
+You can also create labels to represent each level of the factor by setting the `labels` argument in the `factor()` function.
+```{r, results=TRUE}
+factor(animals_fac, levels = c("pig", "sheep"), labels = c("pretty_pig", "smart_sheep"))
+```
+
+An alternative way to modify the levels of the factor is to assign the desired level vector to the `levels()` function with the factor as its argument. For example, if you want to translate the animals names into Spanish, you can use
+
+```{r, results = TRUE}
+levels(animals_fac) <- c("mona", "cerda", "oveja")
+animals_fac
+```
+
+
+### Ordered factors
+
+By default, the function `factor()` creates an **unordered factor**, which is usually used when there are no natural ordering among the levels. Sometimes, there may be a natural ordering among the levels. Let's see an example. 
+
+```{r}
+conditions <- c("excellent", "good", "excellent", "good", "average")
+factor(conditions)
+```
+
+Different from the animals in `animals`, the conditions have a natural ordering. We know average < good < excellent. To encode this information in a factor, you can create a so-called **ordered factor** by setting `ordered = TRUE` in the `factor()` function and specify the levels in the ascending order of the desired ordering. 
+```{r, results = TRUE}
+condition_ordered_fac <- factor(conditions, 
+                                ordered = TRUE, 
+                                levels = c("average", "good", "excellent"))
+condition_ordered_fac
+```
+
+We can see that there is an ordering shown in the "Levels". You can also make comparisons on ordered factors.
+```{r, results = TRUE}
+condition_ordered_fac[1] < condition_ordered_fac[2]
+```
+
+The result is `FALSE` since excellent > good. Let's check what would be the result if we don't specify `order = TRUE`.
+```{r, warning=TRUE}
+condition_fac <- factor(conditions, 
+                        levels = c("average", "good", "excellent"))
+condition_fac[1] < condition_fac[2]
+```
+
+The result is again `NA`, since the comparison `<` is not meaningful for **unordered** factors.
+
+We will revisit the topic of factor ordering when generating bar charts in Section \@ref(reordering-bar-chart). 
+
+
+### Exercises
+
+1. What are the advantages of factors over vectors?
+2. Suppose we define `x <- factor(1:5)`, what is the result of `x[1] < x[2]`? Please try to answer this question without R. 
+- (a): `TRUE`
+- (b): `FALSE`
+- (c): `NA`
+3. Suppose we define `x <- factor(1:5, ordered = TRUE)`, what is the result of `x[1] < x[2]`? Please try to answer this question without R. 
+- (a): `TRUE`
+- (b): `FALSE`
+- (c): `NA`
+4. Suppose we define `x <- factor(1:5, ordered = TRUE, levels = 5:1)`, what is the result of `x[1] < x[2]`? Please try to answer this question without R. 
+- (a): `TRUE`
+- (b): `FALSE`
+- (c): `NA`
+5. Suppose `size <- rep(c("big", "small", "medium"), 3:1)`, convert it to an ordered factor with levels small < medium < big. 

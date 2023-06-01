@@ -1,0 +1,114 @@
+## Exporting Data to Delimited Files  {#export-data}
+
+### Set the working directory {#setwd}
+
+First, we will introduce an important concept called **Working Directory**. In order to achieve **data export** and **data import**, you are recommended to set the *working directory*, since we usually use a path relative to the working directory for interacting with files on the computer in R. To set the working directory, you can click *Session* on the menu and click  *Set Working Directory*. 
+
+```{r setwd1, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="Set Working Directory", out.width = '90%'}
+knitr::include_graphics("pics/5_setwd.png")
+```
+
+There are three options under this menu: 
+
+- *To Source File Location*: this will set the working directory as the directory of the current R script. 
+- *To Files Pane Location*: this will set the working directory as the directory of the Files Pane on the bottom right of RStudio. 
+- *Choose Directory...*: this will open up a window from which you can choose any desired directory. 
+
+Keep in mind that if you choose to work under a RStudio project, you might notice an additional choice under the *Set Working Directory* tab:
+
+- *To Project Directory*: this will set the working directory as the directory of your current RStudio project. 
+
+After selecting one of the three options, we can see a line of code containing the function `setwd()` executed in the console. Indeed, this menu operation is equivalent to using the `setwd()` function with the argument being the full path or relative path of the desired directory. 
+
+Another related function is `getwd()`, which tells us the absolute path representing the current working directory. When you see an error message saying that a file is not found, it is a good idea to check the current working directory and check whether it is correct. 
+
+```{r, eval=FALSE}
+getwd()
+```
+
+For illustration purposes, we will create a folder called "data" using the function `dir.create()` under the current working directory and export/import to/from files in this folder. 
+
+```{r, warning=FALSE, eval=FALSE}
+dir.create("data")
+```
+
+### Delimited files
+
+In most applications, you will interact with the so-called **delimited** file. In a delimited file, each row represents a single observation, and it has values separated by the **delimiter**. In principle, *any character (including letters, numbers, or symbols)* can be used as a delimiter, with the most commonly used ones being the follow.
+
+```{r echo = FALSE, results = TRUE}
+library(tibble)
+Delimiter  <- c("comma","space","tab")
+Symbol <- c("`,`", "` `", "`\\t`")
+File_Extension <- c(".csv", ".txt",".tsv")
+
+d <- tibble(Delimiter, Symbol, `Common File Extension` = File_Extension )
+knitr::kable(d)
+```
+
+### Write an object into a .csv file {#write-csv}
+
+First, let's work with one popular kind of *delimited* files called  *comma-separated value* file, usually with the file extension .csv. In a .csv file, the *delimiter* is *comma* (`,`). 
+
+Let's work with the `gm2007` dataset and export a part of it (first five rows and three columns) to a .csv file. To illustrate how the missing data affects data export, let's set the (3, 3) element to be `NA`. We have the country name, year, HDI for each of the 5 country we have here.
+
+```{r, eval=TRUE}
+library(r02pro)
+gm_small <- gm2007[1:5, 1:3]
+gm_small[3, 3] <- NA
+gm_small
+```
+
+Now, let's write the data frame `gm_small` into a file called "gm_small.csv" in the currently working directory. To write an object into a .csv file, you can use the `write_csv()` function in the **readr** package. Since **readr** is a sub-package of **tidyverse**, you can load the package directly if the **tidyverse** package is installed.
+
+```{r, eval=FALSE}
+library(readr)
+write_csv(gm_small, "data/gm_small.csv")
+```
+
+Note here, we are writing the tibble `gm_small` into a file named "gm_small.csv" in the folder "data". "data/gm_small.csv" is an example of **relative file path**. You can also use the **absolute file path** on your computer, though it is not as collaboration friendly as the relative path, since your collaborator may have a different file structure from yours.  
+
+You can verify the .csv file has been indeed created and open the file with RStudio or any text editor to verify its contents. 
+
+```{r csv, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="File Contents", out.width = '90%'}
+knitr::include_graphics("pics/4.2_csv_content.png")
+```
+
+We can see that all the information is wrote in the .csv file, with *commas* separating the values on each observation. In particular, you may find out the first row of the file corresponds to the column names. If you don't want to include the column names, you can set the argument `col_names = FALSE`. 
+
+```{r, eval=FALSE}
+write_csv(gm_small, "data/gm_small_no_colname.csv", col_names = FALSE)
+```
+
+By default, `write_csv()` writes the data into a file in which `NA` is used to represent all the missing values, just like in the tibble. If you want to use another string to represent the missing values in the file, you can set the argument `na` to be the string.
+
+```{r, eval=FALSE}
+write_csv(gm_small, "data/gm_small_missing.csv", na = "This value is missing!")
+```
+
+### Write an object into a general delimited file {#write-delim}
+
+As introduced at the beginning, there are different types of *delimited files*, depending on the specific *delimiter* of your choice. The function `write_delim()` enables us to write an object into a delimited file with any chosen delimiter. The usage of `write_delim()` is almost identical to `write_csv()`, except that it has an additional argument `delim`, which specifies the delimiter to be used. Let's see the following example with `*` as the delimiter. 
+
+```{r, eval=FALSE}
+write_delim(gm_small, "data/gm_small_star.csv", delim = "*")
+```
+
+### Exercises
+
+Use R to create the following data frame and assign it to the name `my_data`.
+
+```{r, echo=FALSE, results=TRUE}
+cha <- c("one", "two", NA, "four", "five")
+num <- c(1, NA, 3, 4, 5)
+let <- letters[1:5]
+my_data <- data.frame(word = cha, number = num, letter = let)
+my_data
+```
+
+
+1. Write R code to set working directory to the location of your .R or .Rmd file, and export `my_data` into a .csv file named "my_data_no_name.csv" without column names. 
+
+
+2. Write R code to export `my_data` into a delimited file called "my_data_na.csv" with `#` as the delimiter and use `999` as the indicator for missing values. 
+

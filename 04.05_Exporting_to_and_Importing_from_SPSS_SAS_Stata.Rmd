@@ -1,0 +1,73 @@
+## Exporting to and Importing from SPSS, SAS, and Stata Files  {#import-other}
+
+Now, you know how to export and import data from delimited files and Excel files. In the section, you will learn how to export and import data from other statistical software including SPSS, SAS, and Stata. We will use the package **haven**, another member of the **tidyverse** family.
+
+### Export and Import SPSS Files
+
+Let's first load the package **haven**, and prepare a data frame for exporting.
+
+```{r, eval=TRUE}
+library(tibble)
+library(haven)
+dig_num <- 7:1
+ani_char <- c("sheep", "pig", "monkey", "pig", "monkey", NA, "pig")
+conditions <- c("Excellent", "Good", NA, "Fair", "Good", "Good", "Excellent")
+my_animals<- tibble(dig_num, ani_char,conditions)
+my_animals
+```
+
+The data frame `my_animals` will be used as in Section \@ref(export-data). You can use the function `write_sav()` to export a data frame into a SPSS .sav file. 
+
+```{r, eval=FALSE}
+write_sav(my_animals, "data/my_animals.sav")
+```
+
+To read a SPSS file ending in .sav or .por, you can use the function `read_spss()` which will automatically call `read_sav()` for .sav files and `read_por()` for .por files.
+
+```{r, results=TRUE}
+my_animals_spss <- read_spss("data/my_animals.sav")
+head(my_animals_spss)
+```
+
+
+### Export and Import SAS Files
+
+You can use the function `write_sas()` to export a data frame into a SAS .sas7bdat file. 
+
+```{r, eval=FALSE}
+write_sas(my_animals, "data/my_animals.sas7bdat")
+```
+
+To import a SAS file, you can use the function `read_sas()`.
+
+```{r, results=TRUE}
+my_animals_sas <- read_sas("data/my_animals.sas7bdat")
+head(my_animals_sas)
+```
+
+
+### Export and Import Stata Files
+
+Lastly, let's talk about Stata files. You can use the function `write_dta()` to export a data frame into a Stata .dta file. 
+
+```{r, eval=FALSE}
+write_dta(my_animals, "data/my_animals.dta")
+```
+
+To read a Stata file ending in .dta, you can use the function `read_dta()`.
+
+```{r, results=TRUE}
+my_animals_stata <- read_dta("data/my_animals.dta")
+head(my_animals_stata)
+```
+
+
+
+### Import using the menu
+
+Similarly as Sections \@ref(import-data) and \@ref(import-excel), you can also use the menu in Table \@ref(tab:importMenu) to import SPSS, SAS, and Stata Files. 
+
+### Exercise
+
+1. Export the first 8 observations in the `sahp` dataset (in **r02pro** package) to SPSS, SAS, and Stata file formats, respectively.
+2. Import the files from Q1 to R and verify their contents. 

@@ -1,0 +1,49 @@
+# Data Manipulation {#data-manipulation}
+
+For conducting data analysis, we often need to conduct various kinds of data manipulation. We will use the `gm` data set in the **r02pro** package throughout this chapter. Let's first look at the data set.
+
+```{r}
+library(r02pro)
+gm
+```
+
+`gm` is a dataset of 65,531 country and year pairs, with 33 variables sociodemographic and public health features. To learn more about each variable, you can look at its documentation.
+```{r, eval=FALSE}
+?gm
+```
+
+To view the entire dataset, you can use the `View()` function, which will open the dataset in the new file window.
+```{r, eval=FALSE}
+View(gm)
+```
+
+To get the first 6 rows of `gm`, you can use the `head()` function, which also has an optional argument if you want a different number of top rows. 
+```{r}
+head(gm)
+head(gm, n = 10) #the first 10 rows of gm
+```
+
+The following are some possible questions we may want to explore.
+
+1. (pick observations by their values) Find the observations that represent countries in Europe (`continent`), years between 2006 and 2010 (`year`), and Low Human Development Index (`HDI_category`). 
+
+You will learn how to **filter observations** in Section \@ref(filter-observations).
+
+2. (reorder the observations) In year 2008, find the 10 countries with the highest life expectancy.
+
+You will learn how to **reorder observations** in Section \@ref(reorder-observations).
+
+3. (pick variable by their names) We see there are 33 columns. For a particular data analysis question, perhaps we want to focus on a subset of the columns.
+
+You will learn how to **select variables** in Section \@ref(select-variables).
+
+4. (create new variables as functions of existing ones) From the existing variables, perhaps we want to create new ones, for instance, the total number of new lung cancer cases for each country.
+
+You will learn how to **create new variables** in Section \@ref(create-variables).
+
+
+5. (create various summary statistics) We may want to create certain summary statistics. For example, what is the average life expectancy of the countries in each continent for each year?
+
+You will learn how to **group observations** and **create summary statistics for each group** in Section \@ref(create-grouped-summaries).
+
+

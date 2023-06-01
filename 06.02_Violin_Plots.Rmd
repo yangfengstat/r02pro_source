@@ -1,0 +1,99 @@
+## Violin Plots {#violin}
+
+In this section, we introduce how to combine music with R via creating **violin plots**. In fact, the violin plot elegantly combines density plot (Section \@ref(density-plot)) and boxplot (Section \@ref(boxplots)) and into a single plot. 
+
+### The basic violin plot
+
+Let's say we want to generate a basic violin plot for the variable `cholesterol` in the `gm2004` dataset.
+
+```{r, warnings = FALSE}
+library(r02pro)
+library(ggplot2)
+ggplot(data = gm2004, 
+       aes(x = "", y = cholesterol)) + 
+  geom_violin()
+```
+
+To introduce the detail of the generation process of violin plot, it is helpful to review the density plot.
+```{r, warnings = FALSE}
+ggplot(data = gm2004, 
+       aes(y = cholesterol)) +
+  geom_density()
+```
+
+Looking at these two plots, it is easy to see that the basic violin plot is nothing but a **Mirrored Density Plot** with the kernel density estimates on each side. 
+
+### Violin plot with boxplot
+
+Usually, the violin plot includes the boxplot inside it, providing extra information about the data. To do this, we just add the boxplot layer on top of the violin plot.
+
+```{r, warnings = FALSE}
+ggplot(data = gm2004, 
+       aes(x = "", y = cholesterol)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1)
+```
+
+Here, we set the aesthetic `width = 0.1` in the boxplot to make it thinner. 
+
+Just like in the boxplot, we can compare the distributions of a continuous variable for different values of a discrete variable. We can achieve this by mapping the discrete variable to the x axis.
+
+```{r, warning = FALSE}
+ggplot(data = gm2004, 
+       aes(x = continent, 
+           y = cholesterol)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1)
+```
+
+We can restrict the x-axis to a subset of the possible `continent` values. 
+```{r, warning = FALSE}
+ggplot(data = gm2004, 
+       aes(x = continent, 
+           y = cholesterol, 
+           color = continent)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1) + 
+  scale_x_discrete(limits=c("Africa", "Americas", "Asia"))
+```
+
+
+Similarly, we can map a third variable to an aesthetic.
+
+```{r, warning = FALSE}
+ggplot(data = gm2004, 
+       aes(x = continent, 
+           y = cholesterol, 
+           fill = gender)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1) + 
+  scale_x_discrete(limits=c("Africa", "Americas", "Asia"))
+```
+
+As you can see, the boxplot doesn't align well inside the violin plot. To fix this issue, you can add the global aesthetic `position = position_dodge(0.9)` to both geoms. 
+
+```{r, warning = FALSE}
+ggplot(data = gm2004, 
+       aes(x = continent, 
+           y = cholesterol, 
+           fill = gender)) + 
+  geom_violin(position = position_dodge(0.9)) +
+  geom_boxplot(width = 0.1, position = position_dodge(0.9)) + 
+  scale_x_discrete(limits=c("Africa", "Americas", "Asia"))
+```
+
+You can also try to add other Constant-Valued Aesthetics to both geoms to change their appearances. 
+
+```{r, warning = FALSE}
+ggplot(data = gm2004, 
+       aes(x = continent, 
+           y = cholesterol, 
+           color = continent)) + 
+  geom_violin(color = "violet",
+              size = 2) +
+  geom_boxplot(width = 0.1,
+               color = "blue",
+               size = 1) + 
+  scale_x_discrete(limits=c("Africa", "Americas", "Asia"))
+```
+

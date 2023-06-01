@@ -1,0 +1,289 @@
+## Introduction to Numeric Vectors {#intro-num-vector} 
+
+We will start off this chapter by learning **numeric vectors**. Numeric vectors are perhaps the most commonly used member of the **atomic vector** family, where all elements are of the same type. 
+
+### Creation and class{#create-numeric-vector} 
+
+```{r, include = FALSE, echo=FALSE}
+rm(list=ls())
+```
+
+
+A **numeric vector** is an atomic vector containing only numbers. For example, `6` is a numeric vector with one element of value 6. 
+ 
+ 
+By assigning the value 6 to the name x1, you can create a new numeric vector `x1` with value 6. As a result, you can refer to `x1` in subsequent calculations. For any vector, you can use the `length()` function to check the number of elements it contains. 
+ 
+```{r, results = TRUE}
+6                         #a numeric vector
+x1 <- 6                   #x1 is also a numeric vector
+x1                        #check the value of x1
+length(6)                 #length of 6
+length(x1)                #length of x1
+```
+
+Given the output, you can see that `6` is a numeric vector with length 1 and you have successfully created the numeric vector `x1` of length 1.
+
+Moving on, you may wonder, can a numeric vector contain more than one value? The answer is a big YES! In R, you can use the `c()` function (`c` is short for combine) to store several elements into one single numeric vector. 
+
+```{r, results = TRUE}
+c(1, 3, 3, 5, 5)          #use c() to combine elements into a numeric vector of length 5
+y1 <- c(1, 3, 3, 5, 5)    #y1 is a numeric vector of length 5
+y1                        #check the value of y1
+length(y1)                #length of y1
+```
+
+In this example, firstly you have created a length-5 object using the `c()` function with arguments being the five elements separated by **comma**. Since all elements are numbers, this object is still a numeric vector. Then after assigning the values to the name y1, you will get a new numeric vector `y1` with 5 elements. Among the five elements, although some of them have the same value, R still recognizes and stores them separately. This is the reason why the length of  `y1` is 5 instead of 3.
+
+Similar to `x1`, you can verify the contents of `y1` and check the length of it via the `length()` function. 
+
+::: {.infobox .caution data-latex="{caution}"}
+
+When you assign several values to a name, the order of the values will not change after assignment. If you create two numeric vectors containing the same numbers but in different orders, the two vectors will be two different ones maintaining the specified orders. For example,
+
+```{r, results = TRUE}
+y2 <- c(1, 3, 5, 7, 9)    
+y2                        
+y3 <- c(9, 7, 5, 3, 1)    
+y3
+```
+
+::: 
+
+In addition to using numbers inside the `c()` function, you can also use numeric vectors as the arguments to create a longer vector. The new, longer vector will combine the input numeric vectors in the given order. 
+
+```{r, results = TRUE}
+c(x1, y1)          #use c() to combine several numeric vectors into one numeric vector
+z1 <- c(x1, y1)
+z1
+length(z1)
+```
+
+Since `x1` contains 1 numeric value and `y1` contains 5 numeric values, `z1` is a numeric vector of length 6 after combination.
+
+For any vector, you can use the function `class()` to check its **class**. A class can be thought of as a "type," providing a description about the vector and determining what functions can be applied to it. 
+
+```{r, results = TRUE, collapse = TRUE}
+class(x1)
+class(y1)
+class(z1)
+```
+
+From the results, you can see that `x1`, `y1`, and `z1` are all numeric, which is the reason why they are called *numeric vectors*. 
+
+As introduced in Section \@ref(Object-Assignment), you can check the named objects via the environment panel as shown in Figure \@ref(fig:en11). 
+
+```{r en11, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (I)", out.width = '70%'}
+knitr::include_graphics("pics/2en1.PNG")
+```
+
+We can see that the environment panel has two columns, with the first column showing the list of object names and the second column showing the corresponding information for each object. The information includes the vector type (here *num* is short for numeric), the vector length, and the value(s) of the vector. Note that if the vector is of length 1 (for example `x1`), the environment will not show the type or the length.
+
+In the last section, we have introduced how to change the value of an object by reassigning it. Similarly, you can also assign a new value, or new values, to `x1`. Notice that the values you are going to assign can have different length with the previous values. Let's see an example,
+
+```{r, results = TRUE}
+z1 <- c(6, 1, 3)
+z1   #check the value of z1
+```
+
+Now, you can see that `z1` contains 3 numeric values, so `z1` is a numeric vector of length 3.
+
+As expected, you can also view the newly assigned values of `z1` in the environment panel, as shown in Figure \@ref(fig:en12).
+
+```{r en12, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (II)", out.width = '70%'}
+knitr::include_graphics("pics/2en2.PNG")
+```
+
+Finally, you can use the `vector(mode, length)` function to create a vector of certain `mode` and `length`. 
+```{r}
+vector("numeric", 4)
+```
+
+
+### Operations and recycling rule {#operation-recycling}
+
+Since numeric vectors are purely made of numbers, you can do **arithmetic operations** between them, just like the fancy calculator in Section \@ref(Calculator). If two or more vectors are of the **same length**, the operation is done **element-wisely**. In other words, R will perform the operation between elements in the same index of different vectors. First, let's create another vector `x2` of length 1 and compute the sum of `x1` and `x2`. Also recall that we've previously created a length-1 numeric vector `x1` with value 6.
+
+```{r results=TRUE}
+x1
+x2 <- 3
+x1 + x2
+```
+
+Then obviously you will get 9! If you assign this operation to a name, you will create a new numeric vector with the *result* of the operation as the value.
+
+```{r results=TRUE}
+s1 <- x1 + x2
+s1 
+```
+
+Here, `s1` is a length-1 numeric vector with value 9.
+
+Similarly, you can create another vector `y2` of the same length as vector `y1`. Then, you can do operations between `y1` and `y2`.
+
+```{r results=TRUE}
+y1
+y2 <- c(2, 4, 1, 3, 2)
+y1 * y2
+```
+
+The result is yet another length-5 vector. To check the calculation was indeed done element-wisely, you can verify that the value of the first element is $1 * 2 = 2$, and value of the second element is $3 * 4 = 12$, etc. 
+
+You can also store the result of multiplication for future use by assigning it to a name.
+
+```{r results=TRUE}
+s2 <- y1 * y2
+s2
+```
+
+
+To have the calculation done element-wisely, R requires two or more vectors to have the same length. However, there is an important **recycling** rule in R, which is quite useful and enables us to write simpler code. Specifically, if one vector is shorter than the other vector, R will **recycle** (repeat) the shorter vector until it matches in length with the longer one so that element-wise calculations can be done conveniently. This recycling is most often used for an operation between a **length>1** vector and a **length-1** vector. Let's see an example.
+
+```{r results=TRUE}
+y1 + x1
+```
+
+From the result, you can see that `x1` is recycled five times to match in length with `y1`, becoming a length-5 numeric vector with five sixes. Subsequently, each element in `y1` is added by 6.
+
+::: {.infobox .caution data-latex="{caution}"}
+By now you have created several objects, and you may find that objects will not be saved in R if you don’t assign their values to names, for example, the results of `y1 + x1` is not shown in the environment.
+:::
+
+
+The followings are a few additional examples you can try.
+
+```{r, eval=FALSE}
+y1 * x2
+y1 / 5
+y2 - x1
+```
+
+
+
+### Storage types (doubles and intergers) {#storage-type}
+
+Now, it is time to learn how numeric vectors are stored in R. To find the **internal storage type** of an R object, you can use the `typeof()` function.
+
+```{r, results=TRUE}
+my_num <- c(1.5, 3, 4)
+typeof(my_num)         #check the internal storage type
+```
+
+You can see that the internal storage type of `my_num` is **double**, meaning that `my_num` is stored as a **double precision** numeric value. In fact, R stores numeric vectors as double precision vectors by default. Let's see another example,
+
+```{r, results=TRUE}
+my_dbl <- c(3, 4)
+typeof(my_dbl)         #check the internal storage type
+```
+
+Different from `my_num` which contains a non-integer (1.5), all elements in `my_dbl` are integers. However, the storage type of `my_dbl` is still double, same as `my_num`. When all values of a numeric vector are integers (such as `my_dbl`), you can store it as an **integer vector**, which is also a numeric vector. To do this, you only need to put an "L" after each integer in the vector. Let's create an integer vector and check its storage type as well as its class. 
+
+```{r, results=TRUE}
+my_int <- c(3L, 4L)
+typeof(my_int)
+class(my_int)
+```
+
+You can see that internal storage type of `my_int` is indeed of `integer` type, with the `class` of it being `integer` as well. It is also worth noting that the displaying value of `my_double` and `my_int` are the same.
+
+```{r, results=TRUE}
+my_double
+my_int
+```
+
+You can also check the vector type and values in the environment. (as shown in Figure \@ref(fig:en13))
+
+```{r en13, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Different storage types", out.width = '70%'}
+knitr::include_graphics("pics/2en3.PNG")
+```
+
+From the picture above, you can see that the values of `my_int` are still 3 and 4, which are the same as those of `my_dbl`. The difference between these two vectors is that `my_int` is an integer vector since its internal storage type is integer, and such a storage type offers great *memory savings* compared to doubles.
+
+Notice that a numeric vector's internal storage type is consistent. Say if you assign multiple numeric values to an object, even when you assign an "L" to most values, as long as the object obtains at least one decimal value, the vector will be stored in R as double. This rule also implies that any numeric vector containing at least one decimal value cannot be transformed to an integer vector.
+
+
+```{r, results=TRUE}
+my_num2 <- c(1.5, 3L, 4L)
+typeof(my_num2) 
+class(my_num2)
+```
+
+Moreover, as you can see by running the code below, whenever you put an "L" after an decimal value, you will get the warning and the storage type will remain `double`.
+
+```{r, results=TRUE}
+my_num3 <- c(1.5L, 3L, 4L)
+typeof(my_num3)
+class(my_num3)
+```
+
+In conclusion, all the numeric vectors will be stored as `double` by default. If all values in a numeric vector are integers, you can convert this numeric vector into an integer vector, and the storage type of this vector will be `integer`, which can save memories compared to doubles. That being said, don't get confused: both double and integer vectors belong to numeric vectors.
+
+
+
+::: {.infobox .caution data-latex="{caution}"}
+Despite the differences between integers and doubles, you can usually ignore their differences unless you are working on a very big data set. R will automatically convert objects between integers and doubles when necessary. 
+:::
+
+### Printing {#printing}
+
+Now, you have learned numeric vectors along with their possible storage types. In this part, let's discuss how you can customize the output digit of a number via printing. Let's start with `pi`, which is a mathematical constant you may be familiar with. `pi` is also an internal numeric vector available for use in R, meaning that it will appear in the environment panel without requiring you to assign it to a name. 
+
+```{r, results=TRUE}
+pi
+```
+
+As you can see from the output, R prints out 7 **significant digits** by default, though in fact we need infinitely many digits to faithfully represent `pi`. To print out an object with a customized significant digit number, you can use the `print()` function that contains useful argument called `digits`, which controls the number of significant digits to be printed. Let's see the following examples.
+
+You can try the following examples.
+
+```{r, results = TRUE}
+print(pi, digits = 20)          #print pi for 20 significant digits
+print(pi, digits = 4)           #print pi for 4 significant digits
+```
+
+
+
+::: {.infobox .caution data-latex="{caution}"}
+Note that the `round()` function also has an argument `digits`, which has a **different** meaning, representing the number of digits after the decimal point. 
+```{r, results = TRUE}
+print(pi, digits = 4)           #print pi for 4 significant digits
+round(pi, digits = 4)           #round pi to 4 decimal places
+```
+::: 
+
+
+You may be wondering whether happens if `digits` is larger than the number of the actual significant digits of a number. Let's try the following example.
+
+```{r, results = TRUE}
+print(1.2, digits = 5)
+```
+
+Clearly, the `print()` function will print out at most the significant digits of the number. 
+
+When you print a vector with more than one element, the same number of decimal places is printed for all elements. In this case, the `digits` parameter represents the **minimum** number of significant digits,  and that at least one element will be encoded with that minimum number.
+
+```{r, results = TRUE}
+print(c(pi, exp(1), log(2)), digits = 4)
+print(c(pi, exp(1), log(2), exp(-5)), digits = 4)
+print(c(20000, 1.2, 2.34), digits = 3)
+```
+
+
+As you can imagine, the `print()` function will be very useful in creating tables that look more streamlined.
+
+
+### Exercises
+
+Write the R code to complete the following tasks.
+
+1. Create a numeric vector named `vec_1` with values $(2, 4, 6, 8)$, get its length,  find out its class, and get its storage type.
+
+2. For the numeric vector `vec_2 <- c(1, 3, 7, 10)`, get the value of the 3rd element, multiple the 3rd element by 5, and verify the change. 
+
+3. Create a vector `vec_3` where each element is twice the corresponding element  in `vec_1` minus half the corresponding element in `vec_2`. 
+
+4. Create an integer vector `int_1` that contains integers $(2, 4, 6, 8)$. Check its class and storage type.
+
+5. Print out the vector $(e, e^2, e^3)$ with 5 significant digits. 
+
+

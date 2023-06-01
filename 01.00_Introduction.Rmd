@@ -1,0 +1,3 @@
+# Introduction {#introduction}
+
+This chapter begins with the installation of R, RStudio, and R Packages in Section \@ref(Installation), shows how to use R as a fancy calculator in Section \@ref(Calculator), followed by object assignments in Section \@ref(Object-Assignment). 

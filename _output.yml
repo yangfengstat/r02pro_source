@@ -1,0 +1,18 @@
+bookdown::gitbook:
+  css:  style.css
+  split_by: section
+  config:
+    toc:
+      before: |
+        <li><a href="./">R Programming: Zero to Pro</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/yangfengstat/r02pro_source/edit/main/%s
+bookdown::pdf_book:
+  includes:
+    in_header: [latex/preamble.tex, latex/blackbox.tex, latex/infobox.tex]
+  latex_engine: xelatex
+  citation_package: natbib
+  pandoc_args: --top-level-division=chapter
+  keep_tex: yes
+bookdown::epub_book: default

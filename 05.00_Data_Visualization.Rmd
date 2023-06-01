@@ -1,0 +1,3 @@
+# Basic Data Visualization {#data-visualization}
+
+Equipped with the knowledge of different R objects in Chapters \@ref(r-objects) and \@ref(object-other-type), and knowing how to import data sets in Chapter \@ref(import-export), we are ready to dive into the colorful world of **data visualization**. In this chapter, you will learn the most commonly used kinds of plots that can be generated in R. 

@@ -1,0 +1,209 @@
+## Logical Vectors: Logical Operators{#logical_operators}
+
+In Section \@ref(subsetting-and-modify-values), you learned how to do vector subsetting, which yields a subvector of the original vector. Let's take a numeric vector `x <- 1:5` as an example. To get a subvector of `x` with values greater than 3, you can create a **logical vector**, and then use it as the index to do vector subsetting. 
+
+```{r results=TRUE}
+x <- 1:5
+xb3 <- x > 3
+set1 <- x[xb3]
+set1
+```
+
+Here, the numeric vector `set1` has values `4 5`. You can get another subvector of `x` by running the following codes.
+
+```{r}
+xs4 <- x <= 4
+set2 <- x[xs4]
+set2
+```
+
+Sometimes, you may want to get a subvector containing elements that satisfy more than one conditions. For example, how can we find the subvector of `x` with values larger than 3 and less than or equal to 4? In this section, we will introduce several **logical operators** and use them to get subvectors. Here, we will focusing on applying logical operators on logical vectors, but keep in mind that many of the example here could be used to express complex arguments in R.
+
+Before we get started, let's create another numeric vector `y`, and compare it to `8` and `9`, separately. Then you will get two logical vectors with the same values as `xb3` and `xs4`.
+
+```{r}
+y <- 6:10
+yb8 <- y > 8           #xb3 is the same as yb8
+ys9 <- y <= 9          #xs4 is the same as ys9
+```
+ 
+### NOT operator by `!`
+
+The first operator we want to introduce is `!`, often called the **NOT operator**. The NOT operator returns the **opposite** of the input logical values. It is intuitive to understand since if something is NOT FALSE, then it is TRUE; and if it is NOT TRUE, then it has to be FALSE. The effect of `!` is summarized in the following table. 
+
+```{r results = TRUE, echo=FALSE}
+Operation  <- c("! TRUE", "! FALSE")
+Result <- c("FALSE", "TRUE")
+d <- data.frame(Operation, Result)
+knitr::kable(d)
+```
+
+Let's see what happens if you apply the NOT operator on a logical vector with more than one element.
+
+```{r results=TRUE}
+!c(FALSE, FALSE, FALSE, TRUE, TRUE)  #the opposite of a logical vector
+```
+
+Here, you get another logical vector with the same length as the original one. The value of each element in the output is the **opposite** of the corresponding value in the original vector. 
+
+
+
+Since `xb3` is also a logical vector, you can apply `!` on `xb3` and use `!xb3` (which is also a logical vector) to do vector subsetting. Guess what you will get?
+
+```{r results=TRUE}
+!xb3
+set3 <- x[!xb3]
+set3
+```
+
+Of course, the resulting numeric vector `set3` will have `1 2 3` as values! As a result, `set1` and `set3` are complements of each other from the whole vector `x`. We can actually get back `x` with `xb3` alone, with some help of vector subsetting and vector concatenation introduced in previous sections.
+
+```{r}
+c(x[!xb3], x[xb3]) == x
+```
+
+
+### AND operator by `&`
+
+Now, we will introduce the AND operator `&`. For two logical vectors of **the same length**, `&` performs comparisons elementwisely. For each location of the resulting vector, the value will be `TRUE` if the values in the same location of the input two vectors are **both `TRUE`**, and will be `FALSE` otherwise. In particular, for each element, we have the following summary. 
+
+```{r results = TRUE, echo=FALSE}
+Operation  <- c("TRUE & TRUE", "TRUE & FALSE", "FALSE & TRUE", "FALSE & FALSE")
+Result <- c("TRUE", "FALSE", "FALSE", "FALSE")
+d <- data.frame(Operation, Result)
+knitr::kable(d)
+```
+
+
+Let's see an example of the AND operation between two logical vectors of the same length. 
+
+```{r results=TRUE}
+c(FALSE, FALSE, FALSE, TRUE, TRUE) & c(TRUE, TRUE, FALSE, TRUE, FALSE)
+
+```
+
+As explained before, the AND operator works elementwisely, and the intermediate step is as below. 
+
+```{r results=TRUE}
+c(FALSE & TRUE, FALSE & TRUE, FALSE & FALSE, TRUE & TRUE, TRUE & FALSE)
+```
+
+As you can see from the result, only the fourth element is `TRUE` since the fourth element of both input logical vectors is `TRUE`.  
+
+Since the AND operator makes comparisons elementwisely, the *recycling rule* also works here. As in the arithmetic operations, normally, we mix one vector with length > 1 and another one with length 1.
+```{r, results = TRUE}
+c(FALSE, FALSE, FALSE, TRUE, TRUE) & FALSE
+```
+
+
+Using the AND operator, you can now easily get a subvector of `x` with value(s) > 3 and <= 4. Recall that at the beginning of this section, you have created two logical vectors `xb3` and `xs4`, then let's apply `&` on them,
+
+```{r results=TRUE}
+xb3 & xs4  
+```
+ 
+From the result, you know that both `xb3` and `xs4` have value `TRUE` for the fourth element, which means the statement that *the value is > 3 and <= 4* is TRUE for the fourth element in `x`. Then, you can use `xb3 & xs4` (a logical vector) to do vector subsetting. 
+
+```{r results=TRUE}
+x[xb3 & xs4]                                      
+```
+
+Here, you get a subvector of `x` with the value `4`.
+
+Since `xs4` and `ys9` have the same values, you will get the same result if you include `ys9` to get a subvector. Therefore, you can try the following codes by yourself.
+
+```{r, eval=FALSE}
+x[xb3 & ys9]
+x[yb8 & ys9]
+```
+
+Note that the logical vector used to do vector subsetting needs to be of the **same length** as the original vector. Since `x` and `y` have the same length, the logical vectors from above can also be used to get subvectors of `y`. For example, you will get the same result from the following four codes.
+
+```{r, eval=FALSE}
+y[xb3 & xs4]
+y[yb8 & ys9]
+y[xb3 & ys9]
+y[yb8 & xs4]
+```
+
+
+
+### OR operator by `|`
+
+The OR operator `|` works similarly to the AND operator `&`, but the difference is that `|` returns `TRUE` if there is **at least one** `TRUE` among the two elements at the same location in the two vectors. The working mechanism of `|` is summarized below.
+
+```{r results = TRUE, echo=FALSE}
+Operation  <- c("TRUE | TRUE", "TRUE | FALSE", "FALSE | TRUE", "FALSE | FALSE")
+Result <- c("TRUE", "TRUE", "TRUE", "FALSE")
+d <- data.frame(Operation, Result)
+knitr::kable(d)
+```
+
+Let's try another example on length > 1 vectors and compare the result with that when we use the AND operator `&`. 
+
+```{r results=TRUE}
+c(FALSE, FALSE, FALSE, TRUE, TRUE) | c(TRUE, TRUE, FALSE, TRUE, FALSE)
+c(FALSE, FALSE, FALSE, TRUE, TRUE) & c(TRUE, TRUE, FALSE, TRUE, FALSE)
+```
+
+You also get a length-5 logical vector with an elementwise OR operation `|`, which is very different from the result with AND operation `&`.
+
+Naturally, you can also use `xb3 | xs4` to do vector subsetting, leading to another length-5 logical vector. 
+
+```{r results=TRUE}
+xb3 | xs4
+x[xb3 | xs4]
+```
+
+Wow! You get all five elements of `x`! That's because the statement "the value is either > 3 or <= 4" is TRUE for all elements in `x`.
+
+### Exclusive OR by `xor`
+
+Last but not least, we introduce the **exclusive OR** operator `xor`. From the name, it's easy to know that `xor` is an extended form of `|`. Here are some examples,
+
+```{r results = TRUE, echo=FALSE}
+Operation  <- c("xor(TRUE, TRUE)", "xor(TRUE, FALSE)", "xor(FALSE, TRUE)", "xor(FALSE, FALSE)")
+Result <- c("FALSE", "TRUE", "TRUE", "FALSE")
+d <- data.frame(Operation, Result)
+knitr::kable(d)
+```
+
+Unlike the OR operator, `xor()` returns `TRUE` when there is **one and only one** `TRUE` among values of these two logical vectors. If these two vectors have the same value, both `TRUE` or both `FALSE`, you will get the value `FALSE`.
+
+For two length > 1 vectors, `xor()` again performs comparisons elementwisely. You can check the result by yourself!
+```{r results=TRUE}
+xor(c(FALSE, FALSE, FALSE, TRUE, TRUE), c(TRUE, TRUE, TRUE, TRUE, FALSE))
+```
+
+Since you also get a logical vector after applying `xor()`, you can use it to do vector subsetting. Using different combinations to do vector subsetting is interesting. Try them!
+
+```{r, eval=FALSE}
+x[xor(xb3, xs4)]
+y[xor(!xb3, ys9)]
+y[xor(yb8, !ys9)]
+```
+
+### Summary of Logical Operators
+
+Let's summarize the logical operators between two vectors. 
+
+- The NOT operator `!` returns the opposite of each value.
+- The AND operator `&` returns `TRUE` if both are `TRUE`.
+- The OR operator `|` returns `TRUE` if at least one is `TRUE`.
+- The exclusive OR operator `xor()` returns `TRUE` if one and only one is `TRUE`.
+
+
+
+
+### Exercises
+
+Consider the vector `v1 <- seq(from = 1, to = 100, by = 3)`, and `v2 <-  sqrt(v1)`. 
+
+
+1. Find the subvector of `v1` with values bigger than 30 and less than 60. And assign the subvector to name v1s. 
+
+2. Find the subvector of `v2` such that the corresponding value of `v1` is less than 20 or larger than 50.
+
+3. Use an example to verify $$xor(a, b) = (!a & b) | (a & !b)$$
+
+

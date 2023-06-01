@@ -1,0 +1,5 @@
+# Advanced Data Visualization {#adv-visual}
+
+In Chapter \@ref(data-visualization), we introduced the most commonly used plots. If you skipped the previous chapter, it may be worthwhile to briefly review Section \@ref(review-basic-visualization). 
+
+In this chapter, we will introduce more types of plots and various customization.

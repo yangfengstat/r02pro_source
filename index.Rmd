@@ -1,0 +1,75 @@
+--- 
+title: "R Programming: Zero to Pro"
+author: "[Yang Feng](http://yangfeng.hosting.nyu.edu/) and r02proers"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+description: "R Programming: Zero to Pro"
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE
+)
+```
+
+# Preface {-}
+
+```{r sheep, echo=FALSE, results = TRUE, fig.cap="", out.width = '25%'}
+knitr::include_graphics("pics/sheep.jpg")
+```
+
+
+This book is for anyone who is interested in learning R and Data Science. It is designed for people with zero background in programming. 
+
+We also have a companion R package named [**r02pro**](https://cran.rstudio.com/web/packages/r02pro/index.html), containing the data sets used as well as interactive exercises for each part. 
+
+
+# Contributing to the Book  {-}
+
+To improve the book, we would like to ask for your help. With your permission, we will be happy to add your name in the Acknowledgment section to show our gratitude. 
+
+### Typos or Grammar Issues {-}
+
+If you find any typos or grammar issues, please feel free to directly click the 'edit' button. This allows you to fork the repository to your GitHub account, make the necessary changes, and then submit a pull request.
+
+### General Questions or Feedback  {-}
+
+If you have more general questions or feedback about any materials in the book, we greatly appreciate if you can write to us at yang.feng@nyu.edu. 
+
+
+# Acknowledgement {-}
+
+
+
+```{r, results = "asis", echo = FALSE, message = FALSE}
+library(dplyr)
+contributors <- readr::read_csv("contributors.csv", col_types = list())
+
+contributors <- contributors %>% 
+  mutate(
+    link = glue::glue("[\\@{login}](https://github.com/{login})"),
+    desc = ifelse(is.na(login), name, ifelse(is.na(name), link, glue::glue("{name} ({link})")))
+  )
+
+cat("This book is the culmination of numerous concerted efforts and the synergy of diverse minds. We would like to extend our heartfelt gratitude towards Dr. Rebecca Betensky, Dr. Rumi Chunara, and Dr. Hai Shu. Their visionary guidance was instrumental in the initial conceptualization and development of the courses - GPH-GU 2183: Introduction to Statistical Programming in R and GPH-GU 2183: Intermediate Statistical Programming in R.
+
+Furthermore, our deepest appreciation goes to the diligent students enrolled in the GPH-GU 2183: Introduction to Statistical Programming in R course during the Fall semester of 2021 at New York University. Their participation and commitment significantly enriched the learning process.
+
+The roster of contributors to this book is extensive, and each individual's unique perspective and expertise has helped shape its content in meaningful ways. This text truly stands as a testament to the power of collaboration and the spirit of learning. The list of people that made contributions include ")
+cat(paste0(contributors$desc, collapse = ", "))
+```
+
+# Building Environment {-}
+
+The R session information when compiling this book is shown below.
+```{r, results=TRUE}
+sessionInfo()
+```
+
+
+In the book, package names are in **bold** text (e.g., **r02pro**), and inline codes and functions are formatted in a typewriter font (e.g. `1 + 2`, `r02pro()`). We always add parentheses after a function name (e.g. `r02pro()`).

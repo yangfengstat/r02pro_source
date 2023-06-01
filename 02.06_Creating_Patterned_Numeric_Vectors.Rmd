@@ -1,0 +1,235 @@
+## Numeric Vectors: Creating numeric vectors with patterns {#patterned_numeric_vectors_creation} 
+
+In Section \@ref(intro-num-vector), you learned how to create numeric vectors with length more than 1 by using the `c()` function. When the number of elements become too big, you may feel redundant manually typing in all those elements. Luckily, as long as the assigned elements have certain patterns, R allows you to create the desired numeric vector numeric vectors more efficiently.
+
+### The colon operator `:` -- Equally-spaced numeric vectors with increment of 1 or -1
+
+An equally-spaced numeric vector is a numeric vector with the same distance between adjacent elements. Suppose you want to assign consecutive integers from 1 to 5 to the name pattern1. Coming from Section \@ref(intro-num-vector), you may do the following:
+
+```{r}
+pattern1 <- c(1, 2, 3, 4, 5)
+```
+
+However, when the number of elements changes from 5 consecutive integers to 100 consecutive integers, manually typing in would be really time-consuming and inefficient. In R, you can use the colon operator `:` to create equally-spaced numeric vectors. Note that you don't need to use `:` together with `c()`.
+
+```{r}
+pattern2 <- 1:5
+```
+
+If you compare `pattern1` and `pattern2`, you will realize that they are both numeric vectors with elements of consecutive integers from 1 to 5. Let's experiement `:` with more attempts.
+
+```{r}
+pattern3 <- 1:100
+pattern3
+pattern4 <- 5:1
+pattern4
+pattern5 <- 1.2:5.2
+pattern5
+
+```
+
+With `pattern3`, you can see how powerful and convenient the colon operator is. In addition to create ascending equally-spaced numeric vectors, you can also use it to create descending ones, like `pattern4`. Eventually, you can use the colon operator to assign equally-spaced decimals to numeric vectors. 
+
+However, as you can see below, R will store numeric vectors with equally-spaced integers as **type integer** and those with equally-spaced decimals as **type double**.
+
+```{r}
+class(pattern4)
+class(pattern5)
+```
+
+
+### The `seq()` function -- Equally-spaced numeric vectors with any increment
+
+As powerful as the colon operator `:` is, it is really restricted to creating equally-spaced numeric vectors with an increment 1 or -1. By contrast, the `seq()` function don't have such a restriction, and it will come into play when you want to create equally-spaced numeric vectors with increments other than 1 or -1.
+
+***a. Create sequences with the `by` argument*** 
+
+The `seq()` function can include three arguments: `from`, `to`, and `by`. The `from` and `to` arguments specify the start and limited end values, respectively, while the `by` argument specifies the increment of the sequence. 
+
+```{r}
+seq(from = 1, to = 5, by = 1)
+seq(to = 5)
+```
+
+You can interpret the above example as "an equally-spaced numeric vector starting at 1 and ending at 5, with the increment between adjacent elements of 1". If you don’t specify the optional `from` and `by` arguments, `seq()` will use the default value 1 for both arguments.
+
+::: {.infobox .caution data-latex="{caution}"}
+Now you have had four methods to create vectors with consecutive integers. 
+```{r, eval = F}
+c(1,2,3,4,5,6)                #write all numbers down
+1:6                           #use colon operator
+seq(from = 1, to = 6, by = 1) #use seq()
+seq(to = 6)                   #use seq()
+```
+:::
+
+Next, let's assign a different value to the `by` argument in the `seq()` function. What you will get a numeric vector with `1 3 5` as its values.
+
+```{r}
+seq(from = 1, to = 5, by = 2)
+```
+
+Note that the ending value of the sequence doesn’t always equal the value assigned to the `to` argument. If you change the limit end value to 6, you still get the same sequence. This is because the next value in the sequence would be 7, which is larger than the limit end value 6. This is the reason why `to` denotes the limited end value, not the end value.
+
+```{r}
+seq(from = 1, to = 6, by = 2)
+```
+
+Of course, you can assign decimal numbers to arguments in the `seq()` function. Below, you will first get a sequence which starts with 1, increases by 0.5 each time until it is larger than 6. Subsequently, you will get a numeric vector with `1.1 1.8 2.5 3.2` as its values.
+
+```{r}
+seq(from = 1, to = 6, by = 0.5) 
+seq(from = 1.1, to = 3.2, by = 0.7) 
+```
+
+Besides ascending sequences, you can also create descending sequences via `seq()`. Similarly, you can assign positive numbers as well as negative ones to arguments in the `seq()` function. Try out some examples like below:
+
+```{r, error=TRUE}
+seq(from = 1.5, to = -1, by = -0.5) 
+seq(from = -3.5, to = -3, by = 0.1)
+seq(from = 1.5, to = -1, by = 0.5) 
+```
+
+It's worth-noting that the arguments in `seq()` function should make algebraic sense. For example, in the last example above, it doesn't make sense to use a positive value in the `by`argument when the start value is bigger than the limited end value, which implies a decreasing sequence. In such cases, You should expect to see an error message.
+
+
+***b. Create sequences with the `length.out` argument*** 
+
+In `seq()`, instead of setting the increment via the `by` argument, you can also specify the `length.out` argument, which creates a equally-spaced sequence with the assigned length (a.k.a. the number of elements in the numeric vector). R will automatically calculate the difference between two neighboring elements according to values of three arguments in `seq()`.
+
+```{r}
+seq(from = 1, to = 5, length.out = 9) 
+```
+
+Here, you will get an equally-spaced sequence of length 9 from 1 to 5. You can also create a decreasing sequence by using the `length.out` argument.
+
+```{r}
+seq(from = 5, to = -5, length.out = 9) 
+seq(from = 5, to = -5, length.out = 8.9) 
+```
+
+What will happen if you assign a decimal number to the `length.out` argument? In such a case, R will round up the decimal to the nearest integer when carrying out the `length.out` argument. In the last example above, the value `8.9` is rounded up to `9`.
+
+::: {.infobox .caution data-latex="{caution}"}
+Unlike creating sequences with `by` argument, if you specify the `length.out` argument in `seq()`, the start value and limited end value of the sequence you get will be exactly match the input arguments. 
+::: 
+
+***c. Create sequences with both the `by` and `length.out` arguments*** 
+
+Lastly, if you provide both the `by` and `length.out` arguments, only one of the `from` and `to` arguments is necessary. With one value (the start value or the limit end value) fixed, seq() will create a vector with specified increment and length.
+
+If you only have the `from` argument, you will get a sequence starting from the value you set, with the increment in the `by` argument, until you get a sequence with a length specified in the `length.out` argument.
+
+If you only have the `to` argument, you will get a sequence ending with the value you set, with the increment in the `by` argument, until you get a sequence with a length specified in the `length.out` argument.
+
+```{r}
+seq(from = 1, by = 2, length.out = 5)
+seq(to = 1, by = 2, length.out = 5)
+```
+
+Before leaving the `seq()` function, you should be aware that you can **at most** provide three arguments. For example, you will see an error when running the following example since all four arguments are specified.
+
+```{r, error=TRUE}
+seq(from = 1, to = 3, by = 1, length.out = 3)
+```
+
+
+### The sequence generator `seq_along()` -- Matching numeric vectors
+
+Now, we will introduce one function derived from the `seq()` function. Let’s first create a numeric vector `extend`.
+
+```{r}
+extend <- seq(from = 2, to = 8, length.out = 7) 
+extend
+```
+
+By the value assigned to the `length.out` argument, you know that the length of `extend` is 7. You also know that `2 3 4 5 6 7 8` are the elements of `extend`. Next, let’s put `extend` in `seq_along()`.
+
+```{r}
+seq_along(extend)
+```
+
+As you can tell from the result, `seq_along()` takes a numeric vector as its argument, generating consecutive integers from 1 to the length of the input vector. The `seq_along()` function is commonly used when writing loops, which will be covered at a later time.
+
+::: {.infobox .caution data-latex="{caution}"}
+You can also use `1:length(extend)` to get the same result as `seq_along(extend)`. 
+```{r}
+1:length(extend)
+```
+:::
+
+### The `rep()` Function -- Numeric vectors with repeated values
+
+The `rep()` function is designed for another type of patterned numeric vectors, which are with replicated values as their elements. To do repetition, you can use the `rep()` function, which works by repeating the first argument for the number of times indicated in the second argument. Suppose you want to assign four 2s to the name num1. You can use the `rep()` function here:
+
+```{r}
+num1 <- rep(2, 4)
+num1
+```
+
+You can interpret the function as "creating a numeric vector in which 2 is repeated four times". The resulting vector is a length-4 numeric vector with all elements of value 2. In addition to one single value, a numeric vector with several values can be assigned in the first argument.
+
+```{r}
+num2 <- rep(c(1, 4, 2), 3)
+num2
+```
+
+Here, the `rep()` will repeat the whole vector c(1, 4, 2) three times. Note that the vector is **repeated as a whole**, not elementwisely. Reflectively, you may be wondering what happens the second argument also has several numbers? Let’s try together.
+
+```{r}
+num3 <- rep(c(1,5,7), c(3,2,1))
+num3
+```
+
+In `rep()`, when the second argument is also a numeric vector, R will do an element-repeat-operation by repeating each element in the first argument the number of times indicated in the corresponding index of the second argument and combine the repeated vectors to a single numeric vector. In this example, 1 is repeated 3 times, 4 is repeated twice, and 7 is repeated once. It is equivalent to
+
+```{r}
+c(rep(1,3), rep(4,2), rep(7,1))
+```
+
+It is important that, to assign two numeric vectors as the two arguments in `rep()`, the two numeric vectors should have the same length. Otherwise, you will see an error message telling you the second argument (a.k.a. the `times` argument) is invalid.
+
+```{r, error=TRUE}
+num4 <- rep(c(1,5,7), c(3,2))
+```
+
+Last but not least, you can also apply `each` and `times` arguments in the `rep()` command. The former implies how many times each element in the vector of interest will be repeated per round, while the latter determines how many rounds the repeating will include.
+
+```{r}
+rep(c(1,2), each = 3, times = 3)
+```
+
+### The `unique()` and `table()` Functions -- Getting unique elements and their frequencies
+
+So far, you have learned how to create vectors with specific patterns. Sometimes, you may want to inspect the unique elements (elements with different values) in a numeric vector and their corresponding frequencies. Let’s use num3 as an example. **(Don’t forget to use ls() or check the environment panel to find all objects you have defined)**,
+
+```{r}
+num3
+```
+
+You can use `unique()` to show all unique elements in vectors.
+
+```{r}
+unique(num3)
+```
+
+From the result, you know the unique elements in `num3` are `1`, `5`, and `7`. To get the frequency of each element, you can use the `table()` function.
+
+```{r}
+table(num3)
+```
+
+Here, the first row is the numeric vector's name. The second row shows all unique elements, and the third row is their corresponding frequencies. In num3, there are three 1s, two 5s and one 7.
+
+
+### Exercises
+
+
+
+1. Use five different ways to create an equally-spaced sequence with `2 4 6 8 10` as result.
+
+2. Use two different ways to create the patterned sequence with `2 2 6 6 8 8 2 2 6 6 8 8` as result.
+
+3. Use two different ways to create a numeric vector with `1 2 3 1 2 3 4 5 1 2 3 4 5 6 7` as result. Show the unique elements and their corresponding frequency.
+
+
