@@ -5,9 +5,7 @@
 knitr::opts_chunk$set(echo = TRUE, results = TRUE, collapse = TRUE)
 ```
 
-At this point, we have introduced three types of atomic vectors: numeric (Section \@ref(intro-num-vector)) (containing double and integer types), character (Section \@ref(intro-char-vector)), and logical vectors (Section \@ref(intro-logi-vector)). Recall that by definition, the **atomic vectors** always contain elements of a single type. You may wonder what will happen if we try to create a vector with values of **mixed types** and that is exactly what we are going to answer in this section. 
-
-
+At this point,  we have introduced three types of atomic vectors: numeric (Section \@ref(intro-num-vector)) (containing double and integer types), character (Section \@ref(intro-char-vector)), and logical vectors (Section \@ref(intro-logi-vector)). Recall that by definition, the **atomic vectors** always contain elements of a single type. You may wonder what will happen if we try to create a vector with values of **mixed types** and that is exactly what we are going to answer in this section. 
 
 ### Coercion with `c()`
 
