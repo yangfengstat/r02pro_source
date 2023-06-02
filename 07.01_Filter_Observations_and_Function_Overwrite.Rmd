@@ -98,7 +98,9 @@ filter(gm,
 
 Using `ahp` dataset,
 
-1. Create a new tibble named `some_apr` that contains all houses that are built before year 2000 (not including 2000), sold on or after year 2009, and with 2 or 3 bedrooms.
+1. Create a new tibble named `my_ahp` that contains all houses that are built before year 2000 (not including 2000), sold on or after year 2009, and with 2 or 3 bedrooms.
+
+2. Create a new tibble named `my_gm` that contains all countries in Asia and Africa with `HDI_category` being "high" or "medium" in year 2006.
 
 
 
