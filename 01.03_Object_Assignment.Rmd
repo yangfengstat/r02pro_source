@@ -184,7 +184,7 @@ d <- data.frame(Type, Section)
 knitr::kable(d)
 ```
 
-We will focus on atomic vectors in Chapter \@ref(r-objects) and discuss other object types in Chapter \@ref(r-objects-other-types).
+We will focus on atomic vectors in Chapter \@ref(r-objects) and discuss other object types in Chapter \@ref(object-other-type).
 
 While some of the object types look more intuitive than others, you have nothing to worry about since we have the next two chapters devoted to the details of R objects. Objects are the building blocks of R programming and it will be time well spent mastering every object type. 
 
