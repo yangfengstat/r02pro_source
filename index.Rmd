@@ -60,7 +60,7 @@ cat("This book is the culmination of numerous concerted efforts and the synergy 
 
 Furthermore, our deepest appreciation goes to the diligent students enrolled in the GPH-GU 2183: Introduction to Statistical Programming in R course during the Fall semester of 2021 at New York University. Their participation and commitment significantly enriched the learning process.
 
-The roster of contributors to this book is extensive, and each individual's unique perspective and expertise has helped shape its content in meaningful ways. This text truly stands as a testament to the power of collaboration and the spirit of learning. The list of people that made contributions include ")
+The roster of contributors to this book is extensive, and each individual's unique perspective and expertise has helped shape its content in meaningful ways. This text truly stands as a testament to the power of collaboration and the spirit of learning. The list of people who made contributions include ")
 cat(paste0(contributors$desc, collapse = ", "))
 ```
 
