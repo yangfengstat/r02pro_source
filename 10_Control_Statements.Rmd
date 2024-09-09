@@ -1,0 +1,3 @@
+# Control Statements {#control-statements}
+
+In the past few chapters, we have been relying on a few R packages including **ggplot2** for visualization, **dplyr** for manipulation, **readr** for export and import data, **tidyr** for tidying data, and **stringr** for handling strings. While these packages are super powerful and make writing codes much easier, they still can't do everything we want. In this chapter, we will introduce a set of **control statements**, which are essential in programming complex tasks. 

@@ -1,0 +1,144 @@
+## Loops {#loop}
+In addition to the conditional statements in Section \@ref(ifelse), another important type of statements that controls the flow of programs is **loops**.
+
+### `for` loops with known sequence {#for-loop}
+The first type of loops is to repeat a segment of codes with a **known sequence**. Let's look at its syntax first.
+
+```{r, eval=FALSE}
+for (val in val_seq){
+  statement1
+  statement2
+}
+```
+
+The `for` loop will sequentially assign each value of the `val_seq` to `val` and run the body of the loop.
+
+
+For example, if you want to find the first ten values of the Fibonacci sequence. It is known that the first two values in a Fibonacci sequence is $F_1 = 0$ and $F_2 = 1$. Then, we have $F_3 = F_1 + F_2 = 0 + 1 = 1$ and in general $F_i = F_{i-2} + F_{i-1}$. 
+
+```{r, results=TRUE}
+fib_seq <- rep(0,10)   #initialize the sequence
+fib_seq[1] <- 0        #initialize the first element
+fib_seq[2] <- 1        #initialize the second element
+for(i in 3:10){        #loop i from 3 to 10
+  fib_seq[i] <- fib_seq[i-2] + fib_seq[i-1] #compute the i-th element of fib_seq as the sum of the previous two elements
+}
+fib_seq                #print the sequence
+```
+
+Here, we first initialize the desired sequence to be a zero vector of length 10. Then, initialize the first element to be 0 and second element of 1. After that, the `for` loop is will initially set `i` to the value of 3, and go over all the values in the sequence `3:10`. At the end, we get the length-10 Fibonacci sequence.
+
+### Combine the conditional statements with loops
+
+In the body of the loop, you usually want to do different tasks depending on the conditions. In this case, you can add conditional statements in the body of the loop.  Let's print out all the numbers in `fib_seq` and add the information whether it is even or odd, and count the number of even values and odd values.
+
+```{r, results=TRUE}
+count_even <- count_odd <- 0  #initialize the counts of even and odd values to be 0
+for(fib_val in fib_seq){  #go over all the values in fib_seq
+  if(fib_val %% 2 == 0){  #check if the current value is even
+    cat(fib_val, ": even\n")        #if so, print the value
+    count_even <- count_even + 1    #then, add 1 to the even count
+  } else{
+    cat(fib_val, ": odd\n")        #if not, print the value
+    count_odd <- count_odd + 1    #then, add 1 to the odd count
+  }
+}
+cat("There are ", count_even, " even values.\n")   #print the count of even values
+cat("There are ", count_odd, " odd values.\n")   #print the count  of odd values
+```
+
+It is worth noting that for this task, we can actually avoid the loop using vectorize operations on the vector. 
+
+```{r, results = TRUE}
+even_ind <- fib_seq %% 2 == 0     #check whether each value is even
+even_odd <- ifelse(even_ind, "even", "odd") #convert the logical vector to a character vector
+cat(paste0(fib_seq, ": ", even_odd, "\n")) #create the string and print
+cat("There are ", sum(even_ind), " even values.\n")   #print the count of even values
+cat("There are ", sum(!even_ind), " odd values.\n")   #print the count  of odd values
+```
+
+### Control Loop Flow With `next` and `break`
+
+Inside the `if` and `else` clause, you can use `next` and `break` to further control the flow.
+
+The `next` function goes directly to the next loop cycle, while `break` jumped out of the current loop.
+
+Let's see an example of `next`. For each value of the `fib_seq`, if it is even, we will skip to the next value. 
+
+```{r, results=TRUE}
+for(fib_val in fib_seq){  #go over all the values in fib_seq
+  if(fib_val %% 2 == 0){  #check if the current value is even
+    next
+  } 
+  cat(fib_val, ": odd\n")        #if not, print the value
+}
+```
+
+
+Now, suppose you want to find the first value in `fib_seq` that is larger than 4. The `break` can be used in this case. 
+
+```{r, results=TRUE}
+for(fib_val in fib_seq){  #go over all the values in fib_seq
+  if(fib_val > 4){  #check if the current value is larger than 4
+    cat(fib_val, " is the first value larger than 4\n")      
+    break
+  } 
+}
+cat(fib_val) #check the current fib_val
+```
+
+You can see that the `fib_val` is `r fib_val`, indicating that we have breaked from the loop since it is larger than 4.
+
+### Nested Loops
+
+In addition to a single loop, it is also common to put one loop inside another one, named the **nested loop**.
+
+Let's say we want to create a matrix `A` of dimension $5\times 5$ where each element $A_{ij} = i+j$. To create such a matrix, we can write a nested loop over $i$ and $j$.
+
+```{r, results = TRUE}
+A <- matrix(0, 5, 5) #initialize the matrix A
+for (i in 1:5)       #loop over index i
+  for (j in 1:5){    #loop over index j
+    A[i, j] <- i + j #set the (i, j)-th element of A
+  }
+A
+```
+
+Let's try another example where we want to create the correlation matrix in the so-called AR(1) model. In particular, the corresponding matrix $A$ is of dimension $p\times p$ where $A_{ij} = \rho^{|i-j|}$. 
+
+Let's say an example of $p = 4$ and $\rho = 0.5$
+
+```{r, results = TRUE}
+p <- 4
+A <- matrix(0, p, p) #initialize the matrix A
+rho <- 0.5
+for (i in 1:p)       #loop over index i
+  for (j in 1:p){    #loop over index j
+    A[i, j] <- rho^{abs(i - j)} #set the (i, j)-th element of A
+  }
+A
+```
+
+### Nested Loop via the `outer()` Function
+
+It turns out for the two examples we showed in the last part, you can use avoid the loop by the `outer()` function.
+
+```{r, results=TRUE}
+outer(1:5, 1:5, "+")
+outer(1:4, 1:4, function(i, j){0.5^{abs(i-j)}})
+```
+
+Let's see another example of using `outer()`. 
+
+```{r, results = TRUE}
+outer(1:5, 1:5, function(x,y){
+paste(x,"+",y,"=",x+y)})
+```
+
+
+Finally, the `outer()` function can also be applied on matrices, which will lead to a higher dimensional array.
+```{r, results = TRUE}
+A <- matrix(1:4, 2, 2)  
+outer(A, A, "-")       #a 4-dimensional array.
+```
+

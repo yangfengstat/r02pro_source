@@ -1,0 +1,18 @@
+# A Case Study: 24 Game Solver {#case-study}
+
+In this final chapter, we will build a 24 Game Solver. The [24 Game](https://en.wikipedia.org/wiki/24_Game) is an arithmetical card game in which the objective is to find a way to manipulate four integers, so that the end result is 24. 
+
+In a classic game, the four integers come from a deck of cards (with all the face cards removed). As a result, the 4 integers range from 1 to 10. The allowed operations are addition, subtraction, multiplication, division, and parentheses. All 4 integers have to be used and only be used once. 
+
+For example, if we have four integers: 6, 1, 2, and 6. 
+One solution is
+$$ (1 + 2) \times 6 + 6 = 24.$$
+Another solution is 
+$$ 1 \times 2 \times (6 + 6) = 24.$$
+
+Now, let's look at a more difficult one: 1, 5, 5, and 5. The solution is 
+$$5\times(5 - 1/5) = 24.$$
+The goal of our solver is to write a function that take the four integers as the input, and if there exist solutions, outputs them. If there doesn't exist a solution, print a message that says so. 
+
+Let's break down the target function into several sub-functions and work on them in the next few subsections.
+

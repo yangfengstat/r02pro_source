@@ -1,0 +1,89 @@
+## Composite Operators and Check Solution {#composite-operator}
+
+
+### Composite Operators
+
+Now, we are ready to automate the three-step composite operators process. Let's say we consider the number sequence in the second row of `nums_perm`: `r nums_perm[2, ]`, with the ninth row of `op_mat`: `r op_mat[9, ]`. We know the composite operation goes as below along with the corresponding steps printed. 
+```{r, results=TRUE}
+re_1 <- cal(nums_perm[2, 1],  nums_perm[2, 2], op_mat[9, 1])
+print_op(nums_perm[2, 1],  nums_perm[2, 2], re_1, op_mat[9, 1])
+re_2 <- cal(re_1,  nums_perm[2, 3], op_mat[9, 2])
+print_op(re_1,  nums_perm[2, 3], re_2, op_mat[9, 2])
+re_3 <- cal(re_2,  nums_perm[2, 4], op_mat[9, 3])
+print_op(re_2,  nums_perm[2, 4], re_3, op_mat[9, 3])
+```
+
+To make our code more compact, we can write a loop over the three operators.
+```{r, results=TRUE}
+sol <- rep(0, n_nums)
+sol[1] <- nums_perm[2, 1]
+for(step in 1:(n_nums-1)){
+  sol[step + 1] <- cal(sol[step], nums_perm[2, step+1], op_mat[9, step])
+  cat(print_op(sol[step], nums_perm[2, step+1], sol[step + 1], op_mat[9, step]), "\n")
+}
+```
+
+To prepare this step as a standalone function for computing all the steps, let's write a function.
+```{r}
+num_op <- function(num, op, n_nums = length(num)){
+sol <- num
+for(step in 1:(n_nums-1))
+  sol[step + 1] <- cal(sol[step], num[step+1], op[step])
+return(sol)
+}
+sol <- num_op(nums_perm[2, ], op_mat[9, ])
+sol
+```
+
+
+### Check if Solution is Found
+
+Once we finish the composite operations, we can check whether our final result is equal to the target value, 24. 
+```{r, results=TRUE}
+goal <- 24
+if(abs(sol[n_nums] - goal) < 1e-5){
+  cat("Found a solution!")
+  } else {
+    cat("This is not a solution.")
+  }
+```
+
+If it does, we can print the solution. Let's write another function to print all the intermediate steps.
+```{r}
+print_sol <- function(nums, sol, op){
+  sol <- round(sol, 3)        #Only keep 3 digits to make it better looking.
+  n_nums <- length(sol)
+  for(step in 1:(n_nums-1)){
+  cat(print_op(sol[step], nums[step+1], sol[step + 1], op[step]), "\n")
+  }
+}
+print_sol(nums_perm[2, ], sol, op_mat[9, ])
+```
+
+
+### Looping Over All Number Sequences and All Operator Sequences
+
+Now, we know how to compute the final value given a number sequence and a operator sequence.  Let's write double loop over the number sequences and the operator sequences. Note that we only want to print the steps when we have found a solution.
+
+```{r, results=TRUE}
+n_sols <- 0
+for(i in 1:nrow(nums_perm))
+for(j in 1:nrow(op_mat)){
+  num_cur <- nums_perm[i, ]
+  op_cur <- op_mat[j, ]
+  sol <- num_op(num_cur, op_cur)
+  if(abs(sol[n_nums] - goal) < 1e-5){
+    n_sols <- n_sols + 1
+    cat("Solution #", n_sols, "\n")
+    print_sol(num_cur, sol, op_cur)
+  } 
+  }
+if(n_sols == 0){
+  cat("Solution not exist!")
+}
+```
+
+From the result, we can see that there is one solution to this difficult problem. 
+
+
+

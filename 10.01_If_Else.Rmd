@@ -1,0 +1,105 @@
+## Conditional Statements via `if`, `else`, and `switch()` {#ifelse}
+
+The first type of control statement is **conditional statements**, which execute a portion of codes depending on the value of a **condition**. 
+
+### Conditional Statements
+
+The general structure of a simple conditional statement is as below.
+```{r, eval=FALSE}
+if(condition) {   
+  true_code_1
+  true_code_2
+} else {
+  false_code_1
+  false_code_2
+  false_code_3
+}
+```
+
+Here, the `condition` is usually a **logical statement**, the true_code_1 and true_code_2 represent the codes to run when `condition == TRUE`, and the false_code_1, false_code_2, false_code_3 represent the codes to run when `condition == FALSE`. Note that the `else` keyword is optional. 
+
+Let's first see an example where we check whether `x` is an even number of an odd number, and print out the corresponding messages. 
+```{r, results = TRUE}
+x <- 3
+if(x %% 2 == 0) { 
+  cat("x is an even number")
+} else {
+  cat("x is an odd number")
+}
+```
+
+We can also use the `ifelse()` function to choose a value depending on whether the condition is `TRUE` or `FALSE`. 
+
+```{r, results=TRUE}
+x_type <- ifelse(x%%2, "even", "odd")
+x_type
+```
+
+
+In addition to a single `if` and `else` pair, we can have more than two options. Let's see the following example. 
+```{r, results=TRUE}
+x <- 9
+if(x %% 3 == 1) {
+  cat("the remainder of x divided by 3 is 1.")
+} else if(x %% 3 == 2) {
+  cat("the remainder of x divided by 3 is 2.")
+} else {
+  cat("x is divisible by 3.")
+}
+```
+
+Next, let's introduce the `switch()` function which can **switch** to a particular value depending on the value of the **expression**, which is the first argument. 
+
+If the first argument is an integer, the function will return the value corresponding to the location of the options. 
+```{r, results=TRUE}
+switch(2, "sheep", "pig", "monkey")
+switch(4, "sheep", "pig", "monkey")
+```
+
+The first statement returns the second option with value `"pig"`, and the second statement returns nothing as there is no 4th option.
+
+
+If the first argument is a character, it will be matched to the names of the elements in the options, and return the corresponding value.
+```{r}
+switch("pig", sheep = 2, pig = 3, monkey = 4)
+switch("pi", sheep = 2, pig = 3, monkey = 4)
+switch("monkey", sheep = 2, pig = 3, monkey = "mona")
+```
+
+### Logical Operators in `if` Statement
+
+Recall we have learned logical operators on logical vectors in Section \@ref(logical-operators). The most commonly used logical operators are the AND operation with `&` and OR operation with `|`. Both operators conducts element-wise operations. In the `if` statement, we usually use another set of AND and OR operations, namely `&&` and `||`. Let's use some examples to understand how they work.
+```{r, results=TRUE}
+logi_1 <- c(T, F, T, F)
+logi_2 <- c(F, T, T, F)
+logi_1 & logi_2
+logi_1 && logi_2
+logi_1 | logi_2
+logi_1 || logi_2
+```
+
+Compare to the `&` and `|`, the `&&` and `||` examine only the first element of the input logical vectors and the results are also a single logical value. 
+
+Another important difference is that `&&` and `||` are **short-circuit**, skipping the evaluation of arguments if the result is **determined**. 
+
+Let's see an example. Let's use an undefined object named `undefined_object`.
+```{r,error=TRUE, results=TRUE}
+undefined_object
+TRUE || undefined_object
+TRUE | undefined_object
+```
+
+Here, we can see that even though `undefined_object` is not found, `TRUE || undefined_object` still returns `TRUE`, due to that the result of `||` operator between `TRUE` and any other value is always `TRUE`, hence determined. In particular, both `TRUE | FALSE ` and `TRUE | TRUE` have the value `TRUE`.  Note that the `|` operator will throw an error as it will always faithfully perform the logical operations. 
+
+Let's see another example of the AND operator between `FALSE` and another argument. 
+```{r,error=TRUE, results=TRUE}
+FALSE && undefined_object
+FALSE & undefined_object
+```
+
+Similarly, the `&&` operator between `FALSE` and an undefined object is `FALSE` since the evaluation stops once the result is determined since we know both `FALSE & FALSE ` and `FALSE & TRUE` have the value `FALSE`. The `&` operator will again throw an error since `undefined_object` is not found. 
+
+
+
+
+

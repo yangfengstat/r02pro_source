@@ -1,0 +1,37 @@
+## Reorder Observations {#reorder-observations}
+
+Now, let's look at the second task: find the 10 countries with the highest life expectancy in 2008. To order observations, you can use the function `arrange()` in the **dplyr** package. 
+
+First, let's create a new dataset called `gm_2008` that only contains the observations in 2008. 
+
+```{r}
+library(r02pro)
+library(dplyr)
+library(tibble)
+gm_2008 <- filter(gm, year == 2008)
+```
+
+
+To arrange the observations in the ascending order of the life expectancy (`life_expectancy`), you just need to add `life_expectancy` as a second argument of the `arrange()` function. To arrange the descending order, you can add `desc()` around the variable. 
+
+```{r, results=TRUE}
+arrange(gm_2008, yr_built)         #arrange in the ascending order of life_expectancy
+arrange(gm_2008, desc(yr_built))   #arrange in the descending order of life_expectancy
+```
+
+You may observe from the results that there are several houses with the same `yr_built` value, leading to a tie. To break the tie, you can supply additional variables in the `arrange()` function, which will arrange the observations in the tie according to the additional variables sequentially.
+
+```{r, results=TRUE}
+arrange(jan09, desc(yr_built), bldg_class)
+```
+
+Here, the observations are arranged in the descending order of `yr_built`, and the ties are broken in the ascending order of `bldg_class`. Clearly, you can supply as many arguments as needed in the `arrange()` function. It is also important to note that the observations that has an `NA` value in the specified variable will always be arranged at the end of the output. 
+
+### Exercises
+
+Using the `ahp` dataset,
+
+1. Find all houses built in `2008` with house style as `2Story`, then arrange the the observations in the ascending order of remodel year, and break the ties in the descending order of sale price.
+
+
+

@@ -1,0 +1,95 @@
+## Permutation and Operator Sequence {#permutation-operator}
+
+Given the four integers, it is clear that we need to perform three operations to arrive at the final result. Without any prior knowledge, one reasonable way to solve the problem is via a exhaustive search. Let's use the example 1, 5, 5, 5 throughout the demonstrations.
+
+Let's have another look at the solution we provided in the chapter introduction, $$ 5\times(5 - 1/5) = 24.$$
+
+It is helpful to break down the equation into the following three steps.
+
+1. $1 / 5 = 0.2$
+2. $5 - 0.2 = 4.8$ 
+3. $5 \times 4.8 = 24$
+
+Let's summarize the features of the three steps.
+
+1. Each step is determined by two numbers and an operator. For example, the first step involves numbers 1 and 5, and the `/` operator. 
+2. The two numbers in the first step comes from the input (the original four numbers). 
+3. Out of the two numbers in steps 2 and 3, one is the result from the previous step, and the other one comes from the original four numbers. For example, in step 2, 0.2 is the result from step 1 and 5 comes from the input.
+
+### Getting All Permutations
+
+The three steps imply a specific order of the original four numbers. In this case, we have 1, 5, 5, 5. In our exhaustive search, we need to enumerate all possible permutations of the original four number, which at most is $4! = 24$. We can find all the possible permutations using the `permutations()` function in the **gtools** package. We also apply the `unique()` function outside to remove the duplicated permutations. 
+
+```{r, results = TRUE}
+library(gtools)
+nums <- c(1, 5, 5, 5)
+n_nums <- length(nums)
+nums_perm <- unique(permutations(n_nums, n_nums, nums, set = FALSE))
+nums_perm
+```
+
+Now, `nums_perm` is a matrix, where each row contains a particular permutation of the original numbers. 
+
+### Getting All Operators
+
+With the `nums_perm` in hand, we have a specific ordering of the original numbers that we will use in the calculation. Let's take a look at the first row, (1, 5, 5, 5). The first step will then involve the numbers 1 and 5. How many possible operations are there between them? At first, maybe you think there are four $1 + 5$, $1 - 5$, $1 \times 5$, and $1 / 5$. Actually, the `-` and `/` operators are not symmetric. And we will get a different result when we switch the order, unless the two numbers are the same. As a summary, for numbers `x` and `y`, we have the following six possible operations.
+
+```{r echo = FALSE, results = TRUE}
+Operator  <- c("x + y","x - y","y - x","x * y", "x / y ", "y / x")
+Example <- c("1 + 5", "1 - 5", "5 - 1", "1 * 5", "1 / 5", "5 / 1")
+Value <- c(6, -4, 4, 5, 0.2, 5)
+d <- data.frame(Operator, Example, Value)
+knitr::kable(d)
+```
+
+Now, we need to make this process automatic. Let's write the following function `cal()` which takes arguments `x`, `y`, and `op` (a value from 1 to 6).
+
+```{r}
+cal <- function(x, y, op){
+  switch(op, x + y, x - y, x * y, x / y, y - x, y / x)
+}
+```
+
+To output the intermediate steps, it is useful to write a print function. The following function `print_op(x, y, z, op)` will generate a string that represent the operation `op` between `x` and `y` generates `z`. 
+```{r}
+print_op <- function(x, y, z, op){
+  switch(op, paste(x, "+", y, "=", z)
+           , paste(x, "-", y, "=", z)
+           , paste(x, "*", y, "=", z)
+           , paste(x, "/", y, "=", z)
+           , paste(y, "-", x, "=", z)
+           , paste(y, "/", x, "=", z)
+         )
+}
+```
+
+
+Since we have three steps and each step has 6 possible operators, there are in total $6^3 = 216$ possible combinations of the operator sequence. Let's get all the combinations as below.
+```{r, results=TRUE}
+n_ops <- 6
+op_mat <- permutations(n_ops, n_nums-1, repeats.allowed = TRUE)
+head(op_mat, 10)
+```
+
+Let's look at some possible row for the example `(1, 5, 5, 5)`.
+
+```{r echo = FALSE, results = TRUE}
+Operator_Seq  <- c("1, 2, 3","5, 3, 4","6, 2, 1")
+Step1 <- c("1 + 5", "1 / 5", "5 / 1")
+Step2 <- c("(1 + 5) - 5", "5 - 1 / 5", "5/1 - 5")
+Step3 <- c("((1 + 5) - 5)*2", "(5 - 1 / 5)*5", "5/1 - 5 + 5")
+Value <- c(((1 + 5) - 5)*2, (5 - 1 / 5)*5, 5/1 - 5 + 5)
+d <- data.frame(Operator_Seq, Step1, Step2, Step3, Value)
+knitr::kable(d)
+```
+
+
+Out of all possible operator sequence, it turns out some of there are redundant when we also consider all permutations of the numbers. The most obvious ones are the operator sequence that starts with 5 or 6. To see this, note that `cal(x, y, 5)` and `cal(y, x, 2)` both equal `y - x`,  and `cal(x, y, 6)` and  `cal(y, x, 4)` both equal to `y/x`. Therefore, we can safely remove all operator sequences that start with 5 or 6.
+```{r}
+op_mat <- op_mat[op_mat[,1]<=4, ]
+```
+
+There are in total 144 possible operator sequences for each number sequence. 
+
+
+

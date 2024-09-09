@@ -29,13 +29,13 @@ The following are some possible questions we may want to explore.
 
 You will learn how to **filter observations** in Section \@ref(filter-observations).
 
-2. (reorder the observations) In year 2008, find the 10 countries with the highest life expectancy.
-
-You will learn how to **reorder observations** in Section \@ref(reorder-observations).
-
-3. (pick variable by their names) We see there are 33 columns. For a particular data analysis question, perhaps we want to focus on a subset of the columns.
+2. (pick variable by their names) We see there are 33 columns. For a particular data analysis question, perhaps we want to focus on a subset of the columns.
 
 You will learn how to **select variables** in Section \@ref(select-variables).
+
+3. (reorder the observations) In year 2008, find the 10 countries with the highest life expectancy.
+
+You will learn how to **reorder observations** in Section \@ref(reorder-observations).
 
 4. (create new variables as functions of existing ones) From the existing variables, perhaps we want to create new ones, for instance, the total number of new lung cancer cases for each country.
 

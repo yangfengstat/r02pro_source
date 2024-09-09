@@ -1,0 +1,3 @@
+# R Markdown {#r-markdown}
+
+In Section \@ref(rstudio-interface), we learned how to create a new R script. R script is useful for organizing R code and add brief comments. However, to write document with more complicated structure, you need to use something more sophisticated. In this chapter, we introduce a new file format, namely the R Markdown file (.rmd). Using R Markdown, you can turn the data analyses into high quality documents, reports, presentations, books, and many other possible forms.

@@ -1,0 +1,93 @@
+## Multivariate Normal Distribution   {#multivariate-normal}
+
+In this section, we introduce how to work with multivariate normal distribution in R.
+
+First, let's review the definition of a multivariate normal distribution. Suppose a $p$-dimensional random vector ${\bf x} \sim N({\bf \mu}, {\bf \Sigma})$, where ${\bf \mu}$ is the mean vector and ${\bf \Sigma}$ is the covariance matrix. We have 
+$$
+f({\bf x}) = \frac{1}{(2\pi)^{p/2}\sqrt{|{\bf \Sigma}|}}\exp\left[-\frac{1}{2}({\bf x}-{\bf\mu})^T{\bf \Sigma}^{-1}({\bf x}-{\bf\mu})\right].
+$$
+
+### Generate Multivate Normal Distribution
+
+To randomly generate ${\bf x} \sim N({\bf \mu}, {\bf \Sigma})$, you can use the `mvrnorm(n = 1, mu, Sigma)` function in the **MASS** package, which is preloaded in the base R. The function `mvnorm()` takes three arguments.
+
+- `n`: targeted sample size
+- `mu`: mean vector
+- `Sigma`: covariance matrix
+
+Let's take a look at an example where the distribution is 
+$\bf\mu = (1, 2)^T$ and 
+$${\bf \Sigma} = \left[\begin{matrix}
+1&0.5\\
+0.5&1
+\end{matrix}\right]$$
+
+```{r, results=TRUE}
+library(MASS)
+n <- 10
+mu <- c(1, 2)
+Sigma <- matrix(c(1, 0.5, 0.5, 1), 2, 2)
+x <- mvrnorm(n, mu, Sigma)
+x
+```
+
+`x` contains $n=10$ two-dimensional normal distributed variable, where each row represents one observation.
+
+### Sample Mean and Sample Covariance Matrix
+
+In practical applications, we usually have a set of observations and would like to get a sample estimate of the parameters ${\bf \mu}$ and ${\bf \Sigma}$. 
+
+For the ${\bf \mu}$, you can directly use the sample mean as the estimate which is unbiased. 
+$$\hat {\bf\mu} = [\hat\mu_j],$$
+where $$\hat\mu_j = \frac{1}{n}\sum_{i=1}^nx_{ij}.$$
+```{r,results=TRUE}
+mu_hat <- apply(x, 2, mean)
+mu_hat
+```
+
+To estimate ${\bf\Sigma}$, we will use the sample covariance matrix estimate:
+$$\hat{\bf \Sigma} = [\hat\Sigma_{jk}],$$
+where $$\hat\Sigma_{jk} = \frac{1}{n-1}\sum_{i=1}^n(x_{ij}-\hat\mu_j)(x_{ik}-\hat\mu_k).$$
+
+To compute this matrix, we can use the function `cov()` on the matrix `x`.
+```{r, results=TRUE}
+sigma_hat <- cov(x)
+sigma_hat
+1/(n-1)*sum((x[,1]-mu_hat[1])*(x[,2]-mu_hat[2])) #compute \hat\Sigma_{12} by formula
+```
+
+For `cov()` function, in addition to computing the sample covariance matrix, you can also use it to compute the covariance among two vectors $y$ and $z$. 
+$$cov(y, z) = \frac{1}{n-1}\sum_{i=1}^n(y_{i}-\bar y)(z_i-\bar z).$$
+
+Let's try to compute the covariance between the first and second column of $x$. 
+
+```{r, results=TRUE}
+cov(x[,1], x[,2])
+cov(x)[1, 2]
+```
+
+You can see that this is exactly the same as $\hat\Sigma_{12}$.
+
+### Sample Correlation Matrix
+
+Another useful measure is the **sample correlation matrix**. It is defined as 
+$$\widehat{corr}(x) = [\widehat{corr}(x)_{jk}],$$
+where $$\widehat{corr}(x)_{jk} = \frac{\hat\Sigma_{jk}}
+{\sqrt{\hat\Sigma_{jj}\hat\Sigma_{kk}}}. $$
+
+You can use `cor()` on the matrix `x` to get its sample correlation matrix.
+```{r, results=TRUE}
+cor(x)
+sigma_hat[1,2] / sqrt(sigma_hat[1, 1] * sigma_hat[2, 2]) #verify the [1,2] element
+```
+
+Similar to the `cov()` function, you can also us the `cor()` function to compute the sample correlation between two vectors.
+```{r, results=TRUE}
+cor(x[,1], x[,2])
+cor(x)[1, 2]
+```
+
+You can see that the sample correlation matrix include all the pairwise sample correlations between any of the two columns.
+
+### Exercise
+

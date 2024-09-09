@@ -1,0 +1,90 @@
+## Solve 24 {#solve24}
+
+Let's first review the helper functions we created.
+```{r}
+# single step operation
+cal <- function(x, y, op){ 
+  switch(op, x + y, x - y, x * y, x / y, y - x, y / x)
+}
+# multi-step operations
+num_op <- function(num, op, n_nums = length(num)){
+sol <- num
+for(step in 1:(n_nums-1))
+  sol[step + 1] <- cal(sol[step], num[step+1], op[step])
+return(sol)
+}
+# print a single step
+print_op <- function(x, y, z, op){
+  switch(op, paste(x, "+", y, "=", z)
+           , paste(x, "-", y, "=", z)
+           , paste(x, "*", y, "=", z)
+           , paste(x, "/", y, "=", z)
+           , paste(y, "-", x, "=", z)
+           , paste(y, "/", x, "=", z)
+         )
+}
+# print multi-steps (the solution)
+print_sol <- function(nums, sol, op){
+  sol <- round(sol, 3)        #Only keep 3 digits to make it better looking.
+  n_nums <- length(sol)
+  for(step in 1:(n_nums-1)){
+  cat(print_op(sol[step], nums[step+1], sol[step + 1], op[step]), "\n")
+  }
+}
+```
+
+
+With all the preparations, we are ready to present the final function to solve 24. In the `solve_24()` function, the first argument `nums` contains the numbers, `goal` is the target value with default 24, and `n_sols_max` represents the maximum number of solutions to search for, with a default value of 3.
+```{r}
+solve_24 <- function(nums, goal = 24, n_sols_max = 3){
+require(gtools)
+n_nums <- length(nums)
+
+nums_perm <- unique(permutations(n_nums, n_nums, nums, set = FALSE))  #generate all number permutations 
+
+n_ops <- 6
+op_mat <- permutations(n_ops, n_nums-1, repeats.allowed = TRUE) #generate all operator sequences
+op_mat <- op_mat[op_mat[,1]<=4, ] #remove redundant ones
+n_sols <- 0  #initialize the number of solutions to be 0
+for(i in 1:nrow(nums_perm))  #loop over all possible permutations
+for(j in 1:nrow(op_mat)){ #loop over all possible operator sequences
+  num_cur <- nums_perm[i, ] #get the current permutation
+  op_cur <- op_mat[j, ] #get the current operator sequence
+  sol <- num_op(num_cur, op_cur) #get the steps
+  if(abs(sol[n_nums] - goal) < 1e-5 & all(sol >= 0)){ #check if it is a solution
+    n_sols <- n_sols + 1 #increase the solution counter
+    cat("Solution #", n_sols, "\n")
+    print_sol(num_cur, sol, op_cur) #print the solution
+  } 
+  if(n_sols >= n_sols_max){
+    return(invisible(NULL))
+  }
+  }
+if(n_sols == 0){ #fail to find a solution
+  cat("Solution not exist!")
+}
+
+}
+```
+
+Now, we are reading to look at some examples.
+```{r, results=TRUE}
+solve_24(1:4)
+solve_24(c(1, 5, 5, 5))
+solve_24(c(3, 7, 3, 7))
+solve_24(c(3, 8, 3, 8))
+solve_24(c(2, 5, 5, 5))
+```
+
+Note that the function is more powerful than merely solving 24. It contains two extensions.
+
+1. The target value can be any number, for example, 25, or 100. 
+2. The input can contain more or less than 4 numbers. 
+
+Let's look at two interesting examples.
+```{r, results=TRUE}
+solve_24(c(12, 13, 23, 25, 25), n_sols_max = 1)
+solve_24(11:16, 100, n_sols_max = 1)
+```
+
+There are other possible extensions of the function we wrote. For example, you can add additional possible operators (e.g. the exponentiation `^`, the factorial `!`) by changing the `cal()` and `print_op` as well as some constants in the `solve_24()` function.

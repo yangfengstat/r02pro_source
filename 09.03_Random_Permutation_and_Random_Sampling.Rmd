@@ -1,0 +1,87 @@
+## Random Permutation and Random Sampling  {#sampling}
+
+Now, you have covered how to work with distributions in R with the four useful functions for each distribution. In many applications, you may want to randomly permute or sample elements from a vector. Let's see how to do that. The vector `x <- 6:10` will be used throughout this section.
+
+### Random Permutation
+
+In statistics and machine learning, you usually need to do a random permutation of the data. For example, you can evaluate a model's performance by dividing the data randomly into two parts for training and validation, respectively.  
+
+For the vector `x <- 6:10`, you can use the function `sample()` to get a permutation for `x`. 
+```{r, results = TRUE}
+x <- 6:10
+set.seed(0)
+sample(x)  #a random permutation of x
+```
+
+To reproduce the random permutation, we can use the same seed. 
+
+```{r, results=TRUE}
+set.seed(0)
+sample(x)  #reproduce the random permutation
+```
+
+
+### Random Sampling without Replacement
+
+Note that the vector `x` has 5 elements in total. To sample a few elements from `x`, you can again use the `sample()` function. For example, if you want to randomly sample two elements from `x`, you can use the following code
+
+```{r, results=TRUE}
+sample(x, size = 2) 
+```
+
+Here, the `size` argument specify the targeted number of elements. By default, the `sample` function take a sample **without replacement**, i.e. the results sample has no duplicated elements. Because of this, if the `size` is larger than the length of the vector `x`, you will see an error message as follows.
+
+```{r, eval = TRUE, error = TRUE}
+sample(x, size = 6)
+```
+
+
+In addition to using a vector in the first argument of `sample`, you can also use a positive integer (e.g., 10), which will be equivalent to `x = 1:10`. See the following code for an example. 
+
+```{r, results = TRUE}
+sample(10, size = 4)   #sample 4 integers from 1 to 10.
+sample(1:10, size = 4) #sample 4 integers from 1 to 10.
+```
+
+
+### Random Sampling with Replacement
+
+Sometimes, you may want to get a sample with replacements. You will still be using the `sample` function, but setting the argument `replace = TRUE`. The following code samples 10 elements with replacement from x.
+
+```{r, results = TRUE}
+sample(x, size = 10, replace = TRUE)
+```
+
+As expected, you will see some duplicated elements in the output vector.
+
+A very important application of random sample with replacement is **bootstrap**. A bootstrap sample is a sample of *the same size as the original data* with replacement. So, if you want to get a bootstrap sample from x, you will sample 5 elements with replacement from x.
+
+```{r, results = TRUE}
+sample(x, replace = TRUE) #a bootstrap sample
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+Note that, when the argument `size` is not provided, it will take the default value: the length of `x`. 
+::: 
+
+
+### Random Sampling with Unequal Probabilities
+
+By default, the `sample()` function will draw each element with the same probability. In some cases, you may want to assign different probabilities for different elements. 
+
+To draw elements with different probabilities, the first method is to use the random number generator for Binomial distribution or Bernoulli distribution. Let's say we want to randomly sample 100 elements from a Bernoulli distribution with success probability $p=0.2$. 
+
+```{r, results = TRUE}
+rbinom(100, size = 1, prob = 0.2)
+```
+
+In addition to using the `rbinom` function introduced in Section \@ref(other-distributions), you can use the `sample` function with the `prob` argument inside to achieve the same goal.
+
+```{r, results = TRUE}
+sample(c(0, 1), size = 100, replace = TRUE, prob = c(0.8, 0.2))
+```
+
+You will samples 100 elements with replacement from c(0,1) here, and the probability of drawing 0 is 0.8, the probability of drawing 1 is 0.2. 
+
+### Exercise
+

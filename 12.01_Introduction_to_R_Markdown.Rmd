@@ -1,0 +1,140 @@
+## Introduction to R Markdown {#intro-r-markdown}
+
+R Markdown is an interactive and dynamic file format in R. An R Markdown file can be transformed into a document of many different types, including HTML, PDF, and Word. 
+
+### Create a new R Markdown document
+
+To create an R Markdown document, you can click the `+` button on the R Studio menu, then select *R Markdown*. 
+
+```{r rmd, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="create a new R Markdown document (I)", out.width = '70%'}
+knitr::include_graphics("pics/10rmd.PNG")
+```
+
+Then you will see a window pops up like Figure \@ref(fig:rmarkdown).
+```{r rmarkdown, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="create a new R Markdown document (II)", out.width = '70%'}
+knitr::include_graphics("pics/10rmarkdown.PNG")
+```
+
+Here, you can enter the Title and Author of the document, and select one of the output formats: HTML, PDF and Word. In our opinion, **HTML is the recommended format for authoring**. If you want to generate a PDF, you need to have a **Tex installation**, which would have already been installed if you write LaTex documents on the computer. If necessary, you can install TinyTeX with the R package `tinytex`. 
+
+```{r, eval = FALSE}
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+A word of caution is needed here. We have seen a lot of people having issues with the installation of the Tex system. The exact cause is sometimes tricky to track. It could be the operating system, the physical location, existing software installed on the computer, or something else. If an error message shows up during the installation process, you are not alone. You could try to search the error message using a search engine. If generating PDF file is a must, as a last resort, you can first generate a word document and convert it into a pdf file afterward. 
+:::
+
+
+After clicking OK, you have created an R Markdown document with file extension **.Rmd**. You can save the file with a desired name on the disk by clicking the *save* button or using keyboard shortcut of saving files. Here, we use the name Lesson 10.1. It is clear to see the difference of file extension between R Markdown document and R script.
+
+```{r diff, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="R Markdown vs. R Script", out.width = '70%'}
+knitr::include_graphics("pics/10diff.PNG")
+```
+
+### Knit the R Markdown document
+
+To generate the final output document, you need to **knit** the .Rmd file. To do that, you can click the **Knit** button shown in the following figure. 
+```{r knit, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Knit button", out.width = '70%'}
+knitr::include_graphics("pics/10knit.PNG")
+```
+
+Then you will get an HTML, PDF, or Word document, according to the chosen document type. Let's take a look at the HTML document together,
+```{r H, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="HTML document", out.width = '70%'}
+knitr::include_graphics("pics/10H1.PNG")
+```
+
+A document consists of components three different types. The first type is the header of document, the second type is text, and the third type is related to codes and the results. Since the output document is rendered from the .Rmd file, the .Rmd file also has three type of components accordingly. 
+
+If you want to make any changes on the output document, you need to make the necessary changes on the .Rmd file and knit it again. Next, we  introduce how to write an R Markdown document.
+
+### Write an R Markdown document
+
+Unlike R script, you may notice that RStudio provides an example of the .Rmd file after creating an R Markdown document. It is then straightforward for you to get started by replacing the example with your own contents.
+
+By now you know that there are three parts in the .Rmd file. Let's go over them one by one.
+
+***a. YAML header***     
+
+The first part is a **YAML** header (Yet Another Markup Language), which is a section of **key: value** pairs surrounded by `---` marks, like below. 
+
+```
+---
+title: "Untitled"
+author: "r02pro"
+date: "8/31/2021"
+output: html_document
+---
+
+```
+
+It is used to specify the document information, including the title, author, date, and output format. The `output:` recognizes the following values:
+
+- html_document, which will create HTML output (default)
+- pdf_document, which will create PDF output
+- word_document, which will create Word output
+
+***b. Text***
+
+After the YAML header, you can see some text. Unlike R script, you don't need to use the pound sign `#` to write text in an R Markdown document. Indeed,  you can write as if you are writing in a text editor, though R Markdown provides a rich collection of text formats, which will be discussed in Section \@ref(rmd-text-formating).        
+
+
+***c. Code Chunks***
+
+The last component type is related to R codes. Different from R script, the R code is usually contained in the **code chunks** in the .Rmd file. So what is a code chunk?
+
+A **code chunk** is basically a collection of R codes surrounded by the chunk delimiters ```` ```{r} ```` and ```` ``` ````. Let's take a look at one code chunk as follows.
+```{r code-chunk, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="An R Code Chunk", out.width = '90%'}
+knitr::include_graphics("pics/10codechunck.PNG")
+```
+
+In this code chunk, there is only one line of code `summary(cars)` which will output the summary statistics of the `cars` data set. If necessary, you can include any lines of codes inside each code chunk. Each chunk can be viewed as a unit that usually serves a particular purpose. Inside each code chunk, you can run the codes **line by line** by the keyboard shortcut Cmd + Enter / Ctrl + Enter. However, it is often more convenient to run the codes **all at once** using the keyboard shortcut Shift + Cmd + Enter / Shift + Ctrl + Enter, or press the Green arrow on the right of the code chunk. 
+
+Then you will see both R code and the result from the output document by default.
+```{r re, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="R code and the result", out.width = '90%'}
+knitr::include_graphics("pics/10H3.PNG")
+```
+
+In addition to the R code, you may be wondering what do the arguments in the big parentheses `{ }` work for. Here, we will introduce a few useful **chunk options** which control the behavior of each code chunk. 
+
+- "r cars" gives the code chunk the name "pressure", which is useful to navigate between different chunks, and it is also necessary to give the code chunk a name if you want to cross reference the corresponding figure in the knitted document.
+- `eval = FALSE` prevents codes from being evaluated. This is useful when you want to show the code but don't want to run it. Default value is `eval = TRUE`.
+- `include = FALSE` prevents code and results from appearing in the knitted file. The code will still be evaluated. Default value is `include = TRUE`.
+- `echo = FALSE` prevents code, but not the results from appearing in the knitted file. This is useful if you want to embed figures in the document without showing the code used to generate them. Default value is `echo = TRUE`.
+- `message = FALSE` prevents messages that are generated by code from appearing in the knitted file.  Default value is `message = TRUE`.
+- `warning = FALSE` prevents warnings that are generated by code from appearing in the knitted file. Default value is `warning = TRUE`.
+
+There are many other available options in an R Markdown code chunk. You can refer to the webpage https://yihui.org/knitr/options/ for details. 
+
+Now let's see some examples together. If you add the chunk option `eval = FALSE`.
+```{r ev1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Add `eval = FALSE`", out.width = '90%'}
+knitr::include_graphics("pics/10eval1.PNG")
+```
+
+Then you will see the code without the result from the output.
+```{r ev2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Only see the code", out.width = '90%'}
+knitr::include_graphics("pics/10eval2.PNG")
+```
+
+If you add the chunk option `echo = FALSE`, 
+```{r ec1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Add `echo = FALSE`", out.width = '90%'}
+knitr::include_graphics("pics/10echo1.PNG")
+```
+
+you will see the result without the code from the output.
+```{r ec2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Only see the result", out.width = '90%'}
+knitr::include_graphics("pics/10echo2.PNG")
+```
+
+You can try to add other chunk options by yourself!
+
+Lastly, if you have many code chunks that share some chunk options, it is very useful to set the **global chunk options** at the beginning of an R Markdown document. To do that, you can add the following chunk right after the YAML header. 
+
+```{r glo, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="global chunk options", out.width = '90%'}
+knitr::include_graphics("pics/10global.PNG")
+```
+
+In this example, we set `echo = TRUE` and `warning = FALSE`. You can feel free to change their values and add other kinds of customization. In each subsequent chunk, this set of global chunk options will be inherited. Of course, you can add additional options in each chunk to add additional chunk options or overwrite the global chunk options. This may be reminiscent of the relationship between global and local aesthetic mappings introduced in Section \@ref(global-local-mapping). 
+
+

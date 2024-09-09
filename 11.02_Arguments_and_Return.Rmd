@@ -1,0 +1,81 @@
+## Arguments and Return {#arguments-return}
+
+Let's continue talking about functions. We will discuss 
+
+
+
+To get a Fibonacci sequence up to the value 100, you can use the following code.
+
+```{r, results=TRUE}
+fib_seq <- c(0, 1)
+fib_last_value <- fib_seq[1]
+fib_cur_value <- fib_seq[2]
+fib_next_value <- fib_last_value + fib_cur_value
+while(fib_next_value < 100){      
+  fib_seq <- c(fib_seq, fib_next_value)
+  fib_cur_value <- fib_next_value
+  fib_last_value <- fib_cur_value
+  fib_next_value <- fib_last_value + fib_cur_value
+}
+fib_seq                #print the sequence
+```
+
+Now, to get a Fibonacci sequence up to the value 200, you just need to change the 100 in the previous code to 200.
+
+```{r, results=TRUE}
+fib_seq <- c(0, 1)
+fib_last_value <- fib_seq[1]
+fib_cur_value <- fib_seq[2]
+fib_next_value <- fib_last_value + fib_cur_value
+while(fib_next_value < 200){      
+  fib_seq <- c(fib_seq, fib_next_value)
+  fib_cur_value <- fib_next_value
+  fib_last_value <- fib_cur_value
+  fib_next_value <- fib_last_value + fib_cur_value
+}
+fib_seq                #print the sequence
+```
+
+If this is some task we want to do repeatedly , it would be better to wrap the whole process into a **function**. 
+
+Let's first review the general syntax of a function.
+```{r, eval=FALSE}
+fun_name <- function(arg1, arg2){
+  expr_1
+  expr_2
+  return(return_val)
+}
+```
+
+
+First, we need to observe what objects are needs inside the function, which will be the **arguments** (`arg1`, `arg2`) of the function. Here, the upper bound of the Fibonacci sequence (value 100 and 200) is the only argument. 
+
+Second, we need to identify what to output from the function, i.e., **return** a value. In this example, the Fibonacci sequence would be a reasonable output for `return_val`.
+
+Third, we need to **name** the function, following the naming rule of an object introduced back in Section \@ref(Naming). Here, we will name it as `get_fibo`. 
+
+Let's look at our function.
+
+```{r}
+get_fibo <- function(upper_bound){
+  fib_seq <- c(0, 1)
+  fib_last_value <- fib_seq[1]
+  fib_cur_value <- fib_seq[2]
+  fib_next_value <- fib_last_value + fib_cur_value
+  while(fib_next_value < upper_bound){      
+    fib_seq <- c(fib_seq, fib_next_value)
+    fib_cur_value <- fib_next_value
+    fib_last_value <- fib_cur_value
+    fib_next_value <- fib_last_value + fib_cur_value
+    }
+  return(fib_seq)                #print the sequence
+}
+```
+
+Now, let's try to evaluate this function with some examples.
+```{r,results=TRUE}
+get_fibo(upper_bound = 50)
+get_fibo(upper_bound = 80)
+get_fibo(upper_bound = 300)
+```
+

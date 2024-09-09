@@ -1,0 +1,74 @@
+## While Loops and Repeat {#while-loop}
+
+In addition to `for` loop where you have to specify the range of values to iterate, it is sometimes more convenient to use another type of loop: the **while loop**. 
+
+### `while` loop
+Let's first review the syntax of `for` loops.
+```{r, eval=FALSE}
+for (val in val_seq){
+  statement1
+  statement2
+}
+```
+
+Here, we have to specify the `val_seq` along which we will assign each element to `val` and execute the statements, unless `break` is called. Sometimes, it is not clear what the `val_seq` would be. For example, if we want to find the Fibonacci sequence up to 100, it is not clear how many elements we will have in the `val_seq`. In this case, the `while` loop comes to rescue. Let's take a look of the syntax of `while` loop.
+
+```{r, eval=FALSE}
+while(cond_expr){
+  statement1
+  statement2
+}
+```
+
+In the `while` loop, we put a logical statement in the `cond_expr`. The loop will continue as long as `cond_expr` take the value of `TRUE`. Let's see the actual code in action.
+```{r, results=TRUE}
+fib_seq <- c(0, 1)
+fib_last_value <- fib_seq[1]
+fib_cur_value <- fib_seq[2]
+fib_next_value <- fib_last_value + fib_cur_value
+while(fib_next_value < 100){      
+  fib_seq <- c(fib_seq, fib_next_value)
+  fib_cur_value <- fib_next_value
+  fib_last_value <- fib_cur_value
+  fib_next_value <- fib_last_value + fib_cur_value
+}
+fib_seq                #print the sequence
+```
+
+
+### `repeat` Loop
+
+The last type of loops is the `repeat` loop, which doesn't have neither the range of values, nor the logical expression. The syntax is as below.
+```{r, eval = FALSE}
+repeat{
+  expr1
+  expr2
+  if(cond_expr){
+    break
+  }
+  expr3
+}
+```
+
+As you can see in the syntax of the `repeat` loop, you always need to put a conditional `break` statement to avoid infinite loops. 
+
+Let's rewrite the previous example using `repeat` loop.
+
+```{r, results=TRUE}
+fib_seq <- c(0, 1)
+fib_last_value <- fib_seq[1]
+fib_cur_value <- fib_seq[2]
+fib_next_value <- fib_last_value + fib_cur_value
+repeat{      
+  fib_seq <- c(fib_seq, fib_next_value)
+  fib_cur_value <- fib_next_value
+  fib_last_value <- fib_cur_value
+  fib_next_value <- fib_last_value + fib_cur_value
+  if(fib_next_value >= 100){
+    break
+  }
+}
+fib_seq                #print the sequence
+```
+
+You can see that the same sequence was generated using the `repeat` loop.

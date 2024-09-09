@@ -1,0 +1,117 @@
+## Select, Rename, and Reorder Variables {#select-variables}
+
+So far, we have only been manipulating observations, including filtering and arranging the observations. In many applications, there are some variables which may not be the focus of the research problem. As a result, learning how to **select** variables is very useful in data analysis. 
+
+### Select Variables via Names
+
+Let's again consider the `ahp` data set, which contains 56 variables in total. If we want to focus on the sold date, house style, living area, and sale price, we can use the `select()` function in the **dplyr** package. We will be using the pipe introduced in Section \@ref(pipe) throughout the rest of this Chapter. Inside the `select()` function, you can include the variables to select as different arguments. Note that the quotation marks are not necessary. 
+
+```{r, results=TRUE}
+library(r02pro)
+library(tidyverse)
+ahp %>% select(dt_sold, house_style, liv_area, sale_price)
+```
+
+As you can see from the output, the `select()` function returns another tibble with all the observations and the selected variables. 
+
+
+### Rename Variables
+
+In the `select()` function, you can also **rename the variables** in the form of `new_name = old_name` as the arguments. Let's see the following example where we want to rename `dt_sold` as `sold_date` and `liv_area` as `living_area`. 
+```{r, results=TRUE}
+ahp %>% select(sold_date = dt_sold, living_area = liv_area, sale_price)
+```
+
+Note that in this renaming operations, only the variables mentioned in the `select()` function are kept. If you want to generate a tibble with some variables renamed while keeping all variables, you can use the `rename()` function. 
+```{r, results=TRUE}
+ahp %>% rename(sold_date = dt_sold, living_area = liv_area)
+```
+
+From this example, you can see the different behavior between `select()` and `rename()` when renaming variables. 
+
+### Select Variables with Patterns
+
+Sometimes, you may want to select many variables that follows a particular pattern.
+
+***a. select consecutive variables***
+
+The first type of variable patterns is **consecutive variables** in a tibble.
+
+To get started, you can use `select(1:m)` to get the first `m` variables. To get the last column, you can use `select(last_col())`. To get the last `m` variables, you can use `select(last_col(m-1):last_col())`.
+```{r, results=TRUE}
+ahp %>% select(1:3)                    # the first 3 columns
+ahp %>% select(last_col())             # the last column
+ahp %>% select(last_col(1))            # the second to last column
+ahp %>% select(last_col(2):last_col()) # the last 3 columns
+```
+
+
+If you want to select all variables from `yr_sold` to `yr_remodel` in the tibble, you can use `yr_sold:yr_remodel` as a single argument in the `select()` function. Note that the result highly depends on the particular ordering of variables in the tibble. 
+```{r, results=TRUE}
+ahp %>% select(yr_sold:yr_remodel, sale_price)
+```
+
+***b. select variables with names that start with, end with, or contain a string***
+Another commonly used pattern is to select all variables with names that start with, end with, or contain a string. To select all variables that begin with `"yr"` (representing year information) in the `ahp` data set, you can use the `starts_with()` function in the `select()` function.
+
+```{r, results=TRUE}
+ahp %>% select(starts_with("yr"), sale_price)
+```
+
+In the output, we can see three variables that begins with `"yr"` including the sold year, built year, and remodel year. We also include the `sale_price` in the `select()` function. 
+
+You can also use `ends_with()` to select all variables with names that end with a particular string. 
+```{r, results=TRUE}
+ahp %>% select(ends_with("qual"))   #ending with qual
+```
+
+This produces a tibble with all quality related variables (ending with `qual`).
+
+If you want to select all variables with names containing a string (not necessarily starts with or ends with), you can use the `contains()` function with the string as its argument.
+```{r, results=TRUE}
+ahp %>% select(contains("mo"))
+```
+
+This outputs two variables named `mo_sold` and `yr_remodel`, both containing `mo`. 
+
+You can also combine multiple conditions using logical operators. First of all, the multiple arguments in the `select()` function are combined with **or operations (`|`). For example, to get all variables that begins with `b` or ends with `m`, you can do the following.
+```{r, results = TRUE}
+ahp %>% select(starts_with("b"), ends_with("m"))
+#ahp %>% select(starts_with("b") | ends_with("m")) #equivalent
+```
+
+For example, to get all variables that begins with `b` and ends with `m`, you can do the following.
+```{r, results = TRUE}
+ahp %>% select(starts_with("b") & ends_with("m"))
+```
+
+
+***c. select variables except for the specified ones***
+
+Sometimes, instead of specifying the variables to select, you want to keep all the variables except a few given ones. It works similar to the vector subsetting where you can add the negation sign `!` before the indices. For example, to keep all variables except the ones of names ending with `"room"` in the `sahp` data set, you can use `select(!ends_with("room"))`. 
+```{r, results = TRUE}
+sahp %>% select(!ends_with("room"))
+```
+
+
+### Reorder Variables via Names
+
+Knowing how to select and rename variables, let's learn how to reorder variables in a tibble. The first approach to reordering variables is to use the `select()` function by listing all the variables in the desired order. However, you may realized that it would be time consuming if there are many variables in the tibble and we only want to move a few to the beginning. It turns out we can utilize the `everything()` function as an argument in the `select()` function, which will select all the remaining variables. Let's say we want to move `yr_sold` and `sale_price` to the beginning of the tibble. 
+```{r, results=TRUE}
+ahp %>% select(yr_sold, sale_price, everything())
+```
+
+You can see the result is another tibble of 56 columns, with the first two columns being `yr_sold` and `sale_price`, followed by the remaining variables in the same order as in the original tibble `ahp`. 
+
+
+### Exercise
+
+Using the `ahp` dataset and the pipe operator for the following exercises.
+
+1. Select all variables with names ends with `qual` or `area`, then give the first three variables the new names `a`, `b` and `c` respectively. Then assign the new dataset to a name `Qual`. 
+
+2. In `Qual`, move `liv_area` to be the first column and `heat_qual` to be the second column while keeping the same order for the remaining columns.
+
+
+
+
