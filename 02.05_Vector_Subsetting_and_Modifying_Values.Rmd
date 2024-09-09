@@ -133,7 +133,7 @@ As it shows, the values of the 2nd and 4th elements in `h` are returned. Notice 
 h[-c(2,4)]  #return values except the 2nd and 4th elements of h
 ```
 
-Similar to using a named logical vectors, you can also use a named numeric vector to do vector subsetting.#comment:我get到这里说named logical vectors的意思了，但是感觉named vectors会让读者以为是2.5.1那种named vectors，所以我觉得可以改成a logical vector assigned with a name
+Similar to using a named logical vectors, you can also use a named numeric vector to do vector subsetting.
 
 ```{r, eval=TRUE}
 ind <- c(2,4)

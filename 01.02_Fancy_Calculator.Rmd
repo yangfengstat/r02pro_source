@@ -25,7 +25,7 @@ d <- data.frame(Operation, Explanation)
 knitr::kable(d)
 ```
 
-### Get help in R
+### Get help in R {#get-help}
 
 While the first seven operations in the above table look intuitive, you may be wondering, what does the `sign()` function mean there? Is that a stop sign?       
 
