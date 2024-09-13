@@ -171,10 +171,10 @@ The .bib file is a plain-text file that consists of bibliography entries like th
 ```
 @book{r02pro,
   title = {R Programming: From Zero to Pro},
-  author = {Yang Feng and Jianan Zhu},
+  author = {Yang Feng and r02proers},
   organization = {New York University},
   address = {New York, NY},
-  year = {2021},
+  year = {2023},
   url = {https://r02pro.github.io/},
 }
 ```

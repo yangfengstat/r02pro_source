@@ -16,7 +16,8 @@ For character vectors, R uses the **lexicographical ordering**, which is sometim
 - symbols are ordered in a specific way as shown below.
 
 ```{r, results = TRUE}
-syms <- c(" ",",",";","_","(",")","!","[","]","{","}","-","*","/","#","$","%","^","&","`","@","+","=","|","?","<",">",".")
+syms <- c(" ",",",";","_","(",")","!","[","]","{","}","-","*","/","#","$","%","^",
+          "&","`","@","+","=","|","?","<",">",".")
 sort(syms)
 ```
 
@@ -35,7 +36,7 @@ all_letters <- c(letters,LETTERS)
 sort(all_letters)
 ```
 
-From the example below, you will find out that the letter-wise rule always overweighs the case-wise rule. #麻烦帮忙看看这里讲得清不清楚
+From the example below, you will find out that the letter-wise rule is prioritized over the case-wise rule. 
 
 ```{r}
 x <- c("d", "c")

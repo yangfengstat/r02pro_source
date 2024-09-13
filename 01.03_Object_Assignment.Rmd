@@ -46,7 +46,7 @@ The assignment operation has three components. From left to right，
 - The final component is the object name's assigned **value(s)**, which is 5 here. 
 
 ::: {.infobox .caution data-latex="{caution}"}
-There is no space between `<` and `-` in the assignment operator `<-`. Note that although `=` may also appear to be working as the assignment operator, it is not recommended as `=` is usually reserved for specifying the value(s) of arguments in a function call, which will be introduced in Section \@ref(vector-patterns).
+There is no space between `<` and `-` in the assignment operator `<-`. Note that although `=` may also appear to be working as the assignment operator, it is not recommended as `=` is usually reserved for specifying the value(s) of arguments in a function call, which will be introduced in Section \@ref(intro-num-vector).
 :::
 
 After running the code above, you will see no output in the console, unlike the situation when we ran `1 + 2` which gives us the answer `3` (as shown in Figure \@ref(fig:noa)). You may be wondering, did we successfully make our first assignment operation? 
