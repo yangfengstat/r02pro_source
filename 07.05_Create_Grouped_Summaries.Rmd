@@ -1,0 +1,57 @@
+## Create Grouped Summaries via `group_by()` and `summarize()` {#create-grouped-summaries}
+
+In Section \@ref(create-variables), you learned how to create new variables as functions of the existing ones. For example, we created a variable representing the order of GDP per capita for each country in the year 2008. In this section, we will learn how to create summaries for each group of observations. 
+
+The **dplyr** package provides two useful functions to achieve this: namely `group_by()` which can group the observations according to the specified variables, and `summarize()` which create summaries for each group. 
+
+### Create Summaries
+
+To create summaries for a variable, you can use the `summarize()` function. Let's compute the number of countries, the average population, and the median of the GDP per capita for all observations in the `gm` dataset for the year 2008.
+
+```{r}
+library(r02pro)
+library(tidyverse)
+gm %>% 
+  filter(year == 2008) %>%
+  summarize(n_countries = n(), 
+            ave_population = mean(population, na.rm = TRUE),
+            q_GDP = median(GDP_per_capita, na.rm = TRUE))
+```
+
+
+Note that here we use the `n()` function to count the number of countries. The `mean()` function computes the average of the population, and the `median()` function computes the median of the GDP per capita. The `na.rm = TRUE` argument is used to remove the missing values when computing the average and median. 
+
+### Create Grouped Summaries
+
+So far, we have learned to use `summarize()` to create summaries for all observations. In practical applications, it is often more useful to compute the summaries when the observations are grouped according to certain criteria. Let's say we want to create the same summaries for each continent in the `gm` dataset. 
+
+```{r}
+gm %>% 
+  group_by(continent) %>% 
+  summarize(n_countries = n(), 
+            ave_population = mean(population, na.rm = TRUE),
+            q_GDP = median(GDP_per_capita, na.rm = TRUE))
+```
+
+From the output, you can see that the summaries are created for each continent. The `group_by()` function is used to group the observations according to the `continent` variable. Then, the `summarize()` function is used to create the summaries for each group.
+
+Let's now do another example. We want to find the top 5 countries with the highest life expectany in the year 2006 for each continent. 
+
+```{r}
+gm %>% 
+  filter(year == 2006,
+         !is.na(continent)) %>%
+  group_by(continent) %>% 
+  top_n(5, life_expectancy) %>% 
+  select(country, life_expectancy) %>%
+  arrange(continent, desc(life_expectancy))
+```
+In this example, we first filter the observations for the year 2006 and remove the missing values in the `continent` variable. Then, we group the observations according to the `continent` variable. The `top_n()` function is used to select the top 5 countries with the highest life expectancy for each continent. Finally, we select the `country` and `life_expectancy` variables and arrange the observations according to the continent and the life expectancy in descending order.
+
+### Exercises
+
+Using the `ahp` dataset and the pipe operator for the following exercises.
+
+1. For each month when the house was sold, summarize the 1st and 3rd quartile of the sale price. Then, create a scatterplot between the month (x-axis) and the quartile of the sale price with different colors for 1st and 3rd quantile. Explain the findings from the figure.
+
+2. Someone has a conjecture that when sold, the houses that are less than or equal to 30 years old have a higher sale price than the houses that are more than 30 years old. Show whether this is true in terms of maximum price, median price, and the minimum price for the houses in each group.

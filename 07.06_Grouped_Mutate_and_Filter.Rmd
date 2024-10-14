@@ -1,0 +1,49 @@
+## Grouped Mutate and Filter via `group_by()` {#grouped-mutate-filter}
+
+In Section \@ref(create-grouped-summaries), you  have seen the power of `group_by()` and `summarize()` which can help to create grouped summaries. In turns out the `group_by()` can be combined with `filter()` and `mutate()` to filter observations by group and create new variables by group. 
+
+### Grouped Filter
+
+For the `gm` dataset, let's say we want to find the countries that have a higher average GDP per capita than the average in the corresponding continent in the year 2008. We can use the following code.
+```{r}
+library(r02pro)
+library(dplyr)
+gm %>% 
+  filter(year == 2008) %>%
+  group_by(continent) %>%
+  mutate(ave_GDP = mean(GDP_per_capita, na.rm = TRUE)) %>%
+  filter(GDP_per_capita > ave_GDP) %>%
+  select(country, continent, GDP_per_capita, ave_GDP)
+```
+
+The code works in the following steps.
+1. Filter the observations for the year 2008.
+2. Group the observations by `continent`.
+3. Compute the average GDP per capita for each continent.
+4. Filter the observations that have a GDP per capita higher than the average GDP per capita of the corresponding continent.
+5. Select the variables `country`, `continent`, `GDP_per_capita`, and `ave_GDP`.
+
+### Grouped Mutate
+
+Now, let's say we want to find the top two countries with the highest GDP per capita for each continent in the year 2008. We can use the following code.
+```{r}
+gm %>% 
+  filter(year == 2008 & !is.na(continent)) %>%
+  group_by(continent) %>%
+  mutate(r = rank(desc(GDP_per_capita), ties.method = "first")) %>%
+  filter(r <= 2) %>%
+  select(country, continent, GDP_per_capita) %>%
+  arrange(continent, desc(GDP_per_capita))
+```
+Here, we first filter the observations for the year 2008 and remove the missing values in the `continent` variable. Then, we group the observations by `continent`. We use the `mutate()` function to create a new variable `r` which represents the rank of the GDP per capita in descending order. The `ties.method = "first"` argument is used to break the ties by giving the same rank to the same values. We then filter the observations that have a rank less than or equal to 2. Finally, we select the variables `country`, `continent`, and `GDP_per_capita`, and arrange the observations according to the continent and the GDP per capita in descending order.
+
+### Exercises
+
+Using the `ahp` dataset and the pipe operator for the following exercises.
+
+1. For each month when the house was sold, find the houses that have a higher sale price than the average sale price in the corresponding month. Then, create a scatterplot between the month (x-axis) and the sale price (y-axis) with different colors for the houses that have a higher sale price than the average sale price in the corresponding month. Explain the findings from the figure.
+2. Focus on the overall conditions where the number of corresponding houses are at least 30. Then, summarize the number of observations and the average sale price for each overall condition.
+3. Find the top two expensive houses that was remodel each year, show only the remodel year and sale price, and arrange the result in the ascending order of remodel year. 
+4. Group the houses by the combination of kitchen quality (`kit_qual`) and  central AC (`central_air`),  find the two houses with the minimum and maximum sale prices for each group. Then, arrange the groups in the descending order of maximum sale price within each group.
+
+
