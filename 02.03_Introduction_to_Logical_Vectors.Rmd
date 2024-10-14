@@ -10,9 +10,9 @@ knitr::opts_chunk$set(
   comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
 ```
 
-A **logical vector** is an atomic vector containing only **logical values**, mostly `TRUE` and `FALSE`. Logical vectors are most omnipresent when we check whether a comparison statement is true or false. Generally,  comparisons are more common between numeric vectors, since it is easy to compare numbers, so we will take the comparisons between numeric vectors as examples in this section. 
+A **logical vector** is an atomic vector containing only **logical values**, mostly `TRUE` and `FALSE`. Logical vectors are most omnipresent when we check whether a comparison statement is true or false. Generally,  comparisons are more common between numeric vectors since it is easy to compare numbers so that we will take the comparisons between numeric vectors as examples in this section. 
 
-For two length-1 vector, the comparison is simply done between the only element of each vector. Let's create a numeric vector `x` with value `3`, and then compare it with `2` and `1`. (Here `2` and `1` are both length-1 numeric vectors) 
+For two length-1 vectors, the comparison is simply done between the only element of each vector. Let's create a numeric vector `x` with value `3`, and then compare it with `2` and `1`. (Here `2` and `1` are both length-1 numeric vectors) 
 
 ```{r results=TRUE}
 x <- 3
@@ -55,7 +55,7 @@ x != 3     #not equal to
 Note that if you want to check whether two vectors are equal, you have to use **two equal signs** (with no space in-between) as a single operator, which is `==`, to do comparisons. If only one equal sign is used, it would work as an assignment operator.  In addition, you can use an exclamation mark together with one equal sign, which is `!=`, to find out whether two vectors are not equal.
  
 
-In addition to making comparisons involving vectors of length 1, you can also do it with vectors containing more than 1 elements. When we make comparisons between two vectors that contain more than 1 elements, R will make an **element-wise** comparison just like the arithmetic operations between two numeric vectors in Section \@ref(operation-recycling).
+In addition to making comparisons involving vectors of length 1, you can also do it with vectors containing more than one elements. When we make comparisons between two vectors that contain more than one elements, R will make an **element-wise** comparison just like the arithmetic operations between two numeric vectors in Section \@ref(operation-recycling).
 
 ```{r, results = TRUE}
 x2 <- c(1, 2, 6)
@@ -64,7 +64,7 @@ logi_1 <- x2 <= x3
 logi_1 
 ```
 
-As `x2` and `x3` are of the same length, **element-wise** comparison will be applied. The result of this comparison `logi_1` will be a logical vector of same length, and only contain `TRUE` and `FALSE.` You can also manually check that the values of `logi_1` agree with the comparisons `1 <= 2`, `2 <= 2`, and `6 <= 4`.
+As `x2` and `x3` are of the same length, **element-wise** comparison will be applied. The result of this comparison `logi_1` will be a logical vector of the same length, and only contain `TRUE` and `FALSE.` You can also manually check that the values of `logi_1` agree with the comparisons `1 <= 2`, `2 <= 2`, and `6 <= 4`.
 
 Similar to the arithmetic operations on numeric vectors, the **recycling rule** (introduced in Section \@ref(operation-recycling)) also applies to the comparison when the two vectors do not have the same length.  This recycling is most often used for a comparison between a vector **with length greater than 1** and a vector **with length of 1**. Let's see an example.
 

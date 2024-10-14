@@ -1,10 +1,10 @@
 ## Data Frame {#dataframe}
 
-So far, we have learned atomic vectors (Chapter \@ref(r-objects)), matrices (Section \@ref(matrix)), and arrays (Section \@ref(array)). Regardless of their dimensionality, the three different object types share an important features: they all contain elements of the same type (i.e., numeric, character, or logical). In real applications, it is common to have mixed variable types. To accommodate this, let's introduce a new two-dimensional object type: **data frame**. 
+So far, we have learned atomic vectors (Chapter \@ref(r-objects)), matrices (Section \@ref(matrix)), and arrays (Section \@ref(array)). Regardless of their dimensionality, the three different object types share an important features: they all contain elements of the **same** type (i.e., numeric, character, or logical). In real applications, it is common to have mixed variable types. To accommodate this, let's introduce a new two-dimensional object type: **data frame**. 
 
 ### Introduction to Data Frames
 
-To create a data frame, you can use the `data.frame()` function to collect several vectors of the same length. Let's see an example of some health conditions of a sheep and a pig over the years 2019, 2020 and 2021. 
+To create a data frame, you can use the `data.frame()` function to combine several vectors of the same length into a single object. Let's see an example of some health conditions of a sheep and a pig over the years 2019, 2020 and 2021. 
 ```{r, results=TRUE}
 animal <- rep(c("sheep", "pig"), c(3,3))
 year <- rep(2019:2021, 2)
@@ -56,7 +56,7 @@ summary(my_data_frame)
 
 From the results, you can see that depending on the variable type, you get different forms of summary. 
 
-In real world, it is very common to encounter missing values, and you may want to jettison those missing values or observations with them. In the object `my_data_frame`, there are two missing values represented by `NA`. To remove the observations (rows) with `NA` values, you can use the `na.omit()` on the data frame.
+In real world, it is very common to encounter missing values, and you may want to discard the observations with them. In the object `my_data_frame`, there are two missing values represented by `NA`. To remove the observations (rows) with `NA` values, you can use the `na.omit()` on the data frame.
 ```{r, results=TRUE}
 my_df_nona <- na.omit(my_data_frame)
 my_df_nona
@@ -91,7 +91,7 @@ my_data_frame$age <- my_data_frame$year - 2015
 my_data_frame
 ```
 
-### Subsetting and Modifying Data Frames {#subset_df}
+### Subsetting and Modifying Data Frames {#subset-df}
 
 As a two-dimensional object type, subsetting and modifying data frames is very similar to the operations on matrices. 
 

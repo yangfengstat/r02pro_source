@@ -30,7 +30,7 @@ plot(sahp$dt_sold[dt_sold_order],
 
 Note that here we added the labels for the x and y axes like we did for scatterplots.
  
-In the line plots, we would like to introduce two additional graphical parameters we can customize in the `plot()` function.
+In the line plots, we would like to introduce two additional graphical parameters that we can customize in the `plot()` function.
 
 ```{r echo = FALSE, results = TRUE}
 Parameter  <- c('`lty`',"`lwd`")

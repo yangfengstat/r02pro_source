@@ -184,10 +184,10 @@ typeof(my_int)
 class(my_int)
 ```
 
-You can see that internal storage type of `my_int` is indeed of `integer` type, with the `class` of it being `integer` as well. It is also worth noting that the displaying value of `my_double` and `my_int` are the same.
+You can see that the internal storage type of `my_int` is indeed of `integer` type, with the `class` of it being `integer` as well. It is also worth noting that the displaying value of `my_dbl` and `my_int` are the same.
 
 ```{r, results=TRUE}
-my_double
+my_dbl
 my_int
 ```
 

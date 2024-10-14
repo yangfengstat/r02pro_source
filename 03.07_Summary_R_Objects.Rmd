@@ -1,6 +1,6 @@
 ## Summary of R Objects {#summary-r-objects}
 
-Throughout last chapter and this one, we have covered all types of R objects including vectors, matrices, arrays, data frames (tibbles), and lists. In this section, we would like to summarize what we have covered and highlight the differences of the different types of objects in terms of their **dimensions** and the **data types** they can contain. 
+Through the last chapter and this one, we have covered all major types of R objects including vectors, matrices, arrays, data frames (tibbles), and lists. In this section, we would like to summarize what we have covered and highlight the main differences of the different types of objects in terms of their **dimensions** and the **data types** they can contain. 
 
 ```{r echo = FALSE, results = TRUE}
 library(tibble)
@@ -14,17 +14,58 @@ knitr::kable(d)
 
 ### Exercises
 
+This exercise will guide you through various R operations using a dataset of animals in a zoo. You will practice creating and manipulating vectors, matrices, and data frames, as well as performing basic calculations and filtering.
+
 Suppose there are 3 lions, 5 tigers, 7 birds, and 2 monkeys in the zoo.
 
-1. Write R code to create a **named** numeric vector `zoo1` to represent this information. What's the storage type of `zoo1`?
-2. If we create a vector `zoo2 <- c(3, "lions", "5", "tigers")`,  what is its storage type? Why?
-3. Write R code to create a data frame `zoo3` where `3 5 7 2` are in one column and the corresponding animal names are in another column. Then give names to each column according to the class of the corresponding vector (if two columns are of the same type, then you can add different numbers after the variable type, e.g. numeric1, numeric2). 
-4. Write R code to get the number of birds from `zoo3`.
-5. Write R code to extract rows of `zoo3` corresponding to lions and tigers.
-6. If the zoo also has 6 pandas, write R code to add a row to `zoo3` to represent this information.
-7. By now, find out the total number of animals in total are in the zoo? (`+` is not permitted)
-8. The zoo manager wants to put some parrots to the zoo, but he doesn't yet know the exact number, how can you add a row to represent this? 
-9. The zoo manager finds that a tiger ran away, please update the data frame `zoo3`.
-10. Can you use the two columns in `zoo3` to create a matrix `zoo4`? If you can, what type of matrix it will be? How many columns and rows are there in the matrix?
-11. Please write R code to create a list `zoo5` where the first element is `3 5 7 2`, the second element contains the corresponding animal names, and the third element being `zoo3`. During the creation process, assign names to each element according to its class (choose from vector, matrix, array, data frame, list. If two elements are of the same type, then please add different numbers after the element type, e.g. array1, array2) 
-12. If the zoo manager wants to extract an element named "array" from `zoo5`, what will he get?
+1. Creating Vectors
+
+- Create a numeric vector named `count` that stores the number of each animal: lions, tigers, birds, and monkeys.
+- Create a character vector named `animal` that stores the names of these animals in the same order.
+
+2. Combining Vectors
+
+- Combine the `count` and `animal` vectors into a new vector `zoo_1 <- c(count, animal)`.
+- What is the data type of `zoo_1`? Why does it has such a data type? What are the implications of this for numerical calculations?
+
+3. Creating a Matrix
+
+- Combine the `count` and `animal` vectors into a matrix `zoo_2 <- cbind(count, animal)`.
+- What is the data type of `zoo_2`? Explain why this occurs and how R handles the different data types within a matrix.
+
+4. Creating a Data Frame
+
+- Create a data frame named `zoo_df` using the `count` and `animal` vectors. Ensure that the data frame has appropriate column names.
+- Display the structure of the data frame using the `str()` function. What are the data types of each column?
+
+5. Updating the Data Frame
+
+- Two birds have escaped from the zoo. Update the `zoo_df` data frame to decrease the bird count by 2.
+- Verify the update by displaying the `zoo_df` data frame.
+
+
+6. Filtering the Data Frame
+
+- Extract and display only the rows of `zoo_df` that correspond to lions and tigers using subsetting.
+
+7. Adding New Data
+
+- The zoo has acquired 6 pandas. Add a new row to `zoo_df` for the pandas with the appropriate count and animal name.
+- Display the updated data frame.
+
+
+8. Calculating the Total Number of Animals
+
+- Calculate the total number of animals in the zoo without using the `+` operator. 
+
+
+9. Adding a Placeholder Row
+
+- The zoo manager plans to add parrots to the zoo, but he doesn’t know the exact number yet. Add a row for “parrots” with a placeholder value of `NA` for the count.
+- Display the updated data frame to confirm the change.
+
+10. Calculating the Median Count
+
+- The zoo manager decides that the number of parrots should be set to the median of the existing animal counts. Calculate the median count, excluding any `NA` values.
+- Update the count for parrots in the data frame to this median value.
+- Display the final data frame.

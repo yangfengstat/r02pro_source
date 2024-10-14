@@ -36,6 +36,7 @@ From this example, it is clear that lists are more general than all the object t
 
 ::: {.infobox .caution data-latex="{caution}"}
 In R, data frames are actually stored as lists. Indeed, they are special lists where each element is a vector (could be of different types) and each element is of the same length. Let's create a data frame and look at its `typeof()`.
+
 ```{r}
 df_ex <- data.frame(dig_num, ani_char)
 typeof(df_ex)
@@ -196,7 +197,7 @@ my_list_mat[[1, 2]]
 my_list_mat[1, 2]
 ```
 
-Similar to combining vectors into matrices in Section \@ref(#combine-vectors), you can also combine lists into list matrix using the `rbind()` or `cbind()` functions.
+Similar to combining vectors into matrices in Section \@ref(combine-vectors), you can also combine lists into list matrix using the `rbind()` or `cbind()` functions.
 
 ```{r, results = TRUE}
 l1 <- list(num = 1:4, mat = matrix(1:6, 2, 3))

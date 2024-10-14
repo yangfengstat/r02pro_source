@@ -1,8 +1,8 @@
 ## NULL, NaN, and Inf {#null}
 
-Having learned the special missing value representation `NA`  in Section \@ref(missing-values), we will introduce three additional values to represent unexpected results, namely the `NULL`, `NaN`, and `Inf`. During the process, we will talk about their relationships to `NA` as well. All `NULL`, `NaN`, and `Inf` are reserved words in R.
+Having learned the special missing value representation `NA` in Section \@ref(missing-values), we will introduce three additional special values, namely the `NULL`, `NaN`, and `Inf`. During the process, we will talk about their relationships to `NA` as well. All `NULL`, `NaN`, and `Inf` are reserved words in R.
 
-Before introducing the three types, let's review the structure, internal storage type, and length of `NA`. It is worth recalling that `NA` is a length-1 logical constant that indicates a missing value. Keep in mind that `NA` is different from `"NA"` (a character vector).
+Before introducing these three special values, let's review the structure, internal storage type, and length of `NA`. It is worth recalling that `NA` is a length-1 logical constant that indicates a missing value. Keep in mind that `NA` is different from `"NA"` (a character vector).
 
 ```{r, results=TRUE}
 str(NA)
@@ -12,28 +12,31 @@ length(NA)
 
 ### NULL
 
-First, let's take a look at `str()`, `typeof()` and `length()` of `NULL`. 
+First, let's take a look at `str()`, `typeof()` and `length()` of `NULL`.
+
 ```{r, results=TRUE}
 str(NULL)
 typeof(NULL)
 length(NULL)
 ```
 
-
-From the output, you'll see that `NULL` is a length-0 object often returned by expressions and functions whose value is undefined. 
+From the output, you'll see that `NULL` is a length-0 object often returned by expressions and functions whose value is undefined.
 
 ***a. Undefined field of a list***
 
-The first scenario of `NULL` is when you try to access an element of a list that is undefined. 
+The first scenario of `NULL` is when you try to access an element of a list that is undefined.
+
 ```{r, results = TRUE}
 my_list <- list(num = 1:3, char = c("a", "b"))
 my_list$logi
 ```
-Here, the result is `NULL` since logi is not a defined field in `my_list`. 
+
+Here, the result is `NULL` since logi is not a defined field in `my_list`.
 
 ***b. Remove an element from a list***
 
 You can remove an element from a list by assign it the `NULL` value.
+
 ```{r, results=TRUE}
 length(my_list)
 my_list$num <- NULL
@@ -41,18 +44,19 @@ length(my_list)
 my_list
 ```
 
-As you can see from the output, the element `num` is removed from `my_list`, leading to the length of `my_list` reduced by 1.
+As you can see from the output, the element `num` is removed from `my_list`, leading to the length of `my_list` being reduced by 1.
 
 ***c. Initialize a list of certain length***
 
-The `NULL` value is useful to serve as the default initial value when you want to create a list of certain length using the `vector()` function. 
+The `NULL` value is useful to serve as the default initial value when you want to create a list of certain length using the `vector()` function.
 
 ```{r, results=TRUE}
 my_list <- vector(mode = "list", length = 3)
 my_list
 ```
 
-It is worth mentioning that the `vector()` function is also useful to initialize a vector of given mode and length. 
+It is worth mentioning that the `vector()` function is also useful to initialize a vector of given mode and length.
+
 ```{r, results = TRUE}
 vector("numeric", length = 2)      ##default is 0
 vector("logical", length = 2)      ##default is FALSE
@@ -68,12 +72,11 @@ a == NULL
 is.null(a)
 ```
 
-It is worth explaining the result of `a == NULL` is `logical(0)`, representing a logical vector of length 0. The underlying reason is that `NULL` contains no value and is of length 0. As the `==` comparison returns a logical type object, hencing leading to a logical vector of length 0. 
-
+It is worth explaining the result of `a == NULL` is `logical(0)`, representing a logical vector of length 0. The underlying reason is that `NULL` contains no value and is of length 0. As the `==` comparison returns a logical type object, which in turn leads to a logical vector of length 0.
 
 ***d. `NULL` values when creating a vector***
 
-If you create a vector with `NULL` values, all `NULL` values will be removed if there exists at least one defined values. If all of them are `NULL` values, only one of them will be kept, but that vector's length will be 0. Note that there is fundamentally different from `NA` values. `NA` means the value is there, but the exact value is not available to us. 
+If you create a vector with `NULL` values, all `NULL` values will be removed if there exists at least one defined values. If all of them are `NULL` values, only one of them will be kept, but that vector's length will be 0. Note that `NULL` is fundamentally different from `NA`. `NA` indicates that there is an underlying value, although the actual value is not available to us.
 
 ```{r, results=TRUE}
 c(NULL, NULL, 1, NULL)
@@ -92,6 +95,7 @@ str(d) # the class is changed to numeric, but the length is still 0
 ### NaN {#NaN}
 
 `NaN`, represents **Not a Number**, usually appears when you divide 0 by 0, indicating the result is not well-defined.
+
 ```{r, results = TRUE}
 0/0
 ```
@@ -104,9 +108,10 @@ typeof(NaN)
 length(NaN)
 ```
 
-As you can see from the results, `NaN` is a numeric vector of length 1, with the value `NaN`. 
+As you can see from the results, `NaN` is a numeric vector of length 1, with the value `NaN`.
 
-To check if a value is `NaN`, you cannot use the `== NaN` similar to checking missing values, instead you need to use the function `is.nan()`.
+To check if a value is `NaN`, you cannot use the `== NaN` similar to checking missing values. Instead, you need to use the function `is.nan()`.
+
 ```{r, results=TRUE}
 a <- NaN
 a == NaN       ##resulting an NA value
@@ -114,10 +119,10 @@ is.nan(a)      ##the correct way to check if the value is NaN
 is.nan(c(NA, 1, NaN))
 ```
 
-
 ### Inf {#Inf}
 
-The last special we want to introduce in this section is `Inf`, representing the value is positive **infinity** ($\infty$), corresponding to a proper mathematical limit. Similarly, we also have negative infinity: `-Inf`. 
+The last special symbol we want to introduce in this section is `Inf`, which represents positive infinity ($\infty$), corresponding to a proper mathematical limit. Similarly, we have negative infinity, denoted as `-Inf`.
+
 ```{r, results = TRUE}
 1/0
 -2/0
@@ -136,9 +141,10 @@ typeof(Inf)
 length(Inf)
 ```
 
-As you can see from the results, similar to `NaN`, `Inf` is a numeric vector of length 1, but with the value `Inf`. 
+As you can see from the results, similar to `NaN`, `Inf` is a numeric vector of length 1, but with the value `Inf`.
 
-To check whether a value is finite or infinite, you can use the `is.finite()` and `is.infinite()` function. 
+To check whether a value is finite or infinite, you can use the `is.finite()` and `is.infinite()` function.
+
 ```{r, results=TRUE}
 is.finite(1/0)
 is.infinite(-3/0)
@@ -146,19 +152,19 @@ is.infinite(-3/0)
 
 ### A comparison of the four special values in R
 
-We would like to summarize the different behaviors of the four special values in R in the following table. 
+We would like to summarize the different behaviors of the four special values in R in the following table.
 
-Summary   |`NA`      | `NULL`     | `NaN`      | `Inf`
-----------|----------|------------|------------|--------------
-`class()` |`"logical"` | `"NULL"`     |`"numeric"`   |`"numeric"`
-`length()`|   1      |   0        |   1        |  1
-check     |`is.na()` | `is.null()`| `is.nan()` | `is.finite()`
+| Summary    | `NA`        | `NULL`      | `NaN`       | `Inf`         |
+|------------|-------------|-------------|-------------|---------------|
+| `class()`  | `"logical"` | `"NULL"`    | `"numeric"` | `"numeric"`   |
+| `length()` | 1           | 0           | 1           | 1             |
+| check      | `is.na()`   | `is.null()` | `is.nan()`  | `is.finite()` |
 
 ### Exercises
 
-Suppose `x <- c(NA, NULL, Inf, NaN)`, answer the following questions. (Try to solve without using R first and then confirm with R code)
+Suppose `x <- c(NA, NULL, Inf, NaN)`, answer the following questions. (First, try to solve without using R. Then, confirm with R code)
 
-1. What's the length of `x`?
-2. What's the class and the storage type of `x`?
-3. What's the value of `x + 1`? Explain the reason for each element in the result.
-4. What's the value of `x == x`? Explain the reason for each element in the result.
+1.  What's the length of `x`?
+2.  What's the class and the storage type of `x`?
+3.  What's the value of `x + 1`? Explain the reason for each element in the result.
+4.  What's the value of `x == x`? Explain the reason for each element in the result.

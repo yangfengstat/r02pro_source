@@ -29,7 +29,7 @@ We can see that the **only** difference between these two codes is the use of di
 
 ### Constant-Valued Aesthetics in Smoothline Fits
 
-Just like in scatterplots (Section \@(aes-constant-value)), you can also set Constant-Valued Aesthetics for smoothline fits. 
+Just like in scatterplots (Section \@ref(aes-constant-value)), you can also set Constant-Valued Aesthetics for smoothline fits. 
 
 ***a. Confidence Interval (Hide or Display)***
 

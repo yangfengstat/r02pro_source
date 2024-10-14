@@ -1,37 +1,60 @@
 ## Reorder Observations {#reorder-observations}
 
-Now, let's look at the second task: find the 10 countries with the highest life expectancy in 2008. To order observations, you can use the function `arrange()` in the **dplyr** package. 
+Now, let's look at the third task: find the 10 countries with the highest life expectancy in the year 2008. To order observations, you can use the function `arrange()` in the **dplyr** package. 
 
-First, let's create a new dataset called `gm_2008` that only contains the observations in 2008. 
+First, let's create a new dataset called `gm_2008` that only contains the observations in 2008 and the variables `country`, `life_expectancy`, and `GDP_per_capita`. 
 
 ```{r}
 library(r02pro)
 library(dplyr)
 library(tibble)
-gm_2008 <- filter(gm, year == 2008)
+gm_2008 <- gm %>% 
+  filter(year == 2008) %>%
+  select(country, life_expectancy, GDP_per_capita)
 ```
 
 
-To arrange the observations in the ascending order of the life expectancy (`life_expectancy`), you just need to add `life_expectancy` as a second argument of the `arrange()` function. To arrange the descending order, you can add `desc()` around the variable. 
-
-```{r, results=TRUE}
-arrange(gm_2008, yr_built)         #arrange in the ascending order of life_expectancy
-arrange(gm_2008, desc(yr_built))   #arrange in the descending order of life_expectancy
+To arrange the observations in the ascending order of the life expectancy (`life_expectancy`), you just need to add `life_expectancy` as an argument of the `arrange()` function. To arrange the descending order, you can add `desc()` around the variable. 
+```{r}
+gm_2008 %>% 
+  arrange(life_expectancy)         #arrange in the ascending order of life_expectancy
+gm_2008 %>%
+  arrange(desc(life_expectancy))   #arrange in the descending order of life_expectancy
 ```
 
-You may observe from the results that there are several houses with the same `yr_built` value, leading to a tie. To break the tie, you can supply additional variables in the `arrange()` function, which will arrange the observations in the tie according to the additional variables sequentially.
 
-```{r, results=TRUE}
-arrange(jan09, desc(yr_built), bldg_class)
+You may observe from the results that there are several countries with the same `life_expectancy` value, leading to a tie. To break the tie, you can supply additional variables in the `arrange()` function, which will arrange the observations within the tie according to the additional variables in the order they are supplied.
+
+```{r}
+gm_2008 %>% 
+  arrange(life_expectancy, 
+          GDP_per_capita) 
 ```
 
-Here, the observations are arranged in the descending order of `yr_built`, and the ties are broken in the ascending order of `bldg_class`. Clearly, you can supply as many arguments as needed in the `arrange()` function. It is also important to note that the observations that has an `NA` value in the specified variable will always be arranged at the end of the output. 
+Here, the observations are arranged in the ascending order of `life_expectancy`, and the ties are broken in the ascending order of `GDP_per_capita`. Note that the observations that has an `NA` value in the specified variable will always be arranged at the end of the output. 
+
+If you want to break the tie in the descending order of `GDP_per_capita`, you can use `desc()` around the variable. 
+
+```{r}
+gm_2008 %>% 
+  arrange(life_expectancy, 
+          desc(GDP_per_capita)) 
+```
+
+Now, we are ready to present the 10 countries with the highest life expectancy in 2008. 
+
+```{r}
+gm_2008 %>% 
+  arrange(desc(life_expectancy)) %>% 
+  head(10)
+```
+
+Here, the `head(10)` function is used to get the first 10 observations in the dataset.
 
 ### Exercises
 
 Using the `ahp` dataset,
+1. Find all houses built in `2008` with `house_style` as `2Story`, then arrange the the observations in the ascending order of remodel year, and break the ties in the descending order of `sale_price`.
 
-1. Find all houses built in `2008` with house style as `2Story`, then arrange the the observations in the ascending order of remodel year, and break the ties in the descending order of sale price.
-
-
+2. Find all houses sold in `2009` with `house_style` as `1Story`, and arrange the observations in the descending order of `sale_price`.
 

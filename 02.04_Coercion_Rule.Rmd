@@ -33,7 +33,7 @@ class(mix_2)
 typeof(mix_2)
 ```
 
-You can see that both `15` and `2022` are converted into strings since strings are more complex than numbers. Then `mix_2` will be a character vector.
+You can see that both `15` and `2022` are converted into strings since strings are more complex than numbers. Then, `mix_2` will be a character vector.
 
 
 The next example mixes  logical values, numbers and strings. 
@@ -55,7 +55,7 @@ mix_4 <- c(c(16, TRUE), "pig")
 mix_4
 ```
 
-Nested `c()` will collapse into a single vector recursively and during the process, the coercion rule will apply whenever needed. First, `c(16, TRUE)` will be converted to `c(16, 1)` since numbers are more complex than logical values. Then, the expression becomes `c(c(16, 1), "pig")`. Since character is more complex than numbers, `c(16, 1)` will be converted to `c("16", "1")` when you combine it with `"pig"`, leading to the results of `mix_5`. To help you understand the process, let's look at another example. 
+Nested `c()` will collapse into a single vector recursively and during the process, the coercion rule will apply whenever needed. First, `c(16, TRUE)` will be converted to `c(16, 1)` since numbers are more complex than logical values. Then, the expression becomes `c(c(16, 1), "pig")`. Since characters are more complex than numbers, `c(16, 1)` will be converted to `c("16", "1")` when you combine it with `"pig"`, leading to the results of `mix_5`. To help you understand the process, let's look at another example. 
 
 ```{r, results=TRUE}
 mix_5 <- c(16, c(TRUE, "pig"))

@@ -35,7 +35,7 @@ dim(y)
 
 Like vector subsetting in Section \@ref(vector-subsetting) and matrix subsetting in Section \@ref(matrix-subsetting), we can do array subsetting as well. 
 
-To do array subsetting, you can specify the indices for each dimension separated by `,`. Since `x` is a three-dimensional array, you can specify at most 3 indices. If you leave the indices for certain dimensions empty, everything will be kept along the corresponding dimensions. You can also use negative index to dropping the specified elements. Let's see a few examples.
+To do array subsetting, you can specify the indices for each dimension separated by `,`. Since `x` is a three-dimensional array, you can specify at most 3 indices. If you leave the indices for certain dimensions empty, everything will be kept along the corresponding dimensions. You can also use negative index to dropping  specified elements. Let's see a few examples.
 
 ```{r, results=TRUE}
 x[1, 2, 3]     #the (1, 2, 3)-th element of x
@@ -93,7 +93,7 @@ sum(array_1[2, 1, ])      #verify the [2, 1] element
 sum(array_1[2, 2, ])      #verify the [2, 2] element
 ```
 
-In addition to the three arguments, you can add additional arguments that will be passed when applying the specified function as we did in Section \@ref(apply-matrix). For example, the follow code generates the third quantile along the third dimension. 
+In addition to the three arguments, you can add additional arguments that will be passed when applying the specified function as we did in Section \@ref(apply-matrix). For example, the follow code generates the 0.75 quantile along the third dimension. 
 
 ```{r, results=TRUE}
 apply(array_1, 3, quantile, 0.75) 
@@ -107,8 +107,8 @@ First use R to create the following array
 a <- array(1:24, c(2, 3, 4))
 ```
 
-1. Compute the mean along the second dimension of `a`. (Hint: the result will be a vector of length -3.)
-2. Compute the first quantile along the first and third dimension of `a`. (Hint: the result will be a matrix of dimension $2\times 4$)
-3. Compute the first and third quantile along the first and third dimension of `a`. (Hint: the result will be an array of dimension $(2, 2, 4)$)
+1. Compute the mean along the second dimension of `a`. (Hint: the result will be a vector of length 3.)
+2. Compute the first quartile along the first and third dimension of `a`. (Hint: the result will be a matrix of dimension $2\times 4$)
+3. Compute the first and third quartile along the first and third dimension of `a`. (Hint: the result will be an array of dimension $(2, 2, 4)$)
 
 

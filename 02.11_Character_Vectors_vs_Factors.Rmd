@@ -66,7 +66,7 @@ animals_new[1] <- "Tiger"
 animals_new
 ```
 
-Since `"Tiger"` is not inside the levels set, we see a warning in the assignment process and the value of the first element is modified to `<NA>`, indicating it is "Not Available". We will cover `NA` in detail in Section \@ref(na). When the same assignment is done on the vector `animals`, there is no warning and the first element of `animals` is changed to "Tigers" as instructed. This is an attractive feature of factors that can prevent input errors. 
+Since `"Tiger"` is not inside the levels set, we see a warning in the assignment process and the value of the first element is modified to `<NA>`, indicating it is "Not Available". We will cover `NA` in detail in Section \@ref(missing-values). When the same assignment is done on the vector `animals`, there is no warning and the first element of `animals` is changed to "Tigers" as instructed. This is an attractive feature of factors that can prevent input errors. 
 
 In addition to creating factors from character vectors, you can also create them from numeric vectors as well as logical vectors.
 ```{r}

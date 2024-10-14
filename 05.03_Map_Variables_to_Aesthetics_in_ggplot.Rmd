@@ -45,7 +45,7 @@ Here, you can see that the color of the points changes smoothly according to the
 
 In addition to color, you can also map a discrete variable to the size aesthetic. 
 
-```{r}
+```{r, warning=TRUE}
 ggplot(data = gm2004) + 
   geom_point(mapping = aes(x = sugar, 
                            y = cholesterol,
@@ -75,7 +75,7 @@ ggplot(data = gm2004) +
              alpha = 0.5)
 ```
 
-Note that now the size of the points changes according to the corresponding `BMI` value, i.e. the larger points represent higher BMIs values and the smaller ones correspond to lower BMI values. It is worth noting that the legend only shows three representative `BMI` values (20, 25, an 30) and their corresponding sizes, however, we have other sizes show on the plot depending on exact BMI values. 
+Note that now the size of the points changes according to the corresponding `BMI` value, i.e. the larger points represent higher BMIs values and the smaller ones correspond to lower BMI values. It is worth noting that the legend only shows three representative `BMI` values (20, 25, and 30) and their corresponding sizes, however, we have other sizes shown on the plot depending on exact BMI values. 
 
 ***c. Shape***
 
@@ -247,7 +247,7 @@ ggplot(data = gm2004) +
              size = 2)
 ```
 
-Now, let's see another example where we want differentiate countries in Africa vs. other continents. 
+Now, let's see another example where we want to differentiate countries in Africa vs. other continents. 
 
 ```{r}
 ggplot(data = gm2004) + 
@@ -258,7 +258,7 @@ ggplot(data = gm2004) +
 ```
 
 
-Clearly, you can easily create new logical variables using any logical operations on existing variables, and map them into any aesthetics just like the existing categorical variables.
+Clearly, you can easily create new logical variables using any logical operations on existing variables, and map them into any aesthetics just like for the existing categorical variables.
 
 ### Exercises
 
@@ -266,7 +266,7 @@ Use **ggplot2** package to answer the following questions.
 
 1.	Using the `sahp` dataset, create a scatterplot to visualize the relationship between `liv_area` (on the x-axis) and `sale_price` (on the y-axis).  Use different colors for different `house_style`, different shapes to distinguish `central_air`, and points are of the size 2.
 
-2. Using the `gm2004` dataset, create a scatterplot to visualize the relationship between `alcohol` (on the x-axis) and `liver_cancer` (on the y-axis) where the points are purple and the size of the points are determined by the `BMI` values. 
+2. Using the `gm2004` dataset, create a scatterplot to visualize the relationship between `BMI` (on the x-axis) and `cholesterol` (on the y-axis) where the points are purple and the size of the points are determined by the `BMI` values. 
 
 3. Using the `gm2004` dataset, create a scatterplot to visualize the relationship between `sugar` (on the x-axis) and `cholesterol` (on the y-axis) where the points are red when `HDI_category` is high or very high and the points are purple when `HDI_category` is low or medium and the size depend on the value of `population`. Please also remove the `NA` level in `HDI_category`. Discuss your findings.
 

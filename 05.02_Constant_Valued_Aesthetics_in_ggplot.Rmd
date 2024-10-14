@@ -95,7 +95,7 @@ You are welcome to try different combinations of global aesthetics.
 
 1.	Using the `sahp` dataset, create a scatterplot with **ggplot2** to visualize the relationship between `lot_area` (on the x-axis) and `sale_price` (on the y-axis) with all points of color purple and size 2.   
 
-2. Using the `gm2004` dataset, create a scatterplot with **ggplot2** to visualize the relationship between `alcohol` (on the x-axis) and `liver_cancer` (on the y-axis) with all points of color pink, size 3, transparency 0.3, and shape of diamond. 
+2. Using the `gm2004` dataset, create a scatterplot with **ggplot2** to visualize the relationship between `BMI` (on the x-axis) and `cholesterol` (on the y-axis) with all points of color pink, size 3, transparency 0.3, and shape of diamond. 
 
 
 

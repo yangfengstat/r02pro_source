@@ -46,7 +46,7 @@ head(my_df)
 We can see from the result that although the file contains two sheets, the function will import the first sheet by default. To import the second sheet, you can set the `sheet` argument to the sheet name (`sahp`) or the position of the sheet (2). 
 
 ```{r, eval=TRUE, results=TRUE}
-sahp_1 <- read_excel("two_data.xlsx", sheet = "sahp")
+sahp_1 <- read_excel("data/two_data.xlsx", sheet = "sahp")
 #sahp_1 <- read_excel("two_data.xlsx", sheet = 2)     #same result as the previous line
 head(sahp_1)
 ```
@@ -54,7 +54,7 @@ head(sahp_1)
 If we only want to import a portion of the data, say the first 5 rows and the first 4 columns, then we can set the argument `range = "A1:D5"`, just like the range in an excel file. Note that the index starts with the first row, which may correspond to the column names.
 
 ```{r, eval=TRUE, results=TRUE}
-sahp_2 <- read_excel("two_data.xlsx", sheet = "sahp", range = "A1:D5")
+sahp_2 <- read_excel("data/two_data.xlsx", sheet = "sahp", range = "A1:D5")
 sahp_2
 ```
 
@@ -100,7 +100,7 @@ df2
 
 Then create a list named `my_list` with `df1` as the first element and `df2` as the second element.
 
-1. Write R code to set working directory to the desktop, then export `my_list` into an excel file named `list.xlsx`. How many sheets are there in the excel file? What's in each sheet? 
+1. Write R code to set working directory to the desktop, then export `my_list` into an excel file named `list.xlsx`. How many sheets are there in the excel file? What are the contents in each sheet? 
 
 2. Write R code to import the first two rows and the first column of the second sheet from the excel file you just created. And verify the object value.
 

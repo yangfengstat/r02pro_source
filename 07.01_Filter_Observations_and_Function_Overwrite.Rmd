@@ -1,4 +1,4 @@
-## Filter Observations and Objects Masking {#filter-observations}
+## Filter Observations, Objects Masking, and the Pipe {#filter-observations}
 
 Let's start with the first task outlined at the beginning of this chapter. Suppose we want to find the observations that represent countries in Europe (`continent`), years between 2006 and 2010 (`year`), and Low Human Development Index (`HDI_category`). You can use the function `filter()` in the **dplyr** package, a member of the **tidyverse** package. If you haven't installed the **tidyverse** package, you need to install it. Let's first load the **dplyr** package. 
 
@@ -26,12 +26,12 @@ In this scenario when the same function name is shared by multiple packages, we 
 ?dplyr::filter
 ```
 
-It is helpful to verify which version of `filter()` you are using by typing the function name `filter`. 
+It is helpful to verify which version of `filter()` you are using by running the function name `filter`. 
 ```{r, eval = FALSE}
 filter
 ```
 
-Usually, R will use the function in the package that is loaded at a later time. To verify the search path, you can use the `search()` function. R will show a list of attached packages and R objects. 
+Usually, R will use the function in the package that is loaded at a later time. To verify the search path, you can use the `search()` function. R will show a list of attached packages and R objects. This list shows the sequence of environments or loaded packages that R uses to look for an object by name. 
 
 ```{r, results=TRUE}
 search()
@@ -54,7 +54,7 @@ filter(gm,
 
 In the `filter()` function, each logical statement will be computed, which leads to a logical vector of the same length as the number of observations. Then, only the observations that have `TRUE` values in all logical vectors are kept. 
 
-It is helpful to learn the mechanism of `filter()` by reproducing the results using what we learned on data frame subsetting in Section \@ref(subset_df). 
+It is helpful to learn the mechanism of `filter()` by reproducing the results using what we learned on data frame subsetting in Section \@ref(subset-df). 
 
 ```{r, eval = FALSE}
 gm[which(gm$continent == "Europe" & 
@@ -93,6 +93,27 @@ filter(gm,
        HDI_category == "very high" | HDI_category == "high" )
 ```
 
+### The pipe operator
+
+Now, we want to introduce a very useful operator, named **pipe**. The pipe operator makes it much easier to apply a sequence of operations on a dataset. For example, let's say we want to generate a scatterplot of `cholesterol` and `BMI` only for the European countries in the `gm2004` dataset. Typically, we first use the `filter()` function to create the subset of the data and call the `ggplot()` function to create the plot. 
+```{r}
+library(ggplot2)
+ggplot(filter(gm2004, 
+              continent == "Europe")) + 
+  geom_point(aes(x = BMI, 
+                 y = cholesterol))
+```
+While this gets the job done, it doesn't look very elegant. Let's take a look what this looks like when we use the pipe operator `%>%`. 
+```{r, eval=FALSE}
+gm2004 %>% 
+  filter(continent == "Europe") %>%
+  ggplot() + 
+  geom_point(aes(x = BMI, 
+                 y = cholesterol))
+```
+I hope you agree that this looks more intepretable, with each line corresponding to a step in the data processing. The pipe operator `%>%` is a binary operator that takes the object on its left-hand side and passes it as the first argument to the function on its right-hand side. This makes it easier to read the code from left to right, as if you are reading a book. 
+
+From now on, we will be extensively using the pipe operator `%>%` to make the code more readable.
 
 ### Exercise
 

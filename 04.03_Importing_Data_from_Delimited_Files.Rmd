@@ -1,15 +1,17 @@
-## Importing Data from Delimited Files  {#import-data}
+## Importing Data from Delimited Files {#import-data}
 
 Knowing how to export data into delimited files, let us now see how to **import** data from delimited files.
 
 ### Import .csv Files using `read_csv()`
 
-To import .csv files, we can use the function `read_csv()` in the **readr** package, which is a sub-package of **tidyverse**. If you have already installed **tidyverse**, you can directly load the **readr** package. 
+To import .csv files, we can use the function `read_csv()` in the **readr** package, which is a sub-package of **tidyverse**. If you have already installed **tidyverse**, you can directly load the **readr** package.
 
 After loading the **readr** package, you can try to import the data from "gm_small.csv" which we created in Section \@ref(write-csv). Please make sure the .csv file is located in the folder "data" relative to the current working directory. Otherwise, you need to change the working directory accordingly using the methods introduced in Section \@ref(setwd).
 
 <!-- ```{r echo = FALSE} -->
+
 <!-- knitr::opts_knit$set(root.dir = "data") -->
+
 <!-- ``` -->
 
 ```{r}
@@ -36,7 +38,7 @@ read_csv("x,y,z
           2,4,6")
 ```
 
-This inline input example is equivalent to reading a .csv file with contents identical to those in quotes. You can see that a tibble with size of 2 by 3 is generated with the column names being `x`, `y` and `z`. From the argument, we can see that by default, the **first row** of the input data will be interpreted as the column names. 
+This inline input example is equivalent to reading a .csv file with contents identical to those in quotes. You can see that a tibble with size of 2 by 3 is generated with the column names being `x`, `y` and `z`. From the argument, we can see that by default, the **first row** of the input data will be interpreted as the column names.
 
 ***a. No column names***
 
@@ -48,11 +50,11 @@ read_csv("x,y,z
           2,4,6", col_names = FALSE)
 ```
 
-Now, a tibble of 3 rows and 3 columns was generated, with the column names being `X1`, `X2`, and `X3`. Note that these are the default naming conventions in the function when you don't supply the column names in the file. Another thing worth mentioning is that all three variables are of **character** types, due to the fact that there are character values for all variables (`x`, `y`, and `z`). 
+Now, a tibble of 3 rows and 3 columns was generated, with the column names being `X1`, `X2`, and `X3`. Note that these are the default naming conventions in the function when you don't supply the column names in the file. Another thing worth mentioning is that all three variables are of **character** types, due to the fact that there are character values for all variables ("x", "y", and "z").
 
 ***b. Skip the first few lines***
 
-Sometimes, the first few lines of your data file may be descriptions of the data, which you want to skip when importing into R. We can set the `skip` argument in the `read_csv()` function to skip a certain number of lines. 
+Sometimes, the first few lines of your data file may be descriptions of the data, which you want to skip when importing into R. We can set the `skip` argument in the `read_csv()` function to skip a certain number of lines.
 
 ```{r, eval=TRUE}
 read_csv("The first line 
@@ -84,41 +86,30 @@ read_csv("x,y,z
          NA,-999,6")
 ```
 
-In a typical application, however, the person who prepared the data may use other strings to represent missing values. For example, if 999 and -999 are used as the indicators for missing values, you can set the argument `na` to be the vector containing those values, along with the default `NA` as a character. 
+In a typical application, however, the person who prepared the data may use other strings to represent missing values. For example, if 999 and -999 are used as the indicators for missing values, you can set the argument `na` to be the vector containing those values. Note that `NA` will still be interpreted as missing values automatically.
 
 ```{r, results=TRUE}
 read_csv("x,y,z
           999,3, yes
          NA,-999, no
-         12, 12, NA", na = c("999","-999", "NA"))
+         12, 12, NA", na = c("999","-999"))
 ```
 
 You can see from the output tibble that all the missing values are now denoted as `NA`.
 
-::: {.infobox .caution data-latex="{caution}"}
-Note that the quotation marks around 999 and -999 are necessary since the `na` argument is expecting a character vector.
+::: {.infobox .caution data-latex="{caution}"} Note that the quotation marks around 999 and -999 are necessary since the `na` argument is expecting a character vector.
+
 ```{r, error=TRUE}
 read_csv("x,y,z
           999,3,5
-         999,-999,6", na = c(999,-999, NA))
+         999,-999,6", na = c(999,-999))
 ```
 
-You can see an error message, stating that it is expecting character values, but got double values. 
-
-In addition, the quotes around `NA` is also necessary. 
-```{r}
-read_csv("x,y,z
-          999,3, yes
-         NA,-999, no
-         12, 12, NA", na = c("999","-999", NA))
-```
-
-Here, the first column is wrongly interpreted as a character vector. 
-
+You can see an error message, stating that it is expecting character values, but got double values.
 
 ### Importing Data From a Delimited File
 
-You now know how to import data from a .csv file using the `read_csv()` function. More generally, `read_delim()` allows us to import data from a delimited file with any chosen *delimiter*. The usage of `read_delim()` is almost identical to `read_csv()`, except that it has an additional argument `delim`, which specifies the delimiter to be used. Let's see the following example with `*` as the delimiter. Note that we are using the "my_animals_star.csv" file generated in Section \@ref(write-delim). 
+You now know how to import data from a .csv file using the `read_csv()` function. More generally, `read_delim()` allows us to import data from a delimited file with any chosen *delimiter*. The usage of `read_delim()` is almost identical to `read_csv()`, except that it has an additional argument `delim`, which specifies the delimiter to be used. Let's see the following example with `*` as the delimiter. Note that we are using the "my_animals_star.csv" file generated in Section \@ref(write-delim).
 
 ```{r, eval=FALSE}
 my_animals <- read_delim("data/gm_small_star.csv", delim = "*")
@@ -130,13 +121,13 @@ Let's try to use `read_csv()` instead to check what will you get.
 read_csv("data/gm_small_star.csv")
 ```
 
-You will see that the imported data has only one variable named `country*year*HDI` since the function will interpret the whole thing as a single variable. 
+You will see that the imported data has only one variable named `country*year*HDI` since the function will interpret the whole thing as a single variable.
 
 ### Import Data Using the Menu {#import-menu}
 
 Besides writing codes involving `read_csv()` or `read_delim()` to import data, you can also take advantage of the interactive menu RStudio provides.
 
-To do this, you can click on the **Import Dataset** button in the **Environment** panel on the top right of RStudio shown in the following figure. 
+To do this, you can click on the **Import Dataset** button in the **Environment** panel on the top right of RStudio shown in the following figure.
 
 ```{r, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="Import Dataset Menu", out.width = '90%'}
 knitr::include_graphics("pics/5-import.png")
@@ -151,25 +142,25 @@ d <- data.frame(Choice, Name)
 knitr::kable(d, caption = "Import Data from Menu")
 ```
 
-We will focus on importing delimited files in this section. We will cover importing Excel files in Section \@ref(import-excel). Working with SPSS, SAS, and Stata files will be covered in Section \@ref(import-other). 
+We have been focusing on importing delimited files in this section. We will cover importing Excel files in Section \@ref(import-excel). Working with SPSS, SAS, and Stata files will be covered in Section \@ref(import-other).
 
-For importing a .csv file, .txt file, or any other file with a delimiter, you can choose the **From Text (readr)** option. Then, you can click **Browse...** and select the data file. We will select the "gm_small_star.csv" file in the "data" folder. 
+For importing a .csv file, .txt file, or any other file with a delimiter, you can choose the **From Text (readr)** option. Then, you can click **Browse...** and select the data file. We will select the "gm_small_star.csv" file in the "data" folder.
 
-After a file is selected, you can see the **Data Preview** which is showing the first several rows of the data. Note that the first row shows the column names and their associate types in parentheses. For each column, you can click the drop-down menu after the type to change its type. 
+After a file is selected, you can see the **Data Preview** which is showing the first several rows of the data. Note that the first row shows the column names and their associate types in parentheses. For each column, you can click the drop-down menu after the type to change its type.
 
 ```{r, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="Import Data Preview", out.width = '90%'}
 knitr::include_graphics("pics/5-import-preview-star.png")
 ```
 
-From this figure, you can see that the preview only shows one column named "country\*year\*HDI". Apparently, the separator "\*" is not properly interpreted during the process. 
+From this figure, you can see that the preview only shows one column named "country\*year\*HDI". Apparently, the separator "\*" is not properly interpreted during the process.
 
-To fix this problem, we can look at the **Import Options** in the left area. 
+To fix this problem, we can look at the **Import Options** in the left area.
 
 ```{r, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="Import Options", out.width = '90%'}
 knitr::include_graphics("pics/5-import-options.png")
 ```
 
-Let's summarize a few commonly used options, their corresponding arguments in the `read_csv()` or `read_delim()` function, and meanings. 
+Let's summarize a few commonly used options, their corresponding arguments in the `read_csv()` or `read_delim()` function, and meanings.
 
 ```{r importOptions, echo = FALSE, results = TRUE}
 Option  <- c("Name","Skip","First Row as Names","Delimiter","Comment","NA","Code Preview")
@@ -185,13 +176,13 @@ In our case, we will change the value of "Delimiter" to "\*" (Note that you need
 knitr::include_graphics("pics/5-import-options-star.png")
 ```
 
-Note that when you change the delimiter, the **Data Preview** window also change correspondingly. 
+Note that when you change the delimiter, the **Data Preview** window also change correspondingly.
 
 ```{r, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="Data Preview (Star)", out.width = '90%'}
-knitr::include_graphics("pics/5-import-preview-star.png")
+knitr::include_graphics("pics/5-import-preview-star-correct.png")
 ```
 
-After changing the delimiter to `*`, we are seeing the expected data with three columns: `dig_num`, `ani_char`, and `conditions`. 
+After changing the delimiter to `*`, we are seeing the expected data with three columns: `dig_num`, `ani_char`, and `conditions`.
 
 The code in the *Code Preview* window will change accordingly, which is a great way to learn on how they work. The new codes in the *Code Preview* window is as below.
 
@@ -206,9 +197,9 @@ View(gm_small_star)
 
 ### Exercises
 
-1. For the "my_data_na.csv" file you created in Exercise 2 in Section \@ref(export-data), write R code to read the file into an object with name `my_data`.
+1.  For the "my_data_na.csv" file you created in Exercise 2 in Section \@ref(export-data), write R code to read the file into an object with name `my_data`.
 
-2. First, look at the code below. 
+2.  First, look at the code below.
 
 ```{r, eval=FALSE}
 d1 <- read_csv("x,y,z
@@ -218,10 +209,11 @@ d1 <- read_csv("x,y,z
 
 Which of the following are the column names of the `d1`?
 
-- `X1`, `X2`, and `X3`
-- `x`, `y`, and `z`
+-   `X1`, `X2`, and `X3`
+-   `x`, `y`, and `z`
 
-3. First, look at the code below.
+3.  First, look at the code below.
+
 ```{r, eval=FALSE}
 d1 <- read_csv("The first line 
           The second line
@@ -231,4 +223,3 @@ d1 <- read_csv("The first line
 ```
 
 What will be the column name(s) of the `d1`?
-

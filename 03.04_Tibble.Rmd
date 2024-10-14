@@ -97,4 +97,4 @@ my_data_frame <- data.frame(animal, weight, condition, healthy)
 my_tibble
 ```
 1. Add the following observation to `my_tibble`: `animal = "pig"`, `weight = 900`, `condition = average`, and `healthy = FALSE`. 
-2. Without running in R, what do you think are the difference between `my_tibble[, 1]` and `my_data_frame[, 1]`? How can you reproduce ``my_data_frame[, 1]` by subsetting `my_tibble`? 
+2. Without running in R, what do you think are the difference between `my_tibble[, 1]` and `my_data_frame[, 1]`? How can you reproduce `my_data_frame[, 1]` by subsetting `my_tibble`? 

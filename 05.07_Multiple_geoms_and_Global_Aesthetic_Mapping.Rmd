@@ -175,7 +175,7 @@ Here, the global aesthetic mapping `color = gender` is first passed to both `geo
 
 Let's review the difference between the Constant-Valued Aesthetic and the Global Aesthetic Mapping. 
 
-- The constant-valued aesthetic set the aesthetic value for all points/lines on the graph (for example, `color = red` will make all points red) for a single geom. It doesn't interfere with the other geoms. 
+- The constant-valued aesthetic sets the aesthetic value for all points/lines on the graph (for example, `color = red` will make all points red) for a single geom. It doesn't interfere with the other geoms. 
 - The global aesthetic mapping is an aesthetic mapping (for example, `color = gender` will use different colors for different gender values) that will be passed into all available geoms considered in the single plot. 
 
 It is worth noting that we can't set the constant-valued aesthetic at the global level, i.e.there is no **Global Constant-Valued Aesthetics**. Let's try to change all the points and lines to purple by adding `color = "purple"` in `ggplot()`. 

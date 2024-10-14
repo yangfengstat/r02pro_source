@@ -10,7 +10,7 @@ One of most common ways to create a matrix from a vector is to use the function 
 matrix(data = 1:12, nrow = 3, ncol = 4)
 ```
 
-Note that when we supply the arguments in the default order of an R function, we can omit the argument names. As a result, the following expression could be simplified and generate the same matrix.
+Note that when we supply the arguments in the default order of an R function, we can omit the argument names. As a result, the following expression generates the same matrix.
 
 ```{r, eval=FALSE}
 matrix(1:12, 3, 4)
@@ -22,20 +22,20 @@ Typically, the length of the supplied vector **equals** the number of rows multi
 matrix(6, 3, 3)
 ```
 
-As mentioned before, some arguments of the function could be omitted for simpler expression and clean coding. In this case, you can just specify `nrow` or `ncol` if the value of the other one can be implied, and still get the exact same matrices as shown below. 
+As mentioned before, some arguments of the function could be omitted for simpler expression and cleaner coding. In this case, you can just specify `nrow` or `ncol` if the value of the other one can be implied, and still get the exact same matrices as shown below. 
 
 ```{r, eval=FALSE}
 matrix(1:12, nrow = 3)
 matrix(1:12, ncol = 4)
 ```
 
-Looking at the resulting matrix, you may notice that the matrix is created by filling the columns sequentially with the elements from the input vector. That is, it first fills the first column, then the second column, and so on. If you want to fill rows instead, you can add the argument `byrow = TRUE`.
+Looking at the resulting matrix, you may notice that the matrix is created by filling the columns sequentially with the elements from the input vector. That is, it first fills the first column, then the second column, and so on. If you want to fill by rows instead, you can add the argument `byrow = TRUE`.
 
 ```{r}
 matrix(1:12, nrow = 4, byrow = TRUE)
 ```
 
-After defining a matrix, we can apply various functions on it.
+After defining a matrix, we can apply various functions to it.
 
 ```{r, results=TRUE}
 x <- matrix(1:12, nrow = 4)
@@ -81,14 +81,14 @@ rownames(x) <- c("a","b","c","d")     #row names
 colnames(x) <- c("x","y","z")         #column names
 ```
 
-Interesting, you can use the same functions `rownames()` and `colnames()` to extract the row and column names. 
+In addition, you can use the same functions `rownames()` and `colnames()` to extract the row and column names. 
 
 ```{r, eval=FALSE}
 rownames(x)
 colnames(x)
 ```
 
-We can also convert a matrix to a vector, which will take the elements of the matrix column by column.
+We can also convert a matrix to a vector, which will arrange the elements of the matrix column by column.
 
 ```{r, results=TRUE}
 as.vector(x)      #convert matrix to a vector
@@ -119,8 +119,8 @@ To combine two vectors into a matrix, you can use the `rbind()` or `cbind()` fun
 ```{r, results=TRUE}
 z <- 1:4
 w <- 5:8
-rbind(z,w)
-cbind(z,w)
+rbind(z, w)
+cbind(z, w)
 ```
 
 In addition to combine two vectors, you can also use `rbind()` and `cbind()` to combine two matrices. 
@@ -151,7 +151,7 @@ To get a submatrix with multiple rows and columns, you just need to supply the r
 x[1:2, 2:3]   #the elements on the first & second row and second & third column
 ```
 
-To keep all the rows or columns, you can leave the index location empty. 
+To keep all the rows or columns, you can leave the corresponding index location empty. 
 
 ```{r}
 x[2, ]       #all elements on the second row
@@ -213,7 +213,7 @@ x[x[, "y"] > 6, x["b", ] < 7]
 
 ### Modify values in sub-matrices
 
-Just as modifying values on sub-vectors (Section \@ref(update-vector)), we can use the same technique for modifying values in sub-matrices. To avoid the changing the original matrix, we will modify the values on an copy of the original matrix.
+Just as modifying values on sub-vectors (Section \@ref(subsetting-and-modify-values)), we can use the same technique for modifying values in sub-matrices. To avoid the changing the original matrix, we will modify the values on an copy of the original matrix.
 
 ```{r, results=TRUE}
 x_copy <- x
@@ -239,7 +239,7 @@ m1 * m2
 m1 / m2
 ```
 
-You can also apply operations between a matrix and a number (a vector of length 1), where the recycling rule introduced in Section \@ref(numeric-vector) will apply. 
+You can also apply operations between a matrix and a number (a vector of length 1), where the recycling rule introduced in Section \@ref(operation-recycling) will apply. 
 
 ```{r, eval=FALSE}
 m1 * 2
@@ -285,6 +285,7 @@ cumsum(x)
 ### Apply functions on each row or each column {#apply-matrix}
 
 In many applications, we may want to apply certain function on each row or column. To do this, you can use the `apply()` function, which takes three arguments by default. 
+
 - The first argument is the **matrix**.
 - The second argument is the **dimension(s)** to apply the function on.
 - The third argument is the **function** to be applied. 
@@ -316,7 +317,7 @@ apply(x, 2, sd)     #calculate the standard deviation of each column
 apply(x, 1, max)    #calculate the max of each row
 ```
 
-In addition to the default three arguments for the `apply()` function, you can add more arguments that will be passed when applying the specified function, i.e. the orginal third argeument. For example, to calculate the first quantile of each column, 
+In addition to the three default arguments for the `apply()` function, you can add more arguments that will be passed when applying the specified function, i.e. the original third argument. For example, to calculate the first quantile of each column, 
 
 ```{r, results=TRUE}
 apply(x, 2, quantile, 0.25)
@@ -353,13 +354,13 @@ apply(char_mat, 2, paste, collapse = "_")
 matrix(1, 6, 6) + diag(rep(1,6))
 ```
 
-For matrix `x <- matrix(1:16, 4, 4)`, compute the following questions using R.
+For matrix `X <- matrix(1:16, 4, 4) + diag(4)`, compute the following questions using R.
 
-2. Compute the column means of `x`.
+2. Compute the column means of `X`.
 
-3. Create a matrix that contains the 0.4 and 0.7 quantiles for each row of `x`.
+3. Create a matrix that contains the 0.4 and 0.7 quantiles for each row of `X`.
 
-4. Compute the cumulative sum of each row of `x`. What type of object is the result? And explain the result of the first column.
+4. Compute the cumulative sum of each row of `X`. What type of object is the result? And explain the result of the first column.
 
 5. If `b <- 1:4`, solve `a` such that $Xa = b$. 
 

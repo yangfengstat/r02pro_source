@@ -26,12 +26,12 @@ You may have noticed that the y-axis count is not a variable in `sahp`! This is 
 
 
 
-Sometimes, we would like to find out the proportion for each value of `x`, then we can display a bar chart of proportion, rather than count. To do this, we need to add `y = stat(prop)` and `group = 1` as additional arguments in the `aes()` function. The `stat(prop)` is a statistical function used to calculate proportions. The `group = 1` implies that all the observations belong to one single group when calculating the proportions. We will try to set `group` to another variable in the next part.
+Sometimes, we would like to find out the proportion for each value of `x`, then we can display a bar chart of proportion, rather than count. To do this, we need to add `y = after_stat(prop)` and `group = 1` as additional arguments in the `aes()` function. The `after_stat(prop)` is a statistical function used to calculate proportions. The `group = 1` implies that all the observations belong to one single group when calculating the proportions. We will try to set `group` to another variable in the next part.
 
 ```{r}
 ggplot(data = sahp) + 
   geom_bar(mapping = aes(x = kit_qual, 
-                         y = stat(prop), 
+                         y = after_stat(prop), 
                          group = 1))
 ```
 
@@ -49,7 +49,7 @@ kit_qual_stat <- data.frame(kit_qual = names(freq),
 kit_qual_stat
 ```
 
-Now, you can directly use the data frame `kit_freq` to generate the bar chart. Here, you need to set `x = kit_qual` and `y = freq` in `aes()`, and `stat = "identity"` as an argument in the `geom_bar()` function. To use proportions instead of frequencies, you can use `y = prop` instead of `y = freq`.
+Now, you can directly use the data frame `kit_qual_stat` to generate the bar chart. Here, you need to set `x = kit_qual` and `y = freq` in `aes()`, and `stat = "identity"` as an argument in the `geom_bar()` function. To use proportions instead of frequencies, you can use `y = prop` instead of `y = freq`.
 
 ```{r, results = TRUE}
 ggplot(kit_qual_stat) + 
@@ -85,7 +85,7 @@ The above code reorders the bar chart to the increasing order of their heights. 
 
 The levels of `f` are reordered so that the values of `.fun(.x)`  are in ascending order. In our example, we reorder the levels of `kit_qual` such that the length of `kit_qual` is in ascending order, i.e. the bars are in ascending order of their heights. 
 
-To reorder in descending order of heights, you can add and additional argument `.desc = TRUE` in the `fct_reorder()` function. 
+To reorder in descending order of heights, you can add an additional argument `.desc = TRUE` in the `fct_reorder()` function. 
 ```{r}
 ggplot(data = sahp) + 
   geom_bar(mapping = aes(x = fct_reorder(kit_qual, 

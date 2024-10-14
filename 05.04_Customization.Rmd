@@ -136,7 +136,7 @@ ggplot(data = gm2004) +
 
 ### Customizing the Breaks on the x and y Axes
 
-In the above plot, the **breaks** on the x axis are 0, 50, 100, 150, and 200 The breaks on the y axis are 4.0, 4.5, 5.0, and 5.5. Sometimes, we may want to customize the breaks, e.g. to show a finer scale. To do this, we can use the `scale_x_continous()` and `scale_y_continuous()` functions. Both functions take an argument called `breaks` which is a numeric vector specifying the desired breaks on the x and y axes. 
+In the above plot, the **breaks** on the x axis are 0, 50, 100, 150, and 200. The breaks on the y axis are 4.0, 4.5, 5.0, and 5.5. Sometimes, we may want to customize the breaks, e.g. to show a finer scale. To do this, we can use the `scale_x_continous()` and `scale_y_continuous()` functions. Both functions take an argument called `breaks` which is a numeric vector specifying the desired breaks on the x and y axes. 
 
 ```{r}
 my_plot +
@@ -194,7 +194,7 @@ ggplot(data = gm2004) +
 
 For this particular `log()` transformation, an alternative is to generate a **Log-scale Plot** by setting the `trans` argument in the `scale_y_continous()` function. The `log-scale plot` is a popular way for displaying numerical data over a very wide range of values in a compact fashion. 
 
-The default value of `trans` is `"identity"` meaning no transformation. There are many different `trans` choices including `log`, `exp`, `log10`, `sqrt`, and others.
+The default value of `trans` is `"identity"`, meaning no transformation. There are many different `trans` choices including `log`, `exp`, `log10`, `sqrt`, and others.
 
 ```{r}
 ggplot(data = gm2004) + 

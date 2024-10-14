@@ -89,8 +89,8 @@ as.Date(format(today, format = "%m-%d-%Y"), format = "%m-%d-%Y")
 
 Notice that the correspondence of the string and supplied format should follow the above table, otherwise you may get some unexpected result.
 ```{r, results=TRUE}
-as.Date("08-01-2021", format = "%B-%d-%y")        #wrong
-as.Date("August-01-2021", format = "%B-%d-%y")    #correct
+as.Date("08-01-2021", format = "%B-%d-%Y")        #wrong
+as.Date("August-01-2021", format = "%B-%d-%Y")    #correct
 ```
 
 Here, you should use `August` rather than `08` in string because `%B` corresponds to full month, so you get `NA` as the result.
@@ -98,9 +98,9 @@ Here, you should use `August` rather than `08` in string because `%B` correspond
 In addition to use `-` as the separator, you can also use `/` as the separator. If the separators used in the string and the format doesn't match in `as.Date()`, you will also get `NA` as the result.
 
 ```{r, results=TRUE}
-as.Date("08/01/2021", format = "%m/%d/%y")
-as.Date("08/01/2021", format = "%m-%d-%y")
-as.Date("08/01/2021", format = "%m-%d/%y")
+as.Date("08/01/2021", format = "%m/%d/%Y")
+as.Date("08/01/2021", format = "%m-%d-%Y")
+as.Date("08/01/2021", format = "%m-%d/%Y")
 ```
 
 You can try different combinations by yourself. Here are some examples！ 
