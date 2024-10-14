@@ -1,0 +1,62 @@
+## Create New Variables via mutate() and transmute() {#create-variables}
+
+You are now an expert in filtering observations (Section \@ref(filter-observations)), selecting, renaming & reordering variables (Section \@ref(select-variables)), and reordering observations (Section \@ref(reorder-observations)). In many applications, you may want to **create new variables** as functions of the existing ones. In this section, we will learn how to do this using the **dplyr** package.
+
+Let's say you want to compute the total GDP for each country in the `gm` data set. To highlight the useful columns, we first use `select()` to select the `country`, `year`, `population`, and `GDP_per_capita`. Then, use the `mutate()` function to add a new variable named `total_GDP` with the value `GDP_per_capita * population` to the end. 
+
+```{r}
+library(r02pro)
+library(tidyverse)
+gm %>% 
+  select(country, year, population, GDP_per_capita) %>%
+  mutate(total_GDP = GDP_per_capita * population) 
+```
+From the result, you can check that the resulting tibble has 5 columns, with the last column being the newly created variable `total_GDP`. You can use `mutate()` to create multiple variables at the same time following the same format. 
+
+```{r}
+gm %>% 
+  select(country, year, population, GDP_per_capita, livercancer_newcases_male, livercancer_newcases_female) %>%
+  mutate(total_GDP = GDP_per_capita * population,
+         livercancer_newcases = livercancer_newcases_male + 
+           livercancer_newcases_female) 
+```
+
+This operation adds two new columns `total_GDP` and `livercancer_newcases` to the existing tibble. Note that the `mutate()` function can **only** use the variables inside the `select()` function. The following code will show an error since `livercancer_newcases_male` is not included in the `select()` function. 
+
+```{r, error=TRUE}
+gm %>% 
+  select(country, year, population, GDP_per_capita) %>% 
+  mutate(total_GDP = GDP_per_capita * population,
+         livercancer_newcases = livercancer_newcases_male + livercancer_newcases_female)
+```
+
+Note that you are free to use any functions on a vector, including all the arithmetic operations and various functions. For example,  to include the order of each country in terms of GDP per capita in the year 2008, you can use `mutate(GDP_order = order(GDP_per_capita))`.  To create a variable as the mean of the `GDP_per_capita`  of all countries, you can add `GDP_per_capita_ave = mean(GDP_per_capita, na.rm = TRUE)` as an argument in the `mutate()` function.
+
+
+```{r}
+gm %>% 
+  filter(year == 2008) %>%
+  select(country, year, population, GDP_per_capita) %>% 
+  mutate(GDP_order = order(GDP_per_capita),
+         GDP_per_capita_ave = mean(GDP_per_capita, na.rm = TRUE))
+```
+
+The `mutate()` function is very powerful in creating new variables. However, if you only want to keep the newly created variables, you can use the `transmute()` function. 
+
+```{r}
+gm %>% 
+  filter(year == 2008) %>%
+  select(country, year, population, GDP_per_capita) %>% 
+  transmute(GDP_order = order(GDP_per_capita),
+            GDP_per_capita_ave = mean(GDP_per_capita, na.rm = TRUE))
+```
+
+
+
+### Exercises
+
+Using the `ahp` dataset and the pipe operator for the following exercises.
+
+1. Create a new variables named `age` being the age of the house when it was sold in terms of years (the number of years from when the house was built to when the house was sold). Then, select the variables `age`, `sale_price`, and `kit_qual`. Finally, generate a scatterplot between `age` (x-axis) and `sale_price` (y-axis), with different colors representing different `kit_qual`. Explain the findings from the figure. 
+
+
