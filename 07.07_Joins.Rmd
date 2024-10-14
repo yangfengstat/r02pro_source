@@ -1,0 +1,133 @@
+## Joins {#joins}
+
+So far, we have been working on a single data set. In applications, however, we often have the need to combine multiple data sets into a single one before doing data analysis. Let's prepare two data sets to show the various ways we can **join two data sets**. 
+
+```{r}
+library(tidyverse)
+library(r02pro)
+top_pop <- gm %>% 
+  filter(year == 2008 & !is.na(continent)) %>%
+  mutate(r = rank(desc(population), ties.method = "first")) %>%
+  filter(r <= 5) %>%
+  select(country, population, HDI_category) %>%
+  arrange(desc(population))
+HDI_cate_dict <-
+  tibble(HDI_category = c("low", "medium", "high"), 
+         HDI_description = c("below 0.549",
+                             "between 0.550–0.699",
+                             "between 0.700–0.799"))
+```
+
+Here, `top_pop` is a tibble of the top 3 countries with the highest population in 2008. `HDI_cate_dict` is a tibble that provides the description of the Human Development Index (HDI) categories.
+
+It is clear that the two tibbles share a variable named `HDI_category`. It could be interesting to join the two tibbles into a single one by including all variables while matching the values of `HDI_category`. The bridging variable `HDI_category` is usually called the **key** to the joining operation.
+
+Next, we will discuss several different join operations between `top_pop` and `HDI_cate_dict`, with the key being `HDI_category`.
+
+### Inner Join {#inner-join}
+
+The first type of **join** operation on two tables  with a set of keys is called **inner join**. You can use the `inner_join(tb1, tb2)` function, which returns all rows in `tb1` such that there are matching values of the corresponding keys in `tb2`.
+
+```{r, results=TRUE}
+inner <- inner_join(top_pop, HDI_cate_dict, by = "HDI_category")
+inner
+```
+
+From the result, you can see that there are 4 observations. Each observation corresponds to one row in `top_pop` that has a matching value in `HDI_cate_dict` for `HDI_category`. The observation corresponding to United States in `top_pop` is dropped in the result since its `HDI_category` value is `"very high"`, which doesn't have a matched row in `HDI_cate_dict`.
+
+
+### Left Join {#left-join}
+
+The second type of **join** operation on two tables with a set of keys is called **left join**. You can use the `left_join(tb1, tb2)` function, which returns all rows in `tb1`, **no matter** whether there are matching values of the corresponding keys in `tb2`. 
+
+
+```{r, results = TRUE}
+left <- left_join(top_pop, HDI_cate_dict, by = "HDI_category")
+left
+```
+
+As you can see from the result, all rows in `top_pop` is kept, even though United States doesn't have a matching observation in `HDI_cate_dict` for the variable `HDI_category`. In this case, the corresponding value for `HDI_description` is `NA`.
+
+
+### Right Join {#right-join}
+
+The third type of **join** operation on two tables with a set of keys is called **right join**, which works in a similar fashion as left join. You can use the `right_join(tb1, tb2)` function, which returns all rows in `tb2`, **no matter** whether there are matching values of the corresponding keys in `tb1` or not. 
+
+
+```{r, results = TRUE}
+right <- right_join(top_pop, HDI_cate_dict, by = "HDI_category")
+right
+```
+
+As you can see from the result, all rows in `HDI_cate_dict` is kept, even though there aren't any  matching observations in `top_pop` for  `HDI_category == "low"`. In this case, the corresponding values for `country` and `population` are `NA`.
+
+
+### Full Join {#full-join}
+
+The fourth type of **join** operation on two tables with a set of keys is called **full join**. You can use the `full_join(tb1, tb2)` function, which returns all rows in both `tb1` and `tb2`, **no matter** whether there are matching values of the keys in either `tb1` or  `tb2`. 
+
+```{r, results = TRUE}
+full <- full_join(top_pop, HDI_cate_dict, by = "HDI_category")
+full
+```
+
+As you can see from the result, all rows in both `top_pop` and `HDI_cate_dict` are kept. The rows in `top_pop` that don't have matching values in `HDI_cate_dict` are filled with `NA` for the variables in `HDI_cate_dict`, and vice versa.
+
+### Filtering Joins {#filtering-join}
+
+For the previous four types of joins, the resulting table contains columns from both input tables. Sometimes, you may want to only keep the columns from one of the input tables. This is called **filtering joins**, meaning that it is actually doing the filtering operations like the `filter()` function we learned in Section \@ref(filter-observations). 
+
+***a. Semi Join***
+
+The first type of  filtering joins is called **semi join**, in which `semi_join(tb1, tb2)` returns all rows from `tb1` where there are matching values in `tb2` for the **keys**.
+
+```{r, results = TRUE}
+semi_join(top_pop, HDI_cate_dict, by = "HDI_category")
+```
+
+From the result, you can see that only the rows in `top_pop` that have matching values in `HDI_cate_dict` for `HDI_category` are kept. Again, the columns from `HDI_cate_dict` are not included in the output, making it a filtering operation.
+
+***b. Anti Join***
+
+Another type of  filtering joins is called **anti join**, in which `anti_join(tb1, tb2)` returns all rows from `tb1` where there **don't exist** matching values in `tb2` on the **keys**. 
+
+```{r, results = TRUE}
+anti_join(top_pop, HDI_cate_dict, by = "HDI_category")
+```
+
+From the result, you can see that only the rows in `top_pop` that don't have matching values in `HDI_cate_dict` for `HDI_category` are kept. The columns from `HDI_cate_dict` are not included in the output, making it a filtering operation.
+
+### A Summary of All Joins
+
+Finally, we summarize all the six joins in the following table, in terms of which rows and columns are selected in the final output.
+
+```{r echo = FALSE, results = TRUE}
+Type  <- c("`inner_join(tb1, tb2, by)`","`left_join(tb1, tb2, by)`","`right_join(tb1, tb2, by)`","`full_join(tb1, tb2, by)`","`semi_join(tb1, tb2, by)`","`anti_join(tb1, tb2, by)`")
+Rows <- c("Rows in both `tb1` and `tb2`", "Rows in `tb1`", "Rows in `tb2`", "All rows in `tb1` or `tb2`", "Rows in `tb1` with matching keys in `tb2`", "Rows in `tb1` without matching keys in `tb2`")
+Columns <- rep(c("Columns in either `tb1` or `tb2`", "Only columns in `tb1`"), c(4,2))
+d <- tibble(`Code` = Type, Rows, Columns )
+knitr::kable(d)%>%kableExtra::collapse_rows(columns = 3)
+```
+
+### Exercises
+
+First, let's prepare two data sets for the exercises.
+
+```{r}
+library(tidyverse)
+library(r02pro)
+d1 <- ahp %>% 
+  select(dt_sold, bsmt_area, bsmt_ht) %>%
+  head(n = 5)
+d2 <- tibble(bsmt_ht = c("Excellent", "Good", "Average", "Poor"), 
+             height = c("100+ inches", "90-99 inches", "80-89 inches", "<70 inches"))
+d1
+d2
+```
+
+1. Perform an inner join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
+2. Perform a left join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
+3. Perform a right join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
+4. Perform a full join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
+5. Perform a semi join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
+6. Perform an anti join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
