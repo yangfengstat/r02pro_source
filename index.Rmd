@@ -10,10 +10,11 @@ biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 description: "R Programming: Zero to Pro"
+always_allow_html: true
 ---
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
-  comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE
+  comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE, tidy=TRUE
 )
 ```
 

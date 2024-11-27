@@ -1,0 +1,208 @@
+## Conditional Statements via `if`, `else`, and `switch()` {#ifelse}
+
+Conditional statements are a type of control statement that execute specific blocks of code depending on the value of a **condition**.
+
+### The Structure of Conditional Statements
+
+The general structure of a simple conditional statement is:
+
+```{r, eval=FALSE}
+if(condition) {   
+  true_code_1
+  true_code_2
+} else {
+  false_code_1
+  false_code_2
+  false_code_3
+}
+```
+
+- `condition` is usually a **logical statement**.
+- `true_code_1`, `true_code_2`, etc., are the code blocks executed when `condition` evaluates to `TRUE`.
+- `false_code_1`, `false_code_2`, etc., are the code blocks executed when `condition` evaluates to `FALSE`.
+
+The `else` block is optional.
+
+### Example: Checking Even or Odd Numbers
+
+Let’s check whether a number `x` is even or odd and print the corresponding message:
+
+```{r, results=TRUE}
+x <- 3
+if(x %% 2 == 0) { 
+  cat("x is an even number\n")
+} else {
+  cat("x is an odd number\n")
+}
+```
+
+### Using `ifelse()`
+
+The `ifelse()` function allows you to select values based on whether a condition is `TRUE` or `FALSE`:
+
+```{r, results=TRUE}
+x_type <- ifelse(x %% 2 == 0, "even", "odd")
+x_type
+```
+
+Here, `ifelse()` evaluates `x %% 2 == 0` and assigns `"even"` if `TRUE` and `"odd"` otherwise.
+
+### Multiple Conditions with `else if`
+
+You can chain multiple conditions using `else if`:
+
+```{r, results=TRUE}
+x <- 9
+if(x %% 3 == 1) {
+  cat("The remainder of x divided by 3 is 1.\n")
+} else if(x %% 3 == 2) {
+  cat("The remainder of x divided by 3 is 2.\n")
+} else {
+  cat("x is divisible by 3.\n")
+}
+```
+
+### Using `switch()` for Multiple Choices
+
+The `switch()` function selects and returns a value based on an expression. 
+
+#### Numeric Indexing
+
+If the first argument is an integer, `switch()` returns the value corresponding to the indexed position:
+
+```{r, results=TRUE}
+switch(2, "sheep", "pig", "monkey")  # Returns "pig"
+switch(4, "sheep", "pig", "monkey")  # Returns nothing
+```
+
+#### Character Matching
+
+If the first argument is a character, `switch()` matches it to the names of the elements:
+
+```{r, results=TRUE}
+switch("pig", sheep = 2, pig = 3, monkey = 4)       # Returns 3
+switch("pi", sheep = 2, pig = 3, monkey = 4)       # Returns NULL (no match)
+switch("monkey", sheep = 2, pig = 3, monkey = "mona")  # Returns "mona"
+```
+
+### Logical Operators in Conditional Statements
+
+Logical operators like `&` (AND) and `|` (OR) work element-wise on logical vectors. However, in `if` statements, their counterparts `&&` and `||` are typically used:
+
+- `&&` (AND): Checks only the first element of the logical vectors and stops evaluation as soon as the result is determined.
+- `||` (OR): Similarly checks only the first element and short-circuits evaluation when the result is determined.
+
+#### Example: Comparing Operators
+
+```{r, results=TRUE}
+logi_1 <- c(TRUE, FALSE, TRUE, FALSE)
+logi_2 <- c(FALSE, TRUE, TRUE, FALSE)
+
+# Element-wise operations
+logi_1 & logi_2  # Returns c(FALSE, FALSE, TRUE, FALSE)
+logi_1 | logi_2  # Returns c(TRUE, TRUE, TRUE, FALSE)
+
+# First-element-only operations
+logi_1 && logi_2  # Returns FALSE
+logi_1 || logi_2  # Returns TRUE
+```
+
+#### Short-Circuit Evaluation
+
+Short-circuit evaluation with `&&` and `||` avoids unnecessary computation. Consider the following example:
+
+```{r, error=TRUE, results=TRUE}
+undefined_object  # Throws an error
+TRUE || undefined_object  # Returns TRUE
+TRUE | undefined_object   # Throws an error
+```
+
+For `||`, since `TRUE ||` guarantees a `TRUE` result, the evaluation stops early without checking `undefined_object`.
+
+#### Another Example: AND Operator
+
+```{r, error=TRUE, results=TRUE}
+FALSE && undefined_object  # Returns FALSE
+FALSE & undefined_object   # Throws an error
+```
+
+Here, `FALSE &&` stops evaluation immediately, as the result is already determined. In contrast, `&` attempts full evaluation and fails.
+
+### Exercises
+
+1. Checking Positive, Negative, or Zero
+
+Write an `if-else` statement that checks whether a given number `y` is:
+
+1. Positive,
+2. Negative, or
+3. Zero.
+
+Print an appropriate message for each case.
+
+**Example Input:**
+```r
+y <- -5
+```
+
+**Expected Output:**
+```plaintext
+"y is a negative number."
+```
+
+2. Determine the Grade
+
+Create a program that uses `if`, `else if`, and `else` to assign a grade based on a student's score. Use the following grading scheme:
+
+- A: 90 and above
+- B: 80-89
+- C: 70-79
+- D: 60-69
+- F: Below 60
+
+**Example Input:**
+```r
+score <- 85
+```
+
+**Expected Output:**
+```plaintext
+"Your grade is B."
+```
+
+3. Choose a Pet Using `switch()`
+
+Use the `switch()` function to match an input string to a pet and return its description. For example:
+
+- `"dog"`: "Dogs are loyal and friendly."
+- `"cat"`: "Cats are independent and curious."
+- `"fish"`: "Fish are calming and easy to care for."
+- Default case: "Pet type not recognized."
+
+**Example Input:**
+```r
+pet <- "cat"
+```
+
+**Expected Output:**
+```plaintext
+"Cats are independent and curious."
+```
+
+4.Maximum of Three Numbers
+
+Write a program that uses nested `if-else` statements to find the largest of three numbers, `a`, `b`, and `c`.
+
+**Example Input:**
+```r
+a <- 7
+b <- 15
+c <- 10
+```
+
+**Expected Output:**
+```plaintext
+"The largest number is 15."
+```
+
+

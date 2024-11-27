@@ -1,0 +1,183 @@
+## Convert Between Names and Values  {#tidy-name-value}
+
+
+First, let's prepare a subset of the `gm` data in the **r02pro** package. 
+
+```{r}
+library(r02pro)
+library(tidyverse)
+gm_tidy <- gm %>% 
+  filter(country %in% c("United States", "China", "Russia")) %>%
+  select(country, year, life_expectancy) %>%
+  filter(year >= 2004 & year <= 2006)
+gm_tidy
+```
+
+From the code, you can see that `gm_tidy` is a tibble that contains the life expectancy of the United States, China, and Russia from 2004 to 2006. This is a **tidy** format.
+
+### Convert Values into Column Names {#tidy-wide}
+
+In `gm_tidy`, each row contains the year when the life expectancy measurement was taken. Suppose we want to convert the year value into column names. You can use the `pivot_wider()` function.
+
+In `pivot_wider()`, you need to specify two arguments: 
+
+- `names_from` denotes which column in the original tibble contains the values of the new column names, 
+- `values_from` denotes which column in the original tibble contains the values for each cell in the new tibble. 
+
+```{r}
+gm_wide <- gm_tidy %>% 
+  pivot_wider(names_from = year, 
+              values_from = life_expectancy)
+gm_wide
+```
+
+From the resulting tibble `gm_wide`, you can see that the `year` variable is converted into column names. The `life_expectancy` variable contains the corresponding values. The `gm_wide` is now in a wide format. During the process, the `year` information is lost, which is not desirable. Fortunately, you can add a prefix "year" to the column names via an argument `names_prefix` in the `pivot_wider()` function. 
+
+```{r}
+gm_wide_year <- gm_tidy %>% 
+  pivot_wider(names_from = year, 
+              names_prefix = "year", 
+              values_from = life_expectancy)
+gm_wide_year
+```
+
+In the resulting tibble `gm_wide_year`, you can see that the column names are prefixed with "year". The `year` information is now reflected in the names of the tibble.
+
+The reason why we call the function `pivot_wider()` is that it will create a **wider** dataset than the original one, containing more columns.
+
+### Convert Column Names into Values {#tidy-long}
+
+Apparently, both `gm_wide` and `gm_wide_year` are not tidy. Now, let's make them tidy using the `pivot_longer()` function. 
+```{r}
+gm_wide %>% 
+  pivot_longer(cols = -1, 
+               names_to = "year", 
+               values_to = "life_expectancy")
+```
+
+
+In the `pivot_longer()` function, 
+
+- `cols` specifies the column names that you want to convert from, which accept the same format as that in `dplyr::select()` introduced in Section \@ref(select-variables). 
+- `names_to` specifies the variable name you want to use for the column names. 
+- `values_to` specifies the variable name for holding the values in the selected columns.
+
+In the resulting tibble, `col = -1` means that all columns except the first column are selected. The column names `2004`, `2005`, and `2006` are converted into values of the variable `year`. The `life_expectancy` variable contains the corresponding values. We have recovered the tidy `gm_tidy` through the tidy process.
+
+The reason why we call the function `pivot_longer()` is that it will create a **longer** dataset than the original one, containing more rows.
+
+Now, let's tidy `gm_wide_year` using the `pivot_longer()` function. 
+
+```{r}
+gm_wide_year %>% 
+  pivot_longer(cols = -1, 
+               names_to = "year", 
+               names_prefix = "year", 
+               values_to = "life_expectancy")
+```
+
+Note that we have an extra argument `names_prefix` in the `pivot_longer()` function. This argument is used to remove the prefix "year" from the column names.
+
+Comparing the `pivot_wider()` and `pivot_longer()` functions, you can see that they are complementary. The `pivot_wider()` function converts values into column names, while the `pivot_longer()` function converts column names into values.
+
+### Multiple Variables {#tidy-multiple}
+
+In the `gm` dataset, there are multiple variables that you may want to convert into column names. You can specify multiple variables in the `names_from` argument in the `pivot_wider()` function. 
+
+```{r}
+gm_tidy <- gm %>% 
+  filter(country %in% c("United States", "China", "Russia")) %>%
+  select(country, year, life_expectancy, GDP_per_capita) %>%
+  filter(year >= 2004 & year <= 2006)
+gm_tidy
+gm_wide <- gm_tidy %>% 
+  pivot_wider(names_from = c(country, year), 
+              values_from = c(life_expectancy, GDP_per_capita),
+              names_sep = "-")
+gm_wide
+```
+
+In the `pivot_wider()` function, you can specify multiple variables in the `names_from` and `values_from` arguments. The resulting tibble `gm_wide` contains the life expectancy and GDP per capita of the United States, China, and Russia from 2004 to 2006. The column names are in the format of `country_year_variable`. Note that we have an extra argument `names_sep` in the `pivot_wider()` function. This argument is used to separate the column names with a hyphen `"-"`. We didn't use the separator `"_"` because it is already used in the column names of the original tibble.
+
+To make the tibble tidy, you can use the `pivot_longer()` function. 
+
+```{r}
+gm_wide %>% 
+  pivot_longer(cols = everything(), 
+               names_to = c(".value", "country", "year"), 
+               names_sep = "-")
+```
+
+- Here, we use the `everything()` function to select all columns. 
+- The `names_to` argument specifies the variable names for the column names. The `".value"` is a special value that tells the function to keep the values in the selected columns. The `country` and `year` variables are used to store the country and year values in the column names.
+- The `names_sep` argument specifies the separator used in the column names. 
+
+Now, let's see another example.
+```{r}
+gm_gender <- gm %>% 
+  filter(country %in% c("United States", "China", "Russia")) %>%
+  filter(year == 2004) %>%
+  select(country, ends_with("male"))
+gm_gender
+```
+
+Here, we have selected the columns that end with `male`. 
+One tricky part is that some columns contain more than one underscores, making the pattern a bit more complicated.
+
+We want to convert the column names into values. 
+```{r}
+gm_gender %>% 
+  pivot_longer(cols = -1,
+               names_to = c(".value", "gender"),
+               names_pattern = "(.+)_(?!.*_)(.+)")
+```
+
+
+In the `pivot_longer()` function, the `names_to` argument specifies the variable names for the column names. Here, the `".value"` is a special value that tells the function to keep the values in the selected columns. The `gender` variable is used to store the values of the column names. The `names_pattern` argument specifies the pattern of the column names. The `(.+)_(?!.*_)(.+)` regular expression uses a negative lookahead assertion to identify the last underscore. In particular,
+
+- `(.+)`: Captures everything before the last underscore.
+- `_(?!.*_)`: Matches an underscore only if it's not followed by another underscore.
+- `(.+)`: Captures everything after the last underscore.
+
+
+### Exercises
+
+1. You are given the following dataset. 
+```{r}
+df <- tibble(
+  country = c("A", "A", "B", "B"),
+  year = c(2000, 2001, 2000, 2001),
+  life_expectancy = c(70, 71, 75, 76),
+  infant_mortality = c(5, 4.5, 3, 2.8)
+)
+```
+
+Create a wide-format dataset where:
+
+- Each row represents a country.
+- Columns represent combinations of year and a demographic variable (e.g., '2000_life_expectancy', '2000_infant_mortality', '2001_life_expectancy', etc.).
+
+2. Use the wide-format dataset created in Exercise 1, transform the data back into a tidy format.
+
+3. You are given the following dataset. 
+```{r}
+df <- tibble(
+  country = c("A", "B", "C"),
+  life_expectancy_male = c(72, 78, 75),
+  life_expectancy_female = c(78, 83, 80)
+)
+```
+Tidy the dataset so that it contains the following columns: `country`, `gender`, and `life_expectancy`.
+
+4. You are given the following dataset. 
+```{r}
+df <- tibble(
+  group = c("A", "B"),
+  q1_pre = c(10, 12),
+  q1_post = c(15, 18),
+  q2_pre = c(7, 9),
+  q2_post = c(11, 13)
+)
+```
+
+Tidy the dataset so that it contains the following columns: `group`, `question`, `time`, and `score`, where `question` is either `q1` or `q2`, `time` is either `pre` or `post`, and `score` is the corresponding value.

@@ -1,0 +1,3 @@
+# Functions {#functions}
+
+In theory, you can already write very complicated codes, accomplishing a lot of data analysis tasks. In this chapter, you will learn a very powerful tool, **functions**.

@@ -1,0 +1,130 @@
+## Going Beyond Basics: Advanced R Functions {#functions-advanced}
+
+Functions are a fundamental building block in R, and mastering them allows for efficient and modular programming. This section explores advanced concepts, including returning multiple values, nested functions, higher-order functions, and error handling.
+
+
+### Returning Multiple Values Using Lists
+
+Sometimes, you may need to return more than one value from a function. In R, this is commonly done by returning a list that contains all the values you want to output. A list in R can hold different types of data, including vectors, matrices, and even other lists.
+
+#### Example: Returning a List
+
+Let’s create a function that calculates the mean and variance of a numeric vector and returns both values in a list:
+
+```{r}
+# Define the function
+summary_stats <- function(x) {
+  mean_value <- mean(x)         # Calculate the mean
+  variance_value <- var(x)      # Calculate the variance
+  
+  # Return the results as a list
+  return(list(mean = mean_value, variance = variance_value))
+}
+
+# Test the function
+results <- summary_stats(c(1, 2, 3, 4, 5))
+print(results)
+```
+
+Here, the function `summary_stats()` calculates the mean and variance of the input vector `x` and returns both values as a list. The returned list contains two elements: `mean` and `variance`.
+
+You can access the elements of the returned list using the `$` operator or by indexing:
+
+```{r}
+# Access elements by name
+results$mean
+results$variance
+
+# Access elements by index
+results[[1]]  # Mean
+results[[2]]  # Variance
+```
+
+### Nested Functions
+
+Functions can be defined within other functions in R. Nested functions are useful for encapsulating helper functions that are only relevant within a specific context.
+
+**Example: Nested Function**
+
+```{r}
+# Outer function
+outer_function <- function(x) {
+  
+  # Inner function
+  inner_function <- function(y) {
+    return(y^2)
+  }
+  
+  result <- inner_function(x) + x
+  return(result)
+}
+
+# Test the function
+outer_function(5)
+```
+
+Here, the function `outer_function()` contains an inner function `inner_function()`. The inner function squares the input `y`, and the outer function calculates the sum of the squared input and the original input.
+
+### Higher-Order Functions
+
+A higher-order function is a function that takes other functions as arguments or returns a function as its output. This concept is widely used in functional programming.
+
+**Example: Function as an Argument**
+
+```{r}
+apply_function <- function(func, x) {
+  return(func(x))
+}
+
+# Test with built-in functions
+apply_function(mean, c(1, 2, 3, 4, 5))
+apply_function(sum, c(1, 2, 3, 4, 5))
+```
+
+Here, the function `apply_function()` takes another function `func` and an input `x`. It applies the function `func` to the input `x` and returns the result. This allows you to pass different functions as arguments to `apply_function()`.
+
+Another common use of higher-order functions is to return a function as output. This is useful for creating functions that can be customized based on the input arguments.
+```{r}
+# Define a higher-order function
+power_function <- function(power) {
+  return(function(x) x^power)
+}
+power_of_2 <- power_function(2)
+power_of_3 <- power_function(3)
+power_of_2(5)
+power_of_3(5)
+```
+
+Here, the function `power_function()` returns a function that raises its input to the specified power. You can create custom functions like `power_of_2` and `power_of_3` by calling `power_function()` with different power values.
+
+### Error Handling in Functions
+
+When writing functions, it's important to handle errors gracefully to ensure that your code runs smoothly even when unexpected input is encountered.
+
+**Example: Adding Error Handling**
+
+```{r, eval=FALSE}
+safe_division <- function(a, b) {
+  if (b == 0) {
+    stop("Error: Division by zero is not allowed!")
+  }
+  return(a / b)
+}
+
+# Test the function
+safe_division(10, 2)  # Valid
+safe_division(10, 0)  # Error
+```
+
+Here, the function `safe_division()` checks if the divisor `b` is zero and raises an error if division by zero is attempted. This prevents the function from returning an incorrect result or crashing due to invalid input.
+
+### Exercise
+
+1. Write a function `log_transform()` that takes a numeric vector and a base for the logarithm. The function should handle cases where the input contains non-positive values by returning an error message.
+
+2. Write a higher-order function `repeat_n()` that takes a function and a number `n`, and applies the function `n` times to the initial input.
+
+3. Write a function `safe_sqrt()` that calculates the square root of a numeric input. The function should return `NA` if the input is negative and print an error message.
+
+4. Write a higher-order function `apply_n_times()` that takes a function and a number `n`, and applies the function `n` times to the initial input. If `n` is not a positive integer, the function should return an error message.
+

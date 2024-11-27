@@ -9,7 +9,7 @@ $$
 
 ### Generate Multivate Normal Distribution
 
-To randomly generate ${\bf x} \sim N({\bf \mu}, {\bf \Sigma})$, you can use the `mvrnorm(n = 1, mu, Sigma)` function in the **MASS** package, which is preloaded in the base R. The function `mvnorm()` takes three arguments.
+To randomly generate ${\bf x} \sim N({\bf \mu}, {\bf \Sigma})$, you can use the `mvrnorm(n = 1, mu, Sigma)` function in the **MASS** package, which is pre-loaded in the base R. The function `mvnorm()` takes three arguments.
 
 - `n`: targeted sample size
 - `mu`: mean vector
@@ -18,20 +18,72 @@ To randomly generate ${\bf x} \sim N({\bf \mu}, {\bf \Sigma})$, you can use the 
 Let's take a look at an example where the distribution is 
 $\bf\mu = (1, 2)^T$ and 
 $${\bf \Sigma} = \left[\begin{matrix}
-1&0.5\\
-0.5&1
+1&0.8\\
+0.8&1
 \end{matrix}\right]$$
 
 ```{r, results=TRUE}
 library(MASS)
-n <- 10
+set.seed(87)
+n <- 1000
 mu <- c(1, 2)
-Sigma <- matrix(c(1, 0.5, 0.5, 1), 2, 2)
+Sigma <- matrix(c(1, 0.8, 0.8, 1), 2, 2)
 x <- mvrnorm(n, mu, Sigma)
-x
+head(x)
 ```
 
-`x` contains $n=10$ two-dimensional normal distributed variable, where each row represents one observation.
+`x` contains $n=1,000$ two-dimensional normal distributed variable, where each row represents one observation. Let's try to visualize the data using a scatterplot.
+
+```{r, results=TRUE}
+normal_data <- as.data.frame(x)
+colnames(normal_data) <- c("X1", "X2")
+
+library(ggplot2)
+# Visualize using ggplot
+ggplot(normal_data, aes(x = X1, y = X2)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  labs(title = "Scatterplot of Multivariate Normal Data",
+       x = "X1",
+       y = "X2") +
+  theme_minimal()
+```
+
+### Properties of Multivariate Normal Distribution
+
+1. **Marginal Distributions:**
+   - Each component of ${\bf x}$ follows a univariate normal distribution.
+
+2. **Linear Combinations:**
+   - Any linear combination of the components of ${\bf x}$ is also normally distributed.
+
+3. **Independence:**
+   - Two components of ${\bf x}$ are independent if and only if their covariance is zero.
+
+
+Let's use visualizations to verify the properties of the multivariate normal distribution.
+
+```{r, results=TRUE}
+# Marginals visualization using ggplot
+ggplot(normal_data, aes(x = X1)) +
+  geom_histogram(bins = 30, fill = "lightblue", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of X1", x = "X1", y = "Frequency") +
+  theme_minimal()
+
+ggplot(normal_data, aes(x = X2)) +
+  geom_histogram(bins = 30, fill = "lightgreen", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of X2", x = "X2", y = "Frequency") +
+  theme_minimal()
+
+# Linear combination visualization
+linear_combination <- 0.5 * normal_data$X1 + 0.5 * normal_data$X2
+ggplot(data.frame(LinearCombination = linear_combination), aes(x = LinearCombination)) +
+  geom_histogram(bins = 30, fill = "pink", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Linear Combination", 
+       x = "Linear Combination", 
+       y = "Frequency") +
+  theme_minimal()
+```
+
 
 ### Sample Mean and Sample Covariance Matrix
 
@@ -90,4 +142,19 @@ cor(x)[1, 2]
 You can see that the sample correlation matrix include all the pairwise sample correlations between any of the two columns.
 
 ### Exercise
+
+1. Generate 500 observations from a bivariate normal distribution with:
+   - Mean vector ${\bf \mu} = (3, 5)^T$
+   - Covariance matrix ${\bf \Sigma} = \begin{bmatrix} 2 & 0.5 \\ 0.5 & 1 \end{bmatrix}$.
+   - Visualize the data using a scatterplot with `ggplot2`.
+
+2. For the above data:
+   - Plot the histograms of each marginal distribution using `ggplot2`.
+   - Compute and interpret the covariance and correlation.
+
+3. Generate 1000 observations from a 3-dimensional normal distribution with:
+   - ${\bf \mu} = (1, -1, 3)^T$
+   - ${\bf \Sigma} = \begin{bmatrix} 1 & 0.3 & 0.2 \\ 0.3 & 1 & 0.4 \\ 0.2 & 0.4 & 1 \end{bmatrix}$.
+   - Compute the pairwise sample correlations between dimensions.
+
 

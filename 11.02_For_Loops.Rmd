@@ -142,3 +142,68 @@ A <- matrix(1:4, 2, 2)
 outer(A, A, "-")       #a 4-dimensional array.
 ```
 
+
+
+### Exercises
+
+1. Calculate Factorials
+
+Write a `for` loop that calculates the factorial of a given number `n`. 
+The factorial of a number `n` is the product of all integers from 1 to `n`. For example, the factorial of 5 (5!) is `1 * 2 * 3 * 4 * 5 = 120`.
+
+**Example Input:**
+```r
+n <- 5
+```
+
+**Expected Output:**
+```plaintext
+"The factorial of 5 is 120."
+```
+
+2. Sum of a Sequence
+
+Use a `for` loop to calculate the sum of all numbers from `1` to `n`, where `n` is a positive integer.
+
+**Example Input:**
+```r
+n <- 10
+```
+
+**Expected Output:**
+```plaintext
+"The sum of numbers from 1 to 10 is 55."
+```
+
+3. Print Multiplication Table
+
+Write a `for` loop that prints the multiplication table of a given number `x` up to 10. 
+
+**Example Input:**
+```r
+x <- 7
+```
+
+**Expected Output:**
+```plaintext
+7 x 1 = 7
+7 x 2 = 14
+...
+7 x 10 = 70
+```
+
+4.  Identify Prime Numbers
+
+Write a program using nested `for` loops that checks whether a given number `n` is a prime number. 
+Print `"n is a prime number"` if `n` is prime, otherwise print `"n is not a prime number"`.
+
+**Example Input:**
+```r
+n <- 13
+```
+
+**Expected Output:**
+```plaintext
+"13 is a prime number."
+```
+

@@ -1,0 +1,123 @@
+## Other Distributions {#other-distributions}
+
+
+In Section \@ref(normal-distribution), we discussed the **normal distribution**, a popular *continuous* distribution, along with its key functions. Here, we explore **discrete distributions** and other common distributions in probability and statistics.
+
+### Discrete vs. Continuous Distributions
+
+- **Continuous Distributions:** Use the probability density function (PDF) to describe probabilities over intervals (e.g., the normal distribution).
+- **Discrete Distributions:** Use the probability mass function (PMF) to describe probabilities at specific points (e.g., the binomial distribution, the Poisson distribution).
+
+### Binomial Distribution
+
+The **binomial distribution** models the number of successes in a fixed number of independent trials, each with the same probability of success. If $X \sim \text{Binomial}(n, p)$:
+
+- $n$ is the number of trials.
+- $p$ is the probability of success on each trial.
+
+We have the following key functions for the Binomial Distribution
+
+| Code | Description |
+|----------|-------------|
+| `dbinom(x, size, prob)` | PMF: Gives the probability of exactly `x` successes. |
+| `pbinom(q, size, prob)` | CDF: Gives the probability of `<= q` successes. |
+| `qbinom(p, size, prob)` | quantile: Finds the smallest value `x` where the cdf is `>= p`. |
+| `rbinom(n, size, prob)` | Generates random samples from the distribution. |
+
+Let's look at an example of $\text{Binomial}(10, 0.5)$.
+
+```{r}
+size <- 10  # Number of trials
+prob <- 0.5 # Probability of success
+
+# pmf: Probability of exactly 5 successes
+dbinom(5, size, prob)
+
+# cdf: Probability of 5 or fewer successes
+pbinom(5, size, prob)
+```
+
+We have `pbinom(5, size, prob) - dbinom(5, size, prob)/2 = 0.5`. Is it surprising? 
+
+### Poisson Distribution
+
+The **Poisson distribution** models the number of events occurring in a fixed interval of time or space, assuming the events occur independently. If $X \sim \text{Poisson}(\lambda)$, where $\lambda$ is the average rate of occurrence, then we have the following functions. 
+
+| Code | Description |
+|----------|-------------|
+| `dpois(x, lambda)` | PMF: Gives the probability of exactly `x` events. |
+| `ppois(q, lambda)` | CDF: Gives the probability of `<= q` events. |
+| `qpois(p, lambda)` | quantile: Finds the smallest value `x` where the cdf is `>= p`. |
+| `rpois(n, lambda)` | Generates random samples from the distribution. |
+
+Let's look at $\text{Poisson}(4)$.
+
+```{r}
+lambda <- 4  # Average rate of occurrence
+
+# PMF: Probability of exactly 3 events
+dpois(3, lambda)
+```
+
+
+### Exponential Distribution
+
+The **exponential distribution** models the time between events in a Poisson process. If $X \sim \text{Exponential}(\lambda)$, where $\lambda$ is the rate parameter, we have the following functions. 
+
+| Function | Description |
+|----------|-------------|
+| `dexp(x, rate)` | PDF: Gives the density at a specific value. |
+| `pexp(q, rate)` | CDF: Gives the probability of `<= q`. |
+| `qexp(p, rate)` | quantile: Finds the smallest value `x` where the cdf is `>= p`. |
+| `rexp(n, rate)` | Generates random samples from the distribution. |
+
+Let's look at an example of $\text{Exponential}(2)$.
+
+
+```{r}
+rate <- 2  # Rate parameter
+
+# PDF: Density at x = 1
+dexp(1, rate)
+```
+
+### A Summary of Commonly Used Distributions
+
+Now, let's look at a summary of commonly used  distributions. For simplicity, let's just use the random number generator for each distribution in the following table. 
+
+```{r echo = FALSE, results = TRUE}
+Name <- c("exponential", "uniform", "t", "F", "beta","gamma", "poisson","binomial","bernoulli")
+Code  <- c("`rexp(3, rate = 0.5)`","`runif(3, min = 1, max = 2)`","`rt(3, df = 4)`","`rf(3, df1 = 3, df2 = 6)`", "`rbeta(3, shape1 = 2, shape2 = 3)`", "`rgamma(3, shape = 2, rate = 3)`", "`rpois(3, lambda = 5)`", "`rbinom(3, size = 3, prob = 0.3)`", "`rbinom(3, size = 1, prob = 0.5)`")
+para_1 <- c("rate", "min", "df", "df1", "shape1", "shape", "lambda","size","size")
+para_2 <- c("-", "max", "-", "df2", "shape2", "rate", "-", "prob", "prob")
+d <- data.frame(Name, Code, para_1, para_2)
+knitr::kable(d)
+```
+
+As we can see from this table, all random number generator functions are formed by the letter `r` followed by the name of the distribution we would like to generate from. For the other three functions, we just need to change the initial letter `r`: 
+
+- to `d` for PDF (continuous distribution) or PMF (discrete distribution), 
+- to `p` for CDF,
+- to `q` for quantile function.
+
+Let's do some statistical exercises with those distributions.
+
+### Exercise
+
+1. For $\text{Binomial}(10, 0.5)$, 
+
+- (a). Compute the PMF for `x = 0, 1, ..., 10`. Plot the pmf.
+- (b). Calculate the CDF and interpret the results.
+- (c). Simulate 1000 random values using `rbinom()` and compare the histogram with the theoretical PMF
+
+2. For $\text{Poisson}(3)$, 
+
+- (a). Compute the PMF for `x = 0, 1, ..., 10`. Plot the pmf.
+- (b). Use `ppois()` to calculate the probability of 2 or fewer events.
+- (c). Generate 500 random values using `rpois()` and create a histogram. Compare it with the theoretical PMF.
+ 
+3. For $\text{Exponential}$ distribution with `rate = 0.5`,
+
+- (a). Compute the PDF for `x = 0.5, 1, 1.5, ..., 5` with `rate = 0.5`. Plot the PDF.
+- (b). Simulate 1000 random samples using `rexp()` with `rate = 0.5`. Create a histogram and compare it with the theoretical PDF. 
+

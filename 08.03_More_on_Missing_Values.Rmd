@@ -1,0 +1,98 @@
+## More on Missing Values  {#more-on-missing-values}
+
+In Section \@ref(missing-values), we have introduced the concept of missing values and how to detect them. In this section, we will discuss missingness related to tidy data. 
+
+### Missing Values in Tidy Data
+
+In tidy data, missing values are represented as `NA`. In R, `NA` stands for "Not Available" and is used to represent missing values. When working with tidy data, it is important to understand how missing values are handled in R. Let's revisit the following dataset from Section \@ref(tidy-name-value).
+
+```{r}
+library(r02pro)
+library(tidyverse)
+gm_tidy <- gm %>% 
+  filter(country %in% c("United States", "China", "Russia")) %>%
+  select(country, year, life_expectancy) %>%
+  filter(year >= 2004 & year <= 2006)
+```
+
+Let's remove the 3rd and 4th rows to prepare the dataset for this section.
+
+```{r}
+gm_tidy <- gm_tidy[-c(3, 4), ]
+gm_tidy
+```
+In this tidy format, we actually don't see any missing values. Let's try to convert it into a wide format and see what happens.
+
+```{r}
+gm_wide <- gm_tidy %>% 
+  pivot_wider(names_from = year,
+              values_from = life_expectancy)
+gm_wide
+```
+
+From this output, we can see that the `NA` values are introduced when we convert the tidy data into a wide format. This is because the `gm_tidy` dataset does not have data for China in the year 2005 or for United States in the year 2004. When we convert it into a wide format, the `NA` values are introduced to represent the missing data.
+
+Let's try to convert `gm_wide` back to a tidy format.
+
+```{r}
+gm_tidy2 <- gm_wide %>% 
+  pivot_longer(cols = -1,
+               names_to = "year",
+               values_to = "life_expectancy")
+gm_tidy2
+```
+
+Now, we have the missing values in the tidy format.
+
+### Filling Missing Values
+
+When working with missing values, it is important to decide how to handle them. One common approach is to fill the missing values with a specific value. In R, we can use the `replace_na()` function from the `tidyr` package to fill missing values. Let's say we fill in all the missing values with the average of all the non-missing values.
+
+
+```{r}
+gm_tidy2 %>% 
+  mutate(life_expectancy = replace_na(life_expectancy,
+                                      mean(life_expectancy, 
+                                           na.rm = TRUE)))
+```
+
+Clearly, we can see the `life_expectancy` for China in 2005 and for United States in 2005 are both replaced as the overall mean `71.77143`. 
+
+Sometimes, you may want to replace the missing values by the average value within a particular group. In this case, it is reasonable to use the average value for a particular country.  To achieve this, you just need to add a `group_by()` step before the mutate operation.
+
+```{r}
+gm_tidy2 %>% 
+  group_by(country) %>% 
+  mutate(life_expectancy = replace_na(life_expectancy,
+                                      mean(life_expectancy, 
+                                           na.rm = TRUE)))
+```
+
+In some datasets with longitudinal measurements, the values are only recorded when they change. In this case, it is helpful to use `fill()` to fill in missing values with previous or next value. 
+
+Let's first try to fill in the missing values with the last non-missing value.
+
+```{r}
+gm_tidy2 %>% 
+  fill(life_expectancy, .direction = "down")
+```
+
+From the output, you can see the `life_expectancy` for China in 2005 is 74.2, the same value as the preceding value (the `life_expectancy` for China in 2004). The `life_expectancy` for United States in 2004 is set to be the same as the preceding value (Russia in 2005). Again, it may be more reasonable to group by the country first, arrange by `country` and `year`, and fill in the value with the preceding value for a particular country. 
+
+```{r}
+gm_tidy2 %>% 
+  group_by(country) %>%
+  arrange(country, year) %>%
+  fill(life_expectancy, .direction = "down")
+```
+
+Perhaps it comes as a surprise that the `life_expectancy` for United States for 2004 is still missing. The underlying reason is that for United States, there is no preceding observations that are complete. In this case, you can use `.direction = "downup"` in the `fill()` function, which will fill in the missing values in a downward fashion and then in a upward fashion. 
+
+```{r}
+gm_tidy2 %>% 
+  group_by(country) %>%
+  arrange(country, year) %>%
+  fill(life_expectancy, .direction = "downup")
+```
+
+In the downward pass, we fill in the `life_expectancy` value for China in 2005 with the value for 2004. Then in the upward pass, we fill in the `life_expectancy` value for United States with the value for 2005. 

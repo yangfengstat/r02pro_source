@@ -1,0 +1,197 @@
+## While Loops and Repeat {#while-loop}
+
+In addition to `for` loop in Section \@ref(loop) where you have to specify the range of values to iterate, it is sometimes more convenient to use another type of loop: the **while loop**. 
+
+### `while` loop
+Let's first review the syntax of `for` loops.
+```{r, eval=FALSE}
+for (val in val_seq){
+  statement1
+  statement2
+}
+```
+
+Here, we have to specify the `val_seq` along which we will assign each element to `val` and execute the statements, unless `break` is called. Sometimes, it is not clear what the `val_seq` would be. For example, if we want to find the Fibonacci sequence up to 100, it is not clear how many elements we will have in the `val_seq`. In this case, the `while` loop comes to rescue. Let's take a look of the syntax of `while` loop.
+
+```{r, eval=FALSE}
+while(cond_expr){
+  statement1
+  statement2
+}
+```
+
+In the `while` loop, we put a logical statement in the `cond_expr`. The loop will continue as long as `cond_expr` take the value of `TRUE`. Let's see the actual code in action.
+```{r, results=TRUE}
+fib_seq <- c(0, 1)
+fib_last_value <- fib_seq[1]
+fib_cur_value <- fib_seq[2]
+fib_next_value <- fib_last_value + fib_cur_value
+while(fib_next_value < 100){      
+  fib_seq <- c(fib_seq, fib_next_value)
+  fib_cur_value <- fib_next_value
+  fib_last_value <- fib_cur_value
+  fib_next_value <- fib_last_value + fib_cur_value
+}
+fib_seq                #print the sequence
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+**avoid infinite loops**: it is very important to ensure that  `cond_expr` will eventually be `TRUE` at some iterations. Otherwise, the loop will be infinite. The following is an **infinite** loop. 
+```{r, error = TRUE, eval=FALSE}
+counter <- 1
+     while (counter > 0) {
+       print(counter)
+       counter <- counter + 1  
+     }
+```
+:::
+
+### `repeat` Loop
+
+The last type of loops is the `repeat` loop, which doesn't have neither the range of values, nor the logical expression. The syntax is as below.
+```{r, eval = FALSE}
+repeat{
+  expr1
+  expr2
+  if(cond_expr){
+    break
+  }
+  expr3
+}
+```
+
+As you can see in the syntax of the `repeat` loop, you always need to put a conditional `break` statement to avoid infinite loops. 
+
+Let's rewrite the previous example using `repeat` loop.
+
+```{r, results=TRUE}
+fib_seq <- c(0, 1)
+fib_last_value <- fib_seq[1]
+fib_cur_value <- fib_seq[2]
+fib_next_value <- fib_last_value + fib_cur_value
+repeat{      
+  fib_seq <- c(fib_seq, fib_next_value)
+  fib_cur_value <- fib_next_value
+  fib_last_value <- fib_cur_value
+  fib_next_value <- fib_last_value + fib_cur_value
+  if(fib_next_value >= 100){
+    break
+  }
+}
+fib_seq                #print the sequence
+```
+
+You can see that the same sequence was generated using the `repeat` loop.
+
+### Comparison of `for`, `while`, and `repeat` Loops
+
+1. **`for` Loops**
+   - Use when the number of iterations is known before starting the loop.
+   - Typically iterates over elements in a vector, list, or sequence.
+   - Example:
+     ```r
+     for (i in 1:5) {
+       print(i)
+     }
+     ```
+
+2. **`while` Loops**
+   - Use when the loop termination depends on a condition that may change dynamically during execution.
+   - The condition is checked at the beginning of each iteration.
+   - Example:
+     ```r
+     counter <- 1
+     while (counter <= 5) {
+       print(counter)
+       counter <- counter + 1
+     }
+     ```
+
+3. **`repeat` Loops**
+   - Use for indefinite loops where the termination condition is not evaluated at the start.
+   - Typically terminated manually using a `break` statement.
+   - Example:
+     ```r
+     counter <- 1
+     repeat {
+       print(counter)
+       counter <- counter + 1
+       if (counter > 5) break
+     }
+     ```
+
+4. **Key Differences**
+   - `for` loops are ideal for iterating over a known sequence.
+   - `while` loops are better when the number of iterations depends on a condition that might change dynamically.
+   - `repeat` loops are useful for loops that require manual control over termination.
+
+5. **When to Use**
+   - Prefer `for` loops for most R operations due to simplicity and readability.
+   - Use `while` for scenarios where the termination condition is dynamic or unknown.
+   - Use `repeat` sparingly, typically for indefinite or complex loops.
+   
+### Exercises
+
+1. Countdown Timer
+
+Write a `while` loop that counts down from a given number `n` to 1 and prints each number. When the countdown is finished, print `"Blast off!"`.
+
+**Example Input:**
+```r
+n <- 5
+```
+
+**Expected Output:**
+```plaintext
+5
+4
+3
+2
+1
+Blast off!
+```
+
+2. Sum Until a Threshold
+
+Write a `while` loop that keeps adding numbers (starting from 1) until their sum exceeds a given threshold `threshold`. Print the final sum and the last number added.
+
+**Example Input:**
+```r
+threshold <- 15
+```
+
+**Expected Output:**
+```plaintext
+"The sum is 21. The last number added is 6."
+```
+
+3.  Repeat Until Correct
+
+Use a `repeat` loop to simulate a simple guessing game. The loop should keep running until the user guesses the correct number, which is predefined (e.g., `target <- 7`). Use `break` to exit the loop when the guess is correct. Hint: `guess <- readline("Guess a number: ")` will prompt the user to enter a number and assigned it to the object `guess`. 
+
+**Example Input:**
+```r
+target <- 7
+```
+
+**Expected Output:**
+```plaintext
+"Guess a number: "
+7
+"Congratulations! You've guessed the correct number."
+```
+
+4. Fibonacci Sequence
+
+Write a `while` loop that generates the Fibonacci sequence until the value exceeds a given limit `limit`. Print all the Fibonacci numbers generated.
+
+**Example Input:**
+```r
+limit <- 50
+```
+
+**Expected Output:**
+```plaintext
+1, 1, 2, 3, 5, 8, 13, 21, 34
+```
+

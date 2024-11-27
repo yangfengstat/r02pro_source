@@ -93,7 +93,7 @@ filter(gm,
        HDI_category == "very high" | HDI_category == "high" )
 ```
 
-### The pipe operator
+### The pipe operator {#pipe}
 
 Now, we want to introduce a very useful operator, named **pipe**. The pipe operator makes it much easier to apply a sequence of operations on a dataset. For example, let's say we want to generate a scatterplot of `cholesterol` and `BMI` only for the European countries in the `gm2004` dataset. Typically, we first use the `filter()` function to create the subset of the data and call the `ggplot()` function to create the plot. 
 ```{r}
@@ -117,11 +117,12 @@ From now on, we will be extensively using the pipe operator `%>%` to make the co
 
 ### Exercise
 
-Using `ahp` dataset,
 
-1. Create a new tibble named `my_ahp` that contains all houses that are built before year 2000 (not including 2000), sold on or after year 2009, and with 2 or 3 bedrooms.
 
-2. Create a new tibble named `my_gm` that contains all countries in Asia and Africa with `HDI_category` being "high" or "medium" in year 2006.
+1. Using the `ahp` dataset, create a new tibble named `my_ahp` that contains all houses that are built before year 2000 (not including 2000), sold on or after year 2009, and with 2 or 3 bedrooms.
+
+
+2. Using the `gm` dataset, create a new tibble named `my_gm` that contains all countries in Asia and Africa with `HDI_category` being "high" or "medium" in year 2006.
 
 
 

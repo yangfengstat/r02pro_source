@@ -1,0 +1,100 @@
+## Set Operations on Datasets {#set-operations-datasets}
+
+In Section \@ref(joins), you learned how to join two data sets via a shared key. And in Section \@ref(set-operations-vectors), you learned how to conduct set operations on vectors. In some applications, you may want to perform **set operations** on two data frames or tibbles.  Set operations allow you to compare two data frames and return results based on whether rows exist in both, one, or neither of the data frames. Here, we'll explore key set operations in the `dplyr` package: `intersect()`, `union()`, `union_all()`, `setdiff()`, `symdiff()`, and `setequal()`.
+
+Let's first load the **dplyr** package and create two tibbles to use throughout this section.
+```{r}
+library(dplyr)
+df1 <- tibble(id = c(1, 2, 3), value = c("A", "B", "C"))
+df2 <- tibble(id = c(2, 3, 4), value = c("B", "C", "D"))
+```
+
+
+### `intersect(x, y)`
+
+The `intersect(x, y)` function finds all rows that appear in both `x` and `y`. This is useful for identifying the common elements between two data frames.
+
+```{r}
+# Intersection of df1 and df2
+intersect(df1, df2)
+```
+
+In this example, `intersect(df1, df2)` returns the rows that are common to both `df1` and `df2`.
+
+### `union(x, y)`
+
+The `union(x, y)` function returns all unique rows from `x` and `y`, excluding duplicates. This operation is similar to combining two sets in mathematics.
+
+```{r}
+# Example of union()
+union(df1, df2)
+```
+
+The result includes all rows from both data frames, without any duplicates.
+
+### `union_all(x, y)`
+
+Unlike `union()`, the `union_all(x, y)` function includes all rows from both `x` and `y`, including duplicates. This can be useful if you want to keep repeated values.
+
+```{r}
+# Example of union_all()
+union_all(df1, df2)
+```
+
+The output includes all rows from both `df1` and `df2`, and duplicate rows are preserved.
+
+### `setdiff(x, y)`
+
+The `setdiff(x, y)` function finds all rows that are in `x` but not in `y`. This is useful for identifying elements that are unique to `x`.
+
+```{r}
+# Example of setdiff()
+setdiff(df1, df2)
+```
+
+This returns rows from `df1` that do not appear in `df2`.
+
+### `symdiff(x, y)`
+
+The `symdiff(x, y)` function computes the symmetric difference, which includes all rows that are in `x` but not in `y` and all rows that are in `y` but not in `x`. 
+
+```{r}
+# Example of symmetric difference 
+symdiff(df1, df2)
+```
+
+This custom function returns rows that are unique to each data frame.
+
+### `setequal(x, y)`
+
+The `setequal(x, y)` function checks if `x` and `y` contain the same rows, ignoring the order of the rows. It returns `TRUE` if they are equivalent and `FALSE` otherwise.
+
+```{r}
+# Example of setequal()
+setequal(df1, df2)
+```
+
+This will return `FALSE` in this example because `df1` and `df2` do not contain the same rows.
+
+### Summary
+
+Set operations in `dplyr` are a powerful way to compare data frames. They allow you to extract or compare unique and overlapping rows, enabling deeper insights and control over your data analysis.
+
+### Exercises
+
+Create the following two tibbles. 
+```{r}
+df_a <- tibble(id = c(1, 2, 3), value = c("X", "Y", "Z"))
+df_b <- tibble(id = c(2, 3, 4), value = c("Y", "Z", "W"))
+```
+
+
+1. **Intersection Exercise**: Use `intersect()` to find common rows of `df_a` and `df_b`.
+   
+2. **Union Exercise**: Find the union of `df_a` and `df_b`. Compare the results of `union()` and `union_all()`.
+
+3. **Difference Exercise**: Use `setdiff()` to find rows that are in `df_a` but not in `df_b`. What about rows that are in `df_b` but not in `df_a`?
+
+4. **Symmetric Difference Exercise**: Compute the symmetric difference of `df_a` and `df_b` without using `symdiff()` function. Verify that your result is the same as the one from the `symdiff()` function.
+
+5. **Set Equality Exercise**: Use `setequal()` to verify if two data frames with reordered rows are still considered equal: create two data frames with the same rows but in a different order and check if they are equal using `setequal()`.

@@ -1,6 +1,6 @@
 ## Other Atomic Vector Types {#other-atomic-vector}
 
-So far, we have covered the most commonly used  atomic vector types, including logical, integer, numeric, and character, when we order by complexity. In this section, we will introduce two more atomic vector types: **complex** vectors and **raw** vectors.
+So far, we have covered the most commonly used  atomic vector types, including logical, integer, numeric, and character, which we order by complexity. In this section, we will introduce two more atomic vector types: **complex** vectors and **raw** vectors.
 
 ### Complex Vectors
 

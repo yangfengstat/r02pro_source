@@ -1,0 +1,101 @@
+## Random Permutation and Random Sampling  {#sampling}
+
+Now, you have learned to work with distributions in R with the four useful functions for each distribution in Sections \@ref(normal-distribution) and \@ref(other-distributions). In this section, we explore how to perform **random permutations** and **random sampling** in R. These techniques are widely used in statistics, machine learning, and data analysis for tasks like model validation and resampling.
+
+### Random Permutation
+
+A **random permutation** rearranges the elements of a vector in a random order. This is often required in machine learning for splitting data into training and validation sets or in bootstrapping.
+
+#### Example in R
+
+To generate a random permutation of a vector, use the `sample()` function:
+
+```{r, results = TRUE}
+x <- 6:10
+set.seed(0)  # Set seed for reproducibility
+sample(x)    # Random permutation of x
+```
+
+You can reproduce the same random permutation by using the same seed:
+
+```{r, results=TRUE}
+set.seed(0)
+sample(x)  # Reproduces the random permutation
+```
+
+### Random Sampling Without Replacement
+
+**Sampling without replacement** selects elements from a vector without repeating any of them. This is useful when you need a subset of elements from the vector.
+
+
+Let's randomly sample 3 elements from `x`:
+
+```{r, results=TRUE}
+set.seed(1)
+sample(x, size = 3, replace = FALSE)
+```
+
+Here, the `size` argument specifies the number of elements to sample. If `size` is greater than the length of the vector, an error occurs:
+
+```{r, eval = TRUE, error = TRUE}
+sample(x, size = 6, replace = FALSE)
+```
+
+
+In addition to using a vector in the first argument of `sample`, you can also use a positive integer (e.g., 10), which will be equivalent to `x = 1:10`. See the following code for an example. 
+
+```{r, results = TRUE}
+sample(10, size = 4)   #sample 4 integers from 1 to 10.
+sample(1:10, size = 4) #sample 4 integers from 1 to 10.
+```
+
+
+### Random Sampling with Replacement
+
+Sometimes, you may want to get a sample with replacements. You will still be using the `sample()` function, but with the argument `replace = TRUE`. The following code samples 10 elements with replacement from x.
+
+```{r, results = TRUE}
+sample(x, size = 10, replace = TRUE)
+```
+
+
+As expected, you will see some duplicated elements in the output vector.
+
+A very important application of random sampling with replacement is **bootstrap**. A bootstrap sample is a sample of *the same size as the original data* with replacement. So, if you want to get a bootstrap sample from x, you will sample 5 elements with replacement from x.
+
+```{r, results = TRUE}
+sample(x, replace = TRUE) #a bootstrap sample
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+Note that, when the argument `size` is not provided, it will take the default value: the length of `x`. 
+::: 
+
+
+### Random Sampling with Unequal Probabilities
+
+By default, the `sample()` function will draw each element with the same probability. In some cases, you may want to assign different probabilities for different elements. 
+
+To draw elements with different probabilities, the first method is to use the random number generator (RNG) for Binomial distribution or Bernoulli distribution. Let's say we want to randomly sample 100 elements from a Bernoulli distribution with success probability $p=0.2$. 
+
+```{r, results = TRUE}
+rbinom(100, size = 1, prob = 0.2)
+```
+
+In addition to using the `rbinom` function introduced in Section \@ref(other-distributions), you can use the `sample` function with the `prob` argument inside to achieve the same goal.
+
+```{r, results = TRUE}
+sample(c(0, 1), 
+       size = 100, 
+       replace = TRUE, 
+       prob = c(0.8, 0.2))
+```
+
+Here, you will samples 100 elements with replacement from `c(0,1)` , and the probability of drawing 0 is 0.8, the probability of drawing 1 is 0.2. 
+
+### Exercise
+
+1. Randomly permute the vector `x <- 1:20`. Set the `seed = 66` and verify that the permutation is reproducible.
+2. Create a random sample of 5 elements from the vector `letters` without replacement.
+3. Simulate 1000 random samples with replacement from the vector `1:10`. Compute the frequency of each number in the sample.
+4. Split the vector `1:100` into two random subsets of size 70 and 30 without replacement. Calculate the mean of each subset.

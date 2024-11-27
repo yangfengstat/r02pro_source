@@ -45,7 +45,6 @@ str(x_w_name)
 
 x_wo_name <- c(165, 60, 22)
 str(x_wo_name)
-
 ```
 
 You can see that `x_w_name` is a named numeric vector, with the names attribute. In contrast, str() function tells us `x_wo_name` is a plain numeric vector with no attributes. To directly extract certain attributes of an R object, you can use the attr() function on it with the second argument being the specific attribute you wish to extract.

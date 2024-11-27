@@ -131,3 +131,9 @@ d2
 4. Perform a full join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
 5. Perform a semi join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
 6. Perform an anti join between `d1` and `d2` by the key `bsmt_ht`. What are the rows and columns in the final output?
+7. Define `d2_new` by adding a new column to `d2` called `height_code` with values 1, 2, 3, and 4 corresponding to `"Excellent"`, `"Good"`, `"Average"`, and `"Poor"` in `bsmt_ht`, respectively. Perform an inner join between `d1` and `d2_new` by `bsmt_ht`. Does adding this new column affect the join results?
+8. Define `d1_filter` by filtering `d1` to only include rows where `bsmt_area` is between 600 and 800. Perform a left join between `d1_filter` and `d2` by `bsmt_ht`. How many rows in the joined dataset come from `d2`?
+9. Defined `d1_na` by replacing `bsmt_ht` in the first row of `d1` with `NA`.
+Perform a full join between `d1_na` and `d2` by `bsmt_ht`. How does this missing value affect the join result?
+10. Add a row in `d2` with `bsmt_ht` = `"Very Good"` and `height = "95-99 inches"`. Perform an anti join between `d1` and the updated `d2` by `bsmt_ht`. Explain which rows are retained in the output and why.
+

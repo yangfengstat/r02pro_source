@@ -200,7 +200,7 @@ x3[x3 == 999] <- NA
 x3
 ```
 
-Let's see another example where both `999` and `-999` represent the value is missing. You can convert all `999` and `-999` into `NA` by using operations introduced in Section \@ref(set-operations).
+Let's see another example where both `999` and `-999` represent the value is missing. You can convert all `999` and `-999` into `NA` by using operations introduced in Section \@ref(set-operations-vectors).
 ```{r, results=TRUE}
 x4 <- c(4, 999, 1, -999, 3, -999, 999)
 ##999 and -999 are the values indicating missingness

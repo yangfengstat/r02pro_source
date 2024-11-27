@@ -1,24 +1,27 @@
 ## Permutation and Operator Sequence {#permutation-operator}
 
-Given the four integers, it is clear that we need to perform three operations to arrive at the final result. Without any prior knowledge, one reasonable way to solve the problem is via a exhaustive search. Let's use the example 1, 5, 5, 5 throughout the demonstrations.
+In solving the 24 Game, the goal is to perform three operations on four integers to achieve the target result. Without prior knowledge, one effective method is exhaustive search. Let’s use the example \( 1, 5, 5, 5 \) for this demonstration.
 
-Let's have another look at the solution we provided in the chapter introduction, $$ 5\times(5 - 1/5) = 24.$$
+### Breaking Down a Solution
 
-It is helpful to break down the equation into the following three steps.
+Revisiting the example solution from the chapter introduction:
 
-1. $1 / 5 = 0.2$
-2. $5 - 0.2 = 4.8$ 
-3. $5 \times 4.8 = 24$
+\[ 5 \times (5 - 1 / 5) = 24 \]
 
-Let's summarize the features of the three steps.
+We can break this equation into the following three steps:
 
-1. Each step is determined by two numbers and an operator. For example, the first step involves numbers 1 and 5, and the `/` operator. 
-2. The two numbers in the first step comes from the input (the original four numbers). 
-3. Out of the two numbers in steps 2 and 3, one is the result from the previous step, and the other one comes from the original four numbers. For example, in step 2, 0.2 is the result from step 1 and 5 comes from the input.
+1. \( 1 / 5 = 0.2 \)
+2. \( 5 - 0.2 = 4.8 \)
+3. \( 5 \times 4.8 = 24 \)
+
+Key observations:
+1. Each step involves two numbers and one operator. For example, the first step uses \( 1 \) and \( 5 \) with the `/` operator.
+2. Numbers in the first step come directly from the input.
+3. In subsequent steps, one number is the result from the previous step, and the other comes from the input.
 
 ### Getting All Permutations
 
-The three steps imply a specific order of the original four numbers. In this case, we have 1, 5, 5, 5. In our exhaustive search, we need to enumerate all possible permutations of the original four number, which at most is $4! = 24$. We can find all the possible permutations using the `permutations()` function in the **gtools** package. We also apply the `unique()` function outside to remove the duplicated permutations. 
+The three steps imply a specific order of the original four numbers. In this case, we have 1, 5, 5, 5. In our exhaustive search, we need to enumerate all possible permutations of the original four number, which at most is $4! = 24$. We can find all the possible permutations using the `permutations()` function in the **gtools** package. We also apply the `unique()` function to eliminate duplicate permutations.
 
 ```{r, results = TRUE}
 library(gtools)
@@ -28,7 +31,7 @@ nums_perm <- unique(permutations(n_nums, n_nums, nums, set = FALSE))
 nums_perm
 ```
 
-Now, `nums_perm` is a matrix, where each row contains a particular permutation of the original numbers. 
+`nums_perm` is now a matrix where each row represents one unique permutation.
 
 ### Getting All Operators
 

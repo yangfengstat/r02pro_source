@@ -1,6 +1,6 @@
-## Set Operations {#set-operations}
+## Set Operations on Vectors {#set-operations-vectors}
 
-### Set operations
+### Set operations on vectors
 We've spent a couple sections introducing numeric, character, and logical vectors separately. In this section, we'll continue discussing set operations between two vectors of the **same type**. However, all set operators in this section are applicable to all three types off vectors. For later convenience, let's create some numeric, character, and logical vectors now.
 
 ```{r}

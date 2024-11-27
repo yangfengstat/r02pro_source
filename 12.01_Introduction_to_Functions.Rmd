@@ -1,0 +1,172 @@
+## Introduction to Functions {#intro-functions}
+
+### What are Functions?
+Functions are reusable blocks of code designed to perform a specific task. They:
+
+- Make your code modular and readable.
+- Help avoid repetition.
+- Accept inputs (arguments) and return outputs.
+
+In fact, we have being using functions extensively in this book. For example, the `mean()` function calculates the average of a vector:
+```{r}
+mean(c(1, 2, 3, 4, 5))
+```
+
+You can also define your own functions. Let's create a simple function that adds two numbers:
+
+```{r}
+add_numbers <- function(a, b) {
+  result <- a + b
+  return(result)
+}
+
+add_numbers(5, 10)
+```
+
+
+
+### Syntax of a Function
+
+
+The basic syntax of a function in R is:
+
+```{r, eval=FALSE}
+function_name <- function(arguments) {
+  # Code to execute
+  return(value)
+}
+```
+
+Here, we have the following key ingridients of a function:
+
+- `function_name`: The name of the function.
+- `arguments`: Inputs to the function.
+- `value`: The output of the function.
+
+
+
+Let's see an example of a function that greets a user by their name:
+```{r}
+greet <- function(name) {
+  message <- paste("Hello,", name)
+  return(message)
+}
+
+greet("Yang")
+```
+
+
+
+### Default Arguments in Functions
+
+
+Functions can have default values for their arguments. This makes the function more flexible.
+
+```{r}
+calculate_area <- function(length = 1, width = 1) {
+  cat("Length:", length, "\n")
+  cat("Width:", width, "\n")
+  return(length * width)
+}
+
+calculate_area()              # Default arguments
+calculate_area(5, 10)         # Override both defaults
+calculate_area(6)             # Override one default
+calculate_area(length = 5)    # Override one default
+calculate_area(width = 10)    # Override one default
+calculate_area(width = 10, length = 5)    # Override both defaults
+```
+
+Here, the `calculate_area` function calculates the area of a rectangle. 
+
+- If no arguments are provided, it assumes a square with side length `1`.
+- If both arguments are provided, it calculates the area of a rectangle with the given dimensions.
+- If only one argument is provided, it assumes a rectangle with width `1`.
+- If you provide the argument names, you can override the defaults in any order.
+
+
+
+### Project: Dice Simulation
+Write a function `roll_dice` that:
+
+1. Takes an argument `n`, the number of times to roll a six-sided die.
+2. Simulates the rolls and returns a table of the frequency of each face.
+
+Example:
+```{r}
+roll_dice <- function(n) {
+  rolls <- sample(1:6, size = n, replace = TRUE)
+  return(table(rolls))
+}
+
+roll_dice(10)
+```
+
+### Project: Get Fibonacci Sequence
+
+This project demonstrates how to create a function that generates a Fibonacci sequence up to a specified upper bound.
+
+
+- Step 1: Define the Function Arguments
+
+The **arguments** of a function determine what inputs it requires. For this task, the upper bound of the Fibonacci sequence is the only input argument.
+
+- Step 2: Specify the Function Output
+
+The function should **return** the desired Fibonacci sequence as its output. This will allow users to see all Fibonacci numbers less than the given upper bound.
+
+- Step 3: Name the Function
+
+When naming a function, follow consistent naming conventions introduced in Section \@ref(Naming). Here, we will name the function `get_fibo`.
+
+
+Below is the implementation of the function:
+
+```{r}
+get_fibo <- function(upper_bound) {
+  # Initialize the Fibonacci sequence with the first two numbers
+  fib_seq <- c(0, 1)
+  
+  # Set up variables for current, last, and next Fibonacci numbers
+  fib_last_value <- fib_seq[1]
+  fib_cur_value <- fib_seq[2]
+  fib_next_value <- fib_last_value + fib_cur_value
+  
+  # Generate the sequence up to the upper bound
+  while (fib_next_value < upper_bound) {
+    fib_seq <- c(fib_seq, fib_next_value)    # Append the next value
+    fib_last_value <- fib_cur_value          # Update the last value
+    fib_cur_value <- fib_next_value          # Update the current value
+    fib_next_value <- fib_last_value + fib_cur_value # Compute the next value
+  }
+  
+  # Return the sequence
+  return(fib_seq)
+}
+```
+
+Now, let's try to evaluate this function with some examples.
+
+```{r,results=TRUE}
+get_fibo(upper_bound = 50)   # Fibonacci sequence below 50
+get_fibo(upper_bound = 80)   # Fibonacci sequence below 80
+get_fibo(upper_bound = 300)  # Fibonacci sequence below 300
+```
+
+
+
+### Exercises
+
+1. Write a function `square` that returns the square of a number. Test your function with the input `4`.
+
+2. Create a function `multiply` that takes two arguments and returns their product. Test your function with inputs `3` and `7`.
+
+3. Write a function `rectangle_perimeter` that calculates the perimeter of a rectangle. Set the default width to `10`. Test your function with different inputs.
+
+4. Write a function `factorial` that calculates the factorial of a number using a `for` loop. Test your function with input `5`.
+
+5. Extend the `roll_dice` function to plot a bar chart of the frequencies. Test your function with the input `100`.
+
+6. Write a function `is_even` that returns `TRUE` if a number is even and `FALSE` otherwise. Test your function with the input `10`.
+
+

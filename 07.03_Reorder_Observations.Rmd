@@ -54,7 +54,8 @@ Here, the `head(10)` function is used to get the first 10 observations in the da
 ### Exercises
 
 Using the `ahp` dataset,
-1. Find all houses built in `2008` with `house_style` as `2Story`, then arrange the the observations in the ascending order of remodel year, and break the ties in the descending order of `sale_price`.
 
-2. Find all houses sold in `2009` with `house_style` as `1Story`, and arrange the observations in the descending order of `sale_price`.
+1. Find all houses built in `2008` with `house_style` as `"2Story"`, then arrange the the observations in the ascending order of remodel year, and break the ties in the descending order of `sale_price`.
+
+2. Find all houses sold in `2009` with `house_style` as `"1Story"`, and arrange the observations in the descending order of `sale_price`.
 

@@ -210,7 +210,7 @@ class(my_num2)
 
 Moreover, as you can see by running the code below, whenever you put an "L" after an decimal value, you will get the warning and the storage type will remain `double`.
 
-```{r, results=TRUE}
+```{r, results=TRUE, warning=TRUE}
 my_num3 <- c(1.5L, 3L, 4L)
 typeof(my_num3)
 class(my_num3)

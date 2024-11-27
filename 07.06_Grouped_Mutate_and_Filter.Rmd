@@ -35,15 +35,19 @@ gm %>%
   select(country, continent, GDP_per_capita) %>%
   arrange(continent, desc(GDP_per_capita))
 ```
+
 Here, we first filter the observations for the year 2008 and remove the missing values in the `continent` variable. Then, we group the observations by `continent`. We use the `mutate()` function to create a new variable `r` which represents the rank of the GDP per capita in descending order. The `ties.method = "first"` argument is used to break the ties by giving the same rank to the same values. We then filter the observations that have a rank less than or equal to 2. Finally, we select the variables `country`, `continent`, and `GDP_per_capita`, and arrange the observations according to the continent and the GDP per capita in descending order.
 
 ### Exercises
 
 Using the `ahp` dataset and the pipe operator for the following exercises.
 
-1. For each month when the house was sold, find the houses that have a higher sale price than the average sale price in the corresponding month. Then, create a scatterplot between the month (x-axis) and the sale price (y-axis) with different colors for the houses that have a higher sale price than the average sale price in the corresponding month. Explain the findings from the figure.
+1. Create a logical variable `high_sale_price`, which equals  `TRUE` if the house's sale price exceeds the average sale price for the corresponding month, and `FALSE` otherwise. Next, create a scatterplot to visualize the relationship between the month and the sale price, using different colors based on whether high_sale_price is `TRUE` or `FALSE`. Explain the insights from the plot.
+
 2. Focus on the overall conditions where the number of corresponding houses are at least 30. Then, summarize the number of observations and the average sale price for each overall condition.
-3. Find the top two expensive houses that was remodel each year, show only the remodel year and sale price, and arrange the result in the ascending order of remodel year. 
+
+3. Find the top two expensive houses that was remodeled each year, show only the remodel year and sale price, and arrange the result in the ascending order of remodel year. Note: if there are ties in the sale price ranking, please include all the tied observations.
+
 4. Group the houses by the combination of kitchen quality (`kit_qual`) and  central AC (`central_air`),  find the two houses with the minimum and maximum sale prices for each group. Then, arrange the groups in the descending order of maximum sale price within each group.
 
 

@@ -1,0 +1,173 @@
+## Anonymous Functions and Scoping {#anonymous-and-scoping}
+
+### Anonymous Functions
+
+An anonymous function is a function that is not assigned a name. These functions are often used when you need a simple one-off computation, typically as an argument to higher-order functions like `apply`, `lapply`, or `sapply`. 
+
+**Key Features of Anonymous Functions**
+
+- They are defined inline without assigning a name.
+- Useful for short, temporary tasks.
+- Simplify code by avoiding unnecessary function declarations.
+
+**Example: Anonymous Function in `sapply`**
+
+```{r}
+# Using an anonymous function to compute squares
+squared_values <- sapply(1:5, function(x) x^2)
+print(squared_values)
+```
+
+Here, the `function(x) x^2` is an anonymous function that computes the square of its input.
+
+**Example: Filtering with an Anonymous Function**
+
+```{r}
+# Filter elements greater than 2 using an anonymous function
+filtered_values <- Filter(function(x) x > 2, c(1, 2, 3, 4, 5))
+print(filtered_values)
+```
+
+Here, the anonymous function `function(x) x > 2` filters elements greater than 2 from the input vector.
+
+### Advanced Use Cases for Anonymous Functions
+
+Anonymous functions can also handle more complex operations, such as interacting with external variables or embedding control structures.
+
+**Example: Combining Multiple Operations**
+
+```{r}
+# Anonymous function to calculate square and add a constant
+constant <- 10
+calculated_values <- sapply(1:5, function(x) (x^2) + constant)
+print(calculated_values)
+```
+
+
+**Example: Conditional Logic in Anonymous Functions**
+
+```{r}
+# Apply a conditional operation using an anonymous function
+conditional_results <- sapply(1:5, function(x) if (x %% 2 == 0) "Even" else "Odd")
+print(conditional_results)
+```
+
+Here, the anonymous function checks if a number is even or odd and returns the corresponding string.
+
+### Scoping in R
+
+Scoping rules determine how variables are resolved in functions. R uses **lexical scoping**, meaning the value of a variable is searched in the environment where the function was created.
+
+
+**Key Concepts of Scoping**
+
+1. **Local Scope**: Variables defined within a function are accessible only inside that function.
+2. **Global Scope**: Variables in the global environment are accessible unless shadowed by local variables.
+3. **Nested Scope**: Functions can access variables from their parent environment.
+
+
+
+**Example: Local Scope**
+
+```{r}
+local_scope_example <- function() {
+  local_var <- 5
+  return(local_var)
+}
+
+# Test the function
+print(local_scope_example())
+
+# Attempting to access local_var outside the function will result in an error
+# print(local_var) # Uncomment to see the error
+```
+
+Here, `local_var` is a local variable within the function `local_scope_example`. If you try to access `local_var` outside the function, it will result in an error.
+
+**Example: Global Scope**
+
+```{r}
+global_var <- 10
+global_scope_example <- function() {
+  print(global_var)
+}
+```
+
+Here, `global_var` is a global variable accessible inside the function `global_scope_example`.
+
+
+
+**Scoping Diagram**
+
+```plaintext
+Global Environment
+ ├── outer_function()
+ │    ├── a (local to outer_function)
+ │    └── inner_function()
+ │         └── b (local to inner_function)
+```
+
+- `outer_function()` defines `a` in its local environment.
+- `inner_function()` accesses `a` from its parent (lexical) environment while using its local `b`.
+
+**Example: Nested Scope**
+
+```{r}
+# Nested scoping example
+outer_function <- function(a) {
+  inner_function <- function(b) {
+    return(a + b)
+  }
+  return(inner_function(5))
+}
+outer_function(10)
+```
+
+Here, the inner function `inner_function` accesses the variable `a` from the outer function `outer_function`.
+
+
+
+**Example: Global Variables**
+
+```{r}
+global_var <- 10
+modify_global_var <- function() {
+  print(global_var)
+  global_var <- 20
+  print(global_var)
+}
+modify_global_var()
+print(global_var)
+```
+Here, the function `modify_global_var` prints and modifies the global variable `global_var`. However, the modification is local to the function and does not affect the global variable. If you want to change the global variable, you need to use the `<<-` operator.
+
+**Modifying Global Variables**
+
+```{r}
+global_var <- 10
+modify_global_var <- function() {
+  print(global_var)
+  global_var <<- 20
+  print(global_var)
+}
+modify_global_var()
+print(global_var)
+```
+
+Now, the global variable `global_var` is modified using the `<<-` operator, which changes the global value.
+
+### Exercises
+
+1. **Using Anonymous Functions**:
+   - Use an anonymous function to compute the factorial of numbers in a vector using `sapply`.
+   - Test the function with `c(5, 6, 7, 8)`.
+
+2. **Scoping Challenge**:
+   - Create a nested function where the inner function uses a variable from the outer function.
+   - Test the behavior when you modify the variable in the global environment.
+
+3. **Conditional Anonymous Functions**:
+   - Write an anonymous function to check if elements of a vector are prime numbers.
+
+4. **Scoping Debugging**:
+   - Write a function with a local variable having the same name as a global variable. Print the value of the variable inside and outside the function to observe scoping behavior.

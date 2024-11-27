@@ -1,0 +1,274 @@
+## Matching Pattern with Regular Expressions {#match-pattern}
+
+Regular expressions provide a powerful and flexible way to find and manipulate text based on patterns of characters. They are essential tools for various tasks in data analysis and programming, including:
+
+-   **Data cleaning**: Standardizing formats of names, addresses, or phone numbers.
+-   **Validation**: Ensuring user input adheres to expected patterns (e.g., email addresses).
+-   **Text extraction**: Isolating keywords, dates, or other crucial information from documents.
+
+This section introduces you to the fundamentals of regular expressions in R, using the **stringr** package.
+
+```{r}
+library(stringr)
+```
+
+The **stringr** package provides a very useful function called `str_view()` to highlight the elements that match the given pattern. To create a logical vector that reflect this match, you can use the `str_detect()` function.
+
+### Basic Pattern Matching
+
+We'll utilize a sample character vector to illustrate these concepts.
+
+```{r}
+sample_names <- c("apple_pie", "banana_bread", "cherry_pie", "chocolate_cake", "apple_crumble")
+```
+
+Let's describe a few commonly used patterns.
+
+***a. matching literal strings***
+
+The simplest form of pattern matching involves searching for a specific sequence of characters. To find all variable names containing the exact string `"pie"`, you can run the following.
+
+```{r, results = TRUE}
+str_view(sample_names, "pie")
+```
+
+Here, the `str_view()` function highlights the variable names that contain the string `"pie"`.
+
+```{r}
+str_detect(sample_names, "pie")
+```
+
+The `str_detect()` function returns a logical vector that reflects whether this is a match. In the rest of this section, we will be focusing on demonstration with `str_view()`.
+
+***b. using wildcards***
+
+The period `(.)` acts as a wildcard, matching **any** single character. This allows for more flexible pattern definitions. For example, to find all variable names that contain the letter `"c"` followed by any character, you can use the pattern `".c"`.
+
+```{r, results=TRUE}
+str_view(sample_names, ".c")
+str_view(sample_names, "._pi.")
+```
+
+The first pattern `".p"` represents any character plus the letter c. Note that `"cherry_pie"` is not a match since it doesn't have any character before the letter `"c"`.
+
+The second pattern `"._pi."` represents any character plus the string `"_pi"` plus any character.
+
+***c. including anchors***
+
+Anchors allow you to specify the position of a match within a string: - `^` matches the start of a string. - `$` matches the end of a string.
+
+For example, to find all variable names that start with the letter `"c"`, you can use the pattern `"^c"`.
+
+```{r}
+str_view(sample_names, "^c")
+```
+
+Now, let's find the strings the end with `"pie"`.
+
+```{r}
+str_view(sample_names, "pie$")
+```
+
+### Character Classes
+
+***a. matching single characters***
+
+Sometimes, we may want to match the characters with a specific class or a group of values instead of exact values. Here is a table of the commonly used classes.
+
+```{r, echo=FALSE}
+library(kableExtra)
+
+df <- data.frame(
+  Class = c("\\\\d", "\\\\s", "[xyz]", "[^xyz]", "[a-z] or [:lower:]", "[A-Z] or [:upper:]"),
+  Description = c(
+    "Matches any digit (0-9)", 
+    "Matches any whitespace character (space, tab, newline)",
+    "Matches any one of the characters within the brackets (x, y, or z)",
+    "Matches any character except those within the brackets",
+    "Matches any lowercase letter", 
+    "Matches any uppercase letter"
+  )
+)
+
+kable(df, "html", escape = FALSE) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+Let's see some examples.
+
+```{r}
+my_char <- c("abc","a1","2b","33c","d 2", "d f  3")
+str_view(my_char, "\\d")       # Matches strings containing a digit
+str_view(my_char, "\\s\\d")    # Matches a whitespace followed by a digit
+str_view(my_char, "[ac3]")     # Matches strings containing 'a', 'c', or '3'
+str_view(my_char, "[^abc3]")  # Matches strings containing characters other than 'a', 'b', 'c', or '3'
+```
+
+Here, `\\d` indicates that as long as the string contains a digit, it will be matched. As a result, `"a1"`, `"2b"`, and `"33c"` are matched. Note that you need to escape the backslash `\` by using two backslashes `\\` within R strings.
+
+***b. matching repeated characters***
+
+To match a character or group of characters multiple times in a row, you can use quantifiers:
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+df <- data.frame(
+  Symbol = c("{n}", "{n,}", "{n,m}", "?", "\\+", "\\*"),
+  Description = c(
+    "Matches exactly n occurrences of the preceding element.",
+    "Matches n or more occurrences.",
+    "Matches at least n and at most m occurrences.",
+    "Matches zero or one occurrence (equivalent to {0,1}).",
+    "Matches one or more occurrences (equivalent to {1,}).",
+    "Matches zero or more occurrences (equivalent to {0,})."
+  )
+)
+
+kableExtra::kable(df)
+```
+
+Let's see some examples.
+
+```{r}
+my_str_rep <- c("bbbb", "1234a", "bbb", "abcdef", "bb ee", "123456789")
+
+str_view(my_str_rep, "b{3}")       # Matches consecutive three 'b's
+```
+
+Here, `"b{3}"` indicates that the string should contain exactly three `"b"`s. As a result, `"bbbb"` and `"bbb"` are matched.
+
+```{r}
+str_view(my_str_rep, "[1-9]{9}")    # Matches a 9-digit number
+```
+
+Here, `"[1-9]{9}"` indicates that the string should contain exactly nine digits. As a result, `"123456789"` is matched.
+
+```{r}
+str_view(my_str_rep, "[a-z]{4}")    # Matches four consecutive lowercase letters
+```
+
+Here, `"[a-z]{4}"` indicates that the string should match exactly four consecutive lowercase letters. As a result, `"bbbb"` and `"abcdef"` are matched. Note that `"bb ee"` is not matched due to the space.
+
+```{r}
+str_view(my_str_rep, "[a-z1-9]{4,}") # Matches at least four consecutive lowercase letters or digits
+```
+
+Finally, `"[a-z1-9]{4,}"` indicates that the string should contain at least four consecutive lowercase letters or digits. As a result, `"bbbb"`, 1234a"`,`"abcdef"`, and`"123456789"\` are matched.
+
+### Combining Patterns with Logical Operators
+
+You can combine multiple patterns using logical operators:
+
+```{r, echo=FALSE}
+library(kableExtra)
+
+df <- data.frame(
+  Symbol = c("\\|", "&", "()"),
+  Description = c(
+    "Matches either the pattern on the left or the right (OR).",
+    "Requires both patterns to match (AND).",
+    "Groups patterns to control the scope of operators."
+  )
+)
+
+kableExtra::kable(df)
+```
+
+Let's see some examples.
+
+```{r}
+my_str_comb <- c("abc", "123", "abc123", "123abc", "abc123def")
+str_view(my_str_comb, "abc|123")    # Matches either 'abc' or '123'
+```
+
+Here, `"abc|123"` indicates that the string should contain either `"abc"` or `"123"`. As a result, `"abc"`, `"123"`, `"abc123"`, `"123abc"`, and `"abc123def"` are matched.
+
+```{r}
+str_view(my_str_comb, "abc&123")    # Matches 'abc' and '123'
+```
+
+Here, `"abc&123"` indicates that the string should contain a substring that matches both `"abc"` and `"123"`, which is impossible. As a result, no matches are found.
+
+```{r}
+str_view(my_str_comb, "(abc|123)abc")  
+```
+
+Here, `"(abc|123)abc"` indicates that the string should contain either `"abc"` or `"123"` followed by `"abc"`. As a result, `"abc123"` is matched.
+
+```{r}
+str_view(my_str_comb, "abc|123abc") 
+```
+
+Here, `"abc|123abc"` indicates that the string should contain either `"abc"` or `"123abc"`. As a result, `"abc"`, `"abc123"`, and `"abc123def"` are matched.
+
+Comparing the last two examples, the parentheses `()` are used to group the patterns to control the scope of the operators.
+
+### Conclusion
+
+Regular expressions provide a powerful and flexible way to find and manipulate text based on patterns of characters. In this section, we introduced you to the fundamentals of regular expressions in R, using the **stringr** package. We demonstrated how to match literal strings, use wildcards, include anchors, character classes, and combine patterns with logical operators.
+
+### Exercises
+
+1. Matching Literal Strings:
+
+Create a character vector called `fruits` containing the following elements: `"apple"`, `"banana"`, `"strawberry"`, `"blueberry"`, `"blackberry"`. Use `str_view()` to highlight the fruits containing the substring `"an"`.
+
+2. Using Wildcards
+
+Using the `fruits` vector from Exercise 1, use a wildcard to find and highlight fruits that have any character followed by `"e"`.
+
+3. Including Anchors
+
+Using the `fruits` vector, find and highlight fruits that ends with the string `"berry"`.
+
+
+
+4. Character Classes
+
+Create a new character vector called `codes` with the elements: `"A123"`, `"B456"`, `"Bb56"`, `"C789"`, `"D012"`, `"e345"`. Use a regular expression to highlight the elements that contains an uppercase letter followed by a number. 
+
+5. Matching Repeated Characters
+
+Create a vector named `phone_numbers` with these elements: `"555-123-4567"`, `"(555) 123 4567"`, `"5551234567"`, `"1-555-123-4567"`, `"555.123.4567"`.
+
+- Find and highlight all phone numbers that contain exactly three digits followed by a hyphen, another three digits, a hyphen, and finally four digits (e.g., `555-123-4567`).
+- Use `str_view()` to find all phone numbers that have parentheses around the first three digits (e.g., `(555) 123 4567`).
+
+6. Email address checker
+
+Now, you are asked to check whether a string is a valid .com email address according to the following rules
+
+- Format: `username@domain.com`
+- Username: The part before the `"@"` symbol. It is a string of length at least one that contains any combinations of letters (upper or lower cases), numbers, periods, and underscores. 
+- Domain: It is a string of length at least one that contains any combination of letters and numbers. 
+- `.com`: The domain should end with `.com`.
+
+Use the `str_detect()` function with your pattern on the following strings: 
+```{r}
+emails <- c(
+  "user.name@domain.com", 
+  "user123@domain.com", 
+  "user_name@domain.com", 
+  "username@domaincom", 
+  "username@domain.net", 
+  "user@name@domain.com",
+  "@icloud.com",
+  "user@.com",
+  "user@do_main.com"
+)
+```
+
+
+
+7. Extracting Dates
+
+Create a character vector called `dates` with the following elements: `"2021-01-01"`, `"12-31-2021"`, `"2022-28-02"`, `"2022-02-29"`, `"2022-03-01"`. Use a regular expression to highlight the dates that are in the format `YYYY-MM-DD`. (You just need to make sure the month (MM) is from 01-12, and the day (DD) is from 01-31.)
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+# Strings {#strings}
+
+In Section \@ref(intro-char-vector), we have introduced the character vector that is consisted of strings.  In this Chapter, we will introduce various kinds of operations we can do on strings using the **stringr** package, which is a subpackage of **tidyverse**.
+

@@ -35,7 +35,7 @@ gm %>%
 
 From the output, you can see that the summaries are created for each continent. The `group_by()` function is used to group the observations according to the `continent` variable. Then, the `summarize()` function is used to create the summaries for each group.
 
-Let's now do another example. We want to find the top 5 countries with the highest life expectany in the year 2006 for each continent. 
+Let's now do another example. We want to find the top 5 countries with the highest life expectancy in the year 2006 for each continent. 
 
 ```{r}
 gm %>% 
@@ -47,6 +47,22 @@ gm %>%
   arrange(continent, desc(life_expectancy))
 ```
 In this example, we first filter the observations for the year 2006 and remove the missing values in the `continent` variable. Then, we group the observations according to the `continent` variable. The `top_n()` function is used to select the top 5 countries with the highest life expectancy for each continent. Finally, we select the `country` and `life_expectancy` variables and arrange the observations according to the continent and the life expectancy in descending order.
+
+Finally, let's say we want to visualize the trend of the average GDP per capita for each continent from 1998 to 2018. 
+
+```{r}
+gm %>% 
+  filter(year >= 1998 & year <= 2018 & !is.na(continent)) %>%
+  group_by(continent, year) %>% 
+  summarize(ave_GDP = median(GDP_per_capita, na.rm = TRUE)) %>%
+  ggplot(aes(x = year, y = ave_GDP, color = continent)) +
+  geom_smooth(se = FALSE) +
+  labs(title = "Trend of Average GDP per Capita by Continent",
+       x = "Year",
+       y = "Average GDP per Capita")
+```
+
+Here, we first filter the observations for the years from 1998 to 2018 and remove the missing values in the `continent` variable. Then, we group the observations according to the `continent` and `year` variables. The `summarize()` function is used to compute the median of the GDP per capita for each group.  Finally, we create a smoothline fit to visualize the trend of the average GDP per capita for each continent from 1998 to 2018.
 
 ### Exercises
 

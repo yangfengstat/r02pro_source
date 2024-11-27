@@ -154,7 +154,7 @@ Use the `sahp` data set to answer the following questions.
 
 - Use 10 bins
 - Set the binwidth to be 300
-- Se the bins manually to an equally-spaced sequence from 0 to 3500 with increment 500. 
+- Set the bins manually to an equally-spaced sequence from 0 to 3500 with increment 500. 
 
 2. Create  histograms on the living area (`liv_area`) with 5 bins, and show the information of different `kit_qual` values in each bar. What conclusions can you draw from this plot? 
 

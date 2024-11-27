@@ -1,0 +1,149 @@
+## Separate and Combine Columns via `separate()` and `unite()`  {#separate-unite-columns}
+
+Real-world data is often messy. Sometimes, valuable information is crammed into a single column, making it difficult to analyze.  Other times, separate columns might need to be combined for specific tasks. The `separate()` and `unite()` functions in **tidyr** provide powerful tools to reshape your data and make it tidy for analysis. Imagine a dataset with a column like 'City, State'.  `separate()` allows you to split this into separate `'City'` and `'State'` columns. Conversely, `unite()` can combine `'First Name'` and `'Last Name'` columns into a single `'Full Name'` column.
+
+To introduce the separate and and unite operation, let's again consider the following tidy data set. 
+```{r}
+library(r02pro)
+library(tidyverse)
+gm_tidy <- gm %>% 
+  filter(country %in% c("United States", "China", "Russia")) %>%
+  select(country, year, life_expectancy) %>%
+  filter(year >= 2004 & year <= 2006)
+gm_tidy
+```
+
+
+### Combine Columns via `unite()`
+
+Sometimes, we may want to **combine multiple columns** into a single one. To do this, you can use the `unite()` function in the **tidyr** package. 
+
+In the `unite()` function, you need to specify the name of the to-be created column (`col`), the columns to be combined, and the separator between the columns (`sep`). 
+```{r, results=TRUE}
+gm_year <- gm_tidy %>% 
+  unite(col = "country_year", country, year, sep = "_")
+gm_year
+```
+
+Now, the `gm_year` tibble contains a new column `country_year`, which is the combination of the `country` and `year` columns. The separator between the two columns is an underscore `_`.
+
+### Separate One Column into Multiple Columns Using `separate()`
+
+
+We know the `unite()` function combine multiple columns into a single column. Sometimes, we need to do the opposite operation, namely separate one column into multiple ones.
+
+For example, `gm_year` is not a tidy dataset since the `country_year` column contains two variables. 
+
+To make it tidy, you can use the `separate()` function. In the `separate()` function, you need to specify
+
+- `col`: the name of the column to be separated
+- `into`: the desired names of the to-be created columns after separation
+- `sep`: the separator during the separation process
+
+
+For the `country_year` column in the `gm_year` tibble, we can separate it into two columns: `country` and `year`. 
+
+```{r}
+gm_year %>% 
+  separate(col = "country_year", 
+           into = c("country", "year"), 
+           sep = "_")
+```
+
+From the result, you can see that the original **tidy** tibble is recovered via the `separate()` function. After a careful look, you may notice that the column types of `country` and `year` are both `character`, which may not be what we want. To convert the types automatically, you can add the `convert = TRUE` argument in the `separate()` function.
+
+```{r}
+gm_year %>% 
+  separate(col = "country_year", 
+           into = c("country", "year"), 
+           sep = "_", 
+           convert = TRUE)
+```
+
+Now, the `country` and `year` columns are converted to the appropriate types.
+
+
+In addition to separating via the separator, you can also separate by the position. For example, to separate the year into century (first two digits) and 2-digit year (last 2 digits), you can separate the `year` after position 2. 
+
+```{r}
+gm_tidy %>% 
+  separate(col = "year", 
+           into = c("y12", "y34"), 
+           sep = 2, 
+           convert = TRUE)
+```
+
+From the result, you can see that the `year` column is separated into two columns: `y12` and `y34`. The `y12` column contains the first two digits of the year, while the `y34` column contains the last two digits of the year.
+
+
+You can also separate at multiple locations. For example, to separate the year into four columns, representing four digits, you can use multiple  positions to separate.
+
+```{r}
+gm_digits <- gm_tidy %>% 
+  separate(col = "year", 
+           into = c("y1", "y2", "y3", "y4"), 
+           sep = c(1, 2, 3), 
+           convert = TRUE)
+gm_digits
+```
+
+
+Using the `gm_digits`, you can also combine the four columns into a single column named `year`. 
+
+```{r}
+gm_digits %>% unite(col = "year", y1:y4, sep = "")
+```
+
+Note that the `sep` argument in the `unite()` function is an empty string `""`. This means that there is no separator between the columns.
+
+### Exercises
+
+1. You have a tibble containing data on disease outbreaks, but the location column combines the country and city.
+```{r}
+outbreaks <- tibble(
+  outbreak_id = c(1, 2, 3),
+  disease = c("Measles", "Influenza", "Cholera"),
+  location = c("USA_New York City", "Brazil_Sao Paulo", "India_Mumbai")
+)
+outbreaks
+```
+
+Separate the `location` column into `country` and `city` columns.
+
+2.  You have a tibble with separate columns for patient medical record numbers and visit dates.
+```{r}
+patients <- tibble(
+  patient_id = c(1, 2, 3),
+  record_number = c("A123", "B456", "C789"),
+  visit_date = c("2024-10-15", "2024-09-22", "2024-10-16")
+)
+patients
+```
+
+Combine the `record_number` and `visit_date` columns into a single column named `record_date` with the format "record_number - visit_date".
+
+3. You have a tibble with a vaccine_date column in the format "YYYY-MM-DD".
+
+```{r}
+vaccinations <- tibble(
+  patient_id = c(1, 2, 3),
+  vaccine_name = c("MMR", "Flu", "Tdap"),
+  vaccine_date = c("2023-08-10", "2024-10-05", "2022-06-15")
+)
+vaccinations
+```
+
+- Split the `vaccine_date` column into three columns: year, month, and day.
+- Create a new column called `month_year` in the format "MM/YYYY".
+
+4. You have a tibble with responses to a health survey, but some responses in the symptoms column are separated by commas, while others are separated by semicolons.
+
+```{r}
+survey_data <- tibble(
+  respondent_id = c(1, 2, 3),
+  symptoms = c("Headache, Fatigue", "Nausea; Vomiting", "Cough")
+)
+survey_data
+```
+
+Split the symptoms column into `symptom1` and `symptom2` columns, handling the different separators correctly.

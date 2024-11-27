@@ -1,7 +1,0 @@
-# Functions {#functions}
-
-In theory, you can already write very complicated codes, accomplishing a lot of data analysis tasks. In this chapter, you will learn a very powerful tool, **functions**. Functions have the following advantages.
-
-1. Functions can avoid code duplication.
-2. Functions can make the code more readable.
-3. Functions are invaluable for collaboration in projects.
