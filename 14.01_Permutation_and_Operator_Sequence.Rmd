@@ -87,7 +87,7 @@ knitr::kable(d)
 ```
 
 
-Out of all possible operator sequence, it turns out some of there are redundant when we also consider all permutations of the numbers. The most obvious ones are the operator sequence that starts with 5 or 6. To see this, note that `cal(x, y, 5)` and `cal(y, x, 2)` both equal `y - x`,  and `cal(x, y, 6)` and  `cal(y, x, 4)` both equal to `y/x`. Therefore, we can safely remove all operator sequences that start with 5 or 6.
+Out of all possible operator sequence, it turns out some of them are redundant when we also consider all permutations of the numbers. The most obvious ones are the operator sequence that starts with 5 or 6. To see this, note that `cal(x, y, 5)` and `cal(y, x, 2)` both equal `y - x`,  and `cal(x, y, 6)` and  `cal(y, x, 4)` both equal to `y/x`. Therefore, we can safely remove all operator sequences that start with 5 or 6.
 ```{r}
 op_mat <- op_mat[op_mat[,1]<=4, ]
 ```
