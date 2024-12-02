@@ -69,20 +69,20 @@ h <- c(3,1,4,2,90)
 
 Firstly, let's see how we can apply logical vectors to do vector subsettings. Following the original vector's name, a pair of square brackets `[ ]` is used to include a logical vector of the **same length** as the original vector. Here is an example,
 
-```{r results=TRUE}
+```{r}
 h[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
 ```
 
 From the result, you can see that the values from `h` with the same positions of `TRUE`s are extracted. Since `3`, `4` and `90` are parts of the values of `h`, the vector composed of `3 4 90` is a subvector of `h`. When assigning these three values to a name, you will get a named subvector `sub1`. While `sub1` is developed from `h`, they are now stored as two different vectors.
 
-```{r results=TRUE}
+```{r}
 sub1 <- h[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
 sub1
 ```
 
 In addition to writing the logical vector in an explicit form, you can also use a named logical vector or an expression whose result is a logical vector. Let's say we want to find the subvector of `h` for all elements in `h` that are larger than 2.  Then, you can first compare  `h` with `2`, getting a logical vector, which is named `big3` here. 
 
-```{r results=TRUE}
+```{r}
 h > 2
 big3 <- h > 2
 big3
@@ -98,7 +98,7 @@ h[h > 2]
 
 Don't restrict yourself in thinking that only numeric vectors can be subsetted. If you create a character vector `home` and compare it to `"pig"`, you will get another logical vector `same3`. Let's try to use `same3` to do vector subsetting on `h`.
 
-```{r results=TRUE}
+```{r}
 home <- c("pig", "monkey", "pig", "monkey", "pig")
 same3 <- home == "pig"
 sub2 <- h[same3]
@@ -121,14 +121,14 @@ lg[big3]
 
 Next, we will introduce how to use indices to do vector subsetting. To achieve this goal, you need to put a numeric vector inside `[ ]`, for example,
 
-```{r results=TRUE}
+```{r}
 h #let's refresh ourself with what elements h contains
 h[c(2,4)]  #return values of the 2nd and 4th elements of h
 ```
 
 As it shows, the values of the 2nd and 4th elements in `h` are returned. Notice that, in R, the first element in a vector has index 1, whereas other programming languages may have different indexing fashion. In that sense, the numeric vector inside the `[ ]` represents relative indices instead of actual numeric values. If you add a minus sign `-` before the numeric vector, you will get all elements except the 2nd and 4th ones in `h`.
 
-```{r results=TRUE}
+```{r}
 h[-c(2,4)]  #return values except the 2nd and 4th elements of h
 ```
 
@@ -198,7 +198,7 @@ h[c(2,4)]
 
 Obviously, you will get a numeric vector with `1` and `2` as the values. Let's see how to change values for a subset of `h`. You just need to assign new values to the subset, then you can verify the values of `h`. Let's see an example,
 
-```{r results=TRUE}
+```{r}
 h[c(2,4)] <- c(10, 20)
 h
 h[c(2,4)] <- 10         #recycling rule applies
@@ -225,7 +225,7 @@ knitr::include_graphics("pics/2h1.PNG")
 
 We should agree that `h` is a numeric vector with 5 values Then let's try to do an object assignment again, this time you can assign different values to `h` and see what will happen to `h`.  
 
-```{r results=TRUE}
+```{r}
 h <- c(1,2,3,4,5)
 h
 ```
