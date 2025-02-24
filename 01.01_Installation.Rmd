@@ -42,7 +42,7 @@ Here, we change the *Zoom* to 150% and set the *Editor font size* to 18.
 
 ***b.  Four panels of RStudio***
 
-Now, the RStudio interface is clearer with a bigger font size. Although RStudio has four panels, not all of them are visible to us at the beginning (Figure \@ref(fig:open)).
+Although RStudio has four panels, some may be hidden initially (Figure \@ref(fig:open)).
 
 ```{r open, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Unfold panels", out.width = '100%'}
 knitr::include_graphics("pics/1open.PNG")
@@ -88,7 +88,7 @@ knitr::include_graphics("pics/1answer.PNG")
 Hooray! You have successfully run the first piece of R code and gotten the correct answer 3. Note that the blinking cursor now appears on the next line, ready to accept a new line of code.
 
 ::: {.infobox .caution data-latex="{caution}"}
-The curious you may found that there is a `[1]` showing before the result `3`.  In fact, the `[1]` is an index indicator, showing the next element has an index of 1 in this particular object. We will revisit this point when we introduce vectors in the beginning of Chapter \@ref(r-objects) . 
+The curious you may found that there is a `[1]` showing before the result `3`.  In fact, the `[1]` is an index indicator, showing the next element has an index of 1 in this particular object. We will revisit this point when we introduce vectors in  Chapter \@ref(r-objects) . 
 :::
 
 
@@ -96,7 +96,7 @@ Although the console may work well for some quick calculations, you need to reso
 
 ***d. Editor***
 
-The **Editor** panel is the go-to place to write complicated R codes, which you can save as R files for repeated use in the future. Several kinds of files are available in RStudio. In particular, **R script**, **R Markdown**, and **R Notebook** are the three most common file formats. In order to let you get started better, we will start with R script since this is the simplest file format in R. In Chapter 12 and ？？, we will introduce R Markdown and R Notebook in detail.
+The **Editor** panel is the go-to place to write complicated R codes, which you can save as R files for repeated use in the future. Several kinds of files are available in RStudio. In particular, **R script** and **R Markdown**  are the two most common file formats. We will start with R script since it is the simplest format. In Chapter \@ref(r-markdown), we will introduce R Markdown in detail.
 
 In the editor panel, you may notice that RStudio has created a file by default (Figure \@ref(fig:P1)). The default file RStudio provided is **R script**.
  
@@ -111,33 +111,33 @@ Next, we will introduce how to run codes in scripts. Let's go to the editor and 
 knitr::include_graphics("pics/1run.PNG")
 ```
 
-You can also run multiple lines of code by selecting the lines and clicking the *Run* button or using the keyboard shortcut. (Figure \@ref(fig:mcodes))
+You can also run multiple lines of code by selecting the corresponding lines and clicking the *Run* button or using the keyboard shortcut. (Figure \@ref(fig:mcodes))
 
 ```{r mcodes, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Run codes in script (II)", out.width = '70%'}
 knitr::include_graphics("pics/1mcodes.png")
 ```
 
-Here, three lines of codes are selected. After running these three lines of code together, you can see that the console executes each line of code and you will get the corresponding answer one by one. Therefore, you can write any number of lines of codes in the script, and you can get the answer of each line in the console.
+Here, three lines of codes are selected. After running these three lines of code together, you can see that the console executes all three lines of code and you will get the corresponding outputs one by one. 
 
-After finishing writing codes in the editor, there may be hundreds or more lines of codes in the script. Now, you may wonder if you need to write these codes again when you want to use the same codes next time. The answer is absolutely NO!!! One of the most important features of R files is that R files can be saved for future use. So do R scripts! To do that, you can click the *Save* button as shown in Figure \@ref(fig:save1). The keyboard shortcut of saving files is Cmd+S on Mac or Ctrl+S on Windows.
+To save your work for later use, you can click the *Save* button as shown in Figure \@ref(fig:save1). The keyboard shortcut of saving files is Cmd+S on Mac or Ctrl+S on Windows.
 
 ```{r save1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Save (I)", out.width = '70%'}
 knitr::include_graphics("pics/1save1.PNG")
 ```
 
-Then you would see a pop-up file dialog box, asking you for a file name and location to save it to. Let's call it lesson1.1 here.
+Then you would see a pop-up file dialog box, asking you for a file name and location to save it to. Let's call it `lesson1.1` here.
 
 ```{r save2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Save (II)", out.width = '70%'}
 knitr::include_graphics("pics/1save2.PNG")
 ```
 
-After saving files successfully, you can confirm the name of the R script on the top.
+After saving the file successfully, you can confirm the name of the R script on the top.
 
 ```{r save3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Save (III)", out.width = '70%'}
 knitr::include_graphics("pics/1save3.PNG")
 ```
 
-Then if you close this script and open it again, you would directly see the previous three lines of codes without writing them again.
+Now, when you close this script and open it again, you would directly see the previous three lines of codes.
 
 Lastly, if you want to create a new R script, you can click the `+` button on the menu, then select *R Script*. Note that there are quite a few other options including *R Markdown*, which will be introduced in Chapter \@ref(r-markdown). 
 
@@ -164,7 +164,7 @@ To install an R package, you need to use a built-in R **function**, which is  `i
 
 While there are many built-in R functions, R packages usually contain many useful functions as well, and we can also write our own functions, which will be introduced in Chapter \@ref(functions).  
 
-With `install.packages()`, the argument is the package name with **a pair of quotation marks** around it. The task it performs is installing the specific package into R.  Here, you will install the companion package for this book, named `r02pro`, a.k.a. *R Zero to Pro*. The `r02pro` package contains several data sets that will be used throughout the book, and interactive exercises for each subsection.
+With `install.packages()`, the argument is the package name with **a pair of quotation marks** around it. The task it performs is installing the specific package into R.  Here, you will install the companion package for this book, named `r02pro`, a.k.a. *R Zero to Pro*. The `r02pro` package contains several data sets that will be used throughout the book.
 
 ```{r, eval=FALSE}
 install.packages("r02pro")
@@ -202,8 +202,8 @@ install.packages(r02pro)
 - `install.packages("r02pro")`
 - `install.packages(r02pro)`
 
-2. Write the R code to load the package **r02pro**
+2. Write R code to load the package **r02pro**
 
-3. Write the R code to calculate `2 + 3`.
+3. Write R code to calculate `2 + 3`.
 
 

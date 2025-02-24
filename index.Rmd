@@ -1,6 +1,6 @@
 --- 
 title: "R Programming: Zero to Pro"
-author: "[Yang Feng](http://yangfeng.hosting.nyu.edu/) and r02proers"
+author: "[Yang Feng](https://yangfengstat.github.io/)"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
@@ -27,7 +27,7 @@ knitr::include_graphics("pics/sheep.jpg")
 
 This book is for anyone who is interested in learning R and Data Science. It is designed for people with zero background in programming. 
 
-We also have a companion R package named [**r02pro**](https://cran.rstudio.com/web/packages/r02pro/index.html), containing the data sets used as well as interactive exercises for each part. 
+We also have a companion R package named [**r02pro**](https://cran.rstudio.com/web/packages/r02pro/index.html), containing the data sets that are used throughout the book. 
 
 
 # Contributing to the Book  {-}
@@ -57,7 +57,7 @@ contributors <- contributors %>%
     desc = ifelse(is.na(login), name, ifelse(is.na(name), link, glue::glue("{name} ({link})")))
   )
 
-cat("This book represents the culmination of numerous collaborative efforts and the synthesis of diverse perspectives. We extend our heartfelt gratitude to Dr. Rebecca Betensky, Dr. Rumi Chunara, Dr. Hai Shu, and Ms. Jianan Zhu for their invaluable contributions. Their visionary guidance was pivotal in the conceptualization and development of the courses GPH-GU 2183: Introduction to Statistical Programming in R and GPH-GU 2184: Intermediate Statistical Programming in R. Notably, Ms. Jianan Zhu played a significant role in shaping an earlier version of this book.
+cat("This book represents the culmination of numerous collaborative efforts and the synthesis of diverse perspectives. We extend our heartfelt gratitude to Dr. Rebecca Betensky, Dr. Rumi Chunara, Dr. Hai Shu, and Ms. Jianan Zhu for their invaluable contributions. Their visionary guidance was pivotal in the conceptualization and development of the courses GPH-GU 2183: Introduction to Statistical Programming in R and GPH-GU 2184: Intermediate Statistical Programming in R. Notably, Ms. Jianan Zhu played a significant role in shaping an earlier version of this book. 
 
 We are also deeply grateful to the dedicated students of GPH-GU 2183: Introduction to Statistical Programming in R, GPH-GU 2184: Intermediate Statistical Programming in R, and GPH-GU 2182: Statistical Programming in R at New York University. Their enthusiasm and commitment have greatly enriched the learning experience and inspired many of the ideas presented in this text.
 

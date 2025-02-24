@@ -10,8 +10,8 @@ num2 <- c(1, 1, 3, 4, 4, 5)
 char1 <- c("sheep", "monkey", "sheep", "chicken")
 char2 <- c("sheep", "pig", "pig")
 
-log1 <- c(T, F, F, T)
-log2 <- c(T, T, T)
+log1 <- c(TRUE, FALSE, FALSE, TRUE)
+log2 <- c(TRUE, TRUE, TRUE)
 ```
 
 
@@ -75,7 +75,7 @@ Of course you will get `FALSE` in each operation: `num1` has a unique value `2`,
 ```{r, results=TRUE}
 setequal(c(1, 1, 2), c(1, 2))
 setequal(c("apple", "apple", "peach"), c("apple", "peach"))
-setequal(c("T", "T", "F", "F"), c("T", "F"))
+setequal(c("TRUE", "TRUE", "FALSE", "FALSE"), c("TRUE", "FALSE"))
 ```
 
 ***e. Membership determination***
@@ -104,7 +104,7 @@ Let's try some examples.
 
 ```{r}
 x <- 1:6
-y <- c(T, T, F, T)
+y <- c(TRUE, TRUE, FALSE, TRUE)
 intersect(x, y)
 union(x, y)
 setdiff(x, y)

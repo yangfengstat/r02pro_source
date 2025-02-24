@@ -1,6 +1,6 @@
 ## Set Operations on Datasets {#set-operations-datasets}
 
-In Section \@ref(joins), you learned how to join two data sets via a shared key. And in Section \@ref(set-operations-vectors), you learned how to conduct set operations on vectors. In some applications, you may want to perform **set operations** on two data frames or tibbles.  Set operations allow you to compare two data frames and return results based on whether rows exist in both, one, or neither of the data frames. Here, we'll explore key set operations in the `dplyr` package: `intersect()`, `union()`, `union_all()`, `setdiff()`, `symdiff()`, and `setequal()`.
+In Section \@ref(joins), you learned how to join two data sets via a shared key. And in Section \@ref(set-operations-vectors), you learned how to conduct set operations on vectors. In some applications, you may want to perform **set operations** on two data frames or tibbles.  Set operations allow you to compare two data frames and return results based on whether rows exist in both, one, or neither of the data frames. Here, we'll explore key set operations in the `dplyr` package: `intersect()`, `union()`, `union_all()`, `setdiff()`, `symdiff()`, and `setequal()`. 
 
 Let's first load the **dplyr** package and create two tibbles to use throughout this section.
 ```{r}
@@ -8,6 +8,8 @@ library(dplyr)
 df1 <- tibble(id = c(1, 2, 3), value = c("A", "B", "C"))
 df2 <- tibble(id = c(2, 3, 4), value = c("B", "C", "D"))
 ```
+
+After loading the **dplyr** package, you can see a warning message "The following objects are masked from 'package:base': intersect, setdiff, setequal, union". Indeed, we have the same functions in base R and it is important to distinguish them from the ones in the **dplyr** package. To ensure you are using the desired version, you can use `dplyr::intersect()` and `base::intersect()`, respectively. 
 
 
 ### `intersect(x, y)`
