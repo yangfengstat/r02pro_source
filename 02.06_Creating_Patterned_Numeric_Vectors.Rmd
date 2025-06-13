@@ -1,6 +1,6 @@
 ## Numeric Vectors: Creating numeric vectors with patterns {#patterned_numeric_vectors_creation} 
 
-In Section \@ref(intro-num-vector), you learned how to create numeric vectors with length more than 1 by using the `c()` function. When the number of elements become too big, you may feel redundant manually typing in all those elements. Luckily, as long as the assigned elements have certain patterns, R allows you to create the desired numeric vector numeric vectors more efficiently.
+In Section \@ref(intro-num-vector), you learned how to create numeric vectors with length more than 1 by using the `c()` function. When the number of elements become too big, you may feel redundant manually typing in all those elements. Luckily, as long as the assigned elements have certain patterns, R allows you to create the desired numeric vectors more efficiently.
 
 ### The colon operator `:` -- Equally-spaced numeric vectors with increment of 1 or -1
 
