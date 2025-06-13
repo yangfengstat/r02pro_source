@@ -19,9 +19,11 @@ In general, adding comments to codes is a very good practice, as it greatly incr
 Now let's start to use R as a calculator. In the previous section, we introduced operations such as addition, subtraction, multiplication, division, as well as the combination of multiple basic operations. Additionally, you can also calculate the square root, absolute value and the sign of a number.
 
 ```{r results = TRUE, echo=FALSE}
-Operation  <- c("1 + 2", "1 - 2", "2 * 4", "2 / 4", "6 - 1 / 2", "sqrt(100)", "abs(-3)", "sign(-3)")
-Explanation <- c("addition", "subtraction", "multiplication", "division", "multiple operations", "square root", "absolute value", "sign")
-d <- data.frame(Operation, Explanation)
+ops  <- c("1 + 2", "1 - 2", "2 * 4", "2 / 4", "6 - 1 / 2",
+"sqrt(100)", "abs(-3)", "sign(-3)")
+names <- c("addition", "subtraction", "multiplication", "division",
+"multiple operations", "square root", "absolute value", "sign")
+d <- data.frame(ops, names)
 knitr::kable(d)
 ```
 
@@ -75,10 +77,10 @@ Next, let's move on to the approximation in R. When computing `7 / 3`, the answe
 ***a. Get the integer part and the remainder***
 
 ```{r results = TRUE, echo=FALSE}
-Code  <- c("7%/%3","7%%3")
-Pattern <- c("percent,divide,percent", "percent,percent")
-Name <- c("integer division", "modulus")
-d <- data.frame(Code, Name)
+codes  <- c("7%/%3", "7%%3")
+patterns <- c("percent,divide,percent", "percent,percent")
+names <- c("integer division", "modulus")
+d <- data.frame(codes, names)
 knitr::kable(d)
 ```
 
@@ -138,7 +140,7 @@ log2(1024)  #log2(x) = log(x, 2)
 Before moving on to the natural logarithm, note that the mathematical constant $e$ needs to be written as `exp(1)` in R. When you want to do power operations on $e$, you can simply set the exponent as the argument in the function `exp()`. For example, `exp(3)` is $e$ to the power of 3.  Here, `log()` without specifying the `base` argument represents the logarithm function with base $e$. You can see the general form of `log()` in the comment.
 
 ```{r results = TRUE}
-exp(1)      
+exp(1)
 exp(3)
 log(exp(3))  #log(x) = log(x, exp(1))
 ```
