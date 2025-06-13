@@ -10,13 +10,13 @@ Before we get started, the first item we will cover is adding comments for codes
 6 - 1 / 2 # first calculate 1/2=0.5, then 6-0.5=5.5
 ```
 
-By running this line of code (either in the console or in the editor!), you will get a value of 5.5, which is the answer of `6 - 1 / 2`. As demonstrated, R will not run syntax after the hash character `#`. Commands and strings after the `#` are notations or explanations that can make codes easier to understand. Here, the comment informs you the operation order of previous code: the division is calculated before the subtraction.
+By running this line of code (either in the console or in the editor), you will get a value of 5.5, which is the answer of `6 - 1 / 2`. As demonstrated, R will not run syntax after the hash character `#`. Comments after the `#` are typically added to make codes easier to understand. 
 
 In general, adding comments to codes is a very good practice, as it greatly increases readability and make collaboration easier. We will also add necessary comments in our codes to help you learn R.
 
 ### Basic calculation
 
-Now let's start to use R as a calculator! In the previous section we introduced operations such as addition, subtraction, multiplication, division, as well as the combination of multiple basic operations. Additionally, you can also calculate the square root, absolute value and the sign of a number.
+Now let's start to use R as a calculator. In the previous section, we introduced operations such as addition, subtraction, multiplication, division, as well as the combination of multiple basic operations. Additionally, you can also calculate the square root, absolute value and the sign of a number.
 
 ```{r results = TRUE, echo=FALSE}
 Operation  <- c("1 + 2", "1 - 2", "2 * 4", "2 / 4", "6 - 1 / 2", "sqrt(100)", "abs(-3)", "sign(-3)")
@@ -43,7 +43,7 @@ First, we will introduce how to ask for help in R, and below are three common wa
 
 - Use a question mark followed by the function name, e.g. `?sign`  
 - Use help function, e.g. `help(sign)`
-- Use the help window in RStudio, as shown in Figure \@ref(fig:help). The help window is the panel 4 of Figure \@ref(fig:four) in Section \@ref(Installation). Then type in the function name in the box to the right of the magnifying glass and press return.
+- Use the help window in RStudio, as shown in Figure \@ref(fig:help). The help window is the panel 4 of Figure \@ref(fig:four) in Section \@ref(Installation). You can type  the function name in the box to the right of the magnifying glass and press Return/Enter.
 
 ```{r help, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Ask for help", out.width = '70%'}
 knitr::include_graphics("pics/1help.PNG")
@@ -51,7 +51,7 @@ knitr::include_graphics("pics/1help.PNG")
 
 ***b. Documentation for functions***
 
-After using the above operations to ask for help in R, you can get the documentation of the function in the help window. The documentation consists of different parts, let's take the `sign()` function as an example (Figure \@ref(fig:d)),
+After asking for help in R, you will get the documentation of the function in the help window. The documentation consists of different parts, let's take the `sign()` function as an example (Figure \@ref(fig:d)),
 
 ```{r d, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Documentation for function", out.width = '70%'}
 knitr::include_graphics("pics/1d.PNG")
@@ -59,17 +59,14 @@ knitr::include_graphics("pics/1d.PNG")
 
 This documentation contains the following parts:
 
-- *Description*: A text-format introduction of the function of interest. The introduction describes the function's mechanism, the acceptable input and output types, and some notes of the function.
+- *Description*: A text-format introduction of the function. The introduction describes the function's mechanism, the acceptable input and output types, and some notes of the function.
 - *Usage*: The way the function looks like.
 - *Arguments*: A detailed description of the input.
 - *Details*: A detailed description of the function, including the background, some complicated usage, and special cases of the function.
-- *See Also*: Some functions related or similar to this function.
+- *See Also*: Some functions related or similar to the function.
 - *Examples*: Sample codes and their corresponding answers. You can simply copy codes in the *Examples* part and run them in the editor or in the console. Note that all words after `#` are comments and will be ignored by R.
 
-Here, from the documentation of the `sign()` function, you will know that the `sign()` function can return the signs of numbers, which means it will return 0 for zero, return 1 for positive numbers, and return -1 for negative numbers.
-
-The documentation of different functions can contain different parts, we will give you the introduction of other functions in the following sections.
-
+Here, from the documentation of the `sign()` function, you will know that the `sign()` function returns the signs of numbers, which means it will return 0 for zero, return 1 for positive numbers, and return -1 for negative numbers.
 
 ### Approximation
 
@@ -103,7 +100,7 @@ round(7 / 3)
 round(7 / 3, digits = 3)
 ```
 
-The `round()` function follows the **rounding principle**. By default, you will get the nearest integer to `7 / 3`, which is `2`. If you want to control the approximation accuracy, you can add a `digits` argument to specify how many digits you want after the decimal point. Here you will get `2.333` after adding `digits = 3`.
+The `round()` function follows the **rounding principle**. By default, you will get the nearest integer to `7 / 3`, which is `2`. If you want to control the approximation accuracy, you can add a `digits` argument to specify how many digits you want after the decimal point. For example, you will get `2.333` after setting `digits = 3`.
 
 ### Power & logarithm
 
@@ -124,21 +121,21 @@ Another thing to note is that we don't use commas when writing a big number in R
 
 In mathematics, the *logarithmic operations* are inverse to the power operations. If **$b^y = x$** and you only know *$b$* and *$x$*, you can do logarithmic operations to solve *$y$* using the general form **$y = \log(x, b)$**, which is called the logarithm of $x$ with base $b$. 
 
-In R, logarithm functions with base value of 10, 2, or the natural number $e$ have shortcuts `log10()`, `log2()`, and `log()`, respectively. Let's see an example of `log10()`, the logarithm function with base *10*. Here, we have added a comment to help you have a better understanding of `log10()`.
+In R, logarithm functions with base value of 10, 2, or the mathematical constant $e$ have shortcuts `log10()`, `log2()`, and `log()`, respectively. Let's see an example of `log10()`, the logarithm function with base *10*. Here, we have added a comment to help you have a better understanding of `log10()`.
 
 ```{r results = TRUE}
 10^6 
 log10(1e6) #log10(x) = log(x, 10)
 ```
 
-Next, let's see `log2()`, the logarithm function with base *2*. There is also a comment for `log2()` here.
+Next, let's see `log2()`, the logarithm function with base *2*. 
 
 ```{r results = TRUE}
 2^10
 log2(1024)  #log2(x) = log(x, 2)
 ```
 
-Before moving on to the natural logarithm, note that the natural number $e$ needs to be written as `exp(1)` in R. When you want to do power operations on $e$, you can simply change the argument in the function `exp()`. For example, `exp(3)` is $e$ to the power of 3.  Here, `log()` without specifying the `base` argument represents the logarithm function with base $e$. You can see the general form of `log()` in the comment.
+Before moving on to the natural logarithm, note that the mathematical constant $e$ needs to be written as `exp(1)` in R. When you want to do power operations on $e$, you can simply set the exponent as the argument in the function `exp()`. For example, `exp(3)` is $e$ to the power of 3.  Here, `log()` without specifying the `base` argument represents the logarithm function with base $e$. You can see the general form of `log()` in the comment.
 
 ```{r results = TRUE}
 exp(1)      

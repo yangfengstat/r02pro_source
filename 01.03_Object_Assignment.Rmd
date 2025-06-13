@@ -9,35 +9,35 @@ knitr::opts_chunk$set(
   comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
 ```
 
-In the last section, you have seen the power of R as a fancy calculator. However, in order to do more complicated and interesting tasks, it is super helpful to store intermediate results for future use.
+In the last section, you have seen the power of R as a fancy calculator. However, in order to do more complicated and interesting tasks, it is often helpful to store intermediate results for future use.
 
 Let's take a look at a concrete example. Say if you want to do the following three calculations, all involving `exp(3) / log(20,3) * 7`.
 
 ```{r}
-(exp(3) / log(20,3) * 7) + 3 #addition
-(exp(3) / log(20,3) * 7) - 3 #subtraction
-(exp(3) / log(20,3) * 7) / 3 #division
+(exp(3) / log(20, 3) * 7) + 3 #addition
+(exp(3) / log(20, 3) * 7) - 3 #subtraction
+(exp(3) / log(20, 3) * 7) / 3 #division
 ```
 
-Using R as a fancy calculator (Section \@ref(Calculator)), you need to type the expression `exp(3) / log(20,3) * 7` three times, which is a bit cumbersome. In this section, you will learn how to do **object assignment**, which can avoid the need for typing the same expression more than once.
+Here, you need to type the same expression `exp(3) / log(20,3) * 7` three times, which is a bit cumbersome. In this section, you will learn how to do **object assignment**, which avoid redundancy and make your code more concise.
 
 ### What is an R Object?
 
-Before we get into the details, let's first introduce **object**, which is perhaps the most fundamental thing in R. In principle, **everything that exists in R is an object**. For example, the number `5` is an object, the expression `1 + 2` is an object, and the expression `exp(3) / log(20,3) * 7` is also an object.
+Before delving into the details, let's first introduce the concept of **object**, which is perhaps the most fundamental thing in R. In principle, **everything that exists in R is an object**. For example, the number `5` is an object, the expression `1 + 2` is an object, and the expression `exp(3) / log(20,3) * 7` is also an object.
 
 If you run `5`, you will get one element of value 5 from the output. Similarly, if you run `1 + 2`, you will get one element of value 3 from the output. You can try to run `exp(3) / log(20,3) * 7` by yourself. In these three examples, you can see that there is only one **element** in each object.
 
-However, an object can contain more than one elements, and each element has its own **value**, which is possibly different from that of another element. Naturally, different objects can contain different values.
+However, an object can contain more than one elements, and each element has its own **value**, which is possibly different from that of another element. Naturally, different objects can contain different values. In the following sections, you will learn how to create objects and assign values to them.
 
 ### Assignment Operation with `<-` {#assignment}
 
-With the importance of objects in mind, let's learn how to do **object assignments** in R. To do object assignments, you need to assign **value(s)** to a **name** via the **assignment operator**, which will create a new object with the name you specified. Once the object assignment operation is done, you can simply use the name in subsequent calculations without redundancy. Let's start with a simple example,
+With the importance of objects in mind, let's learn how to do **object assignments** in R. To do object assignments, you need to assign **value(s)** to a **name** via the **assignment operator**, which will create a new object with the name you specified. Once the object assignment operation is done, you can simply use the name in subsequent calculations without redundancy. Let's start with a simple example, assigning the value 5 to the name `x_num`.
 
 ```{r results = TRUE}
 x_num <- 5
 ```
 
-The assignment operation has three components. From left to right，
+The assignment operation has three components. From left to right，they are:
 
 -   the first component `x_num` is the **object name** of a new object, which has certain naming rules that will be discussed shortly in Section \@ref(Naming).
 -   The second component is the **assignment operator** `<-`, which is a combination of the less than sign `<` immediately followed by the minus sign `-`, with **no space** in between.
