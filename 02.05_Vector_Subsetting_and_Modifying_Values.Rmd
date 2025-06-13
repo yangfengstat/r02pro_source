@@ -165,12 +165,12 @@ For a named vector, we can also use character vectors consisting of the names as
 x_w_name <- c(height = 165, weight = 60, BMI = 22)
 x_w_name["height"]
 x_w_name[c("weight", "BMI")]
-x_w_name[c(1,3)] # c("weight", "BMI") and c(1, 3) refer to the same elements, so the last two lines lead to the same output
+x_w_name[c(2,3)] # c("weight", "BMI") and c(2, 3) refer to the same elements, so the last two lines lead to the same output
 ```
 
 
 
-###Access and modify values in vectors and sub-vectors
+### Access and modify values in vectors and sub-vectors
 
 We'll end this section by learning the way to access and modify values in a vector. This is a fairly basic data manipulation, and the reason we wait until now to introduce it is because we use the same ways to access and modify values in atomic vectors that we presented in previous sections.
 
