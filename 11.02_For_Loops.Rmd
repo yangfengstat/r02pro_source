@@ -96,10 +96,10 @@ In addition to a single loop, it is also common to put one loop inside another o
 Let's say we want to create a matrix `A` of dimension $5\times 5$ where each element $A_{ij} = i+j$. To create such a matrix, we can write a nested loop over $i$ and $j$.
 
 ```{r, results = TRUE}
-A <- matrix(0, 5, 5) #initialize the matrix A
-for (i in 1:5)       #loop over index i
-  for (j in 1:5){    #loop over index j
-    A[i, j] <- i + j #set the (i, j)-th element of A
+A <- matrix(0, 5, 5) 
+for (i in 1:5)       
+  for (j in 1:5){    
+    A[i, j] <- i + j 
   }
 A
 ```
@@ -110,11 +110,11 @@ Let's say an example of $p = 4$ and $\rho = 0.5$
 
 ```{r, results = TRUE}
 p <- 4
-A <- matrix(0, p, p) #initialize the matrix A
+A <- matrix(0, p, p) 
 rho <- 0.5
-for (i in 1:p)       #loop over index i
-  for (j in 1:p){    #loop over index j
-    A[i, j] <- rho^{abs(i - j)} #set the (i, j)-th element of A
+for (i in 1:p)      
+  for (j in 1:p){   
+    A[i, j] <- rho^{abs(i - j)} 
   }
 A
 ```

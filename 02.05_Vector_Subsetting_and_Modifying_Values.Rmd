@@ -220,7 +220,7 @@ h <- c(3,1,4,2,90)
 From Section \@ref(Object-Assignment), you learned that you can check all objects you assigned and their values in the **environment panel**. So let's review values of vector `h` from this panel together.
 
 ```{r h1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Values of h (1)", out.width = '70%'}
-knitr::include_graphics("pics/2h1.PNG")
+knitr::include_graphics("pics/2h1.png")
 ```
 
 We should agree that `h` is a numeric vector with 5 values Then let's try to do an object assignment again, this time you can assign different values to `h` and see what will happen to `h`.  
@@ -230,10 +230,9 @@ h <- c(1,2,3,4,5)
 h
 ```
 
-Then you can see that the values of `h` have been changed to the new ones! Another easier way to verify values of `h` is from the environment, so it is a good habit to monitor the environment from time to time to make sure everything looks fine.
 
 ```{r h2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Values of h (2)", out.width = '70%'}
-knitr::include_graphics("pics/2h2.PNG")
+knitr::include_graphics("pics/2h2.png")
 ```
 
 You can assign any values to `h` as you want, then `h` may change the vector type or even the object type according to the values assigned. By running the following code, `h` will be a character vector with three strings.
@@ -243,7 +242,7 @@ h <- c("pig", "monkey", "panda")
 ```
 
 ```{r h3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Values of h (3)", out.width = '70%'}
-knitr::include_graphics("pics/2h3.PNG")
+knitr::include_graphics("pics/2h3.png")
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}

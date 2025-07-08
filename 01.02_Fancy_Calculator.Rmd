@@ -48,7 +48,7 @@ First, we will introduce how to ask for help in R, and below are three common wa
 - Use the help window in RStudio, as shown in Figure \@ref(fig:help). The help window is the panel 4 of Figure \@ref(fig:four) in Section \@ref(Installation). You can type  the function name in the box to the right of the magnifying glass and press Return/Enter.
 
 ```{r help, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Ask for help", out.width = '70%'}
-knitr::include_graphics("pics/1help.PNG")
+knitr::include_graphics("pics/1help.png")
 ```
 
 ***b. Documentation for functions***
@@ -56,7 +56,7 @@ knitr::include_graphics("pics/1help.PNG")
 After asking for help in R, you will get the documentation of the function in the help window. The documentation consists of different parts, let's take the `sign()` function as an example (Figure \@ref(fig:d)),
 
 ```{r d, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Documentation for function", out.width = '70%'}
-knitr::include_graphics("pics/1d.PNG")
+knitr::include_graphics("pics/1d.png")
 ```
 
 This documentation contains the following parts:

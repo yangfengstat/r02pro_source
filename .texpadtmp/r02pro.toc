@@ -1,0 +1,441 @@
+\contentsline {chapter}{Preface}{vii}{chapter*.2}%
+\contentsline {chapter}{Contributing to the Book}{ix}{chapter*.4}%
+\contentsline {subsection}{Typos or Grammar Issues}{ix}{section*.5}%
+\contentsline {subsection}{General Questions or Feedback}{ix}{section*.6}%
+\contentsline {chapter}{Acknowledgement}{xi}{chapter*.7}%
+\contentsline {chapter}{Building Environment}{xiii}{chapter*.8}%
+\contentsline {chapter}{Introduction}{xv}{chapter*.9}%
+\contentsline {section}{\numberline {0.1}Installation of R, RStudio and R Packages}{xv}{section.0.1}%
+\contentsline {subsection}{\numberline {0.1.1}Download and Install}{xv}{subsection.0.1.1}%
+\contentsline {subsection}{\numberline {0.1.2}RStudio Interface}{xv}{subsection.0.1.2}%
+\contentsline {subsection}{\numberline {0.1.3}Install and load R packages}{xxi}{subsection.0.1.3}%
+\contentsline {subsection}{\numberline {0.1.4}Exercises}{xxiii}{subsection.0.1.4}%
+\contentsline {section}{\numberline {0.2}Use R as a Fancy Calculator}{xxiii}{section.0.2}%
+\contentsline {subsection}{\numberline {0.2.1}Add comments using ``\#''}{xxiii}{subsection.0.2.1}%
+\contentsline {subsection}{\numberline {0.2.2}Basic calculation}{xxiv}{subsection.0.2.2}%
+\contentsline {subsection}{\numberline {0.2.3}Get help in R}{xxiv}{subsection.0.2.3}%
+\contentsline {subsection}{\numberline {0.2.4}Approximation}{xxvi}{subsection.0.2.4}%
+\contentsline {subsection}{\numberline {0.2.5}Power \& logarithm}{xxvii}{subsection.0.2.5}%
+\contentsline {subsection}{\numberline {0.2.6}Trigonometric function}{xxviii}{subsection.0.2.6}%
+\contentsline {subsection}{\numberline {0.2.7}Exercises}{xxviii}{subsection.0.2.7}%
+\contentsline {section}{\numberline {0.3}Object Assignment}{xxix}{section.0.3}%
+\contentsline {subsection}{\numberline {0.3.1}What is an R Object?}{xxix}{subsection.0.3.1}%
+\contentsline {subsection}{\numberline {0.3.2}Assignment Operation with \texttt {\textless {}-}}{xxix}{subsection.0.3.2}%
+\contentsline {subsection}{\numberline {0.3.3}Object naming rule}{xxxi}{subsection.0.3.3}%
+\contentsline {subsection}{\numberline {0.3.4}Review objects in environment}{xxxii}{subsection.0.3.4}%
+\contentsline {subsection}{\numberline {0.3.5}Object types}{xxxiii}{subsection.0.3.5}%
+\contentsline {subsection}{\numberline {0.3.6}Exercises}{xxxiv}{subsection.0.3.6}%
+\contentsline {chapter}{R Objects (I): Atomic Vectors}{xxxv}{chapter*.30}%
+\contentsline {section}{\numberline {0.4}Introduction to Numeric Vectors}{xxxv}{section.0.4}%
+\contentsline {subsection}{\numberline {0.4.1}Creation and class}{xxxv}{subsection.0.4.1}%
+\contentsline {subsection}{\numberline {0.4.2}Operations and recycling rule}{xxxviii}{subsection.0.4.2}%
+\contentsline {subsection}{\numberline {0.4.3}Storage types (doubles and intergers)}{xxxix}{subsection.0.4.3}%
+\contentsline {subsection}{\numberline {0.4.4}Printing}{xli}{subsection.0.4.4}%
+\contentsline {subsection}{\numberline {0.4.5}Exercises}{xliii}{subsection.0.4.5}%
+\contentsline {section}{\numberline {0.5}Introduction to Character Vectors}{xliii}{section.0.5}%
+\contentsline {subsection}{\numberline {0.5.1}Creation, class and storage type}{xliii}{subsection.0.5.1}%
+\contentsline {subsection}{\numberline {0.5.2}Change case}{xlv}{subsection.0.5.2}%
+\contentsline {subsection}{\numberline {0.5.3}Review of getting help in R}{xlv}{subsection.0.5.3}%
+\contentsline {subsection}{\numberline {0.5.4}Exercises}{xlviii}{subsection.0.5.4}%
+\contentsline {section}{\numberline {0.6}Introduction to Logical Vectors}{xlix}{section.0.6}%
+\contentsline {subsection}{\numberline {0.6.1}Logical vectors: creation by comparisons, class, and storage type}{xlix}{subsection.0.6.1}%
+\contentsline {subsection}{\numberline {0.6.2}Logical vectors: creation when testing for types}{lii}{subsection.0.6.2}%
+\contentsline {subsection}{\numberline {0.6.3}Exercises}{lii}{subsection.0.6.3}%
+\contentsline {section}{\numberline {0.7}Coercion Rule}{liii}{section.0.7}%
+\contentsline {subsection}{\numberline {0.7.1}Coercion with \texttt {c()}}{liii}{subsection.0.7.1}%
+\contentsline {subsection}{\numberline {0.7.2}Cocercion in operators}{lv}{subsection.0.7.2}%
+\contentsline {subsection}{\numberline {0.7.3}Explicit Coercion}{lvi}{subsection.0.7.3}%
+\contentsline {subsection}{\numberline {0.7.4}Exercises}{lvi}{subsection.0.7.4}%
+\contentsline {section}{\numberline {0.8}Vector Subsetting and Modifying Values}{lvi}{section.0.8}%
+\contentsline {subsection}{\numberline {0.8.1}Named Vectors}{lvii}{subsection.0.8.1}%
+\contentsline {subsection}{\numberline {0.8.2}Vector subsetting}{lviii}{subsection.0.8.2}%
+\contentsline {subsection}{\numberline {0.8.3}Access and modify values in vectors and sub-vectors}{lxi}{subsection.0.8.3}%
+\contentsline {subsection}{\numberline {0.8.4}Exercises}{lxiii}{subsection.0.8.4}%
+\contentsline {section}{\numberline {0.9}Numeric Vectors: Creating numeric vectors with patterns}{lxiv}{section.0.9}%
+\contentsline {subsection}{\numberline {0.9.1}The colon operator \texttt {:} -- Equally-spaced numeric vectors with increment of 1 or -1}{lxiv}{subsection.0.9.1}%
+\contentsline {subsection}{\numberline {0.9.2}The \texttt {seq()} function -- Equally-spaced numeric vectors with any increment}{lxv}{subsection.0.9.2}%
+\contentsline {subsection}{\numberline {0.9.3}The sequence generator \texttt {seq\_along()} -- Matching numeric vectors}{lxvii}{subsection.0.9.3}%
+\contentsline {subsection}{\numberline {0.9.4}The \texttt {rep()} Function -- Numeric vectors with repeated values}{lxviii}{subsection.0.9.4}%
+\contentsline {subsection}{\numberline {0.9.5}The \texttt {unique()} and \texttt {table()} Functions -- Getting unique elements and their frequencies}{lxix}{subsection.0.9.5}%
+\contentsline {subsection}{\numberline {0.9.6}Exercises}{lxx}{subsection.0.9.6}%
+\contentsline {section}{\numberline {0.10}Numeric Vectors: Sort, Rank, Order}{lxx}{section.0.10}%
+\contentsline {subsection}{\numberline {0.10.1}Sort vectors with \texttt {sort()}}{lxx}{subsection.0.10.1}%
+\contentsline {subsection}{\numberline {0.10.2}Get ranks in vectors with \texttt {rank()}}{lxx}{subsection.0.10.2}%
+\contentsline {subsection}{\numberline {0.10.3}Get the ordering permutation via `order()}{lxxii}{subsection.0.10.3}%
+\contentsline {subsection}{\numberline {0.10.4}Exercises}{lxxii}{subsection.0.10.4}%
+\contentsline {section}{\numberline {0.11}Numeric vector: Summary Statistics}{lxxiii}{section.0.11}%
+\contentsline {subsection}{\numberline {0.11.1}Minimum and Maximum}{lxxiii}{subsection.0.11.1}%
+\contentsline {subsection}{\numberline {0.11.2}Sum and Product}{lxxiv}{subsection.0.11.2}%
+\contentsline {subsection}{\numberline {0.11.3}Mean and median}{lxxv}{subsection.0.11.3}%
+\contentsline {subsection}{\numberline {0.11.4}Quantiles}{lxxvi}{subsection.0.11.4}%
+\contentsline {subsection}{\numberline {0.11.5}Summary statistics}{lxxvii}{subsection.0.11.5}%
+\contentsline {subsection}{\numberline {0.11.6}Exercises}{lxxviii}{subsection.0.11.6}%
+\contentsline {section}{\numberline {0.12}Character Vectors: Create with Repetition and Concatenate}{lxxviii}{section.0.12}%
+\contentsline {subsection}{\numberline {0.12.1}Create character vectors with repetition}{lxxviii}{subsection.0.12.1}%
+\contentsline {subsection}{\numberline {0.12.2}Concatenate strings with \texttt {paste()}}{lxxix}{subsection.0.12.2}%
+\contentsline {subsection}{\numberline {0.12.3}Output via \texttt {cat()}}{lxxxi}{subsection.0.12.3}%
+\contentsline {subsection}{\numberline {0.12.4}Exercises}{lxxxi}{subsection.0.12.4}%
+\contentsline {section}{\numberline {0.13}Character Vectors: Sort, Rank, Order}{lxxxii}{section.0.13}%
+\contentsline {subsection}{\numberline {0.13.1}Ordering rules}{lxxxii}{subsection.0.13.1}%
+\contentsline {subsection}{\numberline {0.13.2}Sort vectors with \texttt {sort()}}{lxxxiii}{subsection.0.13.2}%
+\contentsline {subsection}{\numberline {0.13.3}Get ranks in vectors with \texttt {rank()}}{lxxxiv}{subsection.0.13.3}%
+\contentsline {subsection}{\numberline {0.13.4}Get the ordering permutation via \texttt {order()}}{lxxxiv}{subsection.0.13.4}%
+\contentsline {subsection}{\numberline {0.13.5}Summary and comparisons}{lxxxiv}{subsection.0.13.5}%
+\contentsline {subsection}{\numberline {0.13.6}Exercises}{lxxxv}{subsection.0.13.6}%
+\contentsline {section}{\numberline {0.14}Character Vectors, Factors \& Ordered Factors}{lxxxv}{section.0.14}%
+\contentsline {subsection}{\numberline {0.14.1}Create a factor from a vector}{lxxxv}{subsection.0.14.1}%
+\contentsline {subsection}{\numberline {0.14.2}Set the factor levels and labels}{lxxxviii}{subsection.0.14.2}%
+\contentsline {subsection}{\numberline {0.14.3}Ordered factors}{lxxxviii}{subsection.0.14.3}%
+\contentsline {subsection}{\numberline {0.14.4}Exercises}{lxxxix}{subsection.0.14.4}%
+\contentsline {section}{\numberline {0.15}Logical Vectors: Create with Repetitions and Summary Functions}{xc}{section.0.15}%
+\contentsline {subsection}{\numberline {0.15.1}Create logical vectors with repetitions}{xc}{subsection.0.15.1}%
+\contentsline {subsection}{\numberline {0.15.2}Statistical Functions on Logical Vectors}{xc}{subsection.0.15.2}%
+\contentsline {subsection}{\numberline {0.15.3}Exercises}{xcii}{subsection.0.15.3}%
+\contentsline {section}{\numberline {0.16}Logical Vectors: Logical Operators}{xcii}{section.0.16}%
+\contentsline {subsection}{\numberline {0.16.1}NOT operator by \texttt {!}}{xciii}{subsection.0.16.1}%
+\contentsline {subsection}{\numberline {0.16.2}AND operator by \texttt {\&}}{xciii}{subsection.0.16.2}%
+\contentsline {subsection}{\numberline {0.16.3}OR operator by \texttt {\textbar {}}}{xcv}{subsection.0.16.3}%
+\contentsline {subsection}{\numberline {0.16.4}Exclusive OR by \texttt {xor}}{xcv}{subsection.0.16.4}%
+\contentsline {subsection}{\numberline {0.16.5}Summary of Logical Operators}{xcvi}{subsection.0.16.5}%
+\contentsline {subsection}{\numberline {0.16.6}Exercises}{xcvi}{subsection.0.16.6}%
+\contentsline {section}{\numberline {0.17}Set Operations on Vectors}{xcvii}{section.0.17}%
+\contentsline {subsection}{\numberline {0.17.1}Set operations on vectors}{xcvii}{subsection.0.17.1}%
+\contentsline {subsection}{\numberline {0.17.2}Applicance of the coercion rule}{xcix}{subsection.0.17.2}%
+\contentsline {subsection}{\numberline {0.17.3}Summary}{c}{subsection.0.17.3}%
+\contentsline {subsection}{\numberline {0.17.4}Exercises}{c}{subsection.0.17.4}%
+\contentsline {section}{\numberline {0.18}Missing Values (\texttt {NA})}{c}{section.0.18}%
+\contentsline {subsection}{\numberline {0.18.1}\texttt {NA} and \texttt {NaN} are contagious}{cii}{subsection.0.18.1}%
+\contentsline {subsection}{\numberline {0.18.2}Work with \texttt {NA} values}{civ}{subsection.0.18.2}%
+\contentsline {subsection}{\numberline {0.18.3}Exercises}{cvi}{subsection.0.18.3}%
+\contentsline {section}{\numberline {0.19}Dates and Times}{cvii}{section.0.19}%
+\contentsline {subsection}{\numberline {0.19.1}Dates}{cvii}{subsection.0.19.1}%
+\contentsline {subsection}{\numberline {0.19.2}Times}{cxi}{subsection.0.19.2}%
+\contentsline {subsection}{\numberline {0.19.3}Exercises}{cxiii}{subsection.0.19.3}%
+\contentsline {section}{\numberline {0.20}Other Atomic Vector Types}{cxiii}{section.0.20}%
+\contentsline {subsection}{\numberline {0.20.1}Complex Vectors}{cxiii}{subsection.0.20.1}%
+\contentsline {subsection}{\numberline {0.20.2}Raw Vectors}{cxv}{subsection.0.20.2}%
+\contentsline {subsection}{\numberline {0.20.3}Full Coercion Ordering}{cxvi}{subsection.0.20.3}%
+\contentsline {subsection}{\numberline {0.20.4}Exercises}{cxvii}{subsection.0.20.4}%
+\contentsline {chapter}{R Objects (II): Other Types}{cxix}{chapter*.42}%
+\contentsline {section}{\numberline {0.21}Matrix}{cxix}{section.0.21}%
+\contentsline {subsection}{\numberline {0.21.1}Create a matrix from a vector}{cxix}{subsection.0.21.1}%
+\contentsline {subsection}{\numberline {0.21.2}Combine vectors or matrices into a matrix}{cxxii}{subsection.0.21.2}%
+\contentsline {subsection}{\numberline {0.21.3}Matrix subsetting}{cxxiii}{subsection.0.21.3}%
+\contentsline {subsection}{\numberline {0.21.4}Modify values in sub-matrices}{cxxv}{subsection.0.21.4}%
+\contentsline {subsection}{\numberline {0.21.5}Operators and functions on matrices}{cxxvi}{subsection.0.21.5}%
+\contentsline {subsection}{\numberline {0.21.6}Apply functions on each row or each column}{cxxvii}{subsection.0.21.6}%
+\contentsline {subsection}{\numberline {0.21.7}Exercises}{cxxix}{subsection.0.21.7}%
+\contentsline {section}{\numberline {0.22}Array}{cxxx}{section.0.22}%
+\contentsline {subsection}{\numberline {0.22.1}Create an array from a vector}{cxxx}{subsection.0.22.1}%
+\contentsline {subsection}{\numberline {0.22.2}Array subsetting}{cxxxi}{subsection.0.22.2}%
+\contentsline {subsection}{\numberline {0.22.3}Operators and functions on arrays}{cxxxii}{subsection.0.22.3}%
+\contentsline {subsection}{\numberline {0.22.4}Apply functions along certain dimension(s)}{cxxxiii}{subsection.0.22.4}%
+\contentsline {subsection}{\numberline {0.22.5}Exercises}{cxxxiv}{subsection.0.22.5}%
+\contentsline {section}{\numberline {0.23}Data Frame}{cxxxiv}{section.0.23}%
+\contentsline {subsection}{\numberline {0.23.1}Introduction to Data Frames}{cxxxiv}{subsection.0.23.1}%
+\contentsline {subsection}{\numberline {0.23.2}Adding Observations or Variables in Data Frames}{cxxxvii}{subsection.0.23.2}%
+\contentsline {subsection}{\numberline {0.23.3}Subsetting and Modifying Data Frames}{cxxxviii}{subsection.0.23.3}%
+\contentsline {subsection}{\numberline {0.23.4}Exercises}{cxl}{subsection.0.23.4}%
+\contentsline {section}{\numberline {0.24}Tibble}{cxli}{section.0.24}%
+\contentsline {subsection}{\numberline {0.24.1}Introduction to tibbles}{cxli}{subsection.0.24.1}%
+\contentsline {subsection}{\numberline {0.24.2}Adding Observations or Variables in Tibbles}{cxliii}{subsection.0.24.2}%
+\contentsline {subsection}{\numberline {0.24.3}Tibble subsetting and modifying}{cxliv}{subsection.0.24.3}%
+\contentsline {subsection}{\numberline {0.24.4}Exercises}{cxliv}{subsection.0.24.4}%
+\contentsline {section}{\numberline {0.25}List}{cxlv}{section.0.25}%
+\contentsline {subsection}{\numberline {0.25.1}Create a list}{cxlv}{subsection.0.25.1}%
+\contentsline {subsection}{\numberline {0.25.2}Extract a list element and list subsetting}{cxlvii}{subsection.0.25.2}%
+\contentsline {subsection}{\numberline {0.25.3}List inside a list}{cxlix}{subsection.0.25.3}%
+\contentsline {subsection}{\numberline {0.25.4}Unlist a list}{cl}{subsection.0.25.4}%
+\contentsline {subsection}{\numberline {0.25.5}Apply functions for each element of a list}{cli}{subsection.0.25.5}%
+\contentsline {subsection}{\numberline {0.25.6}List Matrix}{clii}{subsection.0.25.6}%
+\contentsline {subsection}{\numberline {0.25.7}Exercises}{cliii}{subsection.0.25.7}%
+\contentsline {section}{\numberline {0.26}NULL, NaN, and Inf}{cliv}{section.0.26}%
+\contentsline {subsection}{\numberline {0.26.1}NULL}{cliv}{subsection.0.26.1}%
+\contentsline {subsection}{\numberline {0.26.2}NaN}{clvi}{subsection.0.26.2}%
+\contentsline {subsection}{\numberline {0.26.3}Inf}{clvii}{subsection.0.26.3}%
+\contentsline {subsection}{\numberline {0.26.4}A comparison of the four special values in R}{clviii}{subsection.0.26.4}%
+\contentsline {subsection}{\numberline {0.26.5}Exercises}{clviii}{subsection.0.26.5}%
+\contentsline {section}{\numberline {0.27}Summary of R Objects}{clviii}{section.0.27}%
+\contentsline {subsection}{\numberline {0.27.1}Exercises}{clix}{subsection.0.27.1}%
+\contentsline {chapter}{Data Import and Export}{clxi}{chapter*.43}%
+\contentsline {section}{\numberline {0.28}Introduction to Data Sets}{clxi}{section.0.28}%
+\contentsline {subsection}{\numberline {0.28.1}Gapminder Data Set}{clxi}{subsection.0.28.1}%
+\contentsline {subsection}{\numberline {0.28.2}Small Ames Housing Price Data Set}{clxv}{subsection.0.28.2}%
+\contentsline {subsubsection}{\numberline {0.28.2.1}Sample Analysis: are two-story houses more expensive than one-story ones?}{clxvii}{subsubsection.0.28.2.1}%
+\contentsline {subsection}{\numberline {0.28.3}Converting Data Types}{clxvii}{subsection.0.28.3}%
+\contentsline {subsection}{\numberline {0.28.4}Recover Modified Values}{clxix}{subsection.0.28.4}%
+\contentsline {section}{\numberline {0.29}Exporting Data to Delimited Files}{clxx}{section.0.29}%
+\contentsline {subsection}{\numberline {0.29.1}Set the working directory}{clxx}{subsection.0.29.1}%
+\contentsline {subsection}{\numberline {0.29.2}Delimited files}{clxxi}{subsection.0.29.2}%
+\contentsline {subsection}{\numberline {0.29.3}Write an object into a .csv file}{clxxi}{subsection.0.29.3}%
+\contentsline {subsection}{\numberline {0.29.4}Write an object into a general delimited file}{clxxiii}{subsection.0.29.4}%
+\contentsline {subsection}{\numberline {0.29.5}Exercises}{clxxiii}{subsection.0.29.5}%
+\contentsline {section}{\numberline {0.30}Importing Data from Delimited Files}{clxxiii}{section.0.30}%
+\contentsline {subsection}{\numberline {0.30.1}Import .csv Files using \texttt {read\_csv()}}{clxxiv}{subsection.0.30.1}%
+\contentsline {subsection}{\numberline {0.30.2}Read Inline .csv Files}{clxxv}{subsection.0.30.2}%
+\contentsline {subsection}{\numberline {0.30.3}Handling Missing Values}{clxxvii}{subsection.0.30.3}%
+\contentsline {subsection}{\numberline {0.30.4}Importing Data From a Delimited File}{clxxviii}{subsection.0.30.4}%
+\contentsline {subsection}{\numberline {0.30.5}Import Data Using the Menu}{clxxix}{subsection.0.30.5}%
+\contentsline {subsection}{\numberline {0.30.6}Exercises}{clxxxii}{subsection.0.30.6}%
+\contentsline {section}{\numberline {0.31}Exporting to and Importing from Excel Files}{clxxxiii}{section.0.31}%
+\contentsline {subsection}{\numberline {0.31.1}Export data into Excel files}{clxxxiii}{subsection.0.31.1}%
+\contentsline {subsection}{\numberline {0.31.2}Import Excel Files (.xls and .xlsx ) using \texttt {read\_excel()}}{clxxxiii}{subsection.0.31.2}%
+\contentsline {subsection}{\numberline {0.31.3}Import Excel file using the menu}{clxxxv}{subsection.0.31.3}%
+\contentsline {subsection}{\numberline {0.31.4}Exercises}{clxxxv}{subsection.0.31.4}%
+\contentsline {section}{\numberline {0.32}Exporting to and Importing from SPSS, SAS, and Stata Files}{clxxxvi}{section.0.32}%
+\contentsline {subsection}{\numberline {0.32.1}Export and Import SPSS Files}{clxxxvi}{subsection.0.32.1}%
+\contentsline {subsection}{\numberline {0.32.2}Export and Import SAS Files}{clxxxvii}{subsection.0.32.2}%
+\contentsline {subsection}{\numberline {0.32.3}Export and Import Stata Files}{clxxxvii}{subsection.0.32.3}%
+\contentsline {subsection}{\numberline {0.32.4}Import using the menu}{clxxxviii}{subsection.0.32.4}%
+\contentsline {subsection}{\numberline {0.32.5}Exercise}{clxxxviii}{subsection.0.32.5}%
+\contentsline {section}{\numberline {0.33}Save and Restore Objects and Workspace}{clxxxviii}{section.0.33}%
+\contentsline {subsection}{\numberline {0.33.1}Save and Restore Objects using .RData}{clxxxviii}{subsection.0.33.1}%
+\contentsline {subsection}{\numberline {0.33.2}Save and Restore a Single Object using \texttt {saveRDS()} and \texttt {readRDS()}}{clxxxix}{subsection.0.33.2}%
+\contentsline {subsection}{\numberline {0.33.3}Exercises}{cxci}{subsection.0.33.3}%
+\contentsline {chapter}{Basic Data Visualization}{cxciii}{chapter*.54}%
+\contentsline {section}{\numberline {0.34}Scatterplot}{cxciii}{section.0.34}%
+\contentsline {subsection}{\numberline {0.34.1}Using the \texttt {plot()} function}{cxciii}{subsection.0.34.1}%
+\contentsline {subsection}{\numberline {0.34.2}Interacting and Saving the plot from \texttt {plot()}}{cxciv}{subsection.0.34.2}%
+\contentsline {subsection}{\numberline {0.34.3}Using the \texttt {ggplot()} function}{cxcv}{subsection.0.34.3}%
+\contentsline {subsection}{\numberline {0.34.4}Interact and Save the plot from \texttt {ggplot()}}{cxcvii}{subsection.0.34.4}%
+\contentsline {subsection}{\numberline {0.34.5}Exercises}{cxcviii}{subsection.0.34.5}%
+\contentsline {section}{\numberline {0.35}ggplot Aesthetics (I): Constant-Valued Aesthetics}{cxcviii}{section.0.35}%
+\contentsline {subsection}{\numberline {0.35.1}Exercises}{cci}{subsection.0.35.1}%
+\contentsline {section}{\numberline {0.36}ggplot Aesthetics (II): Local Aesthetics Mapping}{cci}{section.0.36}%
+\contentsline {subsection}{\numberline {0.36.1}Basic Local Aesthetics Mapping}{cci}{subsection.0.36.1}%
+\contentsline {subsection}{\numberline {0.36.2}Customize the Local Aesthetics Mapping}{cciv}{subsection.0.36.2}%
+\contentsline {subsection}{\numberline {0.36.3}Customize the legend order for discrete variables}{ccvi}{subsection.0.36.3}%
+\contentsline {subsection}{\numberline {0.36.4}Create Logical Variables and Map to Aesthetics}{ccvii}{subsection.0.36.4}%
+\contentsline {subsection}{\numberline {0.36.5}Exercises}{ccviii}{subsection.0.36.5}%
+\contentsline {section}{\numberline {0.37}Customization in ggplot}{ccviii}{section.0.37}%
+\contentsline {subsection}{\numberline {0.37.1}Customization of Labels and Titles}{ccix}{subsection.0.37.1}%
+\contentsline {subsection}{\numberline {0.37.2}Customizing the Breaks on the x and y Axes}{ccxii}{subsection.0.37.2}%
+\contentsline {subsection}{\numberline {0.37.3}Zoom In to a Specific Region of the Data}{ccxiii}{subsection.0.37.3}%
+\contentsline {subsection}{\numberline {0.37.4}Generate Log-Scale Plot}{ccxiii}{subsection.0.37.4}%
+\contentsline {subsection}{\numberline {0.37.5}Coordinate Flip}{ccxiv}{subsection.0.37.5}%
+\contentsline {subsection}{\numberline {0.37.6}Exercises}{ccxiv}{subsection.0.37.6}%
+\contentsline {section}{\numberline {0.38}Line Plots}{ccxiv}{section.0.38}%
+\contentsline {subsection}{\numberline {0.38.1}Line Plots via \texttt {plot()}}{ccxv}{subsection.0.38.1}%
+\contentsline {subsection}{\numberline {0.38.2}Line Plots via \texttt {geom\_line()}}{ccxvi}{subsection.0.38.2}%
+\contentsline {subsection}{\numberline {0.38.3}Constant-Valued Aesthetics in Line Plots}{ccxvii}{subsection.0.38.3}%
+\contentsline {subsection}{\numberline {0.38.4}Mapping Variables to Aesthetics in Line Plots}{ccxviii}{subsection.0.38.4}%
+\contentsline {subsection}{\numberline {0.38.5}Exercises}{ccxviii}{subsection.0.38.5}%
+\contentsline {section}{\numberline {0.39}Smoothline Fits}{ccxix}{section.0.39}%
+\contentsline {subsection}{\numberline {0.39.1}Creating Smoothline Fits using \texttt {geom\_smooth()}}{ccxix}{subsection.0.39.1}%
+\contentsline {subsection}{\numberline {0.39.2}Constant-Valued Aesthetics in Smoothline Fits}{ccxix}{subsection.0.39.2}%
+\contentsline {subsection}{\numberline {0.39.3}Local Aesthetics Mapping in Smoothline Fits}{ccxxii}{subsection.0.39.3}%
+\contentsline {subsection}{\numberline {0.39.4}Exercises}{ccxxiv}{subsection.0.39.4}%
+\contentsline {section}{\numberline {0.40}ggplot Aesthetics (III): Global Aesthetic Mapping}{ccxxiv}{section.0.40}%
+\contentsline {subsection}{\numberline {0.40.1}Multiple geoms}{ccxxv}{subsection.0.40.1}%
+\contentsline {subsection}{\numberline {0.40.2}Global Aesthetic Mapping}{ccxxvii}{subsection.0.40.2}%
+\contentsline {subsubsection}{\numberline {0.40.2.1}Extend Global Aesthetic Mappings}{ccxxviii}{subsubsection.0.40.2.1}%
+\contentsline {subsubsection}{\numberline {0.40.2.2}Overwrite Global Aesthetic Mappings}{ccxxviii}{subsubsection.0.40.2.2}%
+\contentsline {subsubsection}{\numberline {0.40.2.3}No Global Constant-Valued Aesthetics}{ccxxix}{subsubsection.0.40.2.3}%
+\contentsline {subsubsection}{\numberline {0.40.2.4}Mixing the three types of aesthetics}{ccxxx}{subsubsection.0.40.2.4}%
+\contentsline {subsection}{\numberline {0.40.3}Exercises}{ccxxx}{subsection.0.40.3}%
+\contentsline {section}{\numberline {0.41}Bar Charts and Pie Charts via geom\_bar()}{ccxxxi}{section.0.41}%
+\contentsline {subsection}{\numberline {0.41.1}An Introduction to Bar Chart}{ccxxxi}{subsection.0.41.1}%
+\contentsline {subsection}{\numberline {0.41.2}Reordering Bars in Bar Charts}{ccxxxiii}{subsection.0.41.2}%
+\contentsline {subsection}{\numberline {0.41.3}Aesthetics in Bar Charts}{ccxxxiv}{subsection.0.41.3}%
+\contentsline {subsection}{\numberline {0.41.4}Pie Charts}{ccxxxvi}{subsection.0.41.4}%
+\contentsline {subsection}{\numberline {0.41.5}Exercises}{ccxxxvii}{subsection.0.41.5}%
+\contentsline {section}{\numberline {0.42}Histograms}{ccxxxvii}{section.0.42}%
+\contentsline {subsection}{\numberline {0.42.1}Using the \texttt {hist()} function}{ccxxxviii}{subsection.0.42.1}%
+\contentsline {subsection}{\numberline {0.42.2}Using the \texttt {geom\_histogram()} function}{ccxxxviii}{subsection.0.42.2}%
+\contentsline {subsection}{\numberline {0.42.3}Aesthetics in \texttt {geom\_histogram()}}{ccxl}{subsection.0.42.3}%
+\contentsline {subsection}{\numberline {0.42.4}Density Estimate Using Histograms}{ccxli}{subsection.0.42.4}%
+\contentsline {subsection}{\numberline {0.42.5}Exercises}{ccxli}{subsection.0.42.5}%
+\contentsline {section}{\numberline {0.43}Density Plots}{ccxlii}{section.0.43}%
+\contentsline {subsection}{\numberline {0.43.1}Aesthetics in Density Plots}{ccxliii}{subsection.0.43.1}%
+\contentsline {subsection}{\numberline {0.43.2}Exercises}{ccxlv}{subsection.0.43.2}%
+\contentsline {section}{\numberline {0.44}Boxplots}{ccxlv}{section.0.44}%
+\contentsline {subsection}{\numberline {0.44.1}Using the \texttt {boxplot()} function}{ccxlv}{subsection.0.44.1}%
+\contentsline {subsection}{\numberline {0.44.2}Using the \texttt {geom\_boxplot()} function}{ccxlvii}{subsection.0.44.2}%
+\contentsline {subsection}{\numberline {0.44.3}Compare distributions in different groups}{ccxlvii}{subsection.0.44.3}%
+\contentsline {subsection}{\numberline {0.44.4}Aesthetics in boxplot}{ccl}{subsection.0.44.4}%
+\contentsline {subsection}{\numberline {0.44.5}Notched Boxplots}{ccliii}{subsection.0.44.5}%
+\contentsline {subsection}{\numberline {0.44.6}Exercises}{ccliii}{subsection.0.44.6}%
+\contentsline {section}{\numberline {0.45}Arrange Multiple Plots}{ccliv}{section.0.45}%
+\contentsline {subsection}{\numberline {0.45.1}Facet wrap}{ccliv}{subsection.0.45.1}%
+\contentsline {subsection}{\numberline {0.45.2}Facet grid}{cclvi}{subsection.0.45.2}%
+\contentsline {subsection}{\numberline {0.45.3}Exercises}{cclvii}{subsection.0.45.3}%
+\contentsline {section}{\numberline {0.46}Review of Basic Visualization}{cclvii}{section.0.46}%
+\contentsline {subsection}{\numberline {0.46.1}Summary of geoms}{cclvii}{subsection.0.46.1}%
+\contentsline {subsection}{\numberline {0.46.2}The grammatical structure of \texttt {ggplot()}}{cclviii}{subsection.0.46.2}%
+\contentsline {subsection}{\numberline {0.46.3}A complex \texttt {ggplot()} example}{cclviii}{subsection.0.46.3}%
+\contentsline {chapter}{Advanced Data Visualization}{cclix}{chapter*.58}%
+\contentsline {section}{\numberline {0.47}Jitter and Count Plots}{cclix}{section.0.47}%
+\contentsline {subsection}{\numberline {0.47.1}Overplotting}{cclix}{subsection.0.47.1}%
+\contentsline {subsection}{\numberline {0.47.2}Jittering}{cclx}{subsection.0.47.2}%
+\contentsline {subsection}{\numberline {0.47.3}Counts Plots}{cclx}{subsection.0.47.3}%
+\contentsline {subsection}{\numberline {0.47.4}Exercises}{cclxi}{subsection.0.47.4}%
+\contentsline {section}{\numberline {0.48}Violin Plots}{cclxi}{section.0.48}%
+\contentsline {subsection}{\numberline {0.48.1}The basic violin plot}{cclxi}{subsection.0.48.1}%
+\contentsline {subsection}{\numberline {0.48.2}Violin plot with boxplot}{cclxii}{subsection.0.48.2}%
+\contentsline {section}{\numberline {0.49}Line Segments}{cclxiv}{section.0.49}%
+\contentsline {subsection}{\numberline {0.49.1}Using \texttt {abline()} with \texttt {plot()}}{cclxiv}{subsection.0.49.1}%
+\contentsline {subsection}{\numberline {0.49.2}Using \texttt {geom\_hline()}, \texttt {geom\_vline()} and \texttt {geom\_abline()}}{cclxv}{subsection.0.49.2}%
+\contentsline {subsection}{\numberline {0.49.3}Exercises}{cclxvi}{subsection.0.49.3}%
+\contentsline {section}{\numberline {0.50}Heat Map}{cclxvii}{section.0.50}%
+\contentsline {subsection}{\numberline {0.50.1}Using the \texttt {heatmap()} function}{cclxvii}{subsection.0.50.1}%
+\contentsline {subsection}{\numberline {0.50.2}Using \texttt {geom\_tile()} in \textbf {ggplot2}}{cclxviii}{subsection.0.50.2}%
+\contentsline {section}{\numberline {0.51}Error Bars}{cclxix}{section.0.51}%
+\contentsline {section}{\numberline {0.52}Interative Plot with \texttt {plotly()}}{cclxxi}{section.0.52}%
+\contentsline {chapter}{Data Manipulation}{cclxxiii}{chapter*.59}%
+\contentsline {section}{\numberline {0.53}Filter Observations, Objects Masking, and the Pipe}{cclxxv}{section.0.53}%
+\contentsline {subsection}{\numberline {0.53.1}Objects Masking}{cclxxv}{subsection.0.53.1}%
+\contentsline {subsection}{\numberline {0.53.2}Filter Observations}{cclxxvi}{subsection.0.53.2}%
+\contentsline {subsection}{\numberline {0.53.3}The pipe operator}{cclxxviii}{subsection.0.53.3}%
+\contentsline {subsection}{\numberline {0.53.4}Exercise}{cclxxix}{subsection.0.53.4}%
+\contentsline {section}{\numberline {0.54}Select, Rename, and Reorder Variables}{cclxxix}{section.0.54}%
+\contentsline {subsection}{\numberline {0.54.1}Select Variables via Names}{cclxxix}{subsection.0.54.1}%
+\contentsline {subsection}{\numberline {0.54.2}Rename Variables}{cclxxx}{subsection.0.54.2}%
+\contentsline {subsection}{\numberline {0.54.3}Select Variables with Patterns}{cclxxxi}{subsection.0.54.3}%
+\contentsline {subsection}{\numberline {0.54.4}Reorder Variables via Names}{cclxxxv}{subsection.0.54.4}%
+\contentsline {subsection}{\numberline {0.54.5}Exercise}{cclxxxvi}{subsection.0.54.5}%
+\contentsline {section}{\numberline {0.55}Reorder Observations}{cclxxxvi}{section.0.55}%
+\contentsline {subsection}{\numberline {0.55.1}Exercises}{cclxxxix}{subsection.0.55.1}%
+\contentsline {section}{\numberline {0.56}Create New Variables via mutate() and transmute()}{cclxxxix}{section.0.56}%
+\contentsline {subsection}{\numberline {0.56.1}Exercises}{ccxcii}{subsection.0.56.1}%
+\contentsline {section}{\numberline {0.57}Create Grouped Summaries via \texttt {group\_by()} and \texttt {summarize()}}{ccxcii}{section.0.57}%
+\contentsline {subsection}{\numberline {0.57.1}Create Summaries}{ccxcii}{subsection.0.57.1}%
+\contentsline {subsection}{\numberline {0.57.2}Create Grouped Summaries}{ccxciii}{subsection.0.57.2}%
+\contentsline {subsection}{\numberline {0.57.3}Exercises}{ccxcv}{subsection.0.57.3}%
+\contentsline {section}{\numberline {0.58}Grouped Mutate and Filter via \texttt {group\_by()}}{ccxcv}{section.0.58}%
+\contentsline {subsection}{\numberline {0.58.1}Grouped Filter}{ccxcv}{subsection.0.58.1}%
+\contentsline {subsection}{\numberline {0.58.2}Grouped Mutate}{ccxcvi}{subsection.0.58.2}%
+\contentsline {subsection}{\numberline {0.58.3}Exercises}{ccxcvii}{subsection.0.58.3}%
+\contentsline {section}{\numberline {0.59}Joins}{ccxcvii}{section.0.59}%
+\contentsline {subsection}{\numberline {0.59.1}Inner Join}{ccxcviii}{subsection.0.59.1}%
+\contentsline {subsection}{\numberline {0.59.2}Left Join}{ccxcviii}{subsection.0.59.2}%
+\contentsline {subsection}{\numberline {0.59.3}Right Join}{ccxcix}{subsection.0.59.3}%
+\contentsline {subsection}{\numberline {0.59.4}Full Join}{ccxcix}{subsection.0.59.4}%
+\contentsline {subsection}{\numberline {0.59.5}Filtering Joins}{ccc}{subsection.0.59.5}%
+\contentsline {subsection}{\numberline {0.59.6}A Summary of All Joins}{ccc}{subsection.0.59.6}%
+\contentsline {subsection}{\numberline {0.59.7}Exercises}{ccci}{subsection.0.59.7}%
+\contentsline {section}{\numberline {0.60}Set Operations on Datasets}{cccii}{section.0.60}%
+\contentsline {subsection}{\numberline {0.60.1}\texttt {intersect(x,\ y)}}{cccii}{subsection.0.60.1}%
+\contentsline {subsection}{\numberline {0.60.2}\texttt {union(x,\ y)}}{ccciii}{subsection.0.60.2}%
+\contentsline {subsection}{\numberline {0.60.3}\texttt {union\_all(x,\ y)}}{ccciii}{subsection.0.60.3}%
+\contentsline {subsection}{\numberline {0.60.4}\texttt {setdiff(x,\ y)}}{ccciii}{subsection.0.60.4}%
+\contentsline {subsection}{\numberline {0.60.5}\texttt {symdiff(x,\ y)}}{ccciv}{subsection.0.60.5}%
+\contentsline {subsection}{\numberline {0.60.6}\texttt {setequal(x,\ y)}}{ccciv}{subsection.0.60.6}%
+\contentsline {subsection}{\numberline {0.60.7}Summary}{ccciv}{subsection.0.60.7}%
+\contentsline {subsection}{\numberline {0.60.8}Exercises}{ccciv}{subsection.0.60.8}%
+\contentsline {chapter}{Tidy Data}{cccvii}{chapter*.60}%
+\contentsline {section}{\numberline {0.61}Convert Between Names and Values}{cccvii}{section.0.61}%
+\contentsline {subsection}{\numberline {0.61.1}Convert Values into Column Names}{cccviii}{subsection.0.61.1}%
+\contentsline {subsection}{\numberline {0.61.2}Convert Column Names into Values}{cccix}{subsection.0.61.2}%
+\contentsline {subsection}{\numberline {0.61.3}Multiple Variables}{cccx}{subsection.0.61.3}%
+\contentsline {subsection}{\numberline {0.61.4}Exercises}{cccxii}{subsection.0.61.4}%
+\contentsline {section}{\numberline {0.62}Separate and Combine Columns via \texttt {separate()} and \texttt {unite()}}{cccxiii}{section.0.62}%
+\contentsline {subsection}{\numberline {0.62.1}Combine Columns via \texttt {unite()}}{cccxiv}{subsection.0.62.1}%
+\contentsline {subsection}{\numberline {0.62.2}Separate One Column into Multiple Columns Using \texttt {separate()}}{cccxiv}{subsection.0.62.2}%
+\contentsline {subsection}{\numberline {0.62.3}Exercises}{cccxvii}{subsection.0.62.3}%
+\contentsline {section}{\numberline {0.63}More on Missing Values}{cccxviii}{section.0.63}%
+\contentsline {subsection}{\numberline {0.63.1}Missing Values in Tidy Data}{cccxviii}{subsection.0.63.1}%
+\contentsline {subsection}{\numberline {0.63.2}Filling Missing Values}{cccxx}{subsection.0.63.2}%
+\contentsline {chapter}{Strings}{cccxxiii}{chapter*.61}%
+\contentsline {section}{\numberline {0.64}Concatenate and Subset Strings}{cccxxiii}{section.0.64}%
+\contentsline {subsection}{\numberline {0.64.1}Concatenate Strings}{cccxxiii}{subsection.0.64.1}%
+\contentsline {subsection}{\numberline {0.64.2}Create and Modify Substrings}{cccxxiv}{subsection.0.64.2}%
+\contentsline {subsection}{\numberline {0.64.3}Exercises}{cccxxv}{subsection.0.64.3}%
+\contentsline {section}{\numberline {0.65}Matching Pattern with Regular Expressions}{cccxxv}{section.0.65}%
+\contentsline {subsection}{\numberline {0.65.1}Basic Pattern Matching}{cccxxvi}{subsection.0.65.1}%
+\contentsline {subsection}{\numberline {0.65.2}Character Classes}{cccxxvii}{subsection.0.65.2}%
+\contentsline {subsection}{\numberline {0.65.3}Combining Patterns with Logical Operators}{cccxxix}{subsection.0.65.3}%
+\contentsline {subsection}{\numberline {0.65.4}Conclusion}{cccxxx}{subsection.0.65.4}%
+\contentsline {subsection}{\numberline {0.65.5}Exercises}{cccxxx}{subsection.0.65.5}%
+\contentsline {chapter}{Statistics}{cccxxxiii}{chapter*.62}%
+\contentsline {section}{\numberline {0.66}Normal Distribution}{cccxxxiii}{section.0.66}%
+\contentsline {subsection}{\numberline {0.66.1}Probability Density Function (PDF)}{cccxxxiii}{subsection.0.66.1}%
+\contentsline {subsection}{\numberline {0.66.2}Cumulative Distribution Function (CDF)}{cccxxxv}{subsection.0.66.2}%
+\contentsline {subsection}{\numberline {0.66.3}Quantile Function}{cccxxxvi}{subsection.0.66.3}%
+\contentsline {subsection}{\numberline {0.66.4}Random Number Generator}{cccxxxvii}{subsection.0.66.4}%
+\contentsline {subsection}{\numberline {0.66.5}Exercises}{cccxxxviii}{subsection.0.66.5}%
+\contentsline {section}{\numberline {0.67}Other Distributions}{cccxxxix}{section.0.67}%
+\contentsline {subsection}{\numberline {0.67.1}Discrete vs.\nobreakspace {}Continuous Distributions}{cccxxxix}{subsection.0.67.1}%
+\contentsline {subsection}{\numberline {0.67.2}Binomial Distribution}{cccxxxix}{subsection.0.67.2}%
+\contentsline {subsection}{\numberline {0.67.3}Poisson Distribution}{cccxl}{subsection.0.67.3}%
+\contentsline {subsection}{\numberline {0.67.4}Exponential Distribution}{cccxl}{subsection.0.67.4}%
+\contentsline {subsection}{\numberline {0.67.5}A Summary of Commonly Used Distributions}{cccxli}{subsection.0.67.5}%
+\contentsline {subsection}{\numberline {0.67.6}Exercise}{cccxli}{subsection.0.67.6}%
+\contentsline {section}{\numberline {0.68}Random Permutation and Random Sampling}{cccxlii}{section.0.68}%
+\contentsline {subsection}{\numberline {0.68.1}Random Permutation}{cccxlii}{subsection.0.68.1}%
+\contentsline {subsubsection}{\numberline {0.68.1.1}Example in R}{cccxlii}{subsubsection.0.68.1.1}%
+\contentsline {subsection}{\numberline {0.68.2}Random Sampling Without Replacement}{cccxliii}{subsection.0.68.2}%
+\contentsline {subsection}{\numberline {0.68.3}Random Sampling with Replacement}{cccxliii}{subsection.0.68.3}%
+\contentsline {subsection}{\numberline {0.68.4}Random Sampling with Unequal Probabilities}{cccxliv}{subsection.0.68.4}%
+\contentsline {subsection}{\numberline {0.68.5}Exercise}{cccxliv}{subsection.0.68.5}%
+\contentsline {section}{\numberline {0.69}Multivariate Normal Distribution}{cccxliv}{section.0.69}%
+\contentsline {subsection}{\numberline {0.69.1}Generate Multivate Normal Distribution}{cccxlv}{subsection.0.69.1}%
+\contentsline {subsection}{\numberline {0.69.2}Properties of Multivariate Normal Distribution}{cccxlvi}{subsection.0.69.2}%
+\contentsline {subsection}{\numberline {0.69.3}Sample Mean and Sample Covariance Matrix}{cccxlvii}{subsection.0.69.3}%
+\contentsline {subsection}{\numberline {0.69.4}Sample Correlation Matrix}{cccxlviii}{subsection.0.69.4}%
+\contentsline {subsection}{\numberline {0.69.5}Exercise}{cccxlviii}{subsection.0.69.5}%
+\contentsline {chapter}{Control Statements}{cccli}{chapter*.63}%
+\contentsline {section}{\numberline {0.70}Conditional Statements via \texttt {if}, \texttt {else}, and \texttt {switch()}}{cccli}{section.0.70}%
+\contentsline {subsection}{\numberline {0.70.1}The Structure of Conditional Statements}{cccli}{subsection.0.70.1}%
+\contentsline {subsection}{\numberline {0.70.2}Example: Checking Even or Odd Numbers}{ccclii}{subsection.0.70.2}%
+\contentsline {subsection}{\numberline {0.70.3}Using \texttt {ifelse()}}{ccclii}{subsection.0.70.3}%
+\contentsline {subsection}{\numberline {0.70.4}Multiple Conditions with \texttt {else\ if}}{ccclii}{subsection.0.70.4}%
+\contentsline {subsection}{\numberline {0.70.5}Using \texttt {switch()} for Multiple Choices}{ccclii}{subsection.0.70.5}%
+\contentsline {subsubsection}{\numberline {0.70.5.1}Numeric Indexing}{ccclii}{subsubsection.0.70.5.1}%
+\contentsline {subsubsection}{\numberline {0.70.5.2}Character Matching}{cccliii}{subsubsection.0.70.5.2}%
+\contentsline {subsection}{\numberline {0.70.6}Logical Operators in Conditional Statements}{cccliii}{subsection.0.70.6}%
+\contentsline {subsubsection}{\numberline {0.70.6.1}Example: Comparing Operators}{cccliii}{subsubsection.0.70.6.1}%
+\contentsline {subsubsection}{\numberline {0.70.6.2}Short-Circuit Evaluation}{cccliii}{subsubsection.0.70.6.2}%
+\contentsline {subsubsection}{\numberline {0.70.6.3}Another Example: AND Operator}{cccliv}{subsubsection.0.70.6.3}%
+\contentsline {subsection}{\numberline {0.70.7}Exercises}{cccliv}{subsection.0.70.7}%
+\contentsline {section}{\numberline {0.71}Loops}{ccclv}{section.0.71}%
+\contentsline {subsection}{\numberline {0.71.1}\texttt {for} loops with known sequence}{ccclv}{subsection.0.71.1}%
+\contentsline {subsection}{\numberline {0.71.2}Combine the conditional statements with loops}{ccclvi}{subsection.0.71.2}%
+\contentsline {subsection}{\numberline {0.71.3}Control Loop Flow With \texttt {next} and \texttt {break}}{ccclvii}{subsection.0.71.3}%
+\contentsline {subsection}{\numberline {0.71.4}Nested Loops}{ccclviii}{subsection.0.71.4}%
+\contentsline {subsection}{\numberline {0.71.5}Nested Loop via the \texttt {outer()} Function}{ccclix}{subsection.0.71.5}%
+\contentsline {subsection}{\numberline {0.71.6}Exercises}{ccclx}{subsection.0.71.6}%
+\contentsline {section}{\numberline {0.72}While Loops and Repeat}{ccclxi}{section.0.72}%
+\contentsline {subsection}{\numberline {0.72.1}\texttt {while} loop}{ccclxi}{subsection.0.72.1}%
+\contentsline {subsection}{\numberline {0.72.2}\texttt {repeat} Loop}{ccclxiii}{subsection.0.72.2}%
+\contentsline {subsection}{\numberline {0.72.3}Comparison of \texttt {for}, \texttt {while}, and \texttt {repeat} Loops}{ccclxiii}{subsection.0.72.3}%
+\contentsline {subsection}{\numberline {0.72.4}Exercises}{ccclxiv}{subsection.0.72.4}%
+\contentsline {chapter}{Functions}{ccclxvii}{chapter*.64}%
+\contentsline {section}{\numberline {0.73}Introduction to Functions}{ccclxvii}{section.0.73}%
+\contentsline {subsection}{\numberline {0.73.1}What are Functions?}{ccclxvii}{subsection.0.73.1}%
+\contentsline {subsection}{\numberline {0.73.2}Syntax of a Function}{ccclxvii}{subsection.0.73.2}%
+\contentsline {subsection}{\numberline {0.73.3}Default Arguments in Functions}{ccclxviii}{subsection.0.73.3}%
+\contentsline {subsection}{\numberline {0.73.4}Project: Dice Simulation}{ccclxix}{subsection.0.73.4}%
+\contentsline {subsection}{\numberline {0.73.5}Project: Get Fibonacci Sequence}{ccclxix}{subsection.0.73.5}%
+\contentsline {subsection}{\numberline {0.73.6}Exercises}{ccclxx}{subsection.0.73.6}%
+\contentsline {section}{\numberline {0.74}Going Beyond Basics: Advanced R Functions}{ccclxxi}{section.0.74}%
+\contentsline {subsection}{\numberline {0.74.1}Returning Multiple Values Using Lists}{ccclxxi}{subsection.0.74.1}%
+\contentsline {subsubsection}{\numberline {0.74.1.1}Example: Returning a List}{ccclxxi}{subsubsection.0.74.1.1}%
+\contentsline {subsection}{\numberline {0.74.2}Nested Functions}{ccclxxii}{subsection.0.74.2}%
+\contentsline {subsection}{\numberline {0.74.3}Higher-Order Functions}{ccclxxii}{subsection.0.74.3}%
+\contentsline {subsection}{\numberline {0.74.4}Error Handling in Functions}{ccclxxiii}{subsection.0.74.4}%
+\contentsline {subsection}{\numberline {0.74.5}Exercise}{ccclxxiv}{subsection.0.74.5}%
+\contentsline {section}{\numberline {0.75}Anonymous Functions and Scoping}{ccclxxiv}{section.0.75}%
+\contentsline {subsection}{\numberline {0.75.1}Anonymous Functions}{ccclxxiv}{subsection.0.75.1}%
+\contentsline {subsection}{\numberline {0.75.2}Advanced Use Cases for Anonymous Functions}{ccclxxv}{subsection.0.75.2}%
+\contentsline {subsection}{\numberline {0.75.3}Scoping in R}{ccclxxv}{subsection.0.75.3}%
+\contentsline {subsection}{\numberline {0.75.4}Exercises}{ccclxxvii}{subsection.0.75.4}%
+\contentsline {chapter}{R Markdown}{ccclxxix}{chapter*.65}%
+\contentsline {section}{\numberline {0.76}Introduction to R Markdown}{ccclxxix}{section.0.76}%
+\contentsline {subsection}{\numberline {0.76.1}Create a new R Markdown document}{ccclxxix}{subsection.0.76.1}%
+\contentsline {subsection}{\numberline {0.76.2}Knit the R Markdown document}{ccclxxx}{subsection.0.76.2}%
+\contentsline {subsection}{\numberline {0.76.3}Write an R Markdown document}{ccclxxxii}{subsection.0.76.3}%
+\contentsline {section}{\numberline {0.77}Text Formatting in R Markdown}{ccclxxxiv}{section.0.77}%
+\contentsline {subsection}{\numberline {0.77.1}Special text formats}{ccclxxxv}{subsection.0.77.1}%
+\contentsline {subsection}{\numberline {0.77.2}Lists in R Markdown}{ccclxxxvii}{subsection.0.77.2}%
+\contentsline {subsection}{\numberline {0.77.3}Tables in R Markdown}{ccclxxxviii}{subsection.0.77.3}%
+\contentsline {subsection}{\numberline {0.77.4}Insert citations and manage bibliographies in R Markdown}{ccclxxxix}{subsection.0.77.4}%
+\contentsline {chapter}{A Case Study: 24 Game Solver}{cccxci}{chapter*.80}%
+\contentsline {section}{\numberline {0.78}Permutation and Operator Sequence}{cccxci}{section.0.78}%
+\contentsline {subsection}{\numberline {0.78.1}Breaking Down a Solution}{cccxcii}{subsection.0.78.1}%
+\contentsline {subsection}{\numberline {0.78.2}Getting All Permutations}{cccxcii}{subsection.0.78.2}%
+\contentsline {subsection}{\numberline {0.78.3}Getting All Operators}{cccxcii}{subsection.0.78.3}%
+\contentsline {section}{\numberline {0.79}Composite Operators and Check Solution}{cccxciv}{section.0.79}%
+\contentsline {subsection}{\numberline {0.79.1}Composite Operators}{cccxciv}{subsection.0.79.1}%
+\contentsline {subsection}{\numberline {0.79.2}Check if Solution is Found}{cccxcv}{subsection.0.79.2}%
+\contentsline {subsection}{\numberline {0.79.3}Looping Over All Number Sequences and All Operator Sequences}{cccxcv}{subsection.0.79.3}%
+\contentsline {section}{\numberline {0.80}Solve 24}{cccxcvi}{section.0.80}%

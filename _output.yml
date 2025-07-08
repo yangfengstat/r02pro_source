@@ -17,4 +17,5 @@ bookdown::pdf_book:
   citation_package: natbib
   pandoc_args: --top-level-division=chapter
   keep_tex: yes
+  number_sections: true
 bookdown::epub_book: default

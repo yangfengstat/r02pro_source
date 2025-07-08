@@ -4,15 +4,6 @@ After familiarizing yourself with the numeric vectors in Section \@ref(intro-num
 
 ### Creation, class and storage type{#create-character-vector} 
 
-```{r, include = FALSE, echo=FALSE}
-rm(list=ls())
-```
-
-```{r, include=FALSE}
-knitr::opts_chunk$set(
-  comment = "#>", echo = TRUE, eval = TRUE, results = TRUE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
-```
-
 A **character vector** is another type of atomic vector (where all elements are of the same type). In a character vector, the value of each element is of character type, which means each element is a string. A string is a sequence of characters (including letters, numbers, or symbols) surrounded by the double quotes ("") or single quotes (\'\'). For consistency, we will stick with double quotes in this book.
 
 The first example: if the word book is surrounded by a pair of double quotes, then it is a string, and `"book"` is a character vector with length 1. The value of `"book"` is the string itself. Notice that here `"book"` is a vector **without** a name since we have not assigned its value to a name, which will be introduced shortly. You can then verify the number of strings in this vector by using `length()` and verify the vector type by using `class()`.
@@ -34,13 +25,15 @@ class(r02pro)
 ```
 
 
-::: {.infobox .caution data-latex="{caution}"}
+::: {.infobox .caution data-latex=""}
 Double quotes need to be paired in strings. If you miss the right double quote, R will show a plus on the next line, waiting for you to finish the command. If this happens, you can either enter the matching double quote, or press ESC to escape this command.
+:::
+
 
 ```{r quo, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Miss the right quotation mark", out.width = '70%'}
-knitr::include_graphics("pics/2quo.PNG")
+knitr::include_graphics("pics/2quo.png")
 ```
-:::
+
 
 Next, let's create a numeric vector `num_vec` with number 708. After adding a pair of double quotes around the number 708, "708" has converted to a string now. You can assign the value "708" to a name (say char_vec), which will create a new character vector named `char_vec`. Don't forget to check the vector type by using `class()` if you are not sure.
 
@@ -126,7 +119,7 @@ Use any of the methods listed above to get the documentation for the function `t
 Different from the documentation of the `sign()` function, you will the title is named "Character Translation and Casefolding" (Figure \@ref(fig:help1)).
 
 ```{r help1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (I)", out.width = '70%'}
-knitr::include_graphics("pics/2help1.PNG")
+knitr::include_graphics("pics/2help1.png")
 ```
 
 - The *Description* part describes the general purpose of this function. In this example, all functions introduced in this documentation translate characters in a character vector (from upper to lower case or vice versa).
@@ -136,14 +129,14 @@ knitr::include_graphics("pics/2help1.PNG")
 Next, let's move to the *Details* part,
 
 ```{r help2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (II)", out.width = '70%'}
-knitr::include_graphics("pics/2help2.PNG")
+knitr::include_graphics("pics/2help2.png")
 ```
 
 - The *Details* part explains the mechanism of the functions, as well as what each of them could achieve. 
 - The *Value* part shows the result that the function would return, with specified data attributes and types. For `tolower` and `toupper`, since we only covert the cases of characters, the returned character vector will share the same `length()` as the input vector. 
 
 ```{r help3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (III)", out.width = '70%'}
-knitr::include_graphics("pics/2help3.PNG")
+knitr::include_graphics("pics/2help3.png")
 ```
 
 In the last part of the documentation, you can see the notes in the *Note* part and some functions related to functions introduced in the *See Also* part. Remember to try some sample codes in the *Examples* part, and implement your own codes with the help of the examples.
@@ -152,7 +145,7 @@ In the last part of the documentation, you can see the notes in the *Note* part 
 At the end of this section, let us review the environment panel. You can see all the character vectors **with names** in this section. Notice that now the vector type has been changed to *chr* (here *chr* is short for character). 
 
 ```{r char, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Character vectors", out.width = '70%'}
-knitr::include_graphics("pics/2char.PNG")
+knitr::include_graphics("pics/2char.png")
 ```
 
 You can also see the list of all the named objects by using `ls()` function.

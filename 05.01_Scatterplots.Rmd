@@ -32,7 +32,6 @@ d <- data.frame(Parameter, Meaning, Example)
 knitr::kable(d)
 ```
 
-::: {.infobox .caution data-latex="{caution}"}
 A collection of shapes and their associated integers are as below.
 
 ```{r all-shapes, echo=FALSE, fig.align = 'center', fig.cap="All Possible Shapes"}
@@ -49,7 +48,7 @@ ggplot(shapes, aes(x, y)) +
   expand_limits(x = 4.1) +
   theme_void()
 ```
-:::
+
 
 Let's see the effect of these parameters in the following example.
 

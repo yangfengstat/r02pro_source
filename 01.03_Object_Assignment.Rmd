@@ -50,7 +50,7 @@ There is no space between `<` and `-` in the assignment operator `<-`. Note that
 After running the code above, you will see no output in the console, unlike the situation when we ran `1 + 2` which gives us the answer `3` (as shown in Figure \@ref(fig:noa)). You may be wondering, did we successfully make our first assignment operation?
 
 ```{r noa, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="No output", out.width = '70%'}
-knitr::include_graphics("pics/2noa.PNG")
+knitr::include_graphics("pics/2noa.png")
 ```
 
 To verify it, you can run the code with just the object name to check its value. (For all named objects, you can get their value(s) by running codes with just their names.)
@@ -138,7 +138,7 @@ At this point, we've introduced the rules of creating objects in R. Now, you can
 If you exercised previous examples, you can find the newly assigned objects `x_num` and `y_num` (possibly also `z_num1` and `z_num2`) in your *Environment* Viewer. You may also notice that the name `TRUE`, which we tried but failed to assign the value 12 to, doesn't appear in the *Environment* (as shown in Figure \@ref(fig:en)). You can check all the **named objects** and their values in this area.
 
 ```{r en, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (I)", out.width = '70%'}
-knitr::include_graphics("pics/1en.PNG")
+knitr::include_graphics("pics/1en.png")
 ```
 
 From the picture above, you can see that the value of `x_num` is 5. In this case, let's try to assign the new value 6 to `x_num` and see what will happen next.
@@ -151,7 +151,7 @@ x_num  #check its value
 Now you can see that the value of `x_num` has changed from 5 to 6. Generally, when assigning a new value to an object, R will update the object's value, and the previous value will no longer be stored. You can verify the result by inspecting the Environment tab, where only the new value of the object will be displayed.
 
 ```{r en2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (II)", out.width = '70%'}
-knitr::include_graphics("pics/1en2.PNG")
+knitr::include_graphics("pics/1en2.png")
 ```
 
 So it is helpful to monitor the environment from time to time to make sure everything looks fine. Notice that objects without names will *not* be shown in the environment.

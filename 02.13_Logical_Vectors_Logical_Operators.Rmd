@@ -204,6 +204,6 @@ Consider the vector `v1 <- seq(from = 1, to = 100, by = 3)`, and `v2 <-  sqrt(v1
 
 2. Find the subvector of `v2` such that the corresponding value of `v1` is less than 20 or larger than 50.
 
-3. Use an example to verify $$xor(a, b) = (!a & b) | (a & !b)$$
+3. Use an example to verify `xor(a, b) = (!a & b) | (a & !b)`.
 
 

@@ -73,7 +73,7 @@ Option  <- c("Name","Sheet", "Range", "Max Rows", "Skip","NA", "First Row as Nam
 Argument <- c("-", "`sheet`","`range`","`n_max`","`skip`", "`na`", "`col_names`", "-")
 Meaning <- c("The object name you would like to assign to.", "The Sheet you want to import from.", "The data range you want to import.", "The maximum number of rows to import.", "The number of rows to skip at the beginning of the file.", "The way NA is represented in the data file.", "Whether you want to use the first row as column names. `TRUE` or `FALSE`.", "The R code to be executed for importing the data")
 d <- data.frame(Option, Argument, Meaning)
-knitr::kable(d, caption = "Menu Options and its Corresponding Arguments in `read_excel()` and Meanings")
+knitr::kable(d, caption = "Menu Options and its Corresponding Arguments in read\\_excel() and Meanings")
 ```
 
 Note that similar as importing delimited files, when you change these options, the code in the *Code Preview* window will change accordingly, which is a great way to learn on how they work.

@@ -74,3 +74,7 @@ sessionInfo()
 
 
 In the book, package names are in **bold** text (e.g., **r02pro**), and inline codes and functions are formatted in a typewriter font (e.g. `1 + 2`, `r02pro()`). We always add parentheses after a function name (e.g. `r02pro()`).
+
+```{r, results='asis', echo=FALSE}
+if (knitr::is_latex_output()) cat("\\mainmatter\n")
+```

@@ -74,7 +74,7 @@ From the results, you can see that `x1`, `y1`, and `z1` are all numeric, which i
 As introduced in Section \@ref(Object-Assignment), you can check the named objects via the environment panel as shown in Figure \@ref(fig:en11). 
 
 ```{r en11, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (I)", out.width = '70%'}
-knitr::include_graphics("pics/2en1.PNG")
+knitr::include_graphics("pics/2en1.png")
 ```
 
 We can see that the environment panel has two columns, with the first column showing the list of object names and the second column showing the corresponding information for each object. The information includes the vector type (here *num* is short for numeric), the vector length, and the value(s) of the vector. Note that if the vector is of length 1 (for example `x1`), the environment will not show the type or the length.
@@ -91,7 +91,7 @@ Now, you can see that `z1` contains 3 numeric values, so `z1` is a numeric vecto
 As expected, you can also view the newly assigned values of `z1` in the environment panel, as shown in Figure \@ref(fig:en12).
 
 ```{r en12, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (II)", out.width = '70%'}
-knitr::include_graphics("pics/2en2.PNG")
+knitr::include_graphics("pics/2en2.png")
 ```
 
 Finally, you can use the `vector(mode, length)` function to create a vector of certain `mode` and `length`. 
@@ -146,7 +146,7 @@ y1 + x1
 From the result, you can see that `x1` is recycled five times to match in length with `y1`, becoming a length-5 numeric vector with five sixes. Subsequently, each element in `y1` is added by 6.
 
 ::: {.infobox .caution data-latex="{caution}"}
-By now you have created several objects, and you may find that objects will not be saved in R if you don’t assign their values to names, for example, the results of `y1 + x1` is not shown in the environment.
+By now you have created several objects, and you may find that objects will not be saved in R if you don't assign their values to names, for example, the results of `y1 + x1` is not shown in the environment.
 :::
 
 
@@ -194,7 +194,7 @@ my_int
 You can also check the vector type and values in the environment. (as shown in Figure \@ref(fig:en13))
 
 ```{r en13, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Different storage types", out.width = '70%'}
-knitr::include_graphics("pics/2en3.PNG")
+knitr::include_graphics("pics/2en3.png")
 ```
 
 From the picture above, you can see that the values of `my_int` are still 3 and 4, which are the same as those of `my_dbl`. The difference between these two vectors is that `my_int` is an integer vector since its internal storage type is integer, and such a storage type offers great *memory savings* compared to doubles.

@@ -23,7 +23,7 @@ After opening RStudio for the first time, you may find that the font and button 
 On the RStudio menu bar, you can click *Tools*, and then click on *Global Options* as shown below.
 
 ```{r font, results = TRUE, echo=FALSE, fig.align = 'center', fig.cap="Global Options", out.width = '90%'}
-knitr::include_graphics("pics/1font.PNG")
+knitr::include_graphics("pics/1font.png")
 ```
 
 Then, you will see a window popping up like Figure \@ref(fig:size). After clicking on *Appearance*, you can see several drop-down menus including *Zoom* and *Editor font size* among other choices shown.
@@ -35,7 +35,7 @@ Then, you will see a window popping up like Figure \@ref(fig:size). After clicki
 Once finishing customizing the appearance, you need to click on *Apply* to save the adjustments.
 
 ```{r size, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Zoom and Editor font size", out.width = '70%'}
-knitr::include_graphics("pics/1size.PNG")
+knitr::include_graphics("pics/1size.png")
 ```
 
 Here, we change the *Zoom* to 150% and set the *Editor font size* to 18.
@@ -45,7 +45,7 @@ Here, we change the *Zoom* to 150% and set the *Editor font size* to 18.
 Although RStudio has four panels, some may be hidden initially (Figure \@ref(fig:open)).
 
 ```{r open, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Unfold panels", out.width = '100%'}
-knitr::include_graphics("pics/1open.PNG")
+knitr::include_graphics("pics/1open.png")
 ```
 
 In Figure \@ref(fig:open), we have labeled three useful buttons as 1, 2, and 3. By clicking buttons 1 and 3, you can reveal the two hidden panels.
@@ -57,7 +57,7 @@ Note that you may see different panels hidden when you open RStudio for the firs
 By clicking button 2, we can clear the content in the bottom left panel (Panel 2 in Figure \@ref(fig:four)) as shown in the following figure. 
 
 ```{r four, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Four panels", out.width = '100%'}
-knitr::include_graphics("pics/1four.PNG")
+knitr::include_graphics("pics/1four.png")
 ```
 
 Now, let's take a close look at all four panels, which are labeled as 1-4 in Figure \@ref(fig:four). You can change the size of each panel by dragging the two blue slides *up* or *down* and the green slide *left* or *right*.
@@ -77,12 +77,12 @@ It is a good habit to add spaces around an operator to increase the readability 
 :::
 
 ```{r code, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Writing code in the console", out.width = '70%'}
-knitr::include_graphics("pics/1code.PNG")
+knitr::include_graphics("pics/1code.png")
 ```
 
 
 ```{r answer, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="R code(2)", out.width = '70%'}
-knitr::include_graphics("pics/1answer.PNG")
+knitr::include_graphics("pics/1answer.png")
 ```
 
 Hooray! You have successfully run the first piece of R code and gotten the correct answer 3. Note that the blinking cursor now appears on the next line, ready to accept a new line of code.
@@ -108,7 +108,7 @@ knitr::include_graphics("pics/1P1.png")
 Next, we will introduce how to run codes in scripts. Let's go to the editor and type `1 + 2`. To run this line of code, you can select this line of code and click the *Run* button. The keyboard shortcut of running this line of code is Cmd+Return on Mac or Ctrl+Enter on Windows. RStudio will then send the line of code to the console and execute the code. 
 
 ```{r run, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Run codes in script (I)", out.width = '70%'}
-knitr::include_graphics("pics/1run.PNG")
+knitr::include_graphics("pics/1run.png")
 ```
 
 You can also run multiple lines of code by selecting the corresponding lines and clicking the *Run* button or using the keyboard shortcut. (Figure \@ref(fig:mcodes))
@@ -122,19 +122,19 @@ Here, three lines of codes are selected. After running these three lines of code
 To save your work for later use, you can click the *Save* button as shown in Figure \@ref(fig:save1). The keyboard shortcut of saving files is Cmd+S on Mac or Ctrl+S on Windows.
 
 ```{r save1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Save (I)", out.width = '70%'}
-knitr::include_graphics("pics/1save1.PNG")
+knitr::include_graphics("pics/1save1.png")
 ```
 
 Then you would see a pop-up file dialog box, asking you for a file name and location to save it to. Let's call it `lesson1.1` here.
 
 ```{r save2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Save (II)", out.width = '70%'}
-knitr::include_graphics("pics/1save2.PNG")
+knitr::include_graphics("pics/1save2.png")
 ```
 
 After saving the file successfully, you can confirm the name of the R script on the top.
 
 ```{r save3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Save (III)", out.width = '70%'}
-knitr::include_graphics("pics/1save3.PNG")
+knitr::include_graphics("pics/1save3.png")
 ```
 
 Now, when you close this script and open it again, you would directly see the previous three lines of codes.
@@ -142,13 +142,13 @@ Now, when you close this script and open it again, you would directly see the pr
 Lastly, if you want to create a new R script, you can click the `+` button on the menu, then select *R Script*. Note that there are quite a few other options including *R Markdown*, which will be introduced in Chapter \@ref(r-markdown). 
 
 ```{r new, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="create a new script (I)", out.width = '70%'}
-knitr::include_graphics("pics/1new.PNG")
+knitr::include_graphics("pics/1new.png")
 ```
 
 Consequently, you will see a new file created. 
 
 ```{r new2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="create a new script (II)", out.width = '70%'}
-knitr::include_graphics("pics/1new2.PNG")
+knitr::include_graphics("pics/1new2.png")
 ```
 
 
@@ -175,7 +175,7 @@ If you miss the right parenthesis, R will return a plus in the next line (as sho
 :::
 
 ```{r right1, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Miss the right parenthesis", out.width = '70%'}
-knitr::include_graphics("pics/1right.PNG")
+knitr::include_graphics("pics/1right.png")
 ```
 
 After a package is installed, you still need to load it into R before using it. To load a package, you can use the `library()` function with the package name as its argument. Here, quotation marks are not necessary.

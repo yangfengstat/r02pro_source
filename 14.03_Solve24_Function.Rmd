@@ -46,7 +46,7 @@ n_ops <- 6
 op_mat <- permutations(n_ops, n_nums-1, repeats.allowed = TRUE) #generate all operator sequences
 op_mat <- op_mat[op_mat[,1]<=4, ] #remove redundant ones
 n_sols <- 0  #initialize the number of solutions to be 0
-for(i in 1:nrow(nums_perm))  #loop over all possible permutations
+for(i in 1:nrow(nums_perm))  
 for(j in 1:nrow(op_mat)){ #loop over all possible operator sequences
   num_cur <- nums_perm[i, ] #get the current permutation
   op_cur <- op_mat[j, ] #get the current operator sequence

@@ -60,7 +60,7 @@ library(tidyverse)
 ggplot(data = na.omit(sahp)) +
   geom_bar(
     mapping = aes(x = kit_qual, fill = oa_qual > 5),
-    stat = "count", #Default stat for geom_bar, can be removed
+    stat = "count", 
     position = "fill") +
   coord_flip() +
   facet_wrap(vars(house_style)) +
