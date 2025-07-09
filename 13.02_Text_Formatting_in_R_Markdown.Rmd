@@ -33,7 +33,6 @@ To make the formatted text into bold type, you can simply use a pair of `**` aro
 
 ***d. create inline code***
 
-***emphasize texts by marking them as inline codes, not recommend***
 Sometimes you may want to mark text or code as **inline code**. To do that, you need to use a pair of  `` ` ``  around the text or code. We have seen many inline codes so far. For example, `*italic*` is an inline code. Another common usage is when you want to include code along with other text outside code chunks.  For example `` `1 + 1` ``  in the markup text generates `1 + 1` in the formatted text. Here, we only display the code without running it. If you want to show the output instead of code, you can use `` `r ` ``. For example, `` `r knitr::inline_expr('1 + 1')` `` will generate `r 1 + 1` in the formatted text. 
 
 Note that if you add a pair of `` ` `` around code inside the the code chunk, you will get an error message when you knit the file.
@@ -171,10 +170,10 @@ The .bib file is a plain-text file that consists of bibliography entries like th
 ```
 @book{r02pro,
   title = {R Programming: From Zero to Pro},
-  author = {Yang Feng and r02proers},
+  author = {Yang Feng},
   organization = {New York University},
   address = {New York, NY},
-  year = {2023},
+  year = {2024},
   url = {https://r02pro.github.io/},
 }
 ```
