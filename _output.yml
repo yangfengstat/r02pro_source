@@ -3,6 +3,8 @@ bookdown::gitbook:
     in_header: ga.html
   css:  style.css
   split_by: section
+  number_sections: true
+  number_tables: true
   config:
     toc:
       before: |
@@ -18,4 +20,5 @@ bookdown::pdf_book:
   pandoc_args: --top-level-division=chapter
   keep_tex: yes
   number_sections: true
+  number_tables: true
 bookdown::epub_book: default

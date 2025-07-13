@@ -137,7 +137,7 @@ s2
 ```
 
 
-To have the calculation done element-wisely, R requires two or more vectors to have the same length. However, there is an important **recycling** rule in R, which is quite useful and enables us to write simpler code. Specifically, if one vector is shorter than the other vector, R will **recycle** (repeat) the shorter vector until it matches in length with the longer one so that element-wise calculations can be done conveniently. This recycling is most often used for an operation between a **length>1** vector and a **length-1** vector. Let's see an example.
+To have the calculation done element-wisely, R requires two or more vectors to have the same length. However, there is an important **recycling** rule in R, which is quite useful and enables us to write simpler code. Specifically, if one vector is shorter than the other vector, R will **recycle** (repeat) the shorter vector until it matches in length with the longer one so that element-wise calculations can be done conveniently. This recycling is most often used for an operation between a vector with more than one elements and a scalar (a.k.a. a vector with only one element). Let's see an example.
 
 ```{r results=TRUE}
 y1 + x1

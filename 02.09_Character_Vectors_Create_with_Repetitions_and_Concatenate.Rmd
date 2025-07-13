@@ -73,7 +73,7 @@ paste(four_strings)                 ##doesn't work without the collapse argument
 ```
 
 
-In addition to paste several strings into one long string, you can also use the `paste()` function to concatenate two or more character vectors, where the pair of strings will be pasted elementwisely. 
+In addition to pasting several strings into one long string, you can also use the `paste()` function to concatenate two or more character vectors, where the pair of strings will be pasted elementwisely. 
 ```{r, results=TRUE}
 paste(c("July", "August"),  c("2007", "2008"))
 ```

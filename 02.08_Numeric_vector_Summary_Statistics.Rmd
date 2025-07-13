@@ -149,12 +149,13 @@ The last group of functions are `var()` and `sd()`, which compute the **sample v
 
 
 For your convenience, we would like to provide a summary of all the functions introduced in the following table. 
+
 ```{r summaryFuns, results = TRUE, echo=FALSE}
 Operation  <- c("min(h)", "max(h)", "range(h)", "which.min(h)", "which.max(h)", "cummin(h)", "cummax(h)", "sum(h)", "cumsum(h)", "prod(h)", "cumprod(h)", "mean(h)", "median(h)", "quantile(h)", "IQR(h)", "quantile(h, probs = 0.95)", "quantile(h, probs = c(0.1, 0.2, 0.99))", "summary(h)", "var(h)", "sd(h)")
 Explanation <- c("the minimum value", "the maximum value", "both the minimum value and the maximum value", "the (first) location of the minimum value", "the (first) location of the maximum value", "the cumulative minimum values", "the cumulative maximum values", "the sum of all elements","the cumulative sum","the product of all elements","the cumulative products","the average of all elements","the middle number in sort(h)","the 0 percentile, 25-th percentile, 50-th percentile, 75-th percentile, and 100-th percentile","the difference between the 3rd quartile and the 1st quartile","the 95-th percentile","several quantiles at a time","5 percentiles and the mean","the sample variance","the sample standard deviation")
 Length <- c(1, 1, 2, 1, 1, "same as the original numeric vector", "same as the original numeric vector", 1, "same as the original numeric vector", 1, "same as the original numeric vector", 1, 1, 5, 1, 1, "same as the argument numeric vector", 6, 1, 1)
 d <- data.frame(Operation, Explanation, Length)
-knitr::kable(d)
+knitr::kable(d, caption = "Summary of all the introduced functions.")
 ```
 
 

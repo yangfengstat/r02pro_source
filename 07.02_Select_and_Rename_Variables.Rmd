@@ -4,7 +4,7 @@ In Section \@ref(filter-observations), we have learned how to filter observation
 
 ### Select Variables via Names
 
-Let's consider the `gm` data set in the **r02pro** package, which contains `r ncol(gm)` variables. If we want to focus on the country, continent, year, and Human Development Index (HDI) category, we can use the `select()` function in the **dplyr** package. We will be using the pipe introduced in Section \@ref(pipe) throughout the rest of this Chapter. Inside the `select()` function, you can include the variables to select as different arguments. Note that the quotation marks are not necessary. 
+Let's consider the `gm` data set in the **r02pro** package, which contains `r ncol(gm)` variables. If we want to focus on the country, continent, year, and Human Development Index (HDI) category, we can use the `select()` function in the **dplyr** package. We will be using the pipe operator introduced in Section \@ref(pipe) throughout the rest of this Chapter. Inside the `select()` function, you can include the variables to select as different arguments. Note that the quotation marks are not necessary. 
 
 ```{r}
 library(r02pro)
@@ -99,7 +99,8 @@ gm %>%
 
 This produces a tibble with all variables containing the string `"newcases"`. 
 
-You can also combine multiple conditions using logical operators. First of all, the multiple arguments in the `select()` function are combined with or operations (`|`). For example, to get all variables that begins with `b` or ends with `m`, you can do the following.
+You can also combine multiple conditions using logical operators. First of all, the multiple arguments in the `select()` function are combined with or operations (`|`). For example, to get all variables that begin with `smoking` or end with `female`, you can use the following code.
+
 ```{r, results = TRUE}
 gm %>% 
   select(starts_with("smoking"), ends_with("female"))

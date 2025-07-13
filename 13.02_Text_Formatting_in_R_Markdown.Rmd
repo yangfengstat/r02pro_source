@@ -12,7 +12,7 @@ Firstly, let's discuss how to generate a couple of special formatted text.
 
 ***a. different header levels***
 
-You may use different numbers of "#" before the marked up text to generate different header levels in the output document. (with more "#"s indicating lower levels and smaller fonts).  For example, you can try to the following lines in the .Rmd file and see what happens in the output document,
+You may use different numbers of "#" before the marked up text to generate different header levels in the output document. (with more "#"s indicating lower levels and smaller fonts).  For example, you can try to the following lines in the .Rmd file and see what happens in the output document. R Markdown automatically numbers sections when you set number_sections: true in the YAML header.
 
 ```
 # Header1
@@ -68,6 +68,16 @@ I learned how to sum up numbers when I was young. For example,
 $$\sum_{i=1}^{10} i = 55$$
 ```
 
+Aside from the headings, you will see the following output.
+
+*This is an example.*
+
+I **learned** to use `a <- rnorm(1)` to generate normal distributed random variable in [r02pro](https://r02pro.github.io/). The result of `1 + 1` is `r 1 + 1`.
+
+I learned how to sum up numbers when I was young. For example,
+$$\sum_{i=1}^{10} i = 55$$
+
+
 
 ### Lists in R Markdown
 
@@ -117,6 +127,14 @@ You will see the following output.
     3.1. tres.uno  
     3.2. tres.dos                                     
    
+Markdown is forgiving--you may write all items as 1. and Pandoc will still number them sequentially. You can try the following. 
+
+```
+1. uno                                           
+1. dos                                            
+1. tres                                            
+```                                        
+       
 
 
 Of course, you can also mix ordered and unordered lists. Feel free to try the following example in your .Rmd file. 
@@ -179,7 +197,7 @@ The .bib file is a plain-text file that consists of bibliography entries like th
 ```
 
 
-Then, each bibtex items can be cited directly within the documentation using the syntax `@key`, where key is the citation key in the first line of the entry, e.g., `@r02pro` will show as @r02pro in the document. To put citations in parentheses, use `[@key]`. To cite more than one items, separate the keys by semicolons, e.g., `[@key-a; @key-b; @key-c]`. To suppress the author name, you can add a minus sign before @, e.g., `[-@r02pro]` will generate -@r02pro.
+Then, each bibtex items can be cited directly within the documentation using the syntax `@key`, where key is the citation key in the first line of the entry, e.g., `@r02pro` will show as @r02pro in the document. To put citations in parentheses, use `[@key]`. To cite more than one items, separate the keys by semicolons, e.g., `[@key-a; @key-b; @key-c]`. To suppress the author name, you can add a minus sign before @, e.g., `[-@r02pro]` will generate [-@r02pro].
 
 
 To learn more about citations and bibliography in R Markdown, you can read the excellent book by @xie2020r.

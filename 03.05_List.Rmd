@@ -61,8 +61,8 @@ To extract a single element from a list, you can use the `$` followed by the ele
 
 ```{r, results=TRUE}
 my_list$number          #a vector
-#my_list[[1]]           #the first element
-#my_list$matrix          #a matrix
+my_list[[1]]           #the first element
+my_list$matrix          #a matrix
 my_list[[3]]           #the third element
 mean(my_list$number)
 rowMeans(my_list$matrix)
@@ -89,12 +89,12 @@ Of course, you can create a sublist containing multiple element, just like when 
 
 ```{r}
 my_list[c(1,3)] #the first and third elements of my_list
-#my_list[-3]     #all elements except the third one
+my_list[-3]     #all elements except the third one
 ```
 
 ***c. Use names to do list subsetting***
 
-When the list elements are named, you can also use names around `[` and `]` to do list subsetting. You can also use a character vector containing the element names. 
+When the list elements are named, you can also use names inside `[` and `]` to do list subsetting. You can also use a character vector containing the element names. 
 
 ```{r, results = TRUE}
 my_list['number']
@@ -129,7 +129,7 @@ To extract `dig_num` from `my_big_big_list`, you now need three layers of extrac
 ```{r, results=TRUE}
 my_big_big_list$big_list$small_list[[1]]
 my_big_big_list[[1]][[1]][[1]]
-#my_big_big_list[[1]]$small_list[[1]] #mix the two ways for value extraction
+my_big_big_list[[1]]$small_list[[1]] #mix the two ways for value extraction
 ```
 
 ### Unlist a list
@@ -141,11 +141,11 @@ unlist(my_list)
 c(my_list[[1]], my_list[[2]], my_list[[3]], my_list[[4]]) #reproduce the result
 ```
 
-As you can tell from the result, the `unlist()` function works in the following steps.
+As you can see from the result, the unlist() function operates in the following steps:
 
-1. It visits each element of the list sequentially according to the indices, one at a time. Each element will be converted into a vector using the `as.vector()` function. 
-2. Then converted vectors of each element will be combined into a longer vector using the `c()` function. During the `c()` operation, coercion rules will apply.
-3. The named of the final vector will the name of each element followed by the index of the corresponding value inside each list element. 
+1.	It visits each element of the list sequentially, following the indices. Each element is converted into a vector using the as.vector() function.
+2.	The resulting vectors are then combined into a single, longer vector using the c() function. During this step, coercion rules apply.
+3.	The names of the final vector are formed by combining the name of each list element with the index of the corresponding value within that element.
 
 Here, `my_list` doesn't contain an element that is also a list. When a list contains another list as one of its elements, the `unlist()` function will also apply the unlist operation on the element by default. In fact, the unlist operation will be applied recursively until none of the elements is a list. Please try to run the following example.
 

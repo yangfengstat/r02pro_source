@@ -47,11 +47,14 @@ The assignment operation has three components. From left to right，they are:
 There is no space between `<` and `-` in the assignment operator `<-`. Note that although `=` may also appear to be working as the assignment operator, it is not recommended as `=` is usually reserved for specifying the value(s) of arguments in a function call, which will be introduced in Section \@ref(intro-num-vector).
 :::
 
-After running the code above, you will see no output in the console, unlike the situation when we ran `1 + 2` which gives us the answer `3` (as shown in Figure \@ref(fig:noa)). You may be wondering, did we successfully make our first assignment operation?
+After running the code above, you will see no output in the console, unlike the situation when we ran `1 + 2` which gives us the answer `3` (as shown in Figure \@ref(fig:noa)). 
 
-```{r noa, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="No output", out.width = '70%'}
+```{r noa, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="No output during the assignment operation.", out.width = '70%'}
 knitr::include_graphics("pics/2noa.png")
 ```
+
+
+You may be wondering, have we successfully made our first assignment operation?
 
 To verify it, you can run the code with just the object name to check its value. (For all named objects, you can get their value(s) by running codes with just their names.)
 
@@ -88,7 +91,7 @@ Note that in the object assignment process, it is not the expression itself but 
 
 You can also try the following examples by yourself.
 
-```{r, eval=FALSE}
+```{r, results=FALSE}
 z_num1 <- floor(7 / 3) 
 z_num1
 z_num2 <- 7%/%3
@@ -120,9 +123,7 @@ TRUE <- 12
 Some commonly used reserved keywords that cannot be used as names are listed as below.
 
 ```{r results = TRUE, echo=FALSE, warning=FALSE}
-Keys  <- c("TRUE", "FALSE", "NA", "Inf", "NaN", "function", "if", "else", "for", "while", "break", "next", "repeat", "return")
-key_mat <- matrix(Keys, 7, 2)
-knitr::kable(key_mat)
+knitr::kable(matrix(c("TRUE", "FALSE", "NA", "Inf", "NaN", "function", "if", "else", "for", "while", "break", "next", "repeat", "return"), 7, 2))
 ```
 
 To get a complete list of reserved words, you can run the following code.

@@ -66,7 +66,7 @@ ls()                   #check what's in the workspace.
 
 ### Save and Restore a Single Object using `saveRDS()` and `readRDS()`
 
-Before introducing the new method, there is one drawback of `load()` worth noting: if the imported .RData file contains objects with the same names as in the current workspace, **all** these objects in the current workspace will be **silently overwritten** without any warning! Let's see the following example. 
+Before introducing the new functions, there is one drawback of `load()` worth noting: if the imported .RData file contains objects with the same names as in the current workspace, **all** these objects in the current workspace will be **silently overwritten** without any warning! Let's see the following example. 
 
 ```{r, results = TRUE}
 dig_num <- 3.14
