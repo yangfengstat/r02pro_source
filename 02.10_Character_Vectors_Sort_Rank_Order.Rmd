@@ -21,7 +21,7 @@ syms <- c(" ",",",";","_","(",")","!","[","]","{","}","-","*","/","#","$","%","^
 sort(syms)
 ```
 
-- digits are ordered ascendingly: the smaller digits appear earlier than the bigger ones.
+- digits are ordered in an increasing fashion: the smaller digits appear earlier than the bigger ones.
 
 ```{r, results = TRUE}
 nums <- 0:9
@@ -32,7 +32,7 @@ sort(nums)
 
 
 ```{r, results = TRUE}
-all_letters <- c(letters,LETTERS)
+all_letters <- c(letters, LETTERS)
 sort(all_letters)
 ```
 

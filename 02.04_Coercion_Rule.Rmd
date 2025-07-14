@@ -16,7 +16,7 @@ Let's see a few examples to learn how the coercion works. The first example mixe
 
 ```{r, results = TRUE}
 mix_1 <- c(TRUE, 7, 4, FALSE)
-mix_1 
+mix_1
 typeof(mix_1)
 class(mix_1)
 ```
@@ -28,7 +28,7 @@ The second example mixes numbers with strings.
 
 ```{r, results = TRUE}
 mix_2 <- c("today", "is", "Jan", 15, "2022")
-mix_2 
+mix_2
 class(mix_2)
 typeof(mix_2)
 ```
@@ -36,16 +36,14 @@ typeof(mix_2)
 You can see that both `15` and `2022` are converted into strings since strings are more complex than numbers. Then, `mix_2` will be a character vector.
 
 
-The next example mixes  logical values, numbers and strings. 
+The next example mixes logical values, numbers and strings. 
 
 ```{r, results=TRUE}
 mix_3 <- c(16, TRUE, "pig")
 mix_3
-class(mix_3)
-
 ```
 
-You can see in both `mix_3` and `mix_4`, both `16` and `TRUE` are converted to strings! That's because values of character type are the most complex among all values. 
+You can see in `mix_3`, both `16` and `TRUE` are converted to strings! That's because values of character type are the most complex among all values. 
 
 
 Next, let's see an interesting example in which we have two layers of coercion. 
@@ -55,7 +53,7 @@ mix_4 <- c(c(16, TRUE), "pig")
 mix_4
 ```
 
-Nested `c()` will collapse into a single vector recursively and during the process, the coercion rule will apply whenever needed. First, `c(16, TRUE)` will be converted to `c(16, 1)` since numbers are more complex than logical values. Then, the expression becomes `c(c(16, 1), "pig")`. Since characters are more complex than numbers, `c(16, 1)` will be converted to `c("16", "1")` when you combine it with `"pig"`, leading to the results of `mix_5`. To help you understand the process, let's look at another example. 
+Nested `c()` will collapse into a single vector recursively and during the process, the coercion rule will apply whenever needed. First, `c(16, TRUE)` will be converted to `c(16, 1)` since numbers are more complex than logical values. Then, the expression becomes `c(c(16, 1), "pig")`. Since characters are more complex than numbers, `c(16, 1)` will be converted to `c("16", "1")` when you combine it with `"pig"`, leading to the results of `mix_4`. To help you understand the process, let's look at another example. 
 
 ```{r, results=TRUE}
 mix_5 <- c(16, c(TRUE, "pig"))
@@ -79,10 +77,9 @@ $$\mbox{logical} < \mbox{integer} < \mbox{double} < \mbox{character}$$
 
 
 
-### Cocercion in operators
+### Coercion in operators
 
-
-In addition to appearing in the vector creation using the `c()` function, the coercion rule also applies when we apply operators with different types. 
+When you use operators, R will also apply the coercion rule to unify the types of all elements involved in the operation. For example, if you add a numeric vector with a logical vector, R will convert the logical vector into a numeric vector first.
 
 ```{r}
 typeof(1L + 3)
@@ -99,6 +96,7 @@ typeof(1L / 5L)
 ::: 
 
 
+
 When comparing vectors of different types, the coercion rule also will apply. Take the following vectors as example:
 
 ```{r}
@@ -108,21 +106,23 @@ a == b
 #> [1] FALSE  TRUE  TRUE
 ```
 
-When we are trying to figure out if `a` is equal to `b`, we get a length-3 logical vector. Elements in `b` is first converted into 1 and 0 based on the coercion rule we previously introduced, which is `TRUE = 1` and `FALSE = 0`, and the result will be `c(1, 0, 1)`. Thus, a comparison between a logical and a numeric vector is changed into comparing two numeric vectors. 
+In this example, `a` is a numeric vector and `b` is a logical vector. When we compare them, R will first convert `b` into a numeric vector, which results in `c(1, 0, 1)`. Then the comparison will be done between two numeric vectors.
+
 
 You can make comparisons between vectors of other types, the following example shows that the classic transitive property in math ($a = b$ and $b = c$ imply $a = c$) doesn't hold in R. 
 
 ```{r}
 1 == TRUE
-TRUE == "TRUE"   
+TRUE == "TRUE"
 1 == "TRUE"
 ```
 
 
 
-### Explicit Coercion
 
-Besides the coercion rule which automatically converts all elements into the most complex type, you can also use functions to do the conversion **manually**. In particular, 
+### Explicit Coercion {#explicit-coercion}
+
+Besides the coercion rule which automatically converts all elements into the most complex type, you can also use functions to do the conversion **explicitly**. In particular, 
 `as.numeric()`, `as.integer()`, `as.character()`, and `as.logical()` convert its argument into numeric, integer, character, and logical, respectively.
 ```{r, results=TRUE}
 as.numeric(c(TRUE, FALSE))
@@ -131,6 +131,8 @@ as.integer(c(TRUE, FALSE))
 as.logical(c(1, 0))
 as.logical(c("TRUE", "FALSE"))
 ```
+
+
 
 ### Exercises
 

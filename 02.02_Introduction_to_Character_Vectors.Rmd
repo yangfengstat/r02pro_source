@@ -9,7 +9,7 @@ A **character vector** is another type of atomic vector (where all elements are 
 The first example: if the word book is surrounded by a pair of double quotes, then it is a string, and `"book"` is a character vector with length 1. The value of `"book"` is the string itself. Notice that here `"book"` is a vector **without** a name since we have not assigned its value to a name, which will be introduced shortly. You can then verify the number of strings in this vector by using `length()` and verify the vector type by using `class()`.
 
 ```{r}
-"book" 
+"book"
 length("book")
 class("book")
 ```
@@ -19,7 +19,7 @@ Now the `class()` function will return `character`, which shows that `"book"` is
 After assigning the value to the name r02pro, you have created a new character vector `r02pro` with "book" as the value.
 
 ```{r}
-r02pro <- "book" 
+r02pro <- "book"
 r02pro
 class(r02pro)
 ```
@@ -39,7 +39,7 @@ Next, let's create a numeric vector `num_vec` with number 708. After adding a pa
 
 ```{r}
 num_vec <- 708
-char_vec <- "708" 
+char_vec <- "708"
 class(num_vec)
 class(char_vec)
 ```
@@ -123,8 +123,8 @@ knitr::include_graphics("pics/2help1.png")
 ```
 
 - The *Description* part describes the general purpose of this function. In this example, all functions introduced in this documentation translate characters in a character vector (from upper to lower case or vice versa).
-- The *Usage* part shows the expected syntax. This section may contain multiple functions that share similar usage, but with different number and format of input. For example, `chartr` is expecting three arguments, which is `old`,`new` and `x`, respectively, but `tolower` and `toupper` functions is only taking one argument `x`. 
-- The *Arguments* part provides detailed explanation for argument. Depending on the function, argument could be different from data type to input length, and it is best to read them individually. For our example, you can focus on the explanation of `x` for `tolower` and `toupper` functions for now, as this is the only required input for both of them. 
+- The *Usage* part shows the expected syntax. This section may contain multiple functions that share similar usage, but with different number and format of input. For example, `chartr()` is expecting three arguments, which is `old`,`new` and `x`, respectively, but `tolower()` and `toupper()` functions is only taking one argument `x`. 
+- The *Arguments* part provides detailed explanation for argument. Depending on the function, argument could be different from data type to input length, and it is best to read them individually. For our example, you can focus on the explanation of `x` for `tolower()` and `toupper()` functions for now, as this is the only required input for both of them. 
 
 Next, let's move to the *Details* part,
 
@@ -133,7 +133,7 @@ knitr::include_graphics("pics/2help2.png")
 ```
 
 - The *Details* part explains the mechanism of the functions, as well as what each of them could achieve. 
-- The *Value* part shows the result that the function would return, with specified data attributes and types. For `tolower` and `toupper`, since we only covert the cases of characters, the returned character vector will share the same `length()` as the input vector. 
+- The *Value* part shows the result that the function would return, with specified data attributes and types. For `tolower()` and `toupper()`, since we only covert the cases of characters, the returned character vector will share the same `length()` as the input vector. 
 
 ```{r help3, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Help (III)", out.width = '70%'}
 knitr::include_graphics("pics/2help3.png")

@@ -61,7 +61,7 @@ In addition to making comparisons involving vectors of length 1, you can also do
 x2 <- c(1, 2, 6)
 x3 <- c(2, 2, 4)
 logi_1 <- x2 <= x3
-logi_1 
+logi_1
 ```
 
 As `x2` and `x3` are of the same length, **element-wise** comparison will be applied. The result of this comparison `logi_1` will be a logical vector of the same length, and only contain `TRUE` and `FALSE.` You can also manually check that the values of `logi_1` agree with the comparisons `1 <= 2`, `2 <= 2`, and `6 <= 4`.
@@ -70,7 +70,7 @@ Similar to the arithmetic operations on numeric vectors, the **recycling rule** 
 
 ```{r, results = TRUE}
 x3 <- c(2, 2, 4)
-x3 != 2 
+x3 != 2
 ```
 
 Here, `x3` is a numeric vector with length of 3, and `2` is a numeric vector of length 1. From the result, you can see that `2` is compared with each element in `x3`, producing a length-3 logical vector. You can simply check the values by doing the following comparisons: `2 != 2`, `2 != 2` and `4 != 2`.
@@ -106,7 +106,7 @@ class(char_1)
 It is worth mentioning that, R is case-sensitive in terms of the expression of `TRUE` and `FALSE`. Any expression other than `TRUE`, `FALSE`, `T`, or `F` will be recognized as character values or name of an object in R, not logical values. Please see the example below. 
 
 ```{r, error = TRUE, results = TRUE}
-# Valid Expression 
+# Valid Expression
 class(c(TRUE, T))
 
 # Invalid Expression
@@ -163,5 +163,3 @@ Write the R code to complete the following tasks.
 1. Suppose we have `x1 <- c(1, 2, 3)`, create a logical vector with name `logi_1` that represents whether each element of `x1` is less than or equal to its square.
 
 2. Suppose we have `logi_2 <- c(TRUE, TRUE, FALSE)`. Create a logical vector of length 4 with name `logi_3` with elements representing whether `logi_2` is of integer type, double type, character type, and logical type, respectively.
-
-

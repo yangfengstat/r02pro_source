@@ -10,7 +10,7 @@ animals <- c("sheep", "pig", "monkey", "sheep", "sheep", "pig")
 
 So, what is exactly a **factor**? It can be viewed as a special type of vector whose elements take on a **fixed and known** set of different values. You can create a factor from a vector using the `factor()` function. To understand the output of a factor, it is helpful to compare the results with the original vector `animals`. 
 ```{r, results = TRUE}
-animals_fac <- factor(animals)  
+animals_fac <- factor(animals)
 animals_fac
 animals
 ```
@@ -72,7 +72,7 @@ In addition to creating factors from character vectors, you can also create them
 ```{r}
 x <- rep(3:1, 1:3)
 x_fac <- factor(x)
-y <- rep(c(T, F), c(5, 3))
+y <- rep(c(TRUE, FALSE), c(5, 3))
 y_fac <- factor(y)
 ```
 
@@ -117,8 +117,8 @@ factor(conditions)
 
 Different from the animals in `animals`, the conditions have a natural ordering. We know average < good < excellent. To encode this information in a factor, you can create a so-called **ordered factor** by setting `ordered = TRUE` in the `factor()` function and specify the levels in the ascending order of the desired ordering. 
 ```{r, results = TRUE}
-condition_ordered_fac <- factor(conditions, 
-                                ordered = TRUE, 
+condition_ordered_fac <- factor(conditions,
+                                ordered = TRUE,
                                 levels = c("average", "good", "excellent"))
 condition_ordered_fac
 ```
@@ -130,7 +130,7 @@ condition_ordered_fac[1] < condition_ordered_fac[2]
 
 The result is `FALSE` since excellent > good. Let's check what would be the result if we don't specify `order = TRUE`.
 ```{r, warning=TRUE}
-condition_fac <- factor(conditions, 
+condition_fac <- factor(conditions,
                         levels = c("average", "good", "excellent"))
 condition_fac[1] < condition_fac[2]
 ```

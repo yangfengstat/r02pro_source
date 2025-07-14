@@ -65,7 +65,7 @@ c(x[!xb3], x[xb3]) == x
 
 ### AND operator by `&`
 
-Now, we will introduce the AND operator `&`. For two logical vectors of **the same length**, `&` performs comparisons elementwisely. For each location of the resulting vector, the value will be `TRUE` if the values in the same location of the input two vectors are **both `TRUE`**, and will be `FALSE` otherwise. In particular, for each element, we have the following summary. 
+Now, we will introduce the AND operator `&`. For two logical vectors of **the same length**, `&` performs comparisons element-wisely. For each location of the resulting vector, the value will be `TRUE` if the values in the same location of the input two vectors are **both `TRUE`**, and will be `FALSE` otherwise. In particular, for each element, we have the following summary. 
 
 ```{r, echo=FALSE}
 Operation  <- c("TRUE & TRUE", "TRUE & FALSE", "FALSE & TRUE", "FALSE & FALSE")
@@ -82,7 +82,7 @@ c(FALSE, FALSE, FALSE, TRUE, TRUE) & c(TRUE, TRUE, FALSE, TRUE, FALSE)
 
 ```
 
-As explained before, the AND operator works elementwisely, and the intermediate step is as below. 
+As explained before, the AND operator works element-wisely, and the intermediate step is as below. 
 
 ```{r}
 c(FALSE & TRUE, FALSE & TRUE, FALSE & FALSE, TRUE & TRUE, TRUE & FALSE)
@@ -90,7 +90,7 @@ c(FALSE & TRUE, FALSE & TRUE, FALSE & FALSE, TRUE & TRUE, TRUE & FALSE)
 
 As you can see from the result, only the fourth element is `TRUE` since the fourth element of both input logical vectors is `TRUE`.  
 
-Since the AND operator makes comparisons elementwisely, the *recycling rule* also works here. As in the arithmetic operations, normally, we mix one vector with length > 1 and another one with length 1.
+Since the AND operator makes comparisons element-wisely, the *recycling rule* also works here. As in the arithmetic operations, normally, we mix one vector with length > 1 and another one with length 1.
 ```{r}
 c(FALSE, FALSE, FALSE, TRUE, TRUE) & FALSE
 ```
@@ -105,7 +105,7 @@ xb3 & xs4
 From the result, you know that both `xb3` and `xs4` have value `TRUE` for the fourth element, which means the statement that *the value is > 3 and <= 4* is TRUE for the fourth element in `x`. Then, you can use `xb3 & xs4` (a logical vector) to do vector subsetting. 
 
 ```{r}
-x[xb3 & xs4]                                      
+x[xb3 & xs4]
 ```
 
 Here, you get a subvector of `x` with the value `4`.

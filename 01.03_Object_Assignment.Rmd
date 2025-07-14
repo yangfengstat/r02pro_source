@@ -73,7 +73,7 @@ X_num
 In addition, you can assign **value(s)** of an expression to a name. Let's try to simplify the three expressions we showed at the beginning of this section. It is easy to observe that the three expressions share a common term `exp(3) / log(20,3) * 7`. Let's assign the common term to a name.
 
 ```{r results = TRUE}
-y_num <- exp(3) / log(20,3) * 7
+y_num <- exp(3) / log(20, 3) * 7
 y_num
 ```
 
@@ -92,9 +92,9 @@ Note that in the object assignment process, it is not the expression itself but 
 You can also try the following examples by yourself.
 
 ```{r, results=FALSE}
-z_num1 <- floor(7 / 3) 
+z_num1 <- floor(7 / 3)
 z_num1
-z_num2 <- 7%/%3
+z_num2 <- 7 %/% 3
 z_num2
 ```
 
@@ -123,7 +123,9 @@ TRUE <- 12
 Some commonly used reserved keywords that cannot be used as names are listed as below.
 
 ```{r results = TRUE, echo=FALSE, warning=FALSE}
-knitr::kable(matrix(c("TRUE", "FALSE", "NA", "Inf", "NaN", "function", "if", "else", "for", "while", "break", "next", "repeat", "return"), 7, 2))
+knitr::kable(matrix(c("TRUE", "FALSE", "NA", "Inf",
+ "NaN", "function", "if", "else", "for", "while",
+  "break", "next", "repeat", "return"), 7, 2))
 ```
 
 To get a complete list of reserved words, you can run the following code.

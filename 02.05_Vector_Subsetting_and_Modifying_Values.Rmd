@@ -61,13 +61,13 @@ Now, let's delve into this section's main focus: vector subsetting. At some poin
 In this part, we will introduce two common ways to do vector subsetting in R. Before we get started, let's create a vector which will be used throughout this part. 
 
 ```{r}
-h <- c(3,1,4,2,90)
+h <- c(3, 1, 4, 2, 90)
 ```
 
 
 ***a. Use logical vectors to do vector subsetting***
 
-Firstly, let's see how we can apply logical vectors to do vector subsettings. Following the original vector's name, a pair of square brackets `[ ]` is used to include a logical vector of the **same length** as the original vector. Here is an example,
+Firstly, let's see how we can apply logical vectors to do vector subsetting. Following the original vector's name, a pair of square brackets `[ ]` is used to include a logical vector of the **same length** as the original vector. Here is an example,
 
 ```{r}
 h[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
@@ -192,16 +192,16 @@ It is as straightforward as it looks like! From the result, you can see that you
 Firstly, let's review values of vector `h` and get a subset of it. 
 
 ```{r}
-h <- c(3,1,4,2,90)
-h[c(2,4)]
+h <- c(3, 1, 4, 2, 90)
+h[c(2, 4)]
 ```
 
 Obviously, you will get a numeric vector with `1` and `2` as the values. Let's see how to change values for a subset of `h`. You just need to assign new values to the subset, then you can verify the values of `h`. Let's see an example,
 
 ```{r}
-h[c(2,4)] <- c(10, 20)
+h[c(2, 4)] <- c(10, 20)
 h
-h[c(2,4)] <- 10         #recycling rule applies
+h[c(2, 4)] <- 10         #recycling rule applies
 h
 ```
 
@@ -213,7 +213,7 @@ Another way to change values in vectors is to do object assignment again using t
 
 Let's first reset the values of `h`.
 ```{r}
-h <- c(3,1,4,2,90)
+h <- c(3, 1, 4, 2, 90)
 ```
 
 
@@ -226,7 +226,7 @@ knitr::include_graphics("pics/2h1.png")
 We should agree that `h` is a numeric vector with 5 values Then let's try to do an object assignment again, this time you can assign different values to `h` and see what will happen to `h`.  
 
 ```{r}
-h <- c(1,2,3,4,5)
+h <- c(1, 2, 3, 4, 5)
 h
 ```
 
@@ -250,8 +250,8 @@ knitr::include_graphics("pics/2h3.png")
 If you assign values of a subvector to a name, you will create a new vector. Now `hs` is not the subset of `h`, it is a vector with the same value as the subset. If you assign different value(s) to `hs`, there will be no change on `h`.
 
 ```{r, eval=FALSE }
-h <- c(3,1,4,2,90)
-hs <- h[c(2,4)]
+h <- c(3, 1, 4, 2, 90)
+hs <- h[c(2, 4)]
 hs <- 10
 h
 ```

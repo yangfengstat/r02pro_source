@@ -14,8 +14,8 @@ Next, we will divide statistical functions into several groups, and introduce th
 ### Minimum and Maximum
 
 ```{r}
-min(h) 
-max(h) 
+min(h)
+max(h)
 range(h)
 ```
 
@@ -23,8 +23,8 @@ First, you can get the **minimum** and **maximum** values of a numeric vector by
 
 
 ```{r}
-which.min(h) 
-which.max(h) 
+which.min(h)
+which.max(h)
 ```
 
 In addition to getting the minimum and the maximum values, it is often useful to get the corresponding locations of them. In `h`, the minimum value 0 is located in the fourth place, and this is why you will get a result of `4` from `which.min()`. If multiple elements are assigned with the same minimum value, `which.min()` will return the first location. Similarly, `which.max()` tells you the location of the maximum value.
@@ -41,8 +41,8 @@ The third and fourth elements in `g` both have the minimum value, but `which.min
 
 
 ```{r}
-cummin(h) 
-cummax(h) 
+cummin(h)
+cummax(h)
 ```
 
 In addition to calculating the minimum value of all elements, you can also use the **cumulative minimum** function, called `cummin()`. It returns a vector of the same length as the input vector, with the value at each location being the minimum of all preceding elements until that location in the original vector. For example, the first element of `cummin(h)` is `3` because the minimum of the first element in the original vector is always itself. The second element of `cummin(h)` is `2`, since the minimum of the first two elements (`3` and `2`) in `h`is 2, and so on. 

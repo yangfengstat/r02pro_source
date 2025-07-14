@@ -6,7 +6,7 @@ After creating a numeric vector, we usually need to arrange (sort) the elements 
 First, let's create a numeric vector to be used throughout this section.
 
 ```{r}
-x <- c(2, 3, 2, 0, 4, 7) 
+x <- c(2, 3, 2, 0, 4, 7)
 x #check the value of x
 ```
 
