@@ -1,177 +1,186 @@
-## Text Formatting in R Markdown {#rmd-text-formating}
+## Text Formatting in R Markdown {#rmd-text-formatting}
 
-Having learned the YAML Header and R Code Chunks in Section \@ref(intro-r-markdown), we will introduce how to **format text** in R Markdown document, which is crucial in writing a report.
+You've learned about the powerful YAML header and the utility of R Code Chunks in Section \@ref(intro-r-markdown). Now, your journey continues into the art of **text formatting**. A well-formatted report is not just professional; it's a powerful tool to guide your reader through your data story.
 
-In particular, R Markdown follows the syntax of **Pandoc**'s Markdown, a set of markup annotations for plain text files. Pandoc (https://pandoc.org/) is a universal document converter that converts documents from one markup format into another. Here, text in the .Rmd file is called the **marked up text**, and text in the output document is called the **formatted text**. When you knit the .Rmd file, Pandoc transforms the marked up text into formatted text in the specified file format. 
+R Markdown uses **Pandoc's Markdown**, a simple yet powerful syntax for creating beautifully formatted documents. Think of the text in your `.Rmd` file as your raw materials (**marked-up text**), and the  knitted document as your polished creation (**formatted text**).
 
-In this section, we will introduce how to get several kinds of formatted text in the output document by compiling the .Rmd file. 
+Let's explore the tools at your disposal.
 
-### Special text formats
+### Headers: Your Document's Signposts
 
-Firstly, let's discuss how to generate a couple of special formatted text.
+Use different numbers of hash symbols (`#`) to create up to six levels of headers. More `#` symbols mean a lower-level header.
 
-***a. different header levels***
-
-You may use different numbers of "#" before the marked up text to generate different header levels in the output document. (with more "#"s indicating lower levels and smaller fonts).  For example, you can try to the following lines in the .Rmd file and see what happens in the output document. R Markdown automatically numbers sections when you set number_sections: true in the YAML header.
-
-```
-# Header1
-## Header2
-### Header3
-#### Header4
-##### Header5
-###### Header6
+``` markdown
+# Level 1: The Chapter Title
+## Level 2: A Major Section
+### Level 3: A Subsection
+#### Level 4: A Sub-subsection
+##### Level 5: A Sub-sub-subsection
+###### Level 6: A Sub-sub-sub-subsection
 ```
 
-***b. change the text into italic type***
+**Pro-Tip:** Set `number_sections: true` in the YAML header to automatically number your sections.
 
-To make the formatted text into italic type, you can simply use a pair of `*` around the text with no space. For example `*italic*` in the .Rmd file generates *italic* in the output document.
+### Emphasis: Making Your Point
 
-***c. change the text into bold type***
+Markdown allows you to emphasize text in various ways. Here are some common styles:
 
-To make the formatted text into bold type, you can simply use a pair of `**` around the marked up text with no space. For example `**bold**` in the .Rmd file generates **bold** in the output document.
+| Style                 | Syntax                   | Example                                    |
+|-----------------|---------------------|----------------------------------|
+| *Italics*             | `*text*` or `_text_`     | *For emphasis or scientific names*         |
+| **Bold**              | `**text**` or `__text__` | **To show strong importance**              |
+| \~\~Strikethrough\~\~ | `~~text~~`               | \~\~This idea was later disproven.\~\~     |
+| `Code Font`           | `` `text` ``             | Use for `function_names()` or `variables`. |
 
-***d. create inline code***
+### Inline Code: Displaying and Evaluating
 
-Sometimes you may want to mark text or code as **inline code**. To do that, you need to use a pair of  `` ` ``  around the text or code. We have seen many inline codes so far. For example, `*italic*` is an inline code. Another common usage is when you want to include code along with other text outside code chunks.  For example `` `1 + 1` ``  in the markup text generates `1 + 1` in the formatted text. Here, we only display the code without running it. If you want to show the output instead of code, you can use `` `r ` ``. For example, `` `r knitr::inline_expr('1 + 1')` `` will generate `r 1 + 1` in the formatted text. 
+You can include code within your sentences in two ways:
 
-Note that if you add a pair of `` ` `` around code inside the the code chunk, you will get an error message when you knit the file.
+-   To display code as text: Wrap it in single backticks. For example, `1 + 1` renders as 1 + 1.
+-   To evaluate code and show its output: Use inline R code with `` `r ` ``. For example, `` `r knitr::inline_expr('1 + 1')` `` evaluates to **2** in the output.
 
-```{r rmd-code, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Error message (I)", out.width = '90%'}
+> **Heads‑up:** Never wrap code *inside* a code chunk with back‑ticks: `knitr()` will treat them as unmatched delimiters and throw an error when you knit.
+
+```{r incorrect-back-tick-code, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Incorrect back-ticks in a code chunck", out.width = '90%'}
 knitr::include_graphics("pics/10code.PNG")
 ```
 
-```{r error, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="Error message (II)", out.width = '90%'}
+```{r incorrect-back-tick-code-error, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The error message", out.width = '90%'}
 knitr::include_graphics("pics/10error.PNG")
 ```
 
+### Lists: Ordered and Unordered
 
+Use lists to organize information and break down complex topics.
 
-***e. insert hyperlinks***
+-   **Unordered Lists**: Start each line with `*`, `+`, or `-`.
+-   **Ordered Lists**: Start each line with a number. R Markdown will automatically sequence them correctly, even if you use 1. for every item.
+-   **Nested Lists**: Indent items to create sub-lists. You can mix and match ordered and unordered lists.
 
-To insert a hyperlink in the output document, you can use the format `[link](address)` in the .Rmd file. For example, `[r02pro](https://r02pro.github.io/)` in the .Rmd file will generate the text [r02pro](https://r02pro.github.io/) with hyperlink to this book in the output document. 
+Here is an example of a mixed list:
 
-***f. write latex equations***
-
-When writing documents that contain math symbols or equations, you can use latex equations directly in an R Markdown file, just like writing a .tex file. For example, you can use `$\sum_{i=1}^{10} i = 55$` in the .Rmd file to get $\sum_{i=1}^{10} i= 55$ in the output document. You can also use a pair of `$$` to write in display math mode. Say `$$\sum_{i=1}^{10} i = 55$$` in the .Rmd file will generate
-$$\sum_{i=1}^{10} i = 55$$ in the output document.
-
-Lastly, please see the an example which has all components introduced in this part. You can copy the following lines and paste them on an R Markdown document, then click the knit button to see what will you get in the ouput document.
-
-```
-# H1
-*This is an example.*
-## H2
-I **learned** to use `a <- rnorm(1)` to generate normal distributed random variable in [r02pro](https://r02pro.github.io/). The result of `1 + 1` is `r 1 + 1`.
-### H3
-I learned how to sum up numbers when I was young. For example,
-$$\sum_{i=1}^{10} i = 55$$
+``` markdown
+1.  First, collect the data.
+2.  Second, clean the data.
+    * Check for missing values (`NA`).
+    * Ensure correct data types.
+3.  Finally, analyze the data.
 ```
 
-Aside from the headings, you will see the following output.
-
-*This is an example.*
-
-I **learned** to use `a <- rnorm(1)` to generate normal distributed random variable in [r02pro](https://r02pro.github.io/). The result of `1 + 1` is `r 1 + 1`.
-
-I learned how to sum up numbers when I was young. For example,
-$$\sum_{i=1}^{10} i = 55$$
+1.  First, collect the data.
+2.  Second, clean the data.
+    -   Check for missing values (`NA`).
+    -   Ensure correct data types.
+3.  Finally, analyze the data.
 
 
+### Hyperlinks: Connecting to the World
 
-### Lists in R Markdown
+Guide your readers to external resources with hyperlinks. The format is `[Text to display](URL)`.
 
-Secondly, we will introduce how to generate lists in the output document. There are two kinds of lists, **unordered lists** and **ordered lists**.
-
-Generally, To create an unordered list, you can use the symbol `*`, `+`, or `-` at the beginning of the line with a space between the symbol and the text. To create higher order lists, you just need to add extra indent at the beginning of the line. Different layers have different indents and you need to align the items of the same order. Normally, there are at most three layers in a list. Please feel free to try the following example and edit it to your need. 
-
-```
-* Item 1
-* Item 2
-    + Item 2a
-        - Item 2a.a
-        - Item 2a.b
-    + Item 2b
-* Item 3
-    + Item 3a
-```
-You will see the following output in the formatted text.
-
-* Item 1
-* Item 2
-    + Item 2a
-        - Item 2a.a
-        - Item 2a.b
-    + Item 2b
-* Item 3
-    + Item 3a
-    
-To create an **ordered list**, you can use numbers followed by the contents with a space in between. Similar to unordered list, you can add extra layers as needed. Please see the following example with some Spanish numbers. 
-
-```
-1. uno                                           
-2. dos                                            
-    2.1. dos.uno  
-    2.2. dos.dos  
-3. tres                                            
-    3.1. tres.uno  
-    3.2. tres.dos  
-```
-You will see the following output.
-
-1. uno                                           
-2. dos                                            
-    2.1. dos.uno  
-    2.2. dos.dos  
-3. tres                                            
-    3.1. tres.uno  
-    3.2. tres.dos                                     
-   
-Markdown is forgiving--you may write all items as 1. and Pandoc will still number them sequentially. You can try the following. 
-
-```
-1. uno                                           
-1. dos                                            
-1. tres                                            
-```                                        
-       
-
-
-Of course, you can also mix ordered and unordered lists. Feel free to try the following example in your .Rmd file. 
-
-```
-1. Item 1
-2. Item 2
-    + Item 2a
-        - Item 2a.a
-        - Item 2a.b
-    + Item 2b
-3. Item 3
-    +  Item 3a
+```markdown
+I have learned R from the book [r02pro](https://r02pro.github.io/).
 ```
 
+This will create a clickable link in the output document that says 
 
-### Tables in R Markdown
+I have learned R from the book [r02pro](https://r02pro.github.io/).
 
-In addition to lists, you can easily create tables using R Markdown via the `kable()` function in the **knitr** package. You need to install the **knitr** package if you haven't done so. 
+### Blockquotes: Highlighting Wisdom
 
-You can study the following example and adapt it to your needs.
+Use the `>` character to create a blockquote. This is perfect for quoting sources or emphasizing a key insight.
 
-````
-```{r echo = FALSE, results = TRUE}`r ''`
-Code  <- c("`dnorm(x, mean, sd)`","`pnorm(q, mean, sd)`","`qnorm(p, mean, sd)`","`rnorm(n, mean, sd)`")
-Name <- c("probability density function", "cumulative distribution function", "quantile function", "random number generator")
-d <- data.frame(Code, Name)
-knitr::kable(d)
+```markdown
+> "The best thing about being a statistician is that you get to play in everyone's backyard." - John Tukey
 ```
-````
 
-```{r echo = FALSE, results = TRUE}
-Code  <- c("`dnorm(x, mean, sd)`","`pnorm(q, mean, sd)`","`qnorm(p, mean, sd)`","`rnorm(n, mean, sd)`")
-Name <- c("probability density function", "cumulative distribution function", "quantile function", "random number generator")
-d <- data.frame(Code, Name)
-knitr::kable(d)
+This will generate 
+
+> "The best thing about being a statistician is that you get to play in everyone's backyard." - John Tukey
+
+
+### Footnotes: Adding Extra Details
+
+Add non-essential details or citations using footnotes. Use `[^1]` for the marker and define it anywhere in your document. A more convenient inline method is `^[Your footnote text here.]`.
+
+```markdown
+This is a statement with a footnote.[^1]
+
+[^1]: This is the footnote text that provides additional information.
 ```
+
+This is a statement with a footnote.[^1]
+
+[^1]: This is the footnote text that provides additional information.
+
+
+### The Language of the Universe: Writing Mathematics
+
+R Markdown allows you to write beautiful mathematics using LaTeX syntax.
+
+#### Inline Equations
+
+For small formulas that fit within a line of text, wrap your LaTeX code in single dollar signs (`$`).
+
+```markdown
+**Fun Fact:** Did you know that Euler's Identity, 
+$e^{i\pi} + 1 = 0$, connects five of the most fundamental constants in mathematics?
+```
+
+**Fun Fact:** Did you know that Euler's Identity, $e^{i\pi} + 1 = 0$, connects five of the most fundamental constants in mathematics?
+
+#### Displayed Equations
+
+For larger equations that deserve their own line, wrap them in double dollar signs (`$$`).
+
+
+```markdown
+*Statistical Insight:* The probability density function of the normal distribution $N(\mu, \sigma^2)$, a cornerstone of statistics, is given by:
+$$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} $$
+```
+
+*Statistical Insight:* The probability density function of the normal distribution $N(\mu, \sigma^2)$, a cornerstone of statistics, is given by:
+$$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} $$
+
+
+
+### Tables: From Simple to Stunning
+
+While you can write tables by hand in Markdown, it's far more powerful to generate them with R. The `knitr::kable()` function is your starting point.
+
+For a simple table, you can create a data frame in R:
+
+```{r basic-table, echo=TRUE}
+df <- data.frame(
+  Statistic = c("Mean", "Median", "Standard Deviation"),
+  R_Function = c("`mean()`", "`median()`", "`sd()`"),
+  Description = c("The average value", "The middle value", "A measure of spread")
+)
+knitr::kable(df, caption = "Common Descriptive Statistics in R")
+```
+
+**Power-Up with `kableExtra`:** For truly publication-quality tables, the **kableExtra** package is a must-have. It allows for advanced styling.
+
+```{r kableExtra-table, echo=TRUE}
+# You may need to run this once in your Console: install.packages("kableExtra")
+library(kableExtra)
+
+# Let's show some fun facts about planets
+planets_df <- data.frame(
+  Planet = c("Mercury", "Earth", "Mars", "Jupiter"),
+  Type = c("Terrestrial", "Terrestrial", "Terrestrial", "Gas Giant"),
+  Moons = c(0, 1, 2, 95),
+  `Gravity (m/s^2)` = c(3.7, 9.8, 3.7, 24.8),
+  check.names = FALSE
+)
+
+kable(planets_df, caption = "Fun Facts About Our Solar System Neighbors") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE) %>%
+  column_spec(2, bold = TRUE) %>%
+  add_header_above(c(" " = 1, "Classification" = 1, "Satellites" = 2))
+```
+This will create a table with a header row and some styling applied.
+
 
 ### Insert citations and manage bibliographies in R Markdown
 
@@ -200,4 +209,46 @@ The .bib file is a plain-text file that consists of bibliography entries like th
 Then, each bibtex items can be cited directly within the documentation using the syntax `@key`, where key is the citation key in the first line of the entry, e.g., `@r02pro` will show as @r02pro in the document. To put citations in parentheses, use `[@key]`. To cite more than one items, separate the keys by semicolons, e.g., `[@key-a; @key-b; @key-c]`. To suppress the author name, you can add a minus sign before @, e.g., `[-@r02pro]` will generate [-@r02pro].
 
 
-To learn more about citations and bibliography in R Markdown, you can read the excellent book by @xie2020r.
+To learn more about citations and bibliography in R Markdown, you can read the excellent book by @xie2020r..
+
+
+### Your Turn: A Mini-Challenge
+
+Time to get your hands dirty! Create a new `.Rmd` file and try to build the following mini-report. This is the best way to solidify your new skills.
+
+1.  **Create a Level 1 Header:** "My Favorite Mathematical Constant"
+2.  **Write a sentence in bold** explaining what your favorite constant is (e.g., **My favorite constant is  $\pi$**).
+3.  **Add a blockquote** with a fun fact about it.
+4.  **Create an ordered list** with at least two reasons why you like it.
+5.  **Include an inline R calculation.** For example: "A circle with a radius of 5 units has a circumference of `` `r  knitr::inline_expr('2 * pi * 5')` `` units."
+6.  **Add a footnote** with a link to a Wikipedia article about your chosen constant.
+
+Good luck, and happy formatting\!
+
+An example .Rmd file is below for your reference. 
+
+```markdown
+---
+title: "Mini-Challenge Solution: My Favorite Mathematical Constant"
+output: html_document
+---
+
+# My Favorite Mathematical Constant
+
+**My favorite constant is  $e$**
+
+> Euler's number, $e$, is approximately 2.71828 and is the base of the natural logarithm. It appears everywhere in growth processes, probability, and calculus!
+
+Here are a few reasons why I like $e$:
+
+1. It describes continuous growth and exponential change perfectly.
+2. It has deep connections to calculus, particularly in limits and derivatives.
+
+For example, if something grows continuously at a rate of 100%, after 1 unit of time it grows to:
+
+`r knitr::inline_expr('exp(1)')` units.
+
+You can learn more about $e$ on its [Wikipedia page](https://en.wikipedia.org/wiki/E_(mathematical_constant)).[^1]
+
+[^1]: Wikipedia article: https://en.wikipedia.org/wiki/E_(mathematical_constant)
+```

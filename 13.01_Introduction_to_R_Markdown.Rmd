@@ -77,7 +77,7 @@ It is used to specify the document information, including the title, author, dat
 
 ***b. Text***
 
-After the YAML header, you can see some text. Unlike R script, you don't need to use the pound sign `#` to write text in an R Markdown document. Indeed,  you can write as if you are writing in a text editor, though R Markdown provides a rich collection of text formats, which will be discussed in Section \@ref(rmd-text-formating).        
+After the YAML header, you can see some text. Unlike R script, you don't need to use the pound sign `#` to write text in an R Markdown document. Indeed,  you can write as if you are writing in a text editor, though R Markdown provides a rich collection of text formats, which will be discussed in Section \@ref(rmd-text-formatting).        
 
 
 ***c. Code Chunks***
