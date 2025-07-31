@@ -2,6 +2,9 @@
 
 First, let's review the definition of **normal distribution**, which is also called **Gaussian distribution**. If $X\sim N(\mu, \sigma^2)$, we say $X$ is a random variable following a normal distribution with mean $\mu$ and variance $\sigma^2$. 
 
+The normal distribution plays a central role in statistics due to the **Central Limit Theorem**,  which states that the sum of many independent and identically distributed random variables tends to follow a normal distribution, regardless of their original distribution. 
+It appears frequently in natural and social sciences as a model for measurement errors, test scores, heights, etc.
+
 In the following table, we list the four useful functions for normal distribution, and they will be introduced in the subsequent four parts, respectively.
 
 ```{r echo = FALSE, results = TRUE}
@@ -109,10 +112,34 @@ ggplot(norm_dat) +
   geom_line(aes(x = x, y = cdf, color = dist))
 ```
 
+### The Empirical Rule (68-95-99.7)
+
+A key property of the normal distribution is the Empirical Rule. It states that for any normal distribution:
+
+- Approximately 68% of the data falls within 1 standard deviation of the mean.
+- Approximately 95% of the data falls within 2 standard deviations of the mean.
+- Approximately 99.7% of the data falls within 3 standard deviations of the mean.
+
+We can verify this with `pnorm()`. For a standard normal distribution N(0,1):
+```{r, results = TRUE}
+# Probability within 1 SD of the mean
+prob_1_sd <- pnorm(1) - pnorm(-1)
+# Probability within 2 SD of the mean
+prob_2_sd <- pnorm(2) - pnorm(-2)
+# Probability within 3 SD of the mean
+prob_3_sd <- pnorm(3) - pnorm(-3)
+cat(sprintf("%% within 1 SD: %.3f\n%% within 2 SD: %.3f\n%% within 3 SD: %.3f\n", 
+            prob_1_sd, prob_2_sd, prob_3_sd))
+```
 
 ### Quantile Function  {#qf}
 
-The third useful function related to distributions is the **quantile function**. You can compute the quantile of the normal distribution using `qnorm(p, mean, sd)`. The quantile function is the inverse function of the cdf. In particular, the $p$ quantile returns the value $x$ such that
+The third useful function related to distributions is the **quantile function**. It answers the question: "At what value $x$ is the probability of being less than or equal to it equal to a given probability $p$?"
+
+
+
+
+You can compute the quantile of the normal distribution using `qnorm(p, mean, sd)`. The quantile function is the inverse function of the cdf. In particular, the $p$ quantile returns the value $x$ such that
 $$F(x) = P(X\leq x) =  p$$ 
 
 Let's verify `qnorm()` is indeed the inverse function of `pnorm()` using the following example. 
