@@ -156,12 +156,9 @@ ls()
 
 ### Exercises
 
-1. Write R code to create a numeric vector named `vec_1` with values `7 24 8 26`, get its length, and find out its type.
+1. Write R code to create a character vector named `char_1` with values `"I"`, `"am"`, `"learning"`, `"R!"`, get its length, find out its type, and concatenate the vector into a single string with space as the separator.
 
-2. Write R code to create a character vector named `char_1` with values `"I"`, `"am"`, `"learning"`, `"R!"`, get its length, find out its type, and concatenate the vector into a single string with space as the separator.
+2. For the `char_1` defined in Q1, find the number of characters in each string, and convert each string to upper case.
 
-3. For the `char_1` defined in Q2, find the number of characters in each string, and convert each string to upper case.
-
-4. Create a length-2 logical vector representing whether `vec_1` and `char_1` are of character type.
 
 
