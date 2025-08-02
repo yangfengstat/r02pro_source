@@ -1,8 +1,8 @@
 ## Installation of R, RStudio and R Packages  {#Installation} 
 
-### Download and Install
+### Download and Install {#download-install}
 
-As the first step, you need to download R and RStudio, whose links are as follows. For both software, you need to choose the version that corresponds to your operating system.
+First, download **R** and **RStudio** using the links below. Select the installer that matches your operating system.
 
 Download R: <https://cloud.r-project.org/>
 
@@ -12,7 +12,7 @@ Download RStudio: <https://rstudio.com/products/rstudio/download/#download>
 <!-- For a step-by-step demonstration, you can refer to the YouTube video via the following **link**. -->
 <!-- ::: -->
 
-RStudio is an *Integrated Development Environment* for R, which is powerful yet easy to use. Throughout this book, you will use RStudio instead of R to learn R programming. Without further ado, let's start with a quick tour of RStudio.
+RStudio is an *Integrated Development Environment* for R, which is powerful yet easy to use. It places the console, a syntax-highlighting editor, a workspace browser, and many other tools in a single window.
 
 ### RStudio Interface {#rstudio-interface}
 

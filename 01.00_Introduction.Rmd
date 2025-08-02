@@ -1,3 +1,17 @@
 # Introduction {#introduction}
 
-This chapter begins with the installation of R, RStudio, and R Packages in Section \@ref(Installation), shows how to use R as a fancy calculator in Section \@ref(Calculator), followed by object assignments in Section \@ref(Object-Assignment). 
+Welcome! In this book you will learn the essentials of the **R** language and the tidyverse workflow through a series of short, hands-on chapters, from zero to pro. We begin by making sure your toolkit is ready—installing **R**, **RStudio**, and a few helper packages. Next, you will discover how R doubles as a *fancy calculator*, try out the built-in help system, and learn how to write clear, reproducible code.
+
+The opening chapter closes with your first truly *R-native* skill: **creating and assigning objects**. By the end you will know how to store results, name them sensibly, and reuse them in later computations—an idea that returns throughout the book.
+
+> **At a glance – Chapter 1 roadmap**  
+> Section \@ref(Installation). **Installation**: Get R and RStudio running on your computer.  
+> Section \@ref(Calculator). **R as a Calculator**: Perform basic arithmetic, explore built-in functions, and query the help files.  
+> Section \@ref(Object-Assignment). **Object Assignment**: Save your work as named objects and manage them inside RStudio.  
+
+Each subsequent chapter builds on this foundation. Chapter 2 introduces atomic vectors, Chapter 3 dives into other object types including matrices, data frames, tibbles and lists. Later chapters tackle visualization, data wrangling, and programming patterns. 
+
+Feel free to read linearly or jump straight to the topic you need-every section is written so that examples run independently once you have completed the installation step.
+
+Happy coding!
+

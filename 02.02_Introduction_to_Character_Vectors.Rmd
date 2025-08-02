@@ -4,9 +4,9 @@ After familiarizing yourself with the numeric vectors in Section \@ref(intro-num
 
 ### Creation, class and storage type{#create-character-vector} 
 
-A **character vector** is another type of atomic vector (where all elements are of the same type). In a character vector, the value of each element is of character type, which means each element is a string. A string is a sequence of characters (including letters, numbers, or symbols) surrounded by the double quotes ("") or single quotes (\'\'). For consistency, we will stick with double quotes in this book.
+A **character vector** is another type of atomic vector (where all elements are of the same type). In a character vector, the value of each element is of character type, which means each element is a string. A string is a sequence of characters (including letters, numbers, or symbols) surrounded by the double quotes (e.g. \"a_string\") or single quotes (e.g. \'another_string\'). For consistency, we will stick with double quotes in this book.
 
-The first example: if the word book is surrounded by a pair of double quotes, then it is a string, and `"book"` is a character vector with length 1. The value of `"book"` is the string itself. Notice that here `"book"` is a vector **without** a name since we have not assigned its value to a name, which will be introduced shortly. You can then verify the number of strings in this vector by using `length()` and verify the vector type by using `class()`.
+The first example: if the word book is surrounded by a pair of double quotes, then it is a string, and `"book"` is a character vector with length 1. The value of `"book"` is the string itself. Notice that here `"book"` is a vector **without** a name since we have not assigned its value to a name. You can then verify the number of strings using `length()` and the vector type by `class()`.
 
 ```{r}
 "book"
@@ -14,9 +14,10 @@ length("book")
 class("book")
 ```
 
-Now the `class()` function will return `character`, which shows that `"book"` is a character vector.
+As you can see, the length of the character vector is 1, which means it contains only one element. The `class()` function returns `character`, indicating that this is a character vector.
 
-After assigning the value to the name r02pro, you have created a new character vector `r02pro` with "book" as the value.
+Next, let's assign the value of `"book"` to a name (say `r02pro`) using the assignment operator `<-`. This is how you create a character vector with a name. 
+
 
 ```{r}
 r02pro <- "book"
