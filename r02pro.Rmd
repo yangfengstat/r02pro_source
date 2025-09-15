@@ -1,0 +1,1056 @@
+--- 
+title: "R Programming: Zero to Pro"
+author: "[Yang Feng](https://yangfengstat.github.io/)"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+description: "R Programming: Zero to Pro"
+always_allow_html: true
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE, tidy=TRUE
+)
+```
+
+# Preface {-}
+
+```{r sheep, echo=FALSE, results = TRUE, fig.cap="", out.width = '25%'}
+knitr::include_graphics("pics/sheep.jpg")
+```
+
+This book is designed for learners and practitioners in public health, statistics, data science, and related fields who want to develop practical skills in R. Whether you're a beginner or looking to refine your analytical toolkit, this book takes you on a structured journey through essential R programming concepts, data manipulation, visualization, modeling, and reproducible research using the **tidyverse** ecosystem.
+
+Each chapter builds logically on the previous one, emphasizing clear explanations, real-world datasets, and hands-on coding examples that reinforce key ideas and methods.
+
+To support your learning, we’ve developed a companion R package, [**r02pro**](https://cran.rstudio.com/web/packages/r02pro/index.html), which includes all datasets used throughout the book. With this package, you can easily follow along with the code and complete exercises in a reproducible workflow.
+
+This book is open-source and continuously evolving. We welcome contributions and feedback via the GitHub repository.
+
+Let’s code, analyze, and explore the world of data—together.
+
+If you are an instructor and would like to use this book in your course, we are happy to provide the solutions to the exercises. Please email me at yang.feng@nyu.edu.
+
+# Contributing to the Book  {-}
+
+To improve the book, we would like to ask for your help. With your permission, we will be happy to add your name in the Acknowledgment section to show our gratitude. 
+
+### Typos or Grammar Issues {-}
+
+If you find any typos or grammar issues, please feel free to directly click the 'edit' button. This allows you to fork the repository to your GitHub account, make the necessary changes, and then submit a pull request.
+
+### General Questions or Feedback  {-}
+
+If you have more general questions or feedback about any materials in the book, we greatly appreciate if you can write to us at yang.feng@nyu.edu. 
+
+
+# Acknowledgement {-}
+
+
+
+```{r, results = "asis", echo = FALSE, message = FALSE}
+library(dplyr)
+contributors <- readr::read_csv("contributors.csv", col_types = list())
+
+contributors <- contributors %>% 
+  mutate(
+    link = glue::glue("[\\@{login}](https://github.com/{login})"),
+    desc = ifelse(is.na(login), name, ifelse(is.na(name), link, glue::glue("{name} ({link})")))
+  )
+
+cat("This book represents the culmination of numerous collaborative efforts and the synthesis of diverse perspectives. We extend our heartfelt gratitude to Dr. Rebecca Betensky, Dr. Rumi Chunara, Dr. Hai Shu, and Ms. Jianan Zhu for their invaluable contributions. Their visionary guidance was pivotal in the conceptualization and development of the courses GPH-GU 2183: Introduction to Statistical Programming in R and GPH-GU 2184: Intermediate Statistical Programming in R. Notably, Ms. Jianan Zhu played a significant role in shaping an earlier version of this book. 
+
+We are also deeply grateful to the dedicated students of GPH-GU 2183: Introduction to Statistical Programming in R, GPH-GU 2184: Intermediate Statistical Programming in R, and GPH-GU 2182: Statistical Programming in R at New York University. Their enthusiasm and commitment have greatly enriched the learning experience and inspired many of the ideas presented in this text.
+
+The roster of contributors to this book is extensive, and each individual's unique perspective and expertise has helped shape its content in meaningful ways. This text truly stands as a testament to the power of collaboration and the spirit of learning. The list of people who made contributions include ")
+cat(paste0(contributors$desc, collapse = ", "))
+```
+
+# Building Environment {-}
+
+The R session information when compiling this book is shown below.
+```{r, results=TRUE}
+sessionInfo()
+```
+
+
+In the book, package names are in **bold** text (e.g., **r02pro**), and inline codes and functions are formatted in a typewriter font (e.g. `1 + 2`, `r02pro()`). We always add parentheses after a function name (e.g. `r02pro()`).
+
+```{r, results='asis', echo=FALSE}
+if (knitr::is_latex_output()) cat("\\mainmatter\n")
+```
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction {#introduction}
+
+Welcome! In this book you will learn the essentials of the **R** language and the tidyverse workflow through a series of short, hands-on chapters, from zero to pro. We begin by making sure your toolkit is ready—installing **R**, **RStudio**, and a few helper packages. Next, you will discover how R doubles as a *fancy calculator*, try out the built-in help system, and learn how to write clear, reproducible code.
+
+The opening chapter closes with your first truly *R-native* skill: **creating and assigning objects**. By the end you will know how to store results, name them sensibly, and reuse them in later computations—an idea that returns throughout the book.
+
+> **At a glance – Chapter 1 roadmap**  
+> Section \@ref(Installation). **Installation**: Get R and RStudio running on your computer.  
+> Section \@ref(Calculator). **R as a Calculator**: Perform basic arithmetic, explore built-in functions, and query the help files.  
+> Section \@ref(Object-Assignment). **Object Assignment**: Save your work as named objects and manage them inside RStudio.  
+
+Each subsequent chapter builds on this foundation. Chapter 2 introduces atomic vectors, Chapter 3 dives into other object types including matrices, data frames, tibbles and lists. Later chapters tackle visualization, data wrangling, and programming patterns. 
+
+Feel free to read linearly or jump straight to the topic you need-every section is written so that examples run independently once you have completed the installation step.
+
+Happy coding!
+
+
+<!--chapter:end:01.00_Introduction.Rmd-->
+
+
+
+## Installation of R, RStudio and R Packages  {#Installation} 
+### Download and Install {#download-install}
+### RStudio Interface {#rstudio-interface}
+### Install and load R packages
+### Exercises
+
+<!--chapter:end:01.01_Installation.Rmd-->
+
+
+
+## Use R as a Fancy Calculator {#Calculator}
+### Add comments using "#"
+### Basic calculation
+### Get help in R {#get-help}
+### Approximation
+### Power & logarithm
+### Trigonometric function
+### Exercises
+
+<!--chapter:end:01.02_Fancy_Calculator.Rmd-->
+
+
+
+## Object Assignment {#Object-Assignment}
+### What is an R Object?
+### Assignment Operation with `<-` {#assignment}
+### Object naming rule {#Naming}
+### Review objects in environment
+### Object types
+### Exercises
+
+<!--chapter:end:01.03_Object_Assignment.Rmd-->
+
+# R Objects (I): Atomic Vectors {#r-objects}
+
+In this chapter, we focus on the most fundamental R object type: **atomic vectors**. We will introduce different types of atomic vectors, creating vectors with patterns, applying different functions and operations on vectors, comparing and extracting vectors. We will also discuss data and times, factors, and how R represents unexpected results. 
+
+
+<!--chapter:end:02.00_R_Objects_Vectors.Rmd-->
+
+
+
+## Introduction to Numeric Vectors {#intro-num-vector} 
+### Creation and class{#create-numeric-vector} 
+### Operations and recycling rule {#operation-recycling}
+### Storage types (doubles and integers) {#storage-type}
+### Printing {#printing}
+### Exercises
+
+<!--chapter:end:02.01_Introduction_to_Numeric_Vectors.Rmd-->
+
+
+
+## Introduction to Character Vectors {#intro-char-vector} 
+### Creation, class and storage type{#create-character-vector} 
+### Change case{#case}
+### Review of getting help in R
+### Exercises
+
+<!--chapter:end:02.02_Introduction_to_Character_Vectors.Rmd-->
+
+
+
+## Introduction to Logical Vectors {#intro-logi-vector} 
+### Logical vectors: creation by comparisons, class, and storage type{#create-logical-vector} 
+### Logical vectors: creation when testing for types
+### Exercises
+
+<!--chapter:end:02.03_Introduction_to_Logical_Vectors.Rmd-->
+
+
+
+## Coercion Rule {#coercion-rule}
+### Coercion with `c()`
+### Coercion in operators
+### Explicit Coercion {#explicit-coercion}
+### Exercises
+
+<!--chapter:end:02.04_Coercion_Rule.Rmd-->
+
+
+
+## Vector Subsetting and Modifying Values {#subsetting-and-modify-values}
+### Named Vectors
+### Vector subsetting
+### Access and modify values in vectors and sub-vectors
+### Exercises
+
+<!--chapter:end:02.05_Vector_Subsetting_and_Modifying_Values.Rmd-->
+
+
+
+## Numeric Vectors: Creating numeric vectors with patterns {#patterned_numeric_vectors_creation} 
+### The colon operator `:` -- Equally-spaced numeric vectors with increment of 1 or -1
+### The `seq()` function -- Equally-spaced numeric vectors with any increment
+### The sequence generator `seq_along()` -- Matching numeric vectors
+### The `rep()` Function -- Numeric vectors with repeated values
+### The `unique()` and `table()` Functions -- Getting unique elements and their frequencies
+### Exercises
+
+<!--chapter:end:02.06_Creating_Patterned_Numeric_Vectors.Rmd-->
+
+
+
+## Numeric Vectors: Sort, Rank, Order {#numeric-sort-rank-order}
+### Sort vectors with `sort()`
+### Get ranks in vectors with `rank()`
+### Get the ordering permutation via `order()
+### Exercises
+
+<!--chapter:end:02.07_Numeric_Vectors_Sort_Rank_Order.Rmd-->
+
+
+
+## Numeric vector: Summary Statistics {#numeric-vector-statistics}
+### Minimum and Maximum
+### Sum and Product
+### Mean and median
+### Quantiles
+### Summary statistics {#vector-summary}
+### Exercises
+
+<!--chapter:end:02.08_Numeric_vector_Summary_Statistics.Rmd-->
+
+
+
+## Character Vectors: Create with Repetition and Concatenate {#char-concatenate} 
+### Create character vectors with repetition
+### Concatenate strings with `paste()`
+### Output via `cat()`
+### Exercises
+
+<!--chapter:end:02.09_Character_Vectors_Create_with_Repetitions_and_Concatenate.Rmd-->
+
+
+
+## Character Vectors: Sort, Rank, Order {#character-sort-rank-order}
+### Ordering rules {#ordering-rules}
+### Sort vectors with `sort()`
+### Get ranks in vectors with `rank()`
+### Get the ordering permutation via `order()`
+### Summary and comparisons
+### Exercises
+
+<!--chapter:end:02.10_Character_Vectors_Sort_Rank_Order.Rmd-->
+
+
+
+## Character Vectors, Factors & Ordered Factors {#factors}
+### Create a factor from a vector
+### Set the factor levels and labels
+### Ordered factors
+### Exercises
+
+<!--chapter:end:02.11_Character_Vectors_vs_Factors.Rmd-->
+
+
+
+## Logical Vectors: Create with Repetitions and Summary Functions {#logical-patterns}
+### Create logical vectors with repetitions
+### Statistical Functions on Logical Vectors {#functions-logi}
+### Exercises
+
+<!--chapter:end:02.12_Logical_Vectors_with_Patterns.Rmd-->
+
+
+
+## Logical Vectors: Logical Operators{#logical_operators}
+### NOT operator by `!`
+### AND operator by `&`
+### OR operator by `|`
+### Exclusive OR by `xor`
+### Summary of Logical Operators
+### Exercises
+
+<!--chapter:end:02.13_Logical_Vectors_Logical_Operators.Rmd-->
+
+
+
+## Set Operations on Vectors {#set-operations-vectors}
+### Set operations on vectors
+### Applicance of the coercion rule
+### Summary
+### Exercises
+
+<!--chapter:end:02.14_Set_Operations.Rmd-->
+
+
+
+## Missing Values (`NA`) {#missing-values}
+### `NA` and `NaN` are contagious
+### Work with `NA` values
+### Exercises
+
+<!--chapter:end:02.15_Missing_Values.Rmd-->
+
+
+
+## Dates and Times {#date-time}
+### Dates
+### Times
+### Exercises
+
+<!--chapter:end:02.16_Dates_and_Times.Rmd-->
+
+
+
+## Other Atomic Vector Types {#other-atomic-vector}
+### Complex Vectors
+### Raw Vectors
+### Full Coercion Ordering
+### Exercises
+
+<!--chapter:end:02.17_Other_Atomic_Vector_Types.Rmd-->
+
+# R Objects (II): Other Types {#object-other-type}
+
+In Chapter \@ref(r-objects), we introduced **atomic vectors**. In a typical application, we usually need a more complex object type to represent the data. In this chapter, we will introduce a few commonly used object types including matrix in Section \@ref(matrix), array in Section \@ref(array), data frame in Section \@ref(dataframe), tibble in Section \@ref(tibble), and list in Section \@ref(list). 
+
+<!--chapter:end:03.00_R_Objects_Other_Types.Rmd-->
+
+
+
+## Matrix {#matrix}
+### Create a matrix from a vector
+### Combine vectors or matrices into a matrix {#combine-vectors}
+### Matrix subsetting {#matrix-subsetting}
+### Modify values in sub-matrices
+### Operators and functions on matrices
+### Apply functions on each row or each column {#apply-matrix}
+### Exercises
+
+<!--chapter:end:03.01_Matrix.Rmd-->
+
+
+
+## Array {#array}
+### Create an array from a vector
+### Array subsetting
+### Operators and functions on arrays
+### Apply functions along certain dimension(s)
+### Exercises
+
+<!--chapter:end:03.02_Array.Rmd-->
+
+
+
+## Data Frame {#dataframe}
+### Introduction to Data Frames
+### Adding Observations or Variables in Data Frames
+### Subsetting and Modifying Data Frames {#subset-df}
+### Exercises
+
+<!--chapter:end:03.03_Data_Frame.Rmd-->
+
+
+
+## Tibble {#tibble}
+### Introduction to tibbles
+### Adding Observations or Variables in Tibbles
+### Tibble subsetting and modifying
+### Exercises
+
+<!--chapter:end:03.04_Tibble.Rmd-->
+
+
+
+## List {#list}
+### Create a list
+### Extract a list element and list subsetting
+### List inside a list
+### Unlist a list
+### Apply functions for each element of a list
+### List Matrix
+### Exercises
+
+<!--chapter:end:03.05_List.Rmd-->
+
+
+
+## NULL, NaN, and Inf {#null}
+### NULL
+### NaN {#NaN}
+### Inf {#Inf}
+### A comparison of the four special values in R
+### Exercises
+
+<!--chapter:end:03.06_NULL_NaN_Inf.Rmd-->
+
+
+
+## Summary of R Objects {#summary-r-objects}
+### Exercises
+
+<!--chapter:end:03.07_Summary_R_Objects.Rmd-->
+
+# Data Import and Export {#import-export}
+
+So far in this book, you have been creating objects by yourself. When working on real projects, you often need to **import** existing data into R, or **export** the created objects or analysis results into a file on the computer. In this chapter, you will learn how to import and export data of different file types. 
+
+
+<!--chapter:end:04.00_Data_Import_and_Export.Rmd-->
+
+
+
+## Introduction to Data Sets {#intro-dataset}
+### Gapminder Data Set {#intro-gapminder}
+### Small Ames Housing Price Data Set {#sahp}
+#### Sample Analysis: are two-story houses more expensive than one-story ones?
+### Converting Data Types
+### Recover Modified Values
+
+<!--chapter:end:04.01_Introduction_to_Datasets.Rmd-->
+
+
+
+## Exporting Data to Delimited Files  {#export-data}
+### Set the working directory {#setwd}
+### Delimited files
+### Write an object into a .csv file {#write-csv}
+### Write an object into a general delimited file {#write-delim}
+### Exercises
+
+<!--chapter:end:04.02_Exporting_Data_to_Delimited_Files.Rmd-->
+
+
+
+## Importing Data from Delimited Files {#import-data}
+### Import .csv Files using `read_csv()`
+### Read Inline .csv Files
+### Handling Missing Values
+### Importing Data From a Delimited File
+### Import Data Using the Menu {#import-menu}
+### Exercises
+
+<!--chapter:end:04.03_Importing_Data_from_Delimited_Files.Rmd-->
+
+
+
+## Exporting to and Importing from Excel Files  {#import-excel}
+### Export data into Excel files
+### Import Excel Files (.xls and .xlsx ) using `read_excel()`
+### Import Excel file using the menu
+### Exercises
+
+<!--chapter:end:04.04_Exporting_to_and_Importing_from_Excel_Files.Rmd-->
+
+
+
+## Exporting to and Importing from SPSS, SAS, and Stata Files  {#import-other}
+### Export and Import SPSS Files
+### Export and Import SAS Files
+### Export and Import Stata Files
+### Import using the menu
+### Exercise
+
+<!--chapter:end:04.05_Exporting_to_and_Importing_from_SPSS_SAS_Stata.Rmd-->
+
+
+
+## Save and Restore Objects and Workspace  {#save-object}
+### Save and Restore Objects using .RData
+### Save and Restore a Single Object using `saveRDS()` and `readRDS()`
+### Exercises
+
+<!--chapter:end:04.06_Save_and_Restore_Objects_and_Workspace.Rmd-->
+
+# Basic Data Visualization {#data-visualization}
+
+Equipped with the knowledge of different R objects in Chapters \@ref(r-objects) and \@ref(object-other-type), and knowing how to import data sets in Chapter \@ref(import-export), we are ready to dive into the colorful world of **data visualization**. In this chapter, you will learn the most commonly used kinds of plots that can be generated in R.
+
+<!--chapter:end:05.00_Data_Visualization.Rmd-->
+
+
+
+## Scatterplot {#scatterplot}
+### Using the `plot()` function
+### Interacting and Saving the plot from `plot()`
+### Using the `ggplot()` function {#point}
+### Interact and Save the plot from `ggplot()`
+### Exercises
+
+<!--chapter:end:05.01_Scatterplots.Rmd-->
+
+
+
+## ggplot Aesthetics (I): Constant-Valued Aesthetics {#aes-constant-value}
+### Exercises
+
+<!--chapter:end:05.02_Constant_Valued_Aesthetics_in_ggplot.Rmd-->
+
+
+
+## ggplot Aesthetics (II): Local Aesthetics Mapping {#aes-local-map}
+### Basic Local Aesthetics Mapping
+### Customize the Local Aesthetics Mapping
+### Customize the legend order for discrete variables
+### Create Logical Variables and Map to Aesthetics
+### Exercises
+
+<!--chapter:end:05.03_Map_Variables_to_Aesthetics_in_ggplot.Rmd-->
+
+
+
+## Customization in ggplot {#customization}
+### Customization of Labels and Titles
+### Customizing the Breaks on the x and y Axes
+### Zoom In to a Specific Region of the Data
+### Generate Log-Scale Plot
+### Coordinate Flip
+### Exercises
+
+<!--chapter:end:05.04_Customization.Rmd-->
+
+
+
+## Line Plots {#line-plot}
+### Line Plots via `plot()`
+### Line Plots via `geom_line()`
+### Constant-Valued Aesthetics in Line Plots
+### Mapping Variables to Aesthetics in Line Plots
+### Exercises
+
+<!--chapter:end:05.05_Line_Plots.Rmd-->
+
+
+
+## Smoothline Fits {#smoothline}
+### Creating Smoothline Fits using `geom_smooth()`
+### Constant-Valued Aesthetics in Smoothline Fits
+### Local Aesthetics Mapping in Smoothline Fits
+### Exercises
+
+<!--chapter:end:05.06_Smoothline_Fits.Rmd-->
+
+
+
+## ggplot Aesthetics (III): Global Aesthetic Mapping {#multi-geom}
+### Multiple geoms
+### Global Aesthetic Mapping {#global-aes-map}
+#### Extend Global Aesthetic Mappings
+#### Overwrite Global Aesthetic Mappings
+#### No Global Constant-Valued Aesthetics
+#### Mixing the three types of aesthetics
+### Exercises
+
+<!--chapter:end:05.07_Multiple_geoms_and_Global_Aesthetic_Mapping.Rmd-->
+
+
+
+## Bar Charts and Pie Charts via geom_bar() {#bar-charts}
+### An Introduction to Bar Chart {#intro-bar-chart}
+### Reordering Bars in Bar Charts {#reordering-bar-chart}
+### Aesthetics in Bar Charts {#bar-aes}
+### Pie Charts {#pie-charts}
+### Exercises
+
+<!--chapter:end:05.08_Bar_Pie_Charts.Rmd-->
+
+
+
+## Histograms {#histogram}
+### Using the `hist()` function
+### Using the `geom_histogram()` function
+### Aesthetics in `geom_histogram()`
+### Density Estimate Using Histograms
+### Exercises
+
+<!--chapter:end:05.09_Histograms.Rmd-->
+
+
+
+## Density Plots {#density-plot}
+### Aesthetics in Density Plots
+### Exercises
+
+<!--chapter:end:05.10_Density_Plots.Rmd-->
+
+
+
+## Boxplots {#boxplots}
+### Using the `boxplot()` function
+### Using the `geom_boxplot()` function {#boxplot-1}
+### Compare distributions in different groups {#boxplot-2}
+### Aesthetics in boxplot
+### Notched Boxplots
+### Exercises
+
+<!--chapter:end:05.11_Boxplots.Rmd-->
+
+
+
+## Arrange Multiple Plots {#arrange-multi-plots}
+### Facet wrap
+### Facet grid
+### Exercises
+
+<!--chapter:end:05.12_Arrange_Multiple_Plots.Rmd-->
+
+
+
+## Review of Basic Visualization {#review-basic-visualization}
+### Summary of geoms
+### The grammatical structure of `ggplot()`
+### A complex `ggplot()` example
+
+<!--chapter:end:05.13_Review_of_Basic_Visualization.Rmd-->
+
+# Advanced Data Visualization {#adv-visual}
+
+In Chapter \@ref(data-visualization), we introduced the most commonly used plots. If you skipped the previous chapter, it may be worthwhile to briefly review Section \@ref(review-basic-visualization). 
+
+In this chapter, we will introduce more types of plots and various customization.
+
+<!--chapter:end:06.00_Advanced_ggplots_Rmd.Rmd-->
+
+
+
+## Jitter and Count Plots {#jitter-count}
+### Overplotting
+### Jittering {#jitter}
+### Counts Plots {#count}
+### Exercises
+
+<!--chapter:end:06.01_Jitter_and_Count_Plots.Rmd-->
+
+
+
+## Violin Plots {#violin}
+### The basic violin plot
+### Violin plot with boxplot
+
+<!--chapter:end:06.02_Violin_Plots.Rmd-->
+
+
+
+## Line Segments {#add-auxiliary}
+### Using `abline()` with `plot()`
+### Using `geom_hline()`, `geom_vline()` and `geom_abline()`
+### Exercises
+
+<!--chapter:end:06.03_Line_Segments.Rmd-->
+
+
+
+## Heat Map {#heat-map}
+### Using the `heatmap()` function
+### Using `geom_tile()` in **ggplot2**
+
+<!--chapter:end:06.04_Heat_Map.Rmd-->
+
+
+
+## Error Bars {#errorbar}
+
+<!--chapter:end:06.05_Errobar_Plots.Rmd-->
+
+
+
+## Interative Plot with `plotly()` {#plotly}
+
+<!--chapter:end:06.06_Interative_Plot_with_ploty.Rmd-->
+
+
+# Data Manipulation {#data-manipulation}
+
+Placeholder
+
+
+
+<!--chapter:end:07.00_Data_Manipulation.Rmd-->
+
+
+
+## Filter Observations, Objects Masking, and the Pipe {#filter-observations}
+### Objects Masking
+### Filter Observations
+### The pipe operator {#pipe}
+### Exercise
+
+<!--chapter:end:07.01_Filter_Observations_and_Function_Overwrite.Rmd-->
+
+
+
+## Select, Rename, and Reorder Variables {#select-variables}
+### Select Variables via Names
+### Rename Variables
+### Select Variables with Patterns
+### Reorder Variables via Names
+### Exercise
+
+<!--chapter:end:07.02_Select_and_Rename_Variables.Rmd-->
+
+
+
+## Reorder Observations {#reorder-observations}
+### Exercises
+
+<!--chapter:end:07.03_Reorder_Observations.Rmd-->
+
+
+
+## Create New Variables via mutate() and transmute() {#create-variables}
+### Exercises
+
+<!--chapter:end:07.04_Create_New_Variables.Rmd-->
+
+
+
+## Create Grouped Summaries via `group_by()` and `summarize()` {#create-grouped-summaries}
+### Create Summaries
+### Create Grouped Summaries
+### Exercises
+
+<!--chapter:end:07.05_Create_Grouped_Summaries.Rmd-->
+
+
+
+## Grouped Mutate and Filter via `group_by()` {#grouped-mutate-filter}
+### Grouped Filter
+### Grouped Mutate
+### Exercises
+
+<!--chapter:end:07.06_Grouped_Mutate_and_Filter.Rmd-->
+
+
+
+## Joins {#joins}
+### Inner Join {#inner-join}
+### Left Join {#left-join}
+### Right Join {#right-join}
+### Full Join {#full-join}
+### Filtering Joins {#filtering-join}
+### A Summary of All Joins
+### Exercises
+
+<!--chapter:end:07.07_Joins.Rmd-->
+
+
+
+## Set Operations on Datasets {#set-operations-datasets}
+### `intersect(x, y)`
+### `union(x, y)`
+### `union_all(x, y)`
+### `setdiff(x, y)`
+### `symdiff(x, y)`
+### `setequal(x, y)`
+### Summary
+### Exercises
+
+<!--chapter:end:07.08_Set_Operations.Rmd-->
+
+# Tidy Data {#tidy-data}
+
+In the part several chapters, you have learned a lot in data visualization, data import and export, and data manipulation. All the data you have seen so far share a very attractive property, namely, they are all *tidy*. So, what is the so called **tidy data**?  Following the definition in @wickham2016r, tidy data has the following three interrelated properties.
+
+1. Each variable must have its own column.
+2. Each observation must have its own row.
+3. Each value must have its own cell.
+
+These properties of *tidy data* enable us to conduct efficient data manipulation and visualization. Note that in practical applications, many collected data is *untidy*. Although *untidy* data could also be very useful in terms of reporting and visually more intuitive, you are recommended to *tidy* it before applying the tools we learned in this book. 
+
+
+<!--chapter:end:08_Tidy_Data.Rmd-->
+
+
+
+## Convert Between Names and Values  {#tidy-name-value}
+### Convert Values into Column Names {#tidy-wide}
+### Convert Column Names into Values {#tidy-long}
+### Multiple Variables {#tidy-multiple}
+### Exercises
+
+<!--chapter:end:08.01_Convert_Between_Names_and_Values.Rmd-->
+
+
+
+## Separate and Combine Columns via `separate()` and `unite()`  {#separate-unite-columns}
+### Combine Columns via `unite()`
+### Separate One Column into Multiple Columns Using `separate()`
+### Exercises
+
+<!--chapter:end:08.02_Separate_and_Combine_Columns.Rmd-->
+
+
+
+## More on Missing Values  {#more-on-missing-values}
+### Missing Values in Tidy Data
+### Filling Missing Values
+
+<!--chapter:end:08.03_More_on_Missing_Values.Rmd-->
+
+# Strings {#strings}
+
+In Section \@ref(intro-char-vector), we have introduced the character vector that is consisted of strings.  In this Chapter, we will introduce various kinds of operations we can do on strings using the **stringr** package, which is a subpackage of **tidyverse**.
+
+
+<!--chapter:end:09_Strings.Rmd-->
+
+
+
+## Concatenate and Subset Strings {#combine-subset-strings}
+### Concatenate Strings
+### Create and Modify Substrings
+### Exercises
+
+<!--chapter:end:09.01_Combine_and_Subset_Strings.Rmd-->
+
+
+
+## Matching Pattern with Regular Expressions {#match-pattern}
+### Basic Pattern Matching
+### Character Classes
+### Combining Patterns with Logical Operators
+### Conclusion
+### Exercises
+
+<!--chapter:end:09.02_Matching_Pattern.Rmd-->
+
+# Statistics {#statistics}
+
+In this chapter, you will dive into the world of statistics. As a language initially designed for statistical computing, R undoubtedly provides a wide range of functions related to all aspects of probability and statistics. You will start with functions related to normal distribution in Section \@ref(normal-distribution). 
+
+
+
+
+<!--chapter:end:10_Statistics.Rmd-->
+
+
+
+## Normal Distribution  {#normal-distribution}
+### Probability Density Function (PDF) {#pdf}
+### Cumulative Distribution Function (CDF) {#cdf}
+### The Empirical Rule (68-95-99.7)
+### Quantile Function  {#qf}
+### Random Number Generator  {#rng}
+### Exercises
+
+<!--chapter:end:10.01_Normal_Distribution.Rmd-->
+
+
+
+## Other Distributions {#other-distributions}
+### Discrete vs. Continuous Distributions
+### Binomial Distribution
+### Poisson Distribution
+### Exponential Distribution
+### A Summary of Commonly Used Distributions
+### Exercise
+
+<!--chapter:end:10.02_Other_Distributions.Rmd-->
+
+
+
+## Random Permutation and Random Sampling  {#sampling}
+### Random Permutation
+#### Example in R
+### Random Sampling Without Replacement
+### Random Sampling with Replacement
+### Random Sampling with Unequal Probabilities
+### Exercise
+
+<!--chapter:end:10.03_Random_Permutation_and_Random_Sampling.Rmd-->
+
+
+
+## Multivariate Normal Distribution   {#multivariate-normal}
+### Generate Multivate Normal Distribution
+### Properties of Multivariate Normal Distribution
+### Sample Mean and Sample Covariance Matrix
+### Sample Correlation Matrix
+### Exercise
+
+<!--chapter:end:10.04_Multivariate-Normal-Distribution.Rmd-->
+
+# Control Statements {#control-statements}
+
+In the past few chapters, we have been relying on a few R packages including **ggplot2** for visualization, **dplyr** for manipulation, **readr** for export and import data, **tidyr** for tidying data, and **stringr** for handling strings. While these packages are super powerful and make writing codes much easier, they still can't do everything we want. In this chapter, we will introduce a set of **control statements**, which are essential in programming complex tasks. 
+
+<!--chapter:end:11_Control_Statements.Rmd-->
+
+
+
+## Conditional Statements via `if`, `else`, and `switch()` {#ifelse}
+### The Structure of Conditional Statements
+### Example: Checking Even or Odd Numbers
+### Using `ifelse()`
+### Multiple Conditions with `else if`
+### Using `switch()` for Multiple Choices
+#### Numeric Indexing
+#### Character Matching
+### Logical Operators in Conditional Statements
+#### Example: Comparing Operators
+#### Short-Circuit Evaluation
+#### Another Example: AND Operator
+### Exercises
+
+<!--chapter:end:11.01_If_Else.Rmd-->
+
+
+
+## Loops {#loop}
+### `for` loops with known sequence {#for-loop}
+### Combine the conditional statements with loops
+### Control Loop Flow With `next` and `break`
+### Nested Loops
+### Nested Loop via the `outer()` Function
+### Exercises
+
+<!--chapter:end:11.02_For_Loops.Rmd-->
+
+
+
+## While Loops and Repeat {#while-loop}
+### `while` loop
+### `repeat` Loop
+### Comparison of `for`, `while`, and `repeat` Loops
+### Exercises
+
+<!--chapter:end:11.03_While_Loops_and_Repeat.Rmd-->
+
+# Functions {#functions}
+
+In theory, you can already write very complicated codes, accomplishing a lot of data analysis tasks. In this chapter, you will learn a very powerful tool, **functions**.
+
+<!--chapter:end:12_Functions.Rmd-->
+
+
+
+## Introduction to Functions {#intro-functions}
+### What are Functions?
+### Syntax of a Function
+### Default Arguments in Functions
+### Project: Dice Simulation
+### Project: Get Fibonacci Sequence
+### Exercises
+
+<!--chapter:end:12.01_Introduction_to_Functions.Rmd-->
+
+
+
+## Going Beyond Basics: Advanced R Functions {#functions-advanced}
+### Returning Multiple Values Using Lists
+#### Example: Returning a List
+### Nested Functions
+### Higher-Order Functions
+### Error Handling in Functions
+### Exercise
+
+<!--chapter:end:12.02_Advanced_Functions.Rmd-->
+
+
+
+## Anonymous Functions and Scoping {#anonymous-and-scoping}
+### Anonymous Functions
+### Advanced Use Cases for Anonymous Functions
+### Scoping in R
+### Exercises
+
+<!--chapter:end:12.03_Anonymous_Functions_and_Scoping.Rmd-->
+
+# R Markdown {#r-markdown}
+
+In Section \@ref(rstudio-interface), we learned how to create a new R script. R script is useful for organizing R code and add brief comments. However, to write document with more complicated structure, you need to use something more sophisticated. In this chapter, we introduce a new file format, namely the R Markdown file (.rmd). Using R Markdown, you can turn the data analyses into high quality documents, reports, presentations, books, and many other possible forms.
+
+<!--chapter:end:13_R_Markdown.Rmd-->
+
+
+
+## Introduction to R Markdown {#intro-r-markdown}
+### Create a new R Markdown document
+### Knit the R Markdown document
+### Write an R Markdown document
+
+<!--chapter:end:13.01_Introduction_to_R_Markdown.Rmd-->
+
+
+
+## Text Formatting in R Markdown {#rmd-text-formatting}
+### Headers: Your Document's Signposts
+### Emphasis: Making Your Point
+### Inline Code: Displaying and Evaluating
+### Lists: Ordered and Unordered
+### Hyperlinks: Connecting to the World
+### Blockquotes: Highlighting Wisdom
+### Footnotes: Adding Extra Details
+### The Language of the Universe: Writing Mathematics
+#### Inline Equations
+#### Displayed Equations
+### Tables: From Simple to Stunning
+### Insert citations and manage bibliographies in R Markdown
+### Your Turn: A Mini-Challenge
+
+<!--chapter:end:13.02_Text_Formatting_in_R_Markdown.Rmd-->
+
+# A Case Study: 24 Game Solver {#case-study}
+
+In this final chapter, we will build a 24 Game Solver. The [24 Game](https://en.wikipedia.org/wiki/24_Game) is an arithmetical card game in which the objective is to find a way to manipulate four integers, so that the end result is 24. 
+
+In a classic game, the four integers come from a deck of cards (with all the face cards removed). As a result, the 4 integers range from 1 to 10. The allowed operations are addition, subtraction, multiplication, division, and parentheses. All 4 integers have to be used and only be used once. 
+
+For example, if we have four integers: 6, 1, 2, and 6. 
+One solution is
+$$ (1 + 2) \times 6 + 6 = 24.$$
+Another solution is 
+$$ 1 \times 2 \times (6 + 6) = 24.$$
+
+Now, let's look at a more difficult one: 1, 5, 5, and 5. The solution is 
+$$5\times(5 - 1/5) = 24.$$
+The goal of our solver is to write a function that take the four integers as the input, and if there exist solutions, outputs them. If there doesn't exist a solution, print a message that says so. 
+
+Let's break down the target function into several sub-functions and work on them in the next few subsections.
+
+
+<!--chapter:end:14_Case_Study.Rmd-->
+
+
+
+## Permutation and Operator Sequence {#permutation-operator}
+### Breaking Down a Solution
+### Getting All Permutations
+### Getting All Operators
+
+<!--chapter:end:14.01_Permutation_and_Operator_Sequence.Rmd-->
+
+
+
+## Composite Operators and Check Solution {#composite-operator}
+### Composite Operators
+### Check if Solution is Found
+### Looping Over All Number Sequences and All Operator Sequences
+
+<!--chapter:end:14.02_Composite_Operators_and_Check_Solution.Rmd-->
+
+
+
+## Solve 24 {#solve24}
+
+<!--chapter:end:14.03_Solve24_Function.Rmd-->
+
+
+`r if (knitr::is_html_output()) '# References {-}'`
+
+<!--chapter:end:15_References.Rmd-->
+

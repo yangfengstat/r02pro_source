@@ -24,11 +24,17 @@ knitr::opts_chunk$set(
 knitr::include_graphics("pics/sheep.jpg")
 ```
 
+This book is designed for learners and practitioners in public health, statistics, data science, and related fields who want to develop practical skills in R. Whether you're a beginner or looking to refine your analytical toolkit, this book takes you on a structured journey through essential R programming concepts, data manipulation, visualization, modeling, and reproducible research using the **tidyverse** ecosystem.
 
-This book is for anyone who is interested in learning R and Data Science. It is designed for people with zero background in programming. 
+Each chapter builds logically on the previous one, emphasizing clear explanations, real-world datasets, and hands-on coding examples that reinforce key ideas and methods.
 
-We also have a companion R package named [**r02pro**](https://cran.rstudio.com/web/packages/r02pro/index.html), containing the data sets that are used throughout the book. 
+To support your learning, we’ve developed a companion R package, [**r02pro**](https://cran.rstudio.com/web/packages/r02pro/index.html), which includes all datasets used throughout the book. With this package, you can easily follow along with the code and complete exercises in a reproducible workflow.
 
+This book is open-source and continuously evolving. We welcome contributions and feedback via the GitHub repository.
+
+Let’s code, analyze, and explore the world of data—together.
+
+If you are an instructor and would like to use this book in your course, we are happy to provide the solutions to the exercises. Please email me at yang.feng@nyu.edu.
 
 # Contributing to the Book  {-}
 
