@@ -1,4 +1,4 @@
-## Interative Plot with `plotly()` {#plotly}
+## Interactive Plot with `plotly()` {#plotly}
 
 Until now, all the plots we created are all static. In this section, we will introduce a powerful tool named `plotly()` that can make interactive plots. If you haven't done so, you need to first install the R package **plotly**. 
 

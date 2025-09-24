@@ -146,7 +146,7 @@ ggplot(data = remove_missing(sahp, vars="oa_qual")) +
 
 This agrees perfectly with our intuition that houses with higher overall quality have higher sale prices. 
 
-### Aesthetics in boxplot
+### Aesthetics in Boxplots
 
 Before talking about aesthetics, let's create a boxplot of `sale_price` for different values of `house_style`. 
 ```{r, warning=FALSE}

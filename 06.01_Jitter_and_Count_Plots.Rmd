@@ -44,7 +44,7 @@ Now, we can see that Africa has a large number of countries with low HDI categor
 
 ### Counts Plots {#count}
 
-When we want to visualize the distribution of a pair of discrete variables, another method to solve the overplotting issue is the **counts plot**, which uses circles of different sizes to represent the frequency of each value pair. You can use the function `geom_count()` to generate a counts plot. 
+When we want to visualize the distribution of a pair of discrete variables, another method to solve the overplotting issue is the **count plot**, which uses circles of different sizes to represent the frequency of each value pair. You can use the function `geom_count()` to generate a count plot. 
 ```{r}
 ggplot(data = remove_missing(gm2004, 
                              vars = c("continent", "HDI_category"))) + 
