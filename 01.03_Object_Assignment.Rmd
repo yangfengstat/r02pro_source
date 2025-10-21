@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
 ```
 
-In the last section, you saw how R handles one-off calculations. To perform longer analyses, you usually need to keep the result of one step so it can be reused later.
+In the last section, you saw how R handles one-off calculations. To carry out a full analysis, though, you almost always need to preserve the output from one step so you can use it again later.
 
 Consider the following three calculations, each of which repeats the expression `exp(3) / log(20, 3) * 7`.
 
@@ -19,13 +19,13 @@ Consider the following three calculations, each of which repeats the expression 
 (exp(3) / log(20, 3) * 7) / 3 #division
 ```
 
-Typing the same expression three times is easy to mess up and hard to maintain. Object assignment lets you store that intermediate value once and reuse it wherever you need it.
+Typing the same expression three times invites typos and makes future edits painful. Object assignment lets you store that intermediate value once and reuse it wherever you need it.
 
 ### What is an R Object?
 
 Before we talk about assignment, we need to clarify what an **object** is. In R, everything you work with is an object: the number `5`, the expression `1 + 2`, and even the result of `exp(3) / log(20, 3) * 7`.
 
-Running one of those expressions prints its value: in these examples, each object has a single element. Objects can also hold multiple elements (for example, a vector of several numbers), and each element keeps its own value. In the next sections you will learn how to create named objects and control the values they store.
+Running one of those expressions prints its value. In these simple examples each object has a single element, but objects can also hold multiple elements (for example, a vector of several numbers), each retaining its own value. You will soon learn how to create named objects and control what they store.
 
 ### Assignment Operation with `<-` {#assignment}
 
@@ -35,7 +35,7 @@ With objects in mind, the next step is to learn how to create a named object. Th
 x_num <- 5
 ```
 
-The expression has three parts: the **object name** (`x_num`), the **assignment operator** (`<-`, written with no space between `<` and `-`), and the **value** being stored (the number `5`). We will discuss naming rules in Section \@ref(Naming).
+The expression has three parts: the **object name** (`x_num`), the **assignment operator** (`<-`, written with no space between `<` and `-`), and the **value** being stored (the number `5`). Naming rules are covered in Section \@ref(Naming).
 
 ::: {.infobox .caution data-latex="{caution}"}
 Keep the two characters of `<-` together. Although R also accepts `=`, we strongly recommend reserving `=` for function arguments (to be introduced in Section \@ref(intro-num-vector)); mixing the two styles easily leads to confusing code.
@@ -56,20 +56,20 @@ x_num
 
 Great! The output `5` shows that the name `x_num` now stores the value `5`. Anywhere you would have typed the literal number, you can now reference `x_num` instead.
 
-Note that R object names are **case-sensitive**. For example, you have defined `x_num`, but if you type `X_num`, the console will return an error message as follow.
+Note that R object names are **case-sensitive**. For example, you defined `x_num`, but if you type `X_num`, the console returns an error because R treats those names as different objects.
 
 ```{r, error = TRUE}
 X_num
 ```
 
-In addition, you can assign **value(s)** of an expression to a name. Let's try to simplify the three expressions we showed at the beginning of this section. It is easy to observe that the three expressions share a common term `exp(3) / log(20,3) * 7`. Let's assign the common term to a name.
+You can also assign the **result** of an expression to a name. Let's simplify the three expressions we showed at the beginning of this section. Each one shares the common term `exp(3) / log(20, 3) * 7`, so we will store that term in an object.
 
 ```{r results = TRUE}
 y_num <- exp(3) / log(20, 3) * 7
 y_num
 ```
 
-Now you have successfully created an object `y_num` with value `r y_num`. Using the named object `y_num`, you can simplify the three calculations as follows.
+Now you have successfully created an object `y_num` that stores the numeric value `r y_num`. Using the named object `y_num`, you can simplify the three calculations as follows.
 
 ```{r, eval=FALSE}
 y_num + 3
@@ -81,7 +81,7 @@ y_num / 3
 During assignment, the expression on the right-hand side is evaluated first and only the resulting value is stored. Running `y_num` therefore returns the numeric result, not the text of the original expression.
 :::
 
-You can also try the following examples by yourself.
+Try the following examples to see a few more assignment patterns.
 
 ```{r, results=FALSE}
 z_num1 <- floor(7 / 3)
@@ -90,11 +90,11 @@ z_num2 <- 7 %/% 3
 z_num2
 ```
 
-Clearly, using the object assignment, you can greatly simplify the code and avoid redundancy.
+Clearly, object assignment greatly simplifies the code and avoids redundant typing.
 
 ### Object Naming Rules {#Naming}
 
-R is fairly flexible about object names, but there are three rules you must follow.
+R is fairly flexible about object names, but three rules are non-negotiable. Practicing them early will save you from obscure bugs later.
 
 ***a. Start with a letter or a single . (period)***
 
@@ -112,7 +112,7 @@ Names such as `TRUE`, `if`, or `function` are reserved by R and cannot be reassi
 TRUE <- 12
 ```
 
-Some commonly used reserved keywords that cannot be used as names are listed as below.
+Some common reserved keywords that cannot be used as names are listed below.
 
 ```{r results = TRUE, echo=FALSE, warning=FALSE}
 knitr::kable(matrix(c("TRUE", "FALSE", "NA", "Inf",
@@ -143,7 +143,7 @@ x_num <- 6
 x_num  #check its value
 ```
 
-The Environment now shows `x_num` with value 6. Assigning a new value replaces the old one. R does not keep past values once you reassign the name.
+The Environment now shows `x_num` with value 6. Assigning a new value replaces the old one; R does not keep past values once you reassign the name.
 
 ```{r en2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (II)", out.width = '70%'}
 knitr::include_graphics("pics/1en2.png")
@@ -151,17 +151,17 @@ knitr::include_graphics("pics/1en2.png")
 
 Keep an eye on the Environment pane while you work to confirm objects contain what you expect. Only named objects appear there; unnamed results vanish as soon as they are printed.
 
-You can also list the names programmatically with the built-in `ls()` function.
+You can also list the names programmatically with the built-in `ls()` function. The function returns a character vector, which means you can combine it with other functions (`length(ls())`, `rm(list = ls())`, and so on) when you want to audit or tidy your workspace from the console.
 
 ```{r, results = TRUE}
 ls()
 ```
 
-All the objects shown in the environment or on the list are stored in the memory, so they are available for us in subsequent codes. It is a good habit to do object assignments if you want to retrieve their values at a later time.
+Everything shown in the Environment pane or returned by `ls()` lives in memory, ready for reuse in later code. Assigning important results to objects and removing ones you no longer need keep your workspace organized and your scripts reproducible.
 
 ### Object types
 
-So far in this section, you have learned how to do object assignments. The values you assigned are all numbers, i.e. of numeric type. Actually, an object may contain more than one values. Also, an object may contain values other than the numeric type, such like character and logical ones. Depending on the **composition of values**, the object belongs to one particular type.
+So far we have assigned single numeric values to objects. In practice an object may contain many values at once, and those values do not have to be numeric: text strings, logical values, and dates all appear routinely in data analysis. The **composition of values** determines the object type.
 
 ```{r echo = FALSE, results = TRUE}
 Type  <- c("Atomic Vector","Matrix","Array","Data Frame", "Tibble", "List")
@@ -170,9 +170,9 @@ d <- data.frame(Type, Section)
 knitr::kable(d)
 ```
 
-We will focus on atomic vectors in Chapter \@ref(r-objects) and discuss other object types in Chapter \@ref(object-other-type).
+We will focus on atomic vectors in Chapter \@ref(r-objects) and explore the remaining object types in Chapter \@ref(object-other-type).
 
-While some of the object types look more intuitive than others, you have nothing to worry about since we have the next two chapters devoted to the details of R objects. Objects are the building blocks of R programming and it will be time well spent mastering every object type.
+Some object types look more intuitive than others, but the next two chapters walk through each in detail. Objects are the building blocks of R programming, so the time you invest in understanding them will pay off quickly.
 
 ### Exercises
 
