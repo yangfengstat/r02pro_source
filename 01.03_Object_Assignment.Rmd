@@ -9,9 +9,9 @@ knitr::opts_chunk$set(
   comment = "#>", echo = TRUE, eval = TRUE, results = FALSE, error = TRUE, fig.width = 6, warning = FALSE, collapse = TRUE)
 ```
 
-In the last section, you have seen the power of R as a fancy calculator. However, in order to do more complicated and interesting tasks, it is often helpful to store intermediate results for future use.
+In the last section, you saw how R handles one-off calculations. To perform longer analyses, you usually need to keep the result of one step so it can be reused later.
 
-Let's take a look at a concrete example. Say if you want to do the following three calculations, all involving `exp(3) / log(20,3) * 7`.
+Consider the following three calculations, each of which repeats the expression `exp(3) / log(20, 3) * 7`.
 
 ```{r}
 (exp(3) / log(20, 3) * 7) + 3 #addition
@@ -19,50 +19,42 @@ Let's take a look at a concrete example. Say if you want to do the following thr
 (exp(3) / log(20, 3) * 7) / 3 #division
 ```
 
-Here, you need to type the same expression `exp(3) / log(20,3) * 7` three times, which is a bit cumbersome. In this section, you will learn how to do **object assignment**, which avoid redundancy and make your code more concise.
+Typing the same expression three times is easy to mess up and hard to maintain. Object assignment lets you store that intermediate value once and reuse it wherever you need it.
 
 ### What is an R Object?
 
-Before delving into the details, let's first introduce the concept of **object**, which is perhaps the most fundamental thing in R. In principle, **everything that exists in R is an object**. For example, the number `5` is an object, the expression `1 + 2` is an object, and the expression `exp(3) / log(20,3) * 7` is also an object.
+Before we talk about assignment, we need to clarify what an **object** is. In R, everything you work with is an object: the number `5`, the expression `1 + 2`, and even the result of `exp(3) / log(20, 3) * 7`.
 
-If you run `5`, you will get one element of value 5 from the output. Similarly, if you run `1 + 2`, you will get one element of value 3 from the output. You can try to run `exp(3) / log(20,3) * 7` by yourself. In these three examples, you can see that there is only one **element** in each object.
-
-However, an object can contain more than one elements, and each element has its own **value**, which is possibly different from that of another element. Naturally, different objects can contain different values. In the following sections, you will learn how to create objects and assign values to them.
+Running one of those expressions prints its value: in these examples, each object has a single element. Objects can also hold multiple elements (for example, a vector of several numbers), and each element keeps its own value. In the next sections you will learn how to create named objects and control the values they store.
 
 ### Assignment Operation with `<-` {#assignment}
 
-With the importance of objects in mind, let's learn how to do **object assignments** in R. To do object assignments, you need to assign **value(s)** to a **name** via the **assignment operator**, which will create a new object with the name you specified. Once the object assignment operation is done, you can simply use the name in subsequent calculations without redundancy. Let's start with a simple example, assigning the value 5 to the name `x_num`.
+With objects in mind, the next step is to learn how to create a named object. The basic pattern is `name <- value`: choose a descriptive name, place the assignment operator `<-` in the middle, and supply the value you want to store. Once the object exists, you can reuse the name in later expressions without retyping the original value. Here is the simplest possible example.
 
 ```{r results = TRUE}
 x_num <- 5
 ```
 
-The assignment operation has three components. From left to right，they are:
-
--   the first component `x_num` is the **object name** of a new object, which has certain naming rules that will be discussed shortly in Section \@ref(Naming).
--   The second component is the **assignment operator** `<-`, which is a combination of the less than sign `<` immediately followed by the minus sign `-`, with **no space** in between.
--   The final component is the object name's assigned **value(s)**, which is 5 here.
+The expression has three parts: the **object name** (`x_num`), the **assignment operator** (`<-`, written with no space between `<` and `-`), and the **value** being stored (the number `5`). We will discuss naming rules in Section \@ref(Naming).
 
 ::: {.infobox .caution data-latex="{caution}"}
-There is no space between `<` and `-` in the assignment operator `<-`. Note that although `=` may also appear to be working as the assignment operator, it is not recommended as `=` is usually reserved for specifying the value(s) of arguments in a function call, which will be introduced in Section \@ref(intro-num-vector).
+Keep the two characters of `<-` together. Although R also accepts `=`, we strongly recommend reserving `=` for function arguments (to be introduced in Section \@ref(intro-num-vector)); mixing the two styles easily leads to confusing code.
 :::
 
-After running the code above, you will see no output in the console, unlike the situation when we ran `1 + 2` which gives us the answer `3` (as shown in Figure \@ref(fig:noa)). 
+Running the assignment prints nothing to the console (Figure \@ref(fig:noa)), unlike `1 + 2` which displays `3`. The object is created quietly in the background.
 
 ```{r noa, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="No output during the assignment operation.", out.width = '70%'}
 knitr::include_graphics("pics/2noa.png")
 ```
 
 
-You may be wondering, have we successfully made our first assignment operation?
-
-To verify it, you can run the code with just the object name to check its value. (For all named objects, you can get their value(s) by running codes with just their names.)
+To confirm the value stored in an object, run a line containing only its name. R prints the contents of the object to the console.
 
 ```{r results = TRUE}
 x_num
 ```
 
-Great! The output is 5, indicating that you have successfully assigned the value 5 to the name x_num, and you have created a new object `x_num`. From now on, you can use `x_num` instead of `5` to do the subsequent calculations because `x_num` and `5` have the same value.
+Great! The output `5` shows that the name `x_num` now stores the value `5`. Anywhere you would have typed the literal number, you can now reference `x_num` instead.
 
 Note that R object names are **case-sensitive**. For example, you have defined `x_num`, but if you type `X_num`, the console will return an error message as follow.
 
@@ -86,7 +78,7 @@ y_num / 3
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
-Note that in the object assignment process, it is not the expression itself but rather the value(s) of the expression, that is assigned to a name. So you will not get the expression `exp(3) / log(20,3) * 7` by running `y_num`.
+During assignment, the expression on the right-hand side is evaluated first and only the resulting value is stored. Running `y_num` therefore returns the numeric result, not the text of the original expression.
 :::
 
 You can also try the following examples by yourself.
@@ -100,21 +92,21 @@ z_num2
 
 Clearly, using the object assignment, you can greatly simplify the code and avoid redundancy.
 
-### Object naming rule {#Naming}
+### Object Naming Rules {#Naming}
 
-As you now see, the assignment operation in R is very straightforward. In general, R is very flexible in the name you can give to an object. However, there are three important rules you need to follow.
+R is fairly flexible about object names, but there are three rules you must follow.
 
-***a. Must start with a letter or . (period)***
+***a. Start with a letter or a single . (period)***
 
-In addition, if starting with period, the second character can't be a number.
+If you start a name with `.`, the second character cannot be a number.
 
-***b. Can only contain letters, numbers, `_` (underscore), and `.` (period)***
+***b. Use only letters, numbers, `_` (underscore), or `.` (period)***
 
-One recommended naming style is to use lowercase letters and numbers, and use underscore to separate words within a name. So you can use relatively longer names that is more readable. For example, `this_is_name_6` and `super_rich_88` are great names.
+A consistent style improves readability. We recommend all-lowercase names separated with underscores, such as `this_is_name_6` or `super_rich_88`.
 
-***c. Can not use special keywords as names.***
+***c. Avoid reserved keywords***
 
-For example, `TRUE <- 12` is not permitted as `TRUE` is a special keyword in R. You can see from the following that this assignment operation leads to an error message.
+Names such as `TRUE`, `if`, or `function` are reserved by R and cannot be reassigned. Attempting to do so results in an error, as shown below.
 
 ```{r error=TRUE}
 TRUE <- 12
@@ -136,30 +128,30 @@ To get a complete list of reserved words, you can run the following code.
 
 ### Review objects in environment
 
-At this point, we've introduced the rules of creating objects in R. Now, you can also confirm the success of object assignments by inspecting the **Environment**, located in the top right panel (**panel3 in Figure** \@ref(fig:four) **in Section** \@ref(Installation)).
+You can inspect your objects visually in the **Environment** pane, located in the top-right area of RStudio (panel 3 in Figure \@ref(fig:four) from Section \@ref(Installation)).
 
-If you exercised previous examples, you can find the newly assigned objects `x_num` and `y_num` (possibly also `z_num1` and `z_num2`) in your *Environment* Viewer. You may also notice that the name `TRUE`, which we tried but failed to assign the value 12 to, doesn't appear in the *Environment* (as shown in Figure \@ref(fig:en)). You can check all the **named objects** and their values in this area.
+If you ran the earlier examples, you should now see objects such as `x_num`, `y_num`, and `z_num1` listed in the Environment tab (Figure \@ref(fig:en)). Reserved keywords like `TRUE` never appear because R refuses to overwrite them.
 
 ```{r en, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (I)", out.width = '70%'}
 knitr::include_graphics("pics/1en.png")
 ```
 
-From the picture above, you can see that the value of `x_num` is 5. In this case, let's try to assign the new value 6 to `x_num` and see what will happen next.
+From the screenshot above you can see that `x_num` currently stores the value 5. Let's update it to 6 and observe what changes.
 
 ```{r results = TRUE}
 x_num <- 6
 x_num  #check its value
 ```
 
-Now you can see that the value of `x_num` has changed from 5 to 6. Generally, when assigning a new value to an object, R will update the object's value, and the previous value will no longer be stored. You can verify the result by inspecting the Environment tab, where only the new value of the object will be displayed.
+The Environment now shows `x_num` with value 6. Assigning a new value replaces the old one. R does not keep past values once you reassign the name.
 
 ```{r en2, results=TRUE, echo=FALSE, fig.align = 'center', fig.cap="The environment (II)", out.width = '70%'}
 knitr::include_graphics("pics/1en2.png")
 ```
 
-So it is helpful to monitor the environment from time to time to make sure everything looks fine. Notice that objects without names will *not* be shown in the environment.
+Keep an eye on the Environment pane while you work to confirm objects contain what you expect. Only named objects appear there; unnamed results vanish as soon as they are printed.
 
-You can also see the list of all the named objects (just names without values) using the built-in R function `ls()`.
+You can also list the names programmatically with the built-in `ls()` function.
 
 ```{r, results = TRUE}
 ls()
