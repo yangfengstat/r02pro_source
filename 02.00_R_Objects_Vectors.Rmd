@@ -1,4 +1,14 @@
 # R Objects (I): Atomic Vectors {#r-objects}
 
-In this chapter, we focus on the most fundamental R object type: **atomic vectors**. We will introduce different types of atomic vectors, creating vectors with patterns, applying different functions and operations on vectors, comparing and extracting vectors. We will also discuss data and times, factors, and how R represents unexpected results. 
+Object assignment (Chapter \@ref(Object-Assignment)) gave you the power to name and reuse values. The next step is to understand what those named values actually are. In R, almost every data structure you meet ultimately reduces to an **atomic vector**: a one-dimensional sequence of values that all share the same underlying type.
+
+Chapter \@ref(r-objects) is about mastering those building blocks. You will learn how to create vectors from scratch, reshape them into useful patterns, and apply R's vectorized operations confidently. Along the way you will discover how R stores different kinds of information—numbers, text, logical flags, dates, and more—and how to keep those types straight as you analyze data.
+
+> **At a glance – Chapter \@ref(r-objects) roadmap**  
+> Section \@ref(intro-num-vector). **Numeric vectors**: Create numeric sequences, recycle values, and perform arithmetic in a vectorized way.  
+> Section \@ref(intro-char-vector), Section \@ref(char-concatenate), & Section \@ref(factors). **Character vectors**: Build strings, concatenate text, sort or reorder labels, and decide when to convert them to factors.  
+> Section \@ref(intro-logi-vector) & Section \@ref(logical_operators). **Logical vectors**: Record yes/no information, combine conditions, and use logical indexing.  
+> Section \@ref(coercion-rule). **Type coercion**: Predict how R converts between vector types when they meet in the same object.  
+> Section \@ref(subsetting-and-modify-values) to Section \@ref(set-operations-vectors). **Working with vectors**: Subset, modify, rank, summarise, and compare vectors efficiently.  
+> Section \@ref(missing-values) to Section \@ref(other-atomic-vector). **Special values and extensions**: Handle `NA`, `NaN`, and `Inf`, work with dates/times, and meet complex and raw vectors.
 
