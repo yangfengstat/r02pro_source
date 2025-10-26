@@ -1,4 +1,4 @@
-## Logical Vectors: Logical Operators{#logical_operators}
+## Logical Vectors: Logical Operators{#logical-operators}
 
 In Section \@ref(subsetting-and-modify-values), you learned how to do vector subsetting, which yields a subvector of the original vector. Let's take a numeric vector `x <- 1:5` as an example. To get a subvector of `x` with values greater than 3, you can create a **logical vector**, and then use it as the index to do vector subsetting. 
 

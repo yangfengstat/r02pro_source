@@ -6,9 +6,8 @@ Chapter \@ref(r-objects) is about mastering those building blocks. You will lear
 
 > **At a glance – Chapter \@ref(r-objects) roadmap**  
 > Section \@ref(intro-num-vector). **Numeric vectors**: Create numeric sequences, recycle values, and perform arithmetic in a vectorized way.  
-> Section \@ref(intro-char-vector), Section \@ref(char-concatenate), & Section \@ref(factors). **Character vectors**: Build strings, concatenate text, sort or reorder labels, and decide when to convert them to factors.  
-> Section \@ref(intro-logi-vector) & Section \@ref(logical_operators). **Logical vectors**: Record yes/no information, combine conditions, and use logical indexing.  
+> Section \@ref(intro-char-vector), Section \@ref(char-concatenate), Section \@ref(character-sort-rank-order), Section \@ref(factors). **Character vectors**: Build strings, concatenate text, sort or reorder labels, and decide when to convert them to factors.  
+> Section \@ref(intro-logi-vector) & Section \@ref(logical-operators). **Logical vectors**: Record yes/no information, combine conditions, and use logical indexing.  
 > Section \@ref(coercion-rule). **Type coercion**: Predict how R converts between vector types when they meet in the same object.  
-> Section \@ref(subsetting-and-modify-values) to Section \@ref(set-operations-vectors). **Working with vectors**: Subset, modify, rank, summarise, and compare vectors efficiently.  
+> Section \@ref(subsetting-and-modify-values) to Section \@ref(set-operations-vectors). **Working with vectors**: Subset, modify, rank, summarize, and compare vectors efficiently.  
 > Section \@ref(missing-values) to Section \@ref(other-atomic-vector). **Special values and extensions**: Handle `NA`, `NaN`, and `Inf`, work with dates/times, and meet complex and raw vectors.
-
