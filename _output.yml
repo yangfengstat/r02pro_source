@@ -1,6 +1,7 @@
 bookdown::gitbook:
   includes:
     in_header: ga.html
+    after_body: footer.html
   css:  style.css
   split_by: section
   number_sections: true
